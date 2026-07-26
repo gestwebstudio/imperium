@@ -103,7 +103,28 @@
 .btn--primary-surface  { background: var(--color-heritage-green-500, #294434); color: var(--color-white, #FFFFFF); }
 .btn--primary-flat     { background: var(--color-heritage-green-100, #E1EAE5); color: var(--color-heritage-green-500, #294434); }
 .btn--primary-outlined { background: transparent; border-color: var(--color-heritage-green-500, #294434); color: var(--color-heritage-green-500, #294434); }
-.btn--primary-cta      { background: var(--color-warm-taupe-100, #F2EEEA);     color: var(--color-carbon-black-500, #1B1E1D); }
+/* CTA — pill с текстом слева и круглой иконкой-кнопкой справа (green-500) */
+.btn--primary-cta {
+  height: 46px;
+  padding: 0 0 0 22px;
+  gap: 12px;
+  font-size: 18px;
+  line-height: 24px;
+  background: var(--color-warm-taupe-100, #F2EEEA);
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.btn--primary-cta .btn__cta-icon {
+  flex: none;
+  width: 46px;
+  height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--color-heritage-green-500, #294434);
+  color: var(--color-white, #FFFFFF);
+}
+.btn--primary-cta .btn__cta-icon svg { display: block; width: 16px; height: 16px; fill: currentColor; }
 
 /* --- Variants: Secondary --- */
 .btn--secondary-surface  { background: var(--color-warm-taupe-400, #8F8579);   color: var(--color-white, #FFFFFF); }
