@@ -699,7 +699,7 @@
   </details>
 
   <details class="section" id="components">
-    <summary class="sec-summary"><div class="wrap"><h2>Компоненты</h2><span class="count">2 компонента</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></summary>
+    <summary class="sec-summary"><div class="wrap"><h2>Компоненты</h2><span class="count">3 компонента</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></summary>
     <div class="wrap sec-body">
       <p class="lead">Компоненты собраны в <code>styles/components.css</code> на токенах кита (цвета, шрифты). Ниже — живые примеры каждого.</p>
 
@@ -738,6 +738,26 @@
         </div>
       </div>
       <p class="comp-usage">Использование: <code>&lt;span class="badge badge--success"&gt;В наличии&lt;/span&gt;</code> · для обводки добавьте <code>.badge--outlined</code>.</p>
+      </div>
+
+      <div class="kit-block">
+      <div class="kit-head"><h3>Tag</h3><code>.tag</code></div>
+      <p class="kit-lead">Пилюля-метка. <b>Card</b> — тег на карточке (зелёный текст). <b>Filter</b> — удаляемый тег в фильтрах (серый текст с крестиком).</p>
+      <div class="kit-stage kit-stage--col">
+        <div class="stage-label">Card</div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;">
+          <span class="tag tag--card">2026</span>
+          <span class="tag tag--card">Внедорожник</span>
+          <span class="tag tag--card">4.4 AT</span>
+        </div>
+        <div class="stage-label" style="margin-top:8px;">Filter</div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;">
+          <button class="tag tag--filter">2026<span class="tag__close"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.0762 1.07619C10.3105 0.841877 10.6895 0.841886 10.9238 1.07619C11.1581 1.3105 11.1581 1.68953 10.9238 1.92384L6.84764 6.00002L10.9238 10.0762C11.1581 10.3105 11.1581 10.6895 10.9238 10.9238C10.6895 11.1582 10.3105 11.1581 10.0762 10.9238L5.99999 6.84767L1.92381 10.9238C1.6895 11.1582 1.31047 11.1582 1.07616 10.9238C0.841855 10.6895 0.841847 10.3105 1.07616 10.0762L5.15233 6.00002L1.07616 1.92384C0.841842 1.68953 0.841842 1.3105 1.07616 1.07619C1.31047 0.841873 1.6895 0.841873 1.92381 1.07619L5.99999 5.15236L10.0762 1.07619Z" fill="currentColor"/></svg></span></button>
+          <button class="tag tag--filter">Бензин<span class="tag__close"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.0762 1.07619C10.3105 0.841877 10.6895 0.841886 10.9238 1.07619C11.1581 1.3105 11.1581 1.68953 10.9238 1.92384L6.84764 6.00002L10.9238 10.0762C11.1581 10.3105 11.1581 10.6895 10.9238 10.9238C10.6895 11.1582 10.3105 11.1581 10.0762 10.9238L5.99999 6.84767L1.92381 10.9238C1.6895 11.1582 1.31047 11.1582 1.07616 10.9238C0.841855 10.6895 0.841847 10.3105 1.07616 10.0762L5.15233 6.00002L1.07616 1.92384C0.841842 1.68953 0.841842 1.3105 1.07616 1.07619C1.31047 0.841873 1.6895 0.841873 1.92381 1.07619L5.99999 5.15236L10.0762 1.07619Z" fill="currentColor"/></svg></span></button>
+          <button class="tag tag--filter">Автомат<span class="tag__close"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.0762 1.07619C10.3105 0.841877 10.6895 0.841886 10.9238 1.07619C11.1581 1.3105 11.1581 1.68953 10.9238 1.92384L6.84764 6.00002L10.9238 10.0762C11.1581 10.3105 11.1581 10.6895 10.9238 10.9238C10.6895 11.1582 10.3105 11.1581 10.0762 10.9238L5.99999 6.84767L1.92381 10.9238C1.6895 11.1582 1.31047 11.1582 1.07616 10.9238C0.841855 10.6895 0.841847 10.3105 1.07616 10.0762L5.15233 6.00002L1.07616 1.92384C0.841842 1.68953 0.841842 1.3105 1.07616 1.07619C1.31047 0.841873 1.6895 0.841873 1.92381 1.07619L5.99999 5.15236L10.0762 1.07619Z" fill="currentColor"/></svg></span></button>
+        </div>
+      </div>
+      <p class="comp-usage">Использование: <code>&lt;span class="tag tag--card"&gt;2026&lt;/span&gt;</code> · удаляемый: <code>.tag--filter</code> с <code>.tag__close</code> (Close.svg).</p>
       </div>
 
     </div>

@@ -168,3 +168,42 @@
 .badge--outlined.badge--error   { border-color: var(--color-red-500, #BB4545); }
 .badge--outlined.badge--warning { border-color: var(--color-yellow-500, #DDB103); }
 .badge--outlined.badge--success { border-color: var(--color-green-500, #55AB4D); }
+
+
+/* ============================================================
+   Tag — пилюля-метка
+   Типы:
+     .tag--card   — тег на карточке (зелёный текст на тёплой подложке)
+     .tag--filter — удаляемый тег в фильтрах (серый текст + крестик)
+   Крестик: <span class="tag__close"><svg…Close.svg…></span>
+   ============================================================ */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 4px 12px;
+  border: none;
+  border-radius: 26px;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-regular, 400);
+  font-size: 16px;
+  line-height: 20px;
+  white-space: nowrap;
+}
+/* --- Card --- */
+.tag--card { background: rgba(143,133,121,.2); color: var(--color-heritage-green-500, #294434); } /* warm-taupe-400 @20% */
+.tag--card:hover { background: rgba(143,133,121,.4); }
+/* --- Filter (удаляемый) --- */
+.tag--filter {
+  gap: 6px;
+  padding: 4px 8px;
+  background: rgba(144,138,134,.15); /* stone-beige-500 @15% */
+  color: var(--color-warm-taupe-500, #6A6259);
+  font-size: 14px;
+  line-height: 18px;
+  cursor: pointer;
+}
+.tag--filter:hover { background: rgba(144,138,134,.28); }
+.tag__close { flex: none; width: 10px; height: 10px; display: inline-flex; align-items: center; justify-content: center; color: currentColor; }
+.tag__close svg { display: block; width: 100%; height: 100%; }
