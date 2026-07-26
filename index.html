@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Imperium Motors — Дизайн-токены</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&family=Wix+Madefor+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Carbon Black */
+      --color-carbon-black-100: #ECEBEA; --color-carbon-black-200: #C1BFBD;
+      --color-carbon-black-300: #898785; --color-carbon-black-400: #4C4B49;
+      --color-carbon-black-500: #1B1E1D;
+      /* Heritage Green */
+      --color-heritage-green-100: #E1EAE5; --color-heritage-green-200: #A8BCB1;
+      --color-heritage-green-300: #6F917F; --color-heritage-green-400: #4E7B60;
+      --color-heritage-green-500: #294434; --color-heritage-green-600: #213227;
+      /* Warm Taupe */
+      --color-warm-taupe-100: #F2EEEA; --color-warm-taupe-200: #D5CCC4;
+      --color-warm-taupe-300: #B2A79B; --color-warm-taupe-400: #8F8579;
+      --color-warm-taupe-500: #6A6259;
+      /* Stone Beige */
+      --color-stone-beige-100: #F3F0EE; --color-stone-beige-200: #E4DFDB;
+      --color-stone-beige-300: #CAC2BB; --color-stone-beige-400: #A79E97;
+      --color-stone-beige-500: #908A86;
+      --color-white: #FFFFFF;
+      /* Additional */
+      --color-blue-100: #DCDFEF; --color-blue-500: #5262C0;
+      --color-red-100: #EFDCDD; --color-red-500: #BB4545;
+      --color-yellow-100: #F7F3E2; --color-yellow-500: #DDB103;
+      --color-green-100: #DCEFDC; --color-green-500: #55AB4D;
+
+      --font-display: "Wix Madefor Display", sans-serif;
+      --font-text: "Onest", sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-text);
+      background: var(--color-stone-beige-100);
+      color: var(--color-carbon-black-500);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 32px; }
+
+    /* ---------- Header ---------- */
+    header {
+      background: var(--color-heritage-green-500);
+      color: var(--color-white);
+      padding: 72px 0 64px;
+    }
+    header .eyebrow {
+      font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--color-heritage-green-200); margin-bottom: 20px;
+    }
+    header h1 {
+      font-family: var(--font-display); font-weight: 800;
+      font-size: clamp(38px, 6vw, 64px); line-height: 1.02; letter-spacing: -0.02em;
+    }
+    header p {
+      margin-top: 20px; max-width: 560px; font-size: 16px;
+      color: var(--color-stone-beige-200);
+    }
+
+    /* ---------- Section ---------- */
+    section { padding: 72px 0; }
+    section + section { border-top: 1px solid var(--color-stone-beige-300); }
+    .section-head { margin-bottom: 40px; }
+    .section-head .num {
+      font-family: var(--font-display); font-weight: 800; font-size: 13px;
+      color: var(--color-heritage-green-400); letter-spacing: 0.04em;
+    }
+    .section-head h2 {
+      font-family: var(--font-display); font-weight: 700;
+      font-size: 30px; letter-spacing: -0.01em; margin-top: 6px;
+    }
+    .section-head .lead {
+      margin-top: 12px; max-width: 620px; color: var(--color-warm-taupe-500); font-size: 15px;
+    }
+
+    /* ---------- Color groups ---------- */
+    .group { margin-bottom: 44px; }
+    .group:last-child { margin-bottom: 0; }
+    .group-title {
+      display: flex; align-items: baseline; gap: 12px; margin-bottom: 16px;
+    }
+    .group-title h3 {
+      font-family: var(--font-display); font-weight: 600; font-size: 17px;
+    }
+    .group-title span { font-size: 13px; color: var(--color-warm-taupe-400); }
+
+    .swatches {
+      display: grid; gap: 14px;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+    .swatch {
+      border-radius: 14px; overflow: hidden;
+      background: var(--color-white);
+      box-shadow: 0 1px 2px rgba(27,30,29,.05), 0 8px 24px rgba(27,30,29,.04);
+    }
+    .swatch .chip { height: 96px; width: 100%; }
+    .swatch .meta { padding: 12px 14px 14px; }
+    .swatch .name { font-weight: 500; font-size: 13px; }
+    .swatch .hex {
+      font-family: var(--font-display); font-size: 12px;
+      color: var(--color-warm-taupe-400); margin-top: 3px;
+      text-transform: uppercase; letter-spacing: 0.03em;
+    }
+    .swatch.bordered .chip { box-shadow: inset 0 0 0 1px var(--color-stone-beige-300); }
+
+    /* ---------- Typography ---------- */
+    .type-list { display: flex; flex-direction: column; gap: 4px; }
+    .type-row {
+      display: grid; grid-template-columns: 200px 1fr; gap: 32px;
+      align-items: baseline; padding: 26px 0;
+      border-bottom: 1px solid var(--color-stone-beige-200);
+    }
+    .type-row:last-child { border-bottom: none; }
+    .type-spec .tname {
+      font-family: var(--font-display); font-weight: 600; font-size: 15px;
+    }
+    .type-spec .tmeta {
+      font-size: 12.5px; color: var(--color-warm-taupe-400); margin-top: 6px; line-height: 1.6;
+    }
+    .type-sample { color: var(--color-carbon-black-500); }
+
+    .s-price   { font-family: var(--font-display); font-weight: 800; font-size: 30px; line-height: 27.32px; }
+    .s-heading { font-family: var(--font-display); font-weight: 400; font-size: 22px; line-height: 22px; }
+    .s-stat    { font-family: var(--font-display); font-weight: 800; font-size: 19px; line-height: 27.32px; }
+    .s-button  { font-family: var(--font-text); font-weight: 400; font-size: 13px; line-height: 22px; }
+    .s-tag     { font-family: var(--font-text); font-weight: 400; font-size: 12px; line-height: 24px; }
+    .s-caption { font-family: var(--font-text); font-weight: 400; font-size: 12px; line-height: 21.75px; }
+
+    /* Font family showcase */
+    .families { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 48px; }
+    .family-card {
+      background: var(--color-white); border-radius: 18px; padding: 32px;
+      box-shadow: 0 1px 2px rgba(27,30,29,.05), 0 10px 30px rgba(27,30,29,.05);
+    }
+    .family-card .role {
+      font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--color-heritage-green-400); margin-bottom: 14px;
+    }
+    .family-card .big { line-height: 1; letter-spacing: -0.01em; }
+    .fam-display .big { font-family: var(--font-display); font-weight: 800; font-size: 56px; }
+    .fam-text .big { font-family: var(--font-text); font-weight: 600; font-size: 56px; }
+    .family-card .fname { font-family: var(--font-display); font-weight: 600; font-size: 18px; margin-top: 18px; }
+    .family-card .glyphs {
+      margin-top: 6px; color: var(--color-warm-taupe-500); font-size: 14px;
+    }
+    .fam-display .glyphs { font-family: var(--font-display); }
+    .fam-text .glyphs { font-family: var(--font-text); }
+    .family-card .note { margin-top: 18px; font-size: 13.5px; color: var(--color-warm-taupe-500); line-height: 1.6; }
+
+    /* Card demo */
+    .demo-card {
+      background: var(--color-stone-beige-100); border-radius: 20px; padding: 24px;
+      max-width: 380px; box-shadow: 0 1px 2px rgba(27,30,29,.06), 0 16px 40px rgba(27,30,29,.08);
+    }
+    .demo-card .title { font-family: var(--font-display); font-weight: 400; font-size: 22px; }
+    .demo-card .avail { display: flex; align-items: center; gap: 6px; margin-top: 8px; font-size: 12px; color: var(--color-warm-taupe-400); }
+    .demo-card .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--color-green-500); }
+    .demo-card .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 12px; }
+    .demo-card .tag { font-size: 12px; line-height: 24px; padding: 0 9px; border-radius: 26px; background: var(--color-stone-beige-200); color: var(--color-carbon-black-500); }
+    .demo-card .tag.accent { background: var(--color-heritage-green-500); color: var(--color-white); }
+    .demo-card .stats { display: flex; gap: 8px; margin-top: 20px; }
+    .demo-card .stat { flex: 1; background: rgba(255,255,255,.63); border-radius: 7px; padding: 8px; }
+    .demo-card .stat b { font-family: var(--font-display); font-weight: 800; font-size: 19px; display: block; }
+    .demo-card .stat small { font-size: 12px; color: var(--color-warm-taupe-400); }
+    .demo-card .price-row { margin-top: 20px; display: flex; align-items: flex-end; justify-content: space-between; }
+    .demo-card .price-row small { font-size: 12px; color: var(--color-warm-taupe-400); }
+    .demo-card .price { font-family: var(--font-display); font-weight: 800; font-size: 30px; }
+    .demo-card .btn { background: var(--color-heritage-green-500); color: var(--color-white); border: none; border-radius: 21px; padding: 8px 18px; font-family: var(--font-text); font-size: 13px; cursor: pointer; }
+
+    footer { padding: 48px 0 64px; color: var(--color-warm-taupe-400); font-size: 13px; }
+    footer a { color: var(--color-heritage-green-400); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="eyebrow">Imperium Motors · Design Tokens</div>
+      <h1>Палитра&nbsp;и типографика</h1>
+      <p>Глубокий зелёный, графит и тёплые каменные оттенки. Спокойный, статусный и уверенный характер бренда — в цвете и наборе.</p>
+    </div>
+  </header>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div class="num">01</div>
+        <h2>Шрифты</h2>
+        <p class="lead">Заголовки набираются <b>Wix Madefor Display</b> — современным и аккуратным. Основной текст — <b>Onest</b>: спокойный, отлично читается на кириллице.</p>
+      </div>
+
+      <div class="families">
+        <div class="family-card fam-display">
+          <div class="role">Заголовки</div>
+          <div class="big">Ag</div>
+          <div class="fname">Wix Madefor Display</div>
+          <div class="glyphs">АаБбВвГг · Aa Bb Cc · 0123456789</div>
+          <div class="note">Regular 400 · Medium 500 · SemiBold 600 · Bold 700 · ExtraBold 800</div>
+        </div>
+        <div class="family-card fam-text">
+          <div class="role">Основной текст</div>
+          <div class="big">Ag</div>
+          <div class="fname">Onest</div>
+          <div class="glyphs">АаБбВвГг · Aa Bb Cc · 0123456789</div>
+          <div class="note">Regular 400 · Medium 500 · SemiBold 600</div>
+        </div>
+      </div>
+
+      <div class="type-list">
+        <div class="type-row">
+          <div class="type-spec"><div class="tname">Price</div><div class="tmeta">Wix Madefor Display · ExtraBold 800<br>30 / 27.32 px</div></div>
+          <div class="type-sample s-price">17 290 000 ₽</div>
+        </div>
+        <div class="type-row">
+          <div class="type-spec"><div class="tname">Heading</div><div class="tmeta">Wix Madefor Display · Regular 400<br>22 / 22 px</div></div>
+          <div class="type-sample s-heading">Mercedes-Benz GLS 450 4MATIC</div>
+        </div>
+        <div class="type-row">
+          <div class="type-spec"><div class="tname">Stat</div><div class="tmeta">Wix Madefor Display · ExtraBold 800<br>19 / 27.32 px</div></div>
+          <div class="type-sample s-stat">375 л.с. · 5,8 с · 209 км/ч</div>
+        </div>
+        <div class="type-row">
+          <div class="type-spec"><div class="tname">Button</div><div class="tmeta">Onest · Regular 400<br>13 / 22 px</div></div>
+          <div class="type-sample s-button">Забронировать автомобиль</div>
+        </div>
+        <div class="type-row">
+          <div class="type-spec"><div class="tname">Tag</div><div class="tmeta">Onest · Regular 400<br>12 / 24 px</div></div>
+          <div class="type-sample s-tag">Полный привод · Бензин · Автомат</div>
+        </div>
+        <div class="type-row">
+          <div class="type-spec"><div class="tname">Caption</div><div class="tmeta">Onest · Regular 400<br>12 / 21.75 px</div></div>
+          <div class="type-sample s-caption">Стоимость автомобиля указана без учёта дополнительного оборудования.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div class="num">02</div>
+        <h2>Цвета</h2>
+        <p class="lead">Основная палитра — глубокий зелёный, графит и тёплые каменные нейтральные. Heritage Green используется точечно: кнопки, логотип, активные теги.</p>
+      </div>
+
+      <div class="group">
+        <div class="group-title"><h3>Carbon Black</h3><span>графит · основной текст</span></div>
+        <div class="swatches">
+          <div class="swatch bordered"><div class="chip" style="background:#ECEBEA"></div><div class="meta"><div class="name">Carbon Black 100</div><div class="hex">#ECEBEA</div></div></div>
+          <div class="swatch"><div class="chip" style="background:#C1BFBD"></div><div class="meta"><div class="name">Carbon Black 200</div><div class="hex">#C1BFBD</div></div></div>
+          <div class="swatch"><div class="chip" style="background:#898785"></div><div class="meta"><div class="name">Carbon Black 300</div><div class="hex">#898785</div></div></div>
+          <div class="swatch"><div class="chip" style="background:#4C4B49"></div><div class="meta"><div class="name">Carbon Black 400</div><div class="hex">#4C4B49</div></div></div>
+          <div class="swatch"><div class="chip" style="background:#1B1E1D"></div><div class="meta"><div class="name">Carbon Black 500</div><div class="hex">#1B1E1D</div></div></div>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group-title"><h3>Heritage Green</h3><span>основной акцент бренда</span></div>
+        <div class="swatches">
+          <div class="swatch bordered"><div class="chip" style="background:#E1EAE5"></div><div class="meta"><div class="name">Heritage Green 100</div><div class="hex">#E1EAE5</div></div></div>
+          <div class="swatch"><div class="chip" style="background:#A8BCB1"></div><div class="meta"><div class="name">Heritage Green 200</div><div class="hex">#A8BCB1</div></div></div>
+          <div class="swatch"><div class="chip" style="background:#6F917F"></div><div class="meta"><div class="name">Heritage Green 300</div><div class="hex">#6F917F</div></div></div>
+          <div class="swatch"><div class="chip" style="background:#4E7B60"></div><div class="meta"><div class="name">Heritage Green 400</div><div class="hex">#4E7B60</div></div></div>
+          <div class="swatch"><div class="chip" style="background:#294434"></div><div class="meta"><div class="name">Heritage Green 500</div><div class="hex">#294434</div></div></div>
+          <div class="swatch"><div class="chip" style="background:#213227"></div><div class="meta"><div class="name">Heritage Green 600</div><div class="hex">#213227</div></div></div>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group-title"><h3>Warm Taupe</h3><span>тёплый нейтральный</span></div>
+        <div class="swatches">
+          <div class="swatch bordered"><div class="chip" style="background:#F2EEEA"></div><div class="meta"><div class="name">Warm Taupe 100</div><div class="hex">#F2EEEA</div></div></div>
+          <div class="swatch"><div class="chip" style="background:#D5CCC4"></div><div class="meta"><div class="name">Warm Taupe 200</div><div class="hex">#D5CCC4</div></div></div>
+          <div class="swatch"><div class="chip" style="background:#B2A79B"></div><div class="meta"><div class="name">Warm Taupe 300</div><div class="hex">#B2A79B</div></div></div>
+          <div class="swatch"><div class="chip" style="background:#8F8579"></div><div class="meta"><div class="name">Warm Taupe 400</div><div class="hex">#8F8579</div></div></div>
+          <div class="swatch"><div class="chip" style="background:#6A6259"></div><div class="meta"><div class="name">Warm Taupe 500</div><div class="hex">#6A6259</div></div></div>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group-title"><h3>Stone Beige</h3><span>фоны и поверхности</span></div>
+        <div class="swatches">
+          <div class="swatch bordered"><div class="chip" style="background:#F3F0EE"></div><div class="meta"><div class="name">Stone Beige 100</div><div class="hex">#F3F0EE</div></div></div>
+          <div class="swatch bordered"><div class="chip" style="background:#E4DFDB"></div><div class="meta"><div class="name">Stone Beige 200</div><div class="hex">#E4DFDB</div></div></div>
+          <div class="swatch"><div class="chip" style="background:#CAC2BB"></div><div class="meta"><div class="name">Stone Beige 300</div><div class="hex">#CAC2BB</div></div></div>
+          <div class="swatch"><div class="chip" style="background:#A79E97"></div><div class="meta"><div class="name">Stone Beige 400</div><div class="hex">#A79E97</div></div></div>
+          <div class="swatch"><div class="chip" style="background:#908A86"></div><div class="meta"><div class="name">Stone Beige 500</div><div class="hex">#908A86</div></div></div>
+          <div class="swatch bordered"><div class="chip" style="background:#FFFFFF"></div><div class="meta"><div class="name">White</div><div class="hex">#FFFFFF</div></div></div>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group-title"><h3>Additional</h3><span>статусы · информационные</span></div>
+        <div class="swatches">
+          <div class="swatch bordered"><div class="chip" style="background:#DCDFEF"></div><div class="meta"><div class="name">Blue 100</div><div class="hex">#DCDFEF</div></div></div>
+          <div class="swatch"><div class="chip" style="background:#5262C0"></div><div class="meta"><div class="name">Blue 500</div><div class="hex">#5262C0</div></div></div>
+          <div class="swatch bordered"><div class="chip" style="background:#EFDCDD"></div><div class="meta"><div class="name">Red 100</div><div class="hex">#EFDCDD</div></div></div>
+          <div class="swatch"><div class="chip" style="background:#BB4545"></div><div class="meta"><div class="name">Red 500</div><div class="hex">#BB4545</div></div></div>
+          <div class="swatch bordered"><div class="chip" style="background:#F7F3E2"></div><div class="meta"><div class="name">Yellow 100</div><div class="hex">#F7F3E2</div></div></div>
+          <div class="swatch"><div class="chip" style="background:#DDB103"></div><div class="meta"><div class="name">Yellow 500</div><div class="hex">#DDB103</div></div></div>
+          <div class="swatch bordered"><div class="chip" style="background:#DCEFDC"></div><div class="meta"><div class="name">Green 100</div><div class="hex">#DCEFDC</div></div></div>
+          <div class="swatch"><div class="chip" style="background:#55AB4D"></div><div class="meta"><div class="name">Green 500</div><div class="hex">#55AB4D</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div class="num">03</div>
+        <h2>В деле</h2>
+        <p class="lead">Токены вместе: карточка автомобиля собрана на палитре и шрифтах из этого файла.</p>
+      </div>
+      <div class="demo-card">
+        <div class="title">Mercedes-Benz GLS 450 4MATIC</div>
+        <div class="avail"><span class="dot"></span> В наличии</div>
+        <div class="tags">
+          <span class="tag accent">2026</span>
+          <span class="tag">Бензин</span>
+          <span class="tag">Полный привод</span>
+          <span class="tag">Автомат</span>
+        </div>
+        <div class="stats">
+          <div class="stat"><b>5,8 с</b><small>Разгон 0–100</small></div>
+          <div class="stat"><b>375 л.с.</b><small>Мощность</small></div>
+          <div class="stat"><b>209 км/ч</b><small>Макс. скорость</small></div>
+        </div>
+        <div class="price-row">
+          <div>
+            <small>Стоимость автомобиля</small>
+            <div class="price">17 290 000 ₽</div>
+          </div>
+          <button class="btn">Забронировать</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      Imperium Motors · Дизайн-токены выгружены из
+      <a href="https://www.figma.com/design/bERRa0eUHmPImiBdiP62UR/Imperium-Motors">Figma</a>.
+      Цвета — <code>tokens/colors.json</code>, типографика — <code>tokens/typography.json</code>.
+    </div>
+  </footer>
+</body>
+</html>
