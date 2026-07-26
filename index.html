@@ -95,6 +95,20 @@
     .comp-usage { margin-top:20px; font-size:13px; color:var(--color-warm-taupe-500,#6A6259); line-height:1.6; }
     .comp-usage code { font-family:var(--font-display); background:var(--color-stone-beige-200,#E4DFDB); padding:1px 6px; border-radius:5px; font-size:12px; }
 
+    /* generic component showcase (kit blocks) */
+    .kit-block { margin-bottom:40px; }
+    .kit-block:last-child { margin-bottom:0; }
+    .kit-head { display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:4px; }
+    .kit-head h3 { font-family:var(--font-display); font-weight:600; font-size:19px; }
+    .kit-head code { font-family:var(--font-display); font-size:12px; color:var(--color-warm-taupe-400,#8F8579); background:var(--color-stone-beige-200,#E4DFDB); padding:2px 8px; border-radius:6px; }
+    .kit-lead { color:var(--color-warm-taupe-500,#6A6259); font-size:14px; line-height:1.55; margin:2px 0 16px; max-width:660px; }
+    .kit-stage { background:#fff; border-radius:16px; padding:28px; display:flex; flex-wrap:wrap; gap:22px; align-items:center; box-shadow:0 1px 2px rgba(27,30,29,.04),0 8px 24px rgba(27,30,29,.03); }
+    .kit-stage--beige { background:var(--color-stone-beige-200,#E4DFDB); }
+    .kit-stage--dark  { background:var(--color-heritage-green-500,#294434); }
+    .kit-stage--col { flex-direction:column; align-items:flex-start; }
+    .kit-stage .stage-label { width:100%; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--color-warm-taupe-400,#8F8579); margin-bottom:-6px; }
+    .kit-stage--dark .stage-label { color:var(--color-heritage-green-200,#A8BCB1); }
+
     /* buttons showcase */
     .btn-card { background:#fff; border-radius:18px; padding:8px 28px 24px; box-shadow:0 1px 2px rgba(27,30,29,.04),0 8px 24px rgba(27,30,29,.03); }
     .btn-sub { font-family:var(--font-display); font-weight:600; font-size:13px; letter-spacing:.06em; text-transform:uppercase; color:var(--color-warm-taupe-400,#8F8579); padding:22px 0 6px; }
@@ -685,9 +699,13 @@
   </details>
 
   <details class="section" id="components">
-    <summary class="sec-summary"><div class="wrap"><h2>Компоненты</h2><span class="count">Bubble</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></summary>
+    <summary class="sec-summary"><div class="wrap"><h2>Компоненты</h2><span class="count">2 компонента</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></summary>
     <div class="wrap sec-body">
-      <p class="lead"><b>Bubble</b> — счётчик / бейдж с числом. Три размера (S / M / L) и четыре цвета. Собран из <code>styles/components.css</code> на токенах кита.</p>
+      <p class="lead">Компоненты собраны в <code>styles/components.css</code> на токенах кита (цвета, шрифты). Ниже — живые примеры каждого.</p>
+
+      <div class="kit-block">
+      <div class="kit-head"><h3>Bubble</h3><code>.bubble</code></div>
+      <p class="kit-lead">Счётчик / бейдж с числом. Три размера (S / M / L) и четыре цвета. Одна цифра — круг, несколько — pill.</p>
       <div class="comp-card">
       <div class="bubble-matrix">
         <div class="bm-row bm-head"><div class="bm-rowhead"></div><div class="bm-col">S<span class="bm-col-meta">16 px · Onest 10</span></div><div class="bm-col">M<span class="bm-col-meta">20 px · Onest 14</span></div><div class="bm-col">L<span class="bm-col-meta">24 px · Onest 14</span></div></div>
@@ -698,6 +716,30 @@
       </div>
       </div>
       <p class="comp-usage">Использование: <code>&lt;span class="bubble bubble--m bubble--green-500"&gt;1&lt;/span&gt;</code>. Одна цифра — круг, несколько — pill.</p>
+      </div>
+
+      <div class="kit-block">
+      <div class="kit-head"><h3>Badge</h3><code>.badge</code></div>
+      <p class="kit-lead">Статусная метка. Четыре цвета — Info / Success / Warning / Error — в двух вариантах: Surface (заливка) и Outlined (обводка).</p>
+      <div class="kit-stage kit-stage--col">
+        <div class="stage-label">Surface</div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;">
+          <span class="badge badge--info">Badge</span>
+          <span class="badge badge--success">Badge</span>
+          <span class="badge badge--warning">Badge</span>
+          <span class="badge badge--error">Badge</span>
+        </div>
+        <div class="stage-label" style="margin-top:8px;">Outlined</div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;">
+          <span class="badge badge--outlined badge--info">Badge</span>
+          <span class="badge badge--outlined badge--success">Badge</span>
+          <span class="badge badge--outlined badge--warning">Badge</span>
+          <span class="badge badge--outlined badge--error">Badge</span>
+        </div>
+      </div>
+      <p class="comp-usage">Использование: <code>&lt;span class="badge badge--success"&gt;В наличии&lt;/span&gt;</code> · для обводки добавьте <code>.badge--outlined</code>.</p>
+      </div>
+
     </div>
   </details>
 
