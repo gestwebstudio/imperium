@@ -699,7 +699,7 @@
   </details>
 
   <details class="section" id="components">
-    <summary class="sec-summary"><div class="wrap"><h2>Компоненты</h2><span class="count">3 компонента</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></summary>
+    <summary class="sec-summary"><div class="wrap"><h2>Компоненты</h2><span class="count">4 компонента</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></summary>
     <div class="wrap sec-body">
       <p class="lead">Компоненты собраны в <code>styles/components.css</code> на токенах кита (цвета, шрифты). Ниже — живые примеры каждого.</p>
 
@@ -758,6 +758,18 @@
         </div>
       </div>
       <p class="comp-usage">Использование: <code>&lt;span class="tag tag--card"&gt;2026&lt;/span&gt;</code> · удаляемый: <code>.tag--filter</code> с <code>.tag__close</code> (Close.svg).</p>
+      </div>
+
+      <div class="kit-block">
+      <div class="kit-head"><h3>Indicator</h3><code>.indicator</code></div>
+      <p class="kit-lead">Статусная точка с подписью — компактный маркер состояния. Четыре статуса: Success / Warning / Error / Info.</p>
+      <div class="kit-stage" style="gap:32px;">
+        <span class="indicator indicator--success"><span class="indicator__dot"></span>В наличии</span>
+        <span class="indicator indicator--warning"><span class="indicator__dot"></span>В пути</span>
+        <span class="indicator indicator--error"><span class="indicator__dot"></span>Продан</span>
+        <span class="indicator indicator--info"><span class="indicator__dot"></span>Под заказ</span>
+      </div>
+      <p class="comp-usage">Использование: <code>&lt;span class="indicator indicator--success"&gt;&lt;span class="indicator__dot"&gt;&lt;/span&gt;В наличии&lt;/span&gt;</code>.</p>
       </div>
 
     </div>
