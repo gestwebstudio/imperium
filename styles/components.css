@@ -365,3 +365,29 @@
   border-radius: 10px;
   background: var(--color-heritage-green-500, #294434);
 }
+
+
+/* ============================================================
+   Price Block — подпись + цена
+   Значение — текстовый стиль Price/Value (Wix Madefor Display ExtraBold 28/36).
+   ============================================================ */
+.price-block {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+.price-block__label {
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-regular, 400);
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--color-carbon-black-300, #898785);
+}
+.price-block__value {
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-weight: var(--font-weight-extrabold, 800);
+  font-size: 28px;
+  line-height: 36px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
