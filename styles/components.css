@@ -343,3 +343,25 @@
   transition: opacity .12s ease;
 }
 .compare:hover .compare__tip { opacity: 1; }
+
+
+/* ============================================================
+   Slider — трек прогресса / заполнения
+   Ширину заполнения задаёт .slider__fill (inline width или модификатор).
+   ============================================================ */
+.slider {
+  position: relative;
+  width: 100%;
+  height: 4px;
+  border-radius: 12px;
+  background: rgba(143,133,121,.4); /* warm-taupe-400 @40% */
+  overflow: hidden;
+}
+.slider__fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 4px;
+  border-radius: 10px;
+  background: var(--color-heritage-green-500, #294434);
+}

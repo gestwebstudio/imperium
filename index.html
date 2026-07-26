@@ -699,7 +699,7 @@
   </details>
 
   <details class="section" id="components">
-    <summary class="sec-summary"><div class="wrap"><h2>Компоненты</h2><span class="count">7 компонентов</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></summary>
+    <summary class="sec-summary"><div class="wrap"><h2>Компоненты</h2><span class="count">8 компонентов</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></summary>
     <div class="wrap sec-body">
       <p class="lead">Компоненты собраны в <code>styles/components.css</code> на токенах кита (цвета, шрифты). Ниже — живые примеры каждого.</p>
 
@@ -816,6 +816,18 @@
         </button>
       </div>
       <p class="comp-usage">Использование: <code>&lt;button class="compare"&gt;…List-Add…List-Check…&lt;/button&gt;</code> · активное — класс <code>.is-active</code>.</p>
+      </div>
+
+      <div class="kit-block">
+      <div class="kit-head"><h3>Slider</h3><code>.slider</code></div>
+      <p class="kit-lead">Трек прогресса / заполнения. Тонкая тёплая дорожка, заполнение — Heritage Green. Ширину задаёт <code>.slider__fill</code>.</p>
+      <div class="kit-stage kit-stage--col" style="gap:20px;">
+        <div class="stage-label">0% · 76% · 100%</div>
+        <div class="slider"><div class="slider__fill" style="width:0%"></div></div>
+        <div class="slider"><div class="slider__fill" style="width:76%"></div></div>
+        <div class="slider"><div class="slider__fill" style="width:100%"></div></div>
+      </div>
+      <p class="comp-usage">Использование: <code>&lt;div class="slider"&gt;&lt;div class="slider__fill" style="width:76%"&gt;&lt;/div&gt;&lt;/div&gt;</code>.</p>
       </div>
 
     </div>
