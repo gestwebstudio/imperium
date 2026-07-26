@@ -1,0 +1,459 @@
+/* Imperium Motors — Typography Text Styles */
+/* Автогенерация из Figma text styles (REST API). Всего: 73 стилей */
+
+:root {
+  --font-display: "Wix Madefor Display", sans-serif;
+  --font-text: "Onest", sans-serif;
+}
+
+/* ---- Heading ---- */
+.t-heading-h4-h4-semibold {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 600;
+  font-size: 48px;
+  line-height: 56px;
+}
+.t-heading-h6-h6-semibold {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 44px;
+}
+.t-heading-h1-h1-regular {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 400;
+  font-size: 88px;
+  line-height: 100px;
+  text-transform: uppercase;
+}
+.t-heading-h1-h1-extrabold {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 800;
+  font-size: 88px;
+  line-height: 100px;
+  text-transform: uppercase;
+}
+.t-heading-h4-h4-regular {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 56px;
+}
+.t-heading-h5-h5-semibold {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 48px;
+}
+.t-heading-h2-h2-bold {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 700;
+  font-size: 66px;
+  line-height: 70px;
+}
+.t-heading-h3-h3-regular {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 70px;
+}
+.t-heading-h1-h1-medium {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 500;
+  font-size: 88px;
+  line-height: 100px;
+}
+.t-heading-h1-h1-semibold {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 600;
+  font-size: 88px;
+  line-height: 100px;
+}
+.t-heading-h1-h1-bold {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 700;
+  font-size: 88px;
+  line-height: 100px;
+}
+.t-heading-h2-h2-regular {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 400;
+  font-size: 66px;
+  line-height: 70px;
+}
+.t-heading-h2-h2-medium {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 500;
+  font-size: 66px;
+  line-height: 70px;
+}
+.t-heading-h2-h2-semibold {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 600;
+  font-size: 66px;
+  line-height: 70px;
+}
+.t-heading-h2-h2-extrabold {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 800;
+  font-size: 66px;
+  line-height: 70px;
+}
+.t-heading-h3-h3-medium {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 500;
+  font-size: 50px;
+  line-height: 70px;
+}
+.t-heading-h3-h3-semibold {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 600;
+  font-size: 50px;
+  line-height: 70px;
+}
+.t-heading-h3-h3-bold {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 700;
+  font-size: 50px;
+  line-height: 70px;
+}
+.t-heading-h3-h3-extrabold {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 800;
+  font-size: 50px;
+  line-height: 70px;
+}
+.t-heading-h4-h4-medium {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 500;
+  font-size: 48px;
+  line-height: 56px;
+}
+.t-heading-h4-h4-bold {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 56px;
+}
+.t-heading-h4-h4-extrabold {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 800;
+  font-size: 48px;
+  line-height: 56px;
+}
+.t-heading-h5-h5-regular {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 48px;
+}
+.t-heading-h5-h5-medium {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 48px;
+}
+.t-heading-h5-h5-bold {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 48px;
+}
+.t-heading-h5-h5-extrabold {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 48px;
+}
+.t-heading-h6-h6-regular {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 44px;
+}
+.t-heading-h6-h6-medium {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 44px;
+}
+.t-heading-h6-h6-bold {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 44px;
+}
+.t-heading-h6-h6-extrabold {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 800;
+  font-size: 36px;
+  line-height: 44px;
+}
+
+/* ---- Text ---- */
+.t-text-18-18-regular {
+  font-family: "Onest", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+}
+.t-text-10-10-medium {
+  font-family: "Onest", sans-serif;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 10px;
+}
+.t-text-20-20-regular {
+  font-family: "Onest", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 28px;
+}
+.t-text-24-24-semibold {
+  font-family: "Onest", sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 30px;
+}
+.t-text-14-14-regular {
+  font-family: "Onest", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+}
+.t-text-18-18-semibold {
+  font-family: "Onest", sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+}
+.t-text-24-24-regular {
+  font-family: "Onest", sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 30px;
+}
+.t-text-30-30-semibold {
+  font-family: "Onest", sans-serif;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 40px;
+}
+.t-text-16-16-regular {
+  font-family: "Onest", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+}
+.t-text-20-20-medium {
+  font-family: "Onest", sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 28px;
+}
+.t-text-32-32-black {
+  font-family: "Onest", sans-serif;
+  font-weight: 900;
+  font-size: 32px;
+  line-height: 44px;
+  text-transform: uppercase;
+}
+.t-text-32-32-medium {
+  font-family: "Onest", sans-serif;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 44px;
+  text-transform: uppercase;
+}
+.t-text-36-36-regular {
+  font-family: "Onest", sans-serif;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 42px;
+}
+.t-text-14-14-semibold {
+  font-family: "Onest", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+}
+.t-text-36-36-medium {
+  font-family: "Onest", sans-serif;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 42px;
+}
+.t-text-36-36-semibold {
+  font-family: "Onest", sans-serif;
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 42px;
+}
+.t-text-36-36-bold {
+  font-family: "Onest", sans-serif;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 42px;
+}
+.t-text-32-32-regular {
+  font-family: "Onest", sans-serif;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 44px;
+}
+.t-text-32-32-semibold {
+  font-family: "Onest", sans-serif;
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 44px;
+}
+.t-text-32-32-bold {
+  font-family: "Onest", sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 44px;
+}
+.t-text-30-30-regular {
+  font-family: "Onest", sans-serif;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 40px;
+}
+.t-text-30-30-medium {
+  font-family: "Onest", sans-serif;
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 40px;
+}
+.t-text-30-30-bold {
+  font-family: "Onest", sans-serif;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 40px;
+}
+.t-text-24-24-medium {
+  font-family: "Onest", sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 30px;
+}
+.t-text-24-24-bold {
+  font-family: "Onest", sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+}
+.t-text-20-20-semibold {
+  font-family: "Onest", sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 28px;
+}
+.t-text-20-20-bold {
+  font-family: "Onest", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 28px;
+}
+.t-text-18-18-medium {
+  font-family: "Onest", sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+}
+.t-text-18-18-bold {
+  font-family: "Onest", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 24px;
+}
+.t-text-16-16-medium {
+  font-family: "Onest", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+}
+.t-text-16-16-semibold {
+  font-family: "Onest", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+}
+.t-text-16-16-bold {
+  font-family: "Onest", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+}
+.t-text-14-14-medium {
+  font-family: "Onest", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+}
+.t-text-14-14-bold {
+  font-family: "Onest", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 18px;
+}
+.t-text-10-10-regular {
+  font-family: "Onest", sans-serif;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 10px;
+}
+.t-text-10-10-semibold {
+  font-family: "Onest", sans-serif;
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 10px;
+}
+.t-text-10-10-bold {
+  font-family: "Onest", sans-serif;
+  font-weight: 700;
+  font-size: 10px;
+  line-height: 10px;
+}
+
+/* ---- Title card ---- */
+.t-title-card-24-semibold {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 30px;
+}
+.t-title-card-24-regular {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 30px;
+}
+.t-title-card-24-medium {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 30px;
+}
+.t-title-card-24-bold {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+}
+
+/* ---- Numeric ---- */
+.t-numeric-value {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 46px;
+}
+
+/* ---- Price ---- */
+.t-price-value {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-weight: 800;
+  font-size: 28px;
+  line-height: 36px;
+}

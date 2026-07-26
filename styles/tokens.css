@@ -50,21 +50,11 @@
 
   /* ---------- Typography: Weights ---------- */
   --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
   --font-weight-extrabold: 800;
+  --font-weight-black: 900;
 
-  /* ---------- Typography: Sizes ---------- */
-  --font-size-price: 30px;
-  --font-size-heading: 22px;
-  --font-size-stat: 19px;
-  --font-size-button: 13px;
-  --font-size-tag: 12px;
-  --font-size-caption: 12px;
-
-  /* ---------- Typography: Line heights ---------- */
-  --line-height-price: 27.32px;
-  --line-height-heading: 22px;
-  --line-height-stat: 27.32px;
-  --line-height-button: 22px;
-  --line-height-tag: 24px;
-  --line-height-caption: 21.75px;
+  /* Готовые текстовые стили (73 шт.) — в styles/typography.css (классы .t-*) */
 }

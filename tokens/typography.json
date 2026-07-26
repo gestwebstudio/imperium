@@ -2,44 +2,751 @@
   "$schema": "https://design-tokens.github.io/community-group/format/",
   "font": {
     "family": {
-      "display": { "$type": "fontFamily", "$value": ["Wix Madefor Display", "sans-serif"], "$description": "Заголовки: современный, аккуратный, нейтральный" },
-      "text": { "$type": "fontFamily", "$value": ["Onest", "sans-serif"], "$description": "Основной текст: спокойный, хорошо читается на кириллице" }
+      "display": {
+        "$type": "fontFamily",
+        "$value": [
+          "Wix Madefor Display",
+          "sans-serif"
+        ],
+        "$description": "Заголовки"
+      },
+      "text": {
+        "$type": "fontFamily",
+        "$value": [
+          "Onest",
+          "sans-serif"
+        ],
+        "$description": "Основной текст"
+      }
     },
     "weight": {
-      "regular": { "$type": "fontWeight", "$value": 400 },
-      "extrabold": { "$type": "fontWeight", "$value": 800 }
+      "regular": {
+        "$type": "fontWeight",
+        "$value": 400
+      },
+      "medium": {
+        "$type": "fontWeight",
+        "$value": 500
+      },
+      "semibold": {
+        "$type": "fontWeight",
+        "$value": 600
+      },
+      "bold": {
+        "$type": "fontWeight",
+        "$value": 700
+      },
+      "extrabold": {
+        "$type": "fontWeight",
+        "$value": 800
+      },
+      "black": {
+        "$type": "fontWeight",
+        "$value": 900
+      }
     }
   },
-  "typography": {
-    "price": {
-      "$type": "typography",
-      "$value": { "fontFamily": "Wix Madefor Display", "fontWeight": 800, "fontSize": "30px", "lineHeight": "27.32px" },
-      "$description": "Крупная цена / основной числовой акцент"
+  "textStyle": {
+    "Text": {
+      "18": {
+        "18-Regular": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 400,
+            "fontSize": "18px",
+            "lineHeight": "24px"
+          }
+        },
+        "18-SemiBold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 600,
+            "fontSize": "18px",
+            "lineHeight": "24px"
+          }
+        },
+        "18-Medium": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 500,
+            "fontSize": "18px",
+            "lineHeight": "24px"
+          }
+        },
+        "18-Bold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 700,
+            "fontSize": "18px",
+            "lineHeight": "24px"
+          }
+        }
+      },
+      "10": {
+        "10-Medium": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 500,
+            "fontSize": "10px",
+            "lineHeight": "10px"
+          }
+        },
+        "10-Regular": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 400,
+            "fontSize": "10px",
+            "lineHeight": "10px"
+          }
+        },
+        "10-SemiBold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 600,
+            "fontSize": "10px",
+            "lineHeight": "10px"
+          }
+        },
+        "10-Bold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 700,
+            "fontSize": "10px",
+            "lineHeight": "10px"
+          }
+        }
+      },
+      "20": {
+        "20-Regular": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 400,
+            "fontSize": "20px",
+            "lineHeight": "28px"
+          }
+        },
+        "20-Medium": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 500,
+            "fontSize": "20px",
+            "lineHeight": "28px"
+          }
+        },
+        "20-SemiBold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 600,
+            "fontSize": "20px",
+            "lineHeight": "28px"
+          }
+        },
+        "20-Bold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 700,
+            "fontSize": "20px",
+            "lineHeight": "28px"
+          }
+        }
+      },
+      "24": {
+        "24-SemiBold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 600,
+            "fontSize": "24px",
+            "lineHeight": "30px"
+          }
+        },
+        "24-Regular": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 400,
+            "fontSize": "24px",
+            "lineHeight": "30px"
+          }
+        },
+        "24-Medium": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 500,
+            "fontSize": "24px",
+            "lineHeight": "30px"
+          }
+        },
+        "24-Bold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 700,
+            "fontSize": "24px",
+            "lineHeight": "30px"
+          }
+        }
+      },
+      "14": {
+        "14-Regular": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 400,
+            "fontSize": "14px",
+            "lineHeight": "18px"
+          }
+        },
+        "14-SemiBold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 600,
+            "fontSize": "14px",
+            "lineHeight": "18px"
+          }
+        },
+        "14-Medium": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 500,
+            "fontSize": "14px",
+            "lineHeight": "18px"
+          }
+        },
+        "14-Bold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 700,
+            "fontSize": "14px",
+            "lineHeight": "18px"
+          }
+        }
+      },
+      "30": {
+        "30-SemiBold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 600,
+            "fontSize": "30px",
+            "lineHeight": "40px"
+          }
+        },
+        "30-Regular": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 400,
+            "fontSize": "30px",
+            "lineHeight": "40px"
+          }
+        },
+        "30-Medium": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 500,
+            "fontSize": "30px",
+            "lineHeight": "40px"
+          }
+        },
+        "30-Bold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 700,
+            "fontSize": "30px",
+            "lineHeight": "40px"
+          }
+        }
+      },
+      "16": {
+        "16-Regular": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 400,
+            "fontSize": "16px",
+            "lineHeight": "20px"
+          }
+        },
+        "16-Medium": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 500,
+            "fontSize": "16px",
+            "lineHeight": "20px"
+          }
+        },
+        "16-SemiBold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 600,
+            "fontSize": "16px",
+            "lineHeight": "20px"
+          }
+        },
+        "16-Bold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 700,
+            "fontSize": "16px",
+            "lineHeight": "20px"
+          }
+        }
+      },
+      "32": {
+        "32-Black": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 900,
+            "fontSize": "32px",
+            "lineHeight": "44px",
+            "textCase": "uppercase"
+          }
+        },
+        "32-Medium": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 500,
+            "fontSize": "32px",
+            "lineHeight": "44px",
+            "textCase": "uppercase"
+          }
+        },
+        "32-Regular": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 400,
+            "fontSize": "32px",
+            "lineHeight": "44px"
+          }
+        },
+        "32-SemiBold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 600,
+            "fontSize": "32px",
+            "lineHeight": "44px"
+          }
+        },
+        "32-Bold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 700,
+            "fontSize": "32px",
+            "lineHeight": "44px"
+          }
+        }
+      },
+      "36": {
+        "36-Regular": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 400,
+            "fontSize": "36px",
+            "lineHeight": "42px"
+          }
+        },
+        "36-Medium": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 500,
+            "fontSize": "36px",
+            "lineHeight": "42px"
+          }
+        },
+        "36-SemiBold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 600,
+            "fontSize": "36px",
+            "lineHeight": "42px"
+          }
+        },
+        "36-Bold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Onest",
+            "fontWeight": 700,
+            "fontSize": "36px",
+            "lineHeight": "42px"
+          }
+        }
+      }
     },
-    "heading": {
-      "$type": "typography",
-      "$value": { "fontFamily": "Wix Madefor Display", "fontWeight": 400, "fontSize": "22px", "lineHeight": "22px" },
-      "$description": "Заголовок карточки / название"
+    "Heading": {
+      "H4": {
+        "H4-SemiBold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 600,
+            "fontSize": "48px",
+            "lineHeight": "56px"
+          }
+        },
+        "H4-Regular": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 400,
+            "fontSize": "48px",
+            "lineHeight": "56px"
+          }
+        },
+        "H4-Medium": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 500,
+            "fontSize": "48px",
+            "lineHeight": "56px"
+          }
+        },
+        "H4-Bold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 700,
+            "fontSize": "48px",
+            "lineHeight": "56px"
+          }
+        },
+        "H4-ExtraBold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 800,
+            "fontSize": "48px",
+            "lineHeight": "56px"
+          }
+        }
+      },
+      "H6": {
+        "H6-SemiBold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 600,
+            "fontSize": "36px",
+            "lineHeight": "44px"
+          }
+        },
+        "H6-Regular": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 400,
+            "fontSize": "36px",
+            "lineHeight": "44px"
+          }
+        },
+        "H6-Medium": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 500,
+            "fontSize": "36px",
+            "lineHeight": "44px"
+          }
+        },
+        "H6-Bold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 700,
+            "fontSize": "36px",
+            "lineHeight": "44px"
+          }
+        },
+        "H6-ExtraBold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 800,
+            "fontSize": "36px",
+            "lineHeight": "44px"
+          }
+        }
+      },
+      "H1": {
+        "H1-Regular": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 400,
+            "fontSize": "88px",
+            "lineHeight": "100px",
+            "textCase": "uppercase"
+          }
+        },
+        "H1-ExtraBold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 800,
+            "fontSize": "88px",
+            "lineHeight": "100px",
+            "textCase": "uppercase"
+          }
+        },
+        "H1-Medium": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 500,
+            "fontSize": "88px",
+            "lineHeight": "100px"
+          }
+        },
+        "H1-SemiBold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 600,
+            "fontSize": "88px",
+            "lineHeight": "100px"
+          }
+        },
+        "H1-Bold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 700,
+            "fontSize": "88px",
+            "lineHeight": "100px"
+          }
+        }
+      },
+      "H5": {
+        "H5-SemiBold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 600,
+            "fontSize": "40px",
+            "lineHeight": "48px"
+          }
+        },
+        "H5-Regular": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 400,
+            "fontSize": "40px",
+            "lineHeight": "48px"
+          }
+        },
+        "H5-Medium": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 500,
+            "fontSize": "40px",
+            "lineHeight": "48px"
+          }
+        },
+        "H5-Bold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 700,
+            "fontSize": "40px",
+            "lineHeight": "48px"
+          }
+        },
+        "H5-ExtraBold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 800,
+            "fontSize": "40px",
+            "lineHeight": "48px"
+          }
+        }
+      },
+      "H2": {
+        "H2-Bold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 700,
+            "fontSize": "66px",
+            "lineHeight": "70px"
+          }
+        },
+        "H2-Regular": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 400,
+            "fontSize": "66px",
+            "lineHeight": "70px"
+          }
+        },
+        "H2-Medium": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 500,
+            "fontSize": "66px",
+            "lineHeight": "70px"
+          }
+        },
+        "H2-SemiBold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 600,
+            "fontSize": "66px",
+            "lineHeight": "70px"
+          }
+        },
+        "H2-ExtraBold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 800,
+            "fontSize": "66px",
+            "lineHeight": "70px"
+          }
+        }
+      },
+      "H3": {
+        "H3-Regular": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 400,
+            "fontSize": "50px",
+            "lineHeight": "70px"
+          }
+        },
+        "H3-Medium": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 500,
+            "fontSize": "50px",
+            "lineHeight": "70px"
+          }
+        },
+        "H3-SemiBold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 600,
+            "fontSize": "50px",
+            "lineHeight": "70px"
+          }
+        },
+        "H3-Bold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 700,
+            "fontSize": "50px",
+            "lineHeight": "70px"
+          }
+        },
+        "H3-ExtraBold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "Wix Madefor Display",
+            "fontWeight": 800,
+            "fontSize": "50px",
+            "lineHeight": "70px"
+          }
+        }
+      }
     },
-    "stat": {
-      "$type": "typography",
-      "$value": { "fontFamily": "Wix Madefor Display", "fontWeight": 800, "fontSize": "19px", "lineHeight": "27.32px" },
-      "$description": "Числовые показатели (характеристики)"
+    "Price": {
+      "Value": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "Wix Madefor Display",
+          "fontWeight": 800,
+          "fontSize": "28px",
+          "lineHeight": "36px"
+        }
+      }
     },
-    "button": {
-      "$type": "typography",
-      "$value": { "fontFamily": "Onest", "fontWeight": 400, "fontSize": "13px", "lineHeight": "22px" },
-      "$description": "Текст кнопок"
+    "Title card": {
+      "24-SemiBold": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "Wix Madefor Display",
+          "fontWeight": 600,
+          "fontSize": "24px",
+          "lineHeight": "30px"
+        }
+      },
+      "24-Regular": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "Wix Madefor Display",
+          "fontWeight": 400,
+          "fontSize": "24px",
+          "lineHeight": "30px"
+        }
+      },
+      "24-Medium": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "Wix Madefor Display",
+          "fontWeight": 500,
+          "fontSize": "24px",
+          "lineHeight": "30px"
+        }
+      },
+      "24-Bold": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "Wix Madefor Display",
+          "fontWeight": 700,
+          "fontSize": "24px",
+          "lineHeight": "30px"
+        }
+      }
     },
-    "tag": {
-      "$type": "typography",
-      "$value": { "fontFamily": "Onest", "fontWeight": 400, "fontSize": "12px", "lineHeight": "24px" },
-      "$description": "Теги / чипы"
-    },
-    "caption": {
-      "$type": "typography",
-      "$value": { "fontFamily": "Onest", "fontWeight": 400, "fontSize": "12px", "lineHeight": "21.75px" },
-      "$description": "Подписи / вспомогательный текст"
+    "Numeric": {
+      "Value": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "Wix Madefor Display",
+          "fontWeight": 800,
+          "fontSize": "40px",
+          "lineHeight": "46px"
+        }
+      }
     }
   }
 }
