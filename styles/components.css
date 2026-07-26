@@ -296,3 +296,50 @@
   transition: opacity .12s ease;
 }
 .wishlist:hover .wishlist__tip { opacity: 1; }
+
+
+/* ============================================================
+   Comparison — кнопка «в сравнение» (тоггл)
+     .is-active — в сравнении (зелёный List-Check)
+   Внутри две иконки (currentColor): .icon-add (List-Add) и .icon-check (List-Check).
+   Тултип на hover — <span class="compare__tip">…</span>.
+   ============================================================ */
+.compare {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--color-carbon-black-500, #1B1E1D);
+  -webkit-tap-highlight-color: transparent;
+}
+.compare svg { position: absolute; width: 24px; height: 24px; display: block; fill: currentColor; transition: opacity .12s ease; }
+.compare .icon-check { opacity: 0; }
+.compare:hover .icon-add { opacity: .6; }
+.compare.is-active { color: var(--color-heritage-green-500, #294434); }
+.compare.is-active .icon-add   { opacity: 0; }
+.compare.is-active .icon-check { opacity: 1; }
+.compare.is-active:hover .icon-check { opacity: .6; }
+.compare__tip {
+  position: absolute;
+  top: 28px;
+  right: -8px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: var(--color-white, #FFFFFF);
+  color: var(--color-carbon-black-300, #898785);
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 14px;
+  line-height: 18px;
+  white-space: nowrap;
+  box-shadow: 4px 4px 10px 0 rgba(106,98,89,.1);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .12s ease;
+}
+.compare:hover .compare__tip { opacity: 1; }
