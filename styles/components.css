@@ -249,3 +249,50 @@
 }
 .tooltip--s { padding: 4px 8px;  border-radius: 4px; font-weight: var(--font-weight-medium, 500);  font-size: 10px; line-height: 10px; }
 .tooltip--l { padding: 4px 10px; border-radius: 6px; font-weight: var(--font-weight-regular, 400); font-size: 14px; line-height: 18px; }
+
+
+/* ============================================================
+   Wishlist — кнопка «в избранное» (сердечко-тоггл)
+     .is-active — в избранном (залитое красное сердце)
+   Внутри две иконки Heart (currentColor): .icon-stroke (контур) и .icon-fill (заливка).
+   Тултип на hover — опциональный <span class="wishlist__tip">…</span>.
+   ============================================================ */
+.wishlist {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--color-carbon-black-500, #1B1E1D);
+  -webkit-tap-highlight-color: transparent;
+}
+.wishlist svg { position: absolute; width: 24px; height: 24px; display: block; fill: currentColor; transition: opacity .12s ease; }
+.wishlist .icon-fill { opacity: 0; }
+.wishlist:hover .icon-stroke { opacity: .6; }
+.wishlist.is-active { color: var(--color-red-500, #BB4545); }
+.wishlist.is-active .icon-stroke { opacity: 0; }
+.wishlist.is-active .icon-fill   { opacity: 1; }
+/* тултип */
+.wishlist__tip {
+  position: absolute;
+  top: 28px;
+  right: -4px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: var(--color-white, #FFFFFF);
+  color: var(--color-carbon-black-300, #898785);
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 14px;
+  line-height: 18px;
+  white-space: nowrap;
+  box-shadow: 4px 4px 10px 0 rgba(106,98,89,.1);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .12s ease;
+}
+.wishlist:hover .wishlist__tip { opacity: 1; }
