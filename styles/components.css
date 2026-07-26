@@ -1,0 +1,32 @@
+/* Imperium Motors — Components */
+/* Использует токены из tokens.css. Подключать после tokens.css. */
+
+/* ============================================================
+   Bubble — счётчик / бейдж с числом
+   Варианты:
+     size:  .bubble--s | .bubble--m | .bubble--l
+     color: .bubble--white | .bubble--green-200 | .bubble--green-500 | .bubble--taupe-400
+   Одна цифра — круг, несколько — pill (растягивается по ширине).
+   ============================================================ */
+.bubble {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-medium, 500);
+  border-radius: 999px;
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* --- Sizes --- */
+.bubble--s { min-width: 16px; height: 16px; padding: 0 6px; font-size: 10px; line-height: 10px; }
+.bubble--m { min-width: 20px; height: 20px; padding: 0 7px; font-size: 14px; line-height: 18px; }
+.bubble--l { min-width: 24px; height: 24px; padding: 0 9px; font-size: 14px; line-height: 18px; }
+
+/* --- Colors --- */
+.bubble--white     { background: var(--color-white, #FFFFFF);            color: var(--color-carbon-black-500, #1B1E1D); }
+.bubble--green-200 { background: var(--color-heritage-green-200, #A8BCB1); color: var(--color-carbon-black-500, #1B1E1D); }
+.bubble--green-500 { background: var(--color-heritage-green-500, #294434); color: var(--color-white, #FFFFFF); }
+.bubble--taupe-400 { background: var(--color-warm-taupe-400, #8F8579);   color: var(--color-white, #FFFFFF); }

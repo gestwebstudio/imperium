@@ -10,6 +10,7 @@
   <!-- Kit token files -->
   <link rel="stylesheet" href="styles/tokens.css">
   <link rel="stylesheet" href="styles/typography.css">
+  <link rel="stylesheet" href="styles/components.css">
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
     body { font-family: var(--font-text, "Onest", sans-serif); background: var(--color-stone-beige-100,#F3F0EE); color: var(--color-carbon-black-500,#1B1E1D); -webkit-font-smoothing:antialiased; }
@@ -28,12 +29,20 @@
     nav.toc a { font-size:13px; color:var(--color-warm-taupe-500,#6A6259); text-decoration:none; padding:6px 12px; border-radius:20px; }
     nav.toc a:hover { background:var(--color-stone-beige-200,#E4DFDB); color:var(--color-carbon-black-500); }
 
-    section { padding:64px 0; }
-    section + section { border-top:1px solid var(--color-stone-beige-300,#CAC2BB); }
-    .head { margin-bottom:36px; }
-    .head .num { font-family:var(--font-display); font-weight:800; font-size:13px; color:var(--color-heritage-green-400,#4E7B60); }
-    .head h2 { font-family:var(--font-display); font-weight:700; font-size:30px; letter-spacing:-.01em; margin-top:6px; }
-    .head .lead { margin-top:10px; max-width:640px; color:var(--color-warm-taupe-500,#6A6259); font-size:15px; line-height:1.55; }
+    /* collapsible sections */
+    details.section { border-top:1px solid var(--color-stone-beige-300,#CAC2BB); }
+    details.section:last-of-type { border-bottom:1px solid var(--color-stone-beige-300,#CAC2BB); }
+    summary.sec-summary { list-style:none; cursor:pointer; padding:34px 0; }
+    summary.sec-summary::-webkit-details-marker { display:none; }
+    summary.sec-summary .wrap { display:flex; align-items:center; gap:16px; }
+    summary.sec-summary h2 { font-family:var(--font-display); font-weight:700; font-size:30px; letter-spacing:-.01em; }
+    summary .count { font-family:var(--font-display); font-weight:600; font-size:13px; color:var(--color-heritage-green-500,#294434); background:var(--color-heritage-green-100,#E1EAE5); padding:3px 10px; border-radius:20px; }
+    summary .chev { margin-left:auto; width:26px; height:26px; flex:none; display:flex; align-items:center; justify-content:center; color:var(--color-warm-taupe-400,#8F8579); transition:transform .2s ease; }
+    summary .chev svg { width:16px; height:16px; }
+    details[open] > summary .chev { transform:rotate(90deg); }
+    summary.sec-summary:hover h2 { color:var(--color-heritage-green-500,#294434); }
+    .sec-body { padding-bottom:60px; }
+    .lead { margin:-6px 0 32px; max-width:640px; color:var(--color-warm-taupe-500,#6A6259); font-size:15px; line-height:1.55; }
 
     /* families */
     .families { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
@@ -70,22 +79,21 @@
     .swatch .cname { font-weight:500; font-size:13px; }
     .swatch .hex { font-family:var(--font-display); font-size:12px; color:var(--color-warm-taupe-400,#8F8579); margin-top:3px; text-transform:uppercase; }
 
-    /* demo card */
-    .demo-card { background:var(--color-stone-beige-100,#F3F0EE); border:1px solid var(--color-stone-beige-200,#E4DFDB); border-radius:20px; padding:24px; max-width:380px; box-shadow:0 1px 2px rgba(27,30,29,.06),0 16px 40px rgba(27,30,29,.08); }
-    .demo-card .title { font-family:var(--font-display); font-weight:400; font-size:22px; }
-    .demo-card .avail { display:flex; align-items:center; gap:6px; margin-top:8px; font-size:12px; color:var(--color-warm-taupe-400,#8F8579); }
-    .demo-card .dot { width:7px; height:7px; border-radius:50%; background:var(--color-green-500,#55AB4D); }
-    .demo-card .tags { display:flex; flex-wrap:wrap; gap:5px; margin-top:12px; }
-    .demo-card .tag { font-size:12px; line-height:24px; padding:0 9px; border-radius:26px; background:var(--color-stone-beige-200,#E4DFDB); }
-    .demo-card .tag.accent { background:var(--color-heritage-green-500,#294434); color:#fff; }
-    .demo-card .stats { display:flex; gap:8px; margin-top:20px; }
-    .demo-card .stat { flex:1; background:rgba(255,255,255,.63); border-radius:7px; padding:8px; }
-    .demo-card .stat b { font-family:var(--font-display); font-weight:800; font-size:19px; display:block; }
-    .demo-card .stat small { font-size:12px; color:var(--color-warm-taupe-400,#8F8579); }
-    .demo-card .price-row { margin-top:20px; display:flex; align-items:flex-end; justify-content:space-between; }
-    .demo-card .price-row small { font-size:12px; color:var(--color-warm-taupe-400,#8F8579); }
-    .demo-card .price { font-family:var(--font-display); font-weight:800; font-size:28px; }
-    .demo-card .btn { background:var(--color-heritage-green-500,#294434); color:#fff; border:none; border-radius:21px; padding:8px 18px; font-family:var(--font-text); font-size:13px; cursor:pointer; }
+    /* component: Bubble matrix */
+    .comp-card { background:#fff; border-radius:18px; padding:12px 28px 28px; box-shadow:0 1px 2px rgba(27,30,29,.04),0 8px 24px rgba(27,30,29,.03); max-width:560px; }
+    .bubble-matrix { display:flex; flex-direction:column; }
+    .bm-row { display:grid; grid-template-columns:220px repeat(3,1fr); align-items:center; border-top:1px solid var(--color-stone-beige-200,#E4DFDB); }
+    .bm-row.bm-head { border-top:none; }
+    .bm-col { display:flex; flex-direction:column; gap:2px; padding:16px 0 10px; font-family:var(--font-display); font-weight:600; font-size:14px; text-align:center; }
+    .bm-col-meta { font-family:var(--font-text); font-weight:400; font-size:11px; color:var(--color-warm-taupe-400,#8F8579); }
+    .bm-rowhead { display:flex; align-items:center; gap:8px; padding:16px 0; font-size:13px; font-weight:500; }
+    .bm-rowhead code { font-family:var(--font-display); font-size:11px; color:var(--color-warm-taupe-400,#8F8579); background:var(--color-stone-beige-100,#F3F0EE); padding:1px 6px; border-radius:5px; }
+    .bm-dot { width:12px; height:12px; border-radius:50%; flex:none; box-shadow:inset 0 0 0 1px rgba(27,30,29,.12); }
+    .bm-cell { display:flex; align-items:center; justify-content:center; padding:16px 0; }
+    /* витрина: белый bubble на белом фоне — тонкая обводка только для наглядности */
+    .bm-cell .bubble--white { box-shadow:inset 0 0 0 1px var(--color-stone-beige-300,#CAC2BB); }
+    .comp-usage { margin-top:20px; font-size:13px; color:var(--color-warm-taupe-500,#6A6259); line-height:1.6; }
+    .comp-usage code { font-family:var(--font-display); background:var(--color-stone-beige-200,#E4DFDB); padding:1px 6px; border-radius:5px; font-size:12px; }
 
     footer { padding:44px 0 64px; color:var(--color-warm-taupe-400,#8F8579); font-size:13px; line-height:1.7; }
     footer a { color:var(--color-heritage-green-400,#4E7B60); text-decoration:none; }
@@ -94,6 +102,9 @@
     @media (max-width:640px) {
       .families { grid-template-columns:1fr; }
       .spec { grid-template-columns:1fr; gap:8px; }
+      summary.sec-summary h2 { font-size:24px; }
+      .bm-row { grid-template-columns:140px repeat(3,1fr); }
+      .bm-rowhead { flex-wrap:wrap; gap:2px; }
     }
   </style>
 </head>
@@ -114,25 +125,25 @@
   <nav class="toc"><div class="wrap">
     <a href="#fonts">Шрифты</a>
     <a href="#typography">Типографика</a>
+    <a href="#components">Компоненты</a>
     <a href="#colors">Цвета</a>
-    <a href="#demo">В деле</a>
   </div></nav>
 
-  <section id="fonts">
-    <div class="wrap">
-      <div class="head"><div class="num">01</div><h2>Шрифты</h2>
-        <p class="lead">Кит построен на двух семействах: <b>Wix Madefor Display</b> — заголовки, <b>Onest</b> — основной текст.</p></div>
+  <details class="section" id="fonts">
+    <summary class="sec-summary"><div class="wrap"><h2>Шрифты</h2><span class="count">2 семейства</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></summary>
+    <div class="wrap sec-body">
+      <p class="lead">Кит построен на двух семействах: <b>Wix Madefor Display</b> — заголовки, <b>Onest</b> — основной текст.</p>
       <div class="families families-2">
         <div class="family fdisplay"><div class="role">Заголовки</div><div class="ag">Ag</div><div class="fname">Wix Madefor Display</div><div class="glyph">АаБбВвГг · 0123456789</div><br><span class="tag">Heading · Title · Numeric · Price</span></div>
         <div class="family ftext"><div class="role">Основной текст</div><div class="ag">Ag</div><div class="fname">Onest</div><div class="glyph">АаБбВвГг · 0123456789</div><br><span class="tag">Text 10–36</span></div>
       </div>
     </div>
-  </section>
+  </details>
 
-  <section id="typography">
-    <div class="wrap">
-      <div class="head"><div class="num">02</div><h2>Типографика</h2>
-        <p class="lead">Все 73 текстовых стилей из Figma. Каждый специмен использует свой класс из <code>styles/typography.css</code>.</p></div>
+  <details class="section" id="typography">
+    <summary class="sec-summary"><div class="wrap"><h2>Типографика</h2><span class="count">73 стиля</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></summary>
+    <div class="wrap sec-body">
+      <p class="lead">Все 73 текстовых стилей из Figma. Каждый специмен использует свой класс из <code>styles/typography.css</code>.</p>
     <div class="type-group">
       <h3 class="group-name">Heading</h3>
       <div class="spec">
@@ -660,12 +671,29 @@
       </div>
     </div>
     </div>
-  </section>
+  </details>
 
-  <section id="colors">
-    <div class="wrap">
-      <div class="head"><div class="num">03</div><h2>Цвета</h2>
-        <p class="lead">Палитра из Figma Variables. Heritage Green используется точечно: кнопки, логотип, активные теги.</p></div>
+  <details class="section" id="components">
+    <summary class="sec-summary"><div class="wrap"><h2>Компоненты</h2><span class="count">Bubble</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></summary>
+    <div class="wrap sec-body">
+      <p class="lead"><b>Bubble</b> — счётчик / бейдж с числом. Три размера (S / M / L) и четыре цвета. Собран из <code>styles/components.css</code> на токенах кита.</p>
+      <div class="comp-card">
+      <div class="bubble-matrix">
+        <div class="bm-row bm-head"><div class="bm-rowhead"></div><div class="bm-col">S<span class="bm-col-meta">16 px · Onest 10</span></div><div class="bm-col">M<span class="bm-col-meta">20 px · Onest 14</span></div><div class="bm-col">L<span class="bm-col-meta">24 px · Onest 14</span></div></div>
+        <div class="bm-row"><div class="bm-rowhead"><span class="bm-dot" style="background:#FFFFFF"></span>White<code>.bubble--white</code></div><div class="bm-cell"><span class="bubble bubble--s bubble--white">1</span></div><div class="bm-cell"><span class="bubble bubble--m bubble--white">1</span></div><div class="bm-cell"><span class="bubble bubble--l bubble--white">1</span></div></div>
+        <div class="bm-row"><div class="bm-rowhead"><span class="bm-dot" style="background:#A8BCB1"></span>Green 200<code>.bubble--green-200</code></div><div class="bm-cell"><span class="bubble bubble--s bubble--green-200">1</span></div><div class="bm-cell"><span class="bubble bubble--m bubble--green-200">1</span></div><div class="bm-cell"><span class="bubble bubble--l bubble--green-200">1</span></div></div>
+        <div class="bm-row"><div class="bm-rowhead"><span class="bm-dot" style="background:#294434"></span>Green 500<code>.bubble--green-500</code></div><div class="bm-cell"><span class="bubble bubble--s bubble--green-500">1</span></div><div class="bm-cell"><span class="bubble bubble--m bubble--green-500">1</span></div><div class="bm-cell"><span class="bubble bubble--l bubble--green-500">1</span></div></div>
+        <div class="bm-row"><div class="bm-rowhead"><span class="bm-dot" style="background:#8F8579"></span>Warm Taupe 400<code>.bubble--taupe-400</code></div><div class="bm-cell"><span class="bubble bubble--s bubble--taupe-400">1</span></div><div class="bm-cell"><span class="bubble bubble--m bubble--taupe-400">1</span></div><div class="bm-cell"><span class="bubble bubble--l bubble--taupe-400">1</span></div></div>
+      </div>
+      </div>
+      <p class="comp-usage">Использование: <code>&lt;span class="bubble bubble--m bubble--green-500"&gt;1&lt;/span&gt;</code>. Одна цифра — круг, несколько — pill.</p>
+    </div>
+  </details>
+
+  <details class="section" id="colors">
+    <summary class="sec-summary"><div class="wrap"><h2>Цвета</h2><span class="count">29 токенов</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></summary>
+    <div class="wrap sec-body">
+      <p class="lead">Палитра из Figma Variables. Heritage Green используется точечно: кнопки, логотип, активные теги.</p>
     <div class="color-group">
       <div class="group-title"><h3>Carbon Black</h3><span>графит · основной текст</span></div>
       <div class="swatches">
@@ -722,29 +750,21 @@
       </div>
     </div>
     </div>
-  </section>
-
-  <section id="demo">
-    <div class="wrap">
-      <div class="head"><div class="num">04</div><h2>В деле</h2>
-        <p class="lead">Токены вместе: карточка автомобиля собрана на палитре и шрифтах кита.</p></div>
-      <div class="demo-card">
-        <div class="title">Mercedes-Benz GLS 450 4MATIC</div>
-        <div class="avail"><span class="dot"></span> В наличии</div>
-        <div class="tags"><span class="tag accent">2026</span><span class="tag">Бензин</span><span class="tag">Полный привод</span><span class="tag">Автомат</span></div>
-        <div class="stats">
-          <div class="stat"><b>5,8 с</b><small>Разгон 0–100</small></div>
-          <div class="stat"><b>375 л.с.</b><small>Мощность</small></div>
-          <div class="stat"><b>209 км/ч</b><small>Макс. скорость</small></div>
-        </div>
-        <div class="price-row"><div><small>Стоимость автомобиля</small><div class="price">17 290 000 ₽</div></div><button class="btn">Забронировать</button></div>
-      </div>
-    </div>
-  </section>
+  </details>
 
   <footer><div class="wrap">
     Imperium Motors · UI Kit — выгружено из <a href="https://www.figma.com/design/bERRa0eUHmPImiBdiP62UR/Imperium-Motors">Figma</a>.<br>
-    Токены: <code>tokens/colors.json</code> · <code>tokens/typography.json</code> · стили: <code>styles/tokens.css</code> · <code>styles/typography.css</code>
+    Токены: <code>tokens/colors.json</code> · <code>tokens/typography.json</code> · стили: <code>styles/tokens.css</code> · <code>styles/typography.css</code> · <code>styles/components.css</code>
   </div></footer>
+
+  <script>
+    // Открывать раздел при переходе по якорю из навигации
+    document.querySelectorAll('nav.toc a').forEach(function(a){
+      a.addEventListener('click', function(){
+        var el = document.getElementById(a.getAttribute('href').slice(1));
+        if (el && el.tagName === 'DETAILS') el.open = true;
+      });
+    });
+  </script>
 </body>
 </html>
