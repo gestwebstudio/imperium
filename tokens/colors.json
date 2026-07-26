@@ -1,0 +1,45 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "color": {
+    "carbon-black": {
+      "100": { "$type": "color", "$value": "#ECEBEA" },
+      "200": { "$type": "color", "$value": "#C1BFBD" },
+      "300": { "$type": "color", "$value": "#898785" },
+      "400": { "$type": "color", "$value": "#4C4B49" },
+      "500": { "$type": "color", "$value": "#1B1E1D" }
+    },
+    "heritage-green": {
+      "100": { "$type": "color", "$value": "#E1EAE5" },
+      "200": { "$type": "color", "$value": "#A8BCB1" },
+      "300": { "$type": "color", "$value": "#6F917F" },
+      "400": { "$type": "color", "$value": "#4E7B60" },
+      "500": { "$type": "color", "$value": "#294434" },
+      "600": { "$type": "color", "$value": "#213227" }
+    },
+    "warm-taupe": {
+      "100": { "$type": "color", "$value": "#F2EEEA" },
+      "200": { "$type": "color", "$value": "#D5CCC4" },
+      "300": { "$type": "color", "$value": "#B2A79B" },
+      "400": { "$type": "color", "$value": "#8F8579" },
+      "500": { "$type": "color", "$value": "#6A6259" }
+    },
+    "stone-beige": {
+      "100": { "$type": "color", "$value": "#F3F0EE" },
+      "200": { "$type": "color", "$value": "#E4DFDB" },
+      "300": { "$type": "color", "$value": "#CAC2BB" },
+      "400": { "$type": "color", "$value": "#A79E97" },
+      "500": { "$type": "color", "$value": "#908A86" }
+    },
+    "white": { "$type": "color", "$value": "#FFFFFF" },
+    "additional": {
+      "blue-100": { "$type": "color", "$value": "#DCDFEF" },
+      "blue-500": { "$type": "color", "$value": "#5262C0" },
+      "red-100": { "$type": "color", "$value": "#EFDCDD" },
+      "red-500": { "$type": "color", "$value": "#BB4545" },
+      "yellow-100": { "$type": "color", "$value": "#F7F3E2" },
+      "yellow-500": { "$type": "color", "$value": "#DDB103" },
+      "green-100": { "$type": "color", "$value": "#DCEFDC" },
+      "green-500": { "$type": "color", "$value": "#55AB4D" }
+    }
+  }
+}

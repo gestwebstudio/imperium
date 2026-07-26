@@ -1,0 +1,45 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "font": {
+    "family": {
+      "display": { "$type": "fontFamily", "$value": ["Wix Madefor Display", "sans-serif"], "$description": "Заголовки: современный, аккуратный, нейтральный" },
+      "text": { "$type": "fontFamily", "$value": ["Onest", "sans-serif"], "$description": "Основной текст: спокойный, хорошо читается на кириллице" }
+    },
+    "weight": {
+      "regular": { "$type": "fontWeight", "$value": 400 },
+      "extrabold": { "$type": "fontWeight", "$value": 800 }
+    }
+  },
+  "typography": {
+    "price": {
+      "$type": "typography",
+      "$value": { "fontFamily": "Wix Madefor Display", "fontWeight": 800, "fontSize": "30px", "lineHeight": "27.32px" },
+      "$description": "Крупная цена / основной числовой акцент"
+    },
+    "heading": {
+      "$type": "typography",
+      "$value": { "fontFamily": "Wix Madefor Display", "fontWeight": 400, "fontSize": "22px", "lineHeight": "22px" },
+      "$description": "Заголовок карточки / название"
+    },
+    "stat": {
+      "$type": "typography",
+      "$value": { "fontFamily": "Wix Madefor Display", "fontWeight": 800, "fontSize": "19px", "lineHeight": "27.32px" },
+      "$description": "Числовые показатели (характеристики)"
+    },
+    "button": {
+      "$type": "typography",
+      "$value": { "fontFamily": "Onest", "fontWeight": 400, "fontSize": "13px", "lineHeight": "22px" },
+      "$description": "Текст кнопок"
+    },
+    "tag": {
+      "$type": "typography",
+      "$value": { "fontFamily": "Onest", "fontWeight": 400, "fontSize": "12px", "lineHeight": "24px" },
+      "$description": "Теги / чипы"
+    },
+    "caption": {
+      "$type": "typography",
+      "$value": { "fontFamily": "Onest", "fontWeight": 400, "fontSize": "12px", "lineHeight": "21.75px" },
+      "$description": "Подписи / вспомогательный текст"
+    }
+  }
+}
