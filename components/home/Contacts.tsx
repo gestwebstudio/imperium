@@ -6,26 +6,28 @@ const MAP_SRC =
 export function Contacts() {
   return (
     <section className="home-wrap contacts" id="contacts">
-      <div className="contacts__head">
-        <h2 className="contacts__title">
-          <span className="l1">Ждём вас в салоне</span>
-          <span className="l2">Imperium Motors</span>
-        </h2>
-        <p className="contacts__sub">
-          Выберите удобное время, и мы подготовим автомобили к вашему приезду.
-          Ответим на вопросы, проведём тест-драйв и обсудим детали сделки в
-          комфортной обстановке.
-        </p>
-      </div>
-
       <div className="contacts__grid">
-        <div className="contacts__gallery">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="tall" src="/images/contacts/1.webp" alt="Салон Imperium Motors" />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/contacts/2.webp" alt="Салон Imperium Motors" />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/contacts/3.webp" alt="Салон Imperium Motors" />
+        <div className="contacts__left">
+          <div className="contacts__head">
+            <h2 className="contacts__title">
+              <span className="l1">Ждём вас в салоне</span>
+              <span className="l2">Imperium Motors</span>
+            </h2>
+            <p className="contacts__sub">
+              Выберите удобное время, и мы подготовим автомобили к вашему приезду.
+              Ответим на вопросы, проведём тест-драйв и обсудим детали сделки в
+              комфортной обстановке.
+            </p>
+          </div>
+
+          <div className="contacts__gallery">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className="tall" src="/images/contacts/1.webp" alt="Салон Imperium Motors" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/contacts/2.webp" alt="Салон Imperium Motors" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/contacts/3.webp" alt="Салон Imperium Motors" />
+          </div>
         </div>
 
         <div className="contacts__info">

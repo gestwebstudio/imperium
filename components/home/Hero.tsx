@@ -38,6 +38,9 @@ export function Hero() {
             src="/images/firstcars/1big.webp"
             alt="Porsche 911 turbo S"
           />
+        </div>
+
+        <div className="hero__lower">
           <div className="hero__card">
             <CarCard
               brandLogo="/images/logo_cards/porsche.webp"
@@ -50,18 +53,18 @@ export function Hero() {
               action={{ label: "Подробнее", variant: "primary-surface" }}
             />
           </div>
-        </div>
 
-        <div className="hero__stats">
-          {stats.map((s, i) => (
-            <Fragment key={s.label}>
-              {i > 0 && <span className="stat__div" />}
-              <div className="stat">
-                <span className="stat__value">{s.value}</span>
-                <span className="stat__label">{s.label}</span>
-              </div>
-            </Fragment>
-          ))}
+          <div className="hero__stats">
+            {stats.map((s, i) => (
+              <Fragment key={s.label}>
+                {i > 0 && <span className="stat__div" />}
+                <div className="stat">
+                  <span className="stat__value">{s.value}</span>
+                  <span className="stat__label">{s.label}</span>
+                </div>
+              </Fragment>
+            ))}
+          </div>
         </div>
 
         <div className="hero__slider">
