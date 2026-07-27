@@ -22,7 +22,16 @@ export interface Car {
   year: number;
   /** Мощность, л.с. */
   power: number;
+  /** Привод (короткое значение: «Полный» / «Задний» / «Передний»). */
   drive: string;
+  /** Тип кузова. */
+  bodyType: string;
+  /** Цвет. */
+  color: string;
+  /** Коробка передач. */
+  transmission: string;
+  /** Тип топлива. */
+  fuelType: string;
   /** Цена, ₽. */
   price: number;
   status: { type: CarStatusType; label: string };
@@ -36,6 +45,7 @@ const SEED = [
     brand: "BMW",
     brandLogo: "/images/logo_cards/bmw.webp",
     photo: "/images/cars/x5-m60i-sport-pro.webp",
+    bodyType: "Кроссовер",
   },
   {
     slug: "range-rover-sv",
@@ -43,6 +53,7 @@ const SEED = [
     brand: "Land Rover",
     brandLogo: "/images/logo_cards/landrover.webp",
     photo: "/images/cars/range-rover-sv.webp",
+    bodyType: "Внедорожник",
   },
   {
     slug: "v-class-exclusive",
@@ -50,6 +61,7 @@ const SEED = [
     brand: "Mercedes-Benz",
     brandLogo: "/images/logo_cards/mercedes.webp",
     photo: "/images/cars/v-class-exclusive.webp",
+    bodyType: "Минивэн",
   },
   {
     slug: "cle-53-amg-4matic",
@@ -57,8 +69,15 @@ const SEED = [
     brand: "Mercedes-Benz",
     brandLogo: "/images/logo_cards/mercedes.webp",
     photo: "/images/cars/cle-53-amg-4matic.webp",
+    bodyType: "Купе",
   },
 ] as const;
+
+/* Наборы значений для псевдослучайной генерации характеристик. */
+const COLORS = ["Чёрный", "Серый", "Белый", "Серебристый", "Синий", "Зелёный"];
+const TRANSMISSIONS = ["Автомат", "Робот"];
+const DRIVES = ["Полный", "Задний", "Передний"];
+const FUELS = ["Бензин", "Дизель", "Гибрид", "Электро"];
 
 /** Детерминированный PRNG (mulberry32) — значения стабильны между рендерами/сборками. */
 function mulberry32(seed: number): () => number {
@@ -72,8 +91,11 @@ function mulberry32(seed: number): () => number {
   };
 }
 
-const COPIES = 12; // 4 базовые × 12 = 48 машин
+const COPIES = 32; // 4 базовые × 32 = 128 машин
 const YEAR = 2026;
+
+const pick = (rand: () => number, arr: string[]) =>
+  arr[Math.floor(rand() * arr.length)];
 
 function buildCatalog(): Car[] {
   const rand = mulberry32(20260727);
@@ -84,6 +106,10 @@ function buildCatalog(): Car[] {
       const power = 200 + Math.floor(rand() * 451);
       // цена 5.9–42 млн ₽, округление до 10 000
       const price = Math.round((5_900_000 + rand() * 36_100_000) / 10_000) * 10_000;
+      const color = pick(rand, COLORS);
+      const transmission = pick(rand, TRANSMISSIONS);
+      const drive = pick(rand, DRIVES);
+      const fuelType = pick(rand, FUELS);
       const slug = copy === 0 ? base.slug : `${base.slug}-${copy + 1}`;
       cars.push({
         id: slug,
@@ -94,7 +120,11 @@ function buildCatalog(): Car[] {
         photo: base.photo,
         year: YEAR,
         power,
-        drive: "Полный привод",
+        drive,
+        bodyType: base.bodyType,
+        color,
+        transmission,
+        fuelType,
         price,
         status: { type: "success", label: "В наличии" },
       });
@@ -117,10 +147,66 @@ export function getCarBySlug(slug: string): Car | undefined {
 
 /** Теги карточки: год · мощность · привод (по ТЗ — «бензин» заменён на л.с.). */
 export function carTags(car: Car): string[] {
-  return [String(car.year), `${car.power} л.с.`, car.drive];
+  return [String(car.year), `${car.power} л.с.`, `${car.drive} привод`];
 }
 
 /** Форматирование цены: 12 340 000 ₽ (без зависимости от локали рантайма). */
 export function formatPrice(value: number): string {
   return `${String(value).replace(/\B(?=(\d{3})+(?!\d))/g, " ")} ₽`;
+}
+
+/* ------------------------------ Фильтры ------------------------------ */
+
+/** Границы диапазонов (по ТЗ каталога). */
+export const PRICE_MIN = 4_500_000;
+export const PRICE_MAX = 50_000_000;
+export const POWER_MIN = 100;
+export const POWER_MAX = 900;
+
+export type FacetKey =
+  | "brand"
+  | "model"
+  | "color"
+  | "body"
+  | "transmission"
+  | "drive"
+  | "fuel";
+
+export interface Facet {
+  key: FacetKey;
+  label: string;
+  get: (c: Car) => string;
+}
+
+/** Аккордеон-фильтры (порядок — как на макете). */
+export const FACETS: Facet[] = [
+  { key: "brand", label: "Бренд", get: (c) => c.brand },
+  { key: "model", label: "Модель", get: (c) => c.name },
+  { key: "color", label: "Цвет", get: (c) => c.color },
+  { key: "body", label: "Кузов", get: (c) => c.bodyType },
+  { key: "transmission", label: "Коробка", get: (c) => c.transmission },
+  { key: "drive", label: "Привод", get: (c) => c.drive },
+  { key: "fuel", label: "Тип топлива", get: (c) => c.fuelType },
+];
+
+/** Канонический порядок значений внутри каждого фасета. */
+const VALUE_ORDER: Record<FacetKey, string[]> = {
+  brand: ["BMW", "Mercedes-Benz", "Land Rover"],
+  model: SEED.map((s) => s.name),
+  color: COLORS,
+  body: ["Внедорожник", "Кроссовер", "Купе", "Минивэн"],
+  transmission: TRANSMISSIONS,
+  drive: DRIVES,
+  fuel: FUELS,
+};
+
+/** Доступные значения каждого фасета (в каноническом порядке, только те, что есть в данных). */
+export function getFacetOptions(): Record<FacetKey, string[]> {
+  const out = {} as Record<FacetKey, string[]>;
+  for (const f of FACETS) {
+    const present = new Set(CARS.map(f.get));
+    const order = VALUE_ORDER[f.key];
+    out[f.key] = order.filter((v) => present.has(v));
+  }
+  return out;
 }

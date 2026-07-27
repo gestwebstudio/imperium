@@ -1,15 +1,392 @@
-.catalog-wrap { max-width: 1120px; margin: 0 auto; padding: 128px 32px 80px; }
+/* ============================================================
+   Каталог — страница со списком авто, фильтрами и сортировкой.
+   Функционал интерактива — на HeroUI (Breadcrumbs, Dropdown, Accordion,
+   Slider, Checkbox), внешний вид — под наш кит (перебивает слои HeroUI,
+   т.к. этот CSS подключён без @layer).
+   ============================================================ */
 
-.catalog-head { margin-bottom: 28px; }
-.catalog-head h1 {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(32px, 5vw, 44px);
-  line-height: 1;
-  letter-spacing: -.02em;
-  color: var(--color-carbon-black-500);
+/* ---------- Раскладка страницы ---------- */
+.catalog-page {
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 128px clamp(24px, 4vw, 60px) 100px;
 }
-.catalog-head p { margin-top: 10px; color: var(--color-warm-taupe-500); font-size: 16px; }
 
-.catalog-grid { display: flex; flex-wrap: wrap; gap: 24px; }
-.catalog-grid > * { flex: 0 1 432px; }
+/* ---------- Хлебные крошки (HeroUI Breadcrumbs) ---------- */
+.cat-crumbs,
+.cat-crumbs ol {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.cat-crumbs { margin-bottom: 22px; }
+.cat-crumbs li { display: inline-flex; align-items: center; gap: 4px; }
+.cat-crumbs__item {
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-regular, 400);
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--color-warm-taupe-400, #8F8579);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color .15s ease;
+}
+.cat-crumbs__item[href]:hover { color: var(--color-carbon-black-500, #1B1E1D); }
+.cat-crumbs__item--current { color: var(--color-carbon-black-500, #1B1E1D); cursor: default; }
+.cat-crumbs__sep {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  color: var(--color-warm-taupe-300, #B2A79B);
+  transform: rotate(180deg); /* ArrowIcon «<» → «>» */
+}
+
+/* ---------- Шапка: заголовок + бейдж + сортировка ---------- */
+.catalog-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 34px;
+}
+.catalog-head__title { display: flex; align-items: center; gap: 16px; }
+.catalog-head h1 {
+  margin: 0;
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: clamp(30px, 3.4vw, 48px);
+  line-height: 1.16;
+  letter-spacing: -0.01em;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+
+/* Блок сортировки: свой дизайн, дропдаун — HeroUI */
+.cat-sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--font-text, "Onest", sans-serif);
+}
+.cat-sort__label {
+  font-weight: var(--font-weight-regular, 400);
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--color-warm-taupe-400, #8F8579);
+}
+.cat-sort__value {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: var(--font-weight-regular, 400);
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--color-heritage-green-500, #294434);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.cat-sort__arrow {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  color: var(--color-heritage-green-500, #294434);
+  transform: rotate(-90deg); /* «<» → «v» */
+  transition: transform .18s ease;
+}
+.cat-sort[aria-expanded="true"] .cat-sort__arrow { transform: rotate(90deg); }
+
+/* Всплывашка сортировки (HeroUI Dropdown.Popover / Menu) */
+.cat-sort-pop {
+  min-width: 232px;
+  padding: 6px;
+  border-radius: 14px;
+  background: var(--color-white, #FFFFFF);
+  box-shadow: 4px 8px 30px 0 rgba(106, 98, 89, .18);
+  outline: none;
+}
+.cat-sort-pop__item {
+  display: flex;
+  align-items: center;
+  padding: 9px 12px;
+  border-radius: 9px;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-regular, 400);
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+  cursor: pointer;
+  outline: none;
+}
+.cat-sort-pop__item[data-focused],
+.cat-sort-pop__item[data-hovered] { background: var(--color-warm-taupe-100, #F2EEEA); }
+.cat-sort-pop__item[data-selected] {
+  color: var(--color-heritage-green-500, #294434);
+  font-weight: var(--font-weight-medium, 500);
+}
+
+/* ---------- Тело: сайдбар + результаты ---------- */
+.catalog-body { display: flex; align-items: flex-start; gap: 24px; }
+
+.catalog-results { flex: 1 1 0; min-width: 0; }
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+.catalog-empty {
+  margin: 0;
+  padding: 48px 0;
+  font-size: 18px;
+  line-height: 26px;
+  color: var(--color-warm-taupe-500, #6A6259);
+}
+
+/* ---------- Сайдбар фильтров (прилипающий, со скроллом) ---------- */
+.cat-filters {
+  flex: 0 0 432px;
+  align-self: flex-start;
+  position: sticky;
+  top: 34px;
+  max-height: calc(100vh - 68px);
+  overflow-y: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 30px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, .6);
+  overscroll-behavior: contain;
+}
+.cat-filters__block { display: flex; flex-direction: column; gap: 14px; }
+.cat-filters__title {
+  margin: 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-medium, 500);
+  font-size: 24px;
+  line-height: 30px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.cat-filters__divider {
+  height: 1px;
+  width: 100%;
+  background: var(--color-warm-taupe-200, #D5CCC4);
+}
+.cat-filters__list { display: flex; flex-direction: column; gap: 30px; }
+
+/* Выбранные категории */
+.cat-selected__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  min-height: 28px;
+}
+.cat-selected__empty {
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--color-warm-taupe-400, #8F8579);
+}
+/* тег-фильтр как кнопка (крестик убирает фильтр) */
+.cat-selected__row .tag--filter {
+  border: none;
+  font-family: var(--font-text, "Onest", sans-serif);
+}
+.cat-selected__clear { flex: none; }
+
+/* ---------- Диапазон (цена / мощность): поля + слайдер ---------- */
+.cat-range { display: flex; flex-direction: column; gap: 10px; }
+.cat-range__label {
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--color-warm-taupe-400, #8F8579);
+}
+.cat-range__row { display: flex; gap: 8px; }
+.cat-range__input {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 36px;
+  box-sizing: border-box;
+  padding: 8px 12px;
+  border: 1px solid var(--color-warm-taupe-100, #F2EEEA);
+  border-radius: 8px;
+  background: var(--color-white, #FFFFFF);
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-regular, 400);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+  outline: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: border-color .15s ease;
+}
+.cat-range__input:focus { border-color: var(--color-warm-taupe-300, #B2A79B); }
+
+/* Слайдер HeroUI (двухползунковый), покрашенный под кит */
+.cat-slider { width: 100%; touch-action: none; }
+.cat-slider__track {
+  position: relative;
+  width: 100%;
+  height: 20px;
+  border-radius: 12px;
+  background: var(--color-warm-taupe-100, #F2EEEA);
+  cursor: pointer;
+}
+/* точки на дорожке (перекрываются заливкой на активном участке) */
+.cat-slider__track::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: radial-gradient(circle, rgba(106, 98, 89, .15) 1.5px, transparent 1.7px);
+  background-size: 26px 100%;
+  background-position: center;
+  pointer-events: none;
+}
+.cat-slider__fill {
+  position: absolute;
+  top: 0;
+  height: 20px;
+  border-radius: 12px;
+  background: var(--color-heritage-green-400, #4E7B60);
+}
+.cat-slider__thumb {
+  width: 24px;
+  height: 16px;
+  border-radius: 8px;
+  background: #FCFCFC;
+  box-shadow:
+    0 0 1px 0 rgba(0, 0, 0, .06),
+    0 1px 2px 0 rgba(0, 0, 0, .06),
+    0 2px 4px 0 rgba(0, 0, 0, .04);
+  cursor: grab;
+  outline: none;
+}
+.cat-slider__thumb[data-dragging] { cursor: grabbing; }
+.cat-slider__thumb[data-focus-visible] { box-shadow: 0 0 0 3px rgba(78, 123, 96, .35); }
+
+/* ---------- Аккордеоны фильтров (HeroUI Accordion) ---------- */
+.cat-acc { display: flex; flex-direction: column; gap: 6px; }
+.cat-acc__item { border: none; }
+.cat-acc__heading { margin: 0; }
+.cat-acc__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color .15s ease;
+  outline: none;
+}
+.cat-acc__trigger[data-hovered],
+.cat-acc__trigger:hover { background: var(--color-warm-taupe-100, #F2EEEA); }
+.cat-acc__trigger[data-focus-visible] { background: var(--color-warm-taupe-100, #F2EEEA); }
+.cat-acc__label {
+  flex: 1 1 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--color-warm-taupe-400, #8F8579);
+}
+.cat-acc__chevron {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  color: var(--color-warm-taupe-400, #8F8579);
+  transition: transform .2s ease;
+  transform-origin: center;
+}
+.cat-acc__chevron[data-expanded="true"] { transform: rotate(180deg); }
+.cat-acc__panel {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 2px 0 6px;
+}
+
+/* ---------- Чекбоксы (HeroUI Checkbox) ---------- */
+.cat-check { display: block; width: 100%; cursor: pointer; }
+.cat-check__content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  outline: none;
+  transition: background-color .15s ease;
+}
+.cat-check__content[data-hovered],
+.cat-check__content:hover { background: var(--color-warm-taupe-100, #F2EEEA); }
+.cat-check__box {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  box-sizing: border-box;
+  border: 1.5px solid var(--color-warm-taupe-300, #B2A79B);
+  border-radius: 6px;
+  background: var(--color-white, #FFFFFF);
+  transition: background-color .15s ease, border-color .15s ease;
+}
+.cat-check__content[data-selected] .cat-check__box {
+  background: var(--color-heritage-green-500, #294434);
+  border-color: var(--color-heritage-green-500, #294434);
+}
+.cat-check__mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 13px;
+  height: 13px;
+  color: var(--color-white, #FFFFFF);
+}
+.cat-check__mark svg { width: 100%; height: 100%; }
+.cat-check__label {
+  flex: 1 1 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-regular, 400);
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+
+/* ---------- Адаптив ---------- */
+@media (max-width: 1440px) {
+  .catalog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 1080px) {
+  .catalog-body { flex-direction: column; }
+  .cat-filters {
+    position: static;
+    max-height: none;
+    width: 100%;
+    flex-basis: auto;
+    overflow: visible;
+  }
+  .catalog-results { width: 100%; }
+}
+@media (max-width: 680px) {
+  .catalog-grid { grid-template-columns: 1fr; }
+}
