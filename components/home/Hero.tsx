@@ -16,7 +16,10 @@ export function Hero() {
         <div className="hero__top">
           <h1 className="hero__headline">
             <span className="hero__h1-reg">Премиальные</span>
-            <span className="hero__h1-bold">автомобили в москве</span>
+            <span className="hero__h1-bold">
+              автомобили
+              <br />в москве
+            </span>
           </h1>
           <div className="hero__unique">
             <p className="hero__unique-title">Уникальные модели</p>

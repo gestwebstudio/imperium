@@ -11,6 +11,32 @@ const services = [
   },
 ];
 
+function SvcCard({
+  title,
+  image,
+  text,
+}: {
+  title: string;
+  image: string;
+  text: string;
+}) {
+  return (
+    <article className="svc-card">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img className="svc-card__img" src={image} alt={title} />
+      <div className="svc-card__body">
+        <div className="svc-card__head">
+          <h3 className="svc-card__title">{title}</h3>
+          <span className="svc-card__arrow">
+            <ArrowDiagonalIcon />
+          </span>
+        </div>
+        <p className="svc-card__text">{text}</p>
+      </div>
+    </article>
+  );
+}
+
 export function About() {
   return (
     <section className="home-wrap about">
@@ -26,21 +52,38 @@ export function About() {
         ))}
       </div>
 
-      <div className="about__statement">
-        <p className="about__lead">
-          <span className="reg">
-            От доработки серийных моделей до поиска редких экземпляров —{" "}
-          </span>
-          <span className="bold">
-            воплощаем индивидуальный подход в каждой детали
-          </span>
-        </p>
+      <div className="about__identity">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          className="about__wordmark"
-          src="/images/logo_head.svg"
-          alt="Imperium Motors"
-        />
+        <img className="about__wordmark-bg" src="/images/logo_head.svg" alt="" aria-hidden="true" />
+        <div className="about__identity-grid">
+          <div className="about__identity-col">
+            <p className="about__lead">
+              <span className="reg">
+                От доработки серийных моделей до поиска редких экземпляров —{" "}
+              </span>
+              <span className="bold">
+                воплощаем индивидуальный подход в каждой детали
+              </span>
+            </p>
+            <SvcCard
+              title="Индивидуальный подбор"
+              image="/images/services/podbor.webp"
+              text="Мы находим редкие комплектации и привозим автомобили под заказ со всего мира."
+            />
+          </div>
+          <div className="about__identity-col">
+            <SvcCard
+              title="Ателье персонализации"
+              image="/images/services/atelie.webp"
+              text="Защита бронепленкой, смена цвета автомобиля, апгрейд мультимедиа, подбор дисков — всё в одном месте."
+            />
+            <SvcCard
+              title="Дизайн с Александром Велесом"
+              image="/images/services/veles.webp"
+              text="Авторская концепция экстерьера вашего автомобиля: уникальный дизайн, который делает автомобиль продолжением вас."
+            />
+          </div>
+        </div>
       </div>
 
       <div className="about__testimonial">

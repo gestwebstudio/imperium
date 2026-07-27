@@ -4,7 +4,7 @@
    ============================================================ */
 
 .home { }
-.home-wrap { max-width: 1800px; margin: 0 auto; padding: 0 clamp(24px, 4vw, 60px); }
+.home-wrap { max-width: 1920px; margin: 0 auto; padding: 0 clamp(24px, 4vw, 60px); }
 
 /* ---------------- Hero ---------------- */
 .hero {
@@ -12,7 +12,7 @@
   border-radius: 0 0 50px 50px;
   overflow: hidden;
 }
-.hero__inner { max-width: 1800px; margin: 0 auto; padding: 128px clamp(24px, 4vw, 60px) 40px; position: relative; }
+.hero__inner { max-width: 1920px; margin: 0 auto; padding: 128px clamp(24px, 4vw, 60px) 40px; position: relative; }
 
 .hero__top { display: flex; justify-content: space-between; align-items: flex-start; gap: 40px; position: relative; z-index: 3; }
 .hero__headline { display: flex; flex-direction: column; }
@@ -49,8 +49,8 @@
 .hero__watermark {
   position: absolute;
   top: 8%;
-  left: 50%;
-  transform: translateX(-50%);
+  right: 0;
+  text-align: right;
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
   font-weight: 800;
   font-size: clamp(40px, 7vw, 110px);
@@ -67,9 +67,9 @@
   z-index: 1;
   display: block;
   width: 100%;
-  max-width: 1240px;
+  max-width: 1280px;
   height: auto;
-  margin: 0 auto;
+  margin: 0 0 0 auto;
 }
 .hero__card { position: absolute; left: 0; bottom: 0; z-index: 2; width: 100%; max-width: 405px; }
 
@@ -140,7 +140,7 @@
   padding-bottom: 8px;
   scrollbar-width: thin;
 }
-.cars-row > * { flex: 0 0 432px; }
+.cars-row > * { flex: 0 0 calc((100% - 72px) / 4); min-width: 300px; max-width: 432px; }
 @media (max-width: 640px) { .cars-row > * { flex: 0 0 300px; } }
 
 /* ---------------- Body types (bento) ---------------- */
@@ -211,11 +211,33 @@
 }
 .service-card__arrow svg { width: 14px; height: 14px; }
 
-.about__statement { margin-top: 80px; }
+.about__identity { position: relative; margin-top: 80px; }
+.about__wordmark-bg { position: absolute; left: 0; right: 0; top: 42%; width: 100%; height: auto; opacity: 0.12; z-index: 0; pointer-events: none; }
+.about__identity-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 24px 40px; align-items: start; }
+.about__identity-col { display: flex; flex-direction: column; gap: 48px; }
 .about__lead { font-family: var(--font-display, "Wix Madefor Display", sans-serif); max-width: 1027px; color: var(--color-carbon-black-500, #1B1E1D); }
 .about__lead .reg { font-weight: 400; font-size: clamp(30px, 3.4vw, 50px); line-height: 1.4; }
 .about__lead .bold { font-weight: 700; font-size: clamp(38px, 4.6vw, 66px); line-height: 1.08; }
-.about__wordmark { display: block; width: 100%; height: auto; margin-top: 48px; }
+
+/* карточка услуги с фото (Ателье / Подбор / Велес) */
+.svc-card { display: flex; flex-direction: column; gap: 24px; }
+.svc-card__img { width: 100%; height: clamp(280px, 30vw, 438px); border-radius: 30px; object-fit: cover; display: block; }
+.svc-card__body { display: flex; flex-direction: column; gap: 12px; }
+.svc-card__head { display: flex; gap: 12px; align-items: center; }
+.svc-card__title { flex: 1; font-family: var(--font-display, "Wix Madefor Display", sans-serif); font-weight: 600; font-size: clamp(26px, 2.6vw, 36px); line-height: 1.22; color: var(--color-carbon-black-500, #1B1E1D); }
+.svc-card__arrow {
+  flex: none; width: 46px; height: 46px; border-radius: 30px;
+  border: 1px solid var(--color-heritage-green-500, #294434);
+  color: var(--color-heritage-green-500, #294434);
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.svc-card__arrow svg { width: 14px; height: 14px; }
+.svc-card__text { font-family: var(--font-text, "Onest", sans-serif); font-size: 18px; line-height: 24px; color: var(--color-carbon-black-500, #1B1E1D); }
+
+@media (max-width: 900px) {
+  .about__identity-grid { grid-template-columns: 1fr; }
+  .about__wordmark-bg { display: none; }
+}
 
 .about__testimonial { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; margin-top: 80px; }
 .about__testi-img img { width: 100%; height: auto; border-radius: 36px; display: block; object-fit: cover; }
