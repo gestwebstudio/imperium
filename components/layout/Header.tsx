@@ -23,7 +23,7 @@ export function Header() {
     <header className="site-header">
       <GlassSurface
         className="site-header__bar"
-        backgroundOpacity={0.68}
+        backgroundOpacity={0.28}
         saturation={1.1}
         lightAngle={-45}
         lightIntensity={80}
