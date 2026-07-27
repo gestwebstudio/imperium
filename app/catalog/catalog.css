@@ -237,6 +237,10 @@
   transition: border-color .15s ease;
 }
 .cat-range__input:focus { border-color: var(--color-warm-taupe-300, #B2A79B); }
+.cat-range__input::placeholder {
+  color: var(--color-warm-taupe-300, #B2A79B);
+  opacity: 1;
+}
 
 /* Слайдер HeroUI (двухползунковый), покрашенный под кит */
 .cat-slider { width: 100%; touch-action: none; }
@@ -270,7 +274,7 @@
   width: 24px;
   height: 16px;
   border-radius: 8px;
-  background: #FCFCFC;
+  background: #FFFFFF;
   box-shadow:
     0 0 1px 0 rgba(0, 0, 0, .06),
     0 1px 2px 0 rgba(0, 0, 0, .06),

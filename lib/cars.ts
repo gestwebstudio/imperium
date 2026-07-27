@@ -91,7 +91,7 @@ function mulberry32(seed: number): () => number {
   };
 }
 
-const COPIES = 32; // 4 базовые × 32 = 128 машин
+const COPIES = 6; // 4 базовые × 6 = 24 машины
 const YEAR = 2026;
 
 const pick = (rand: () => number, arr: string[]) =>

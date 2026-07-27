@@ -1,10 +1,17 @@
 "use client";
 
+import { useState } from "react";
 import { Slider } from "@heroui/react";
 
 /** Группировка разрядов пробелами: 4500000 → «4 500 000». */
 const groupDigits = (n: number) =>
   String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+
+/** Маска для сырого ввода: оставить цифры и сгруппировать. */
+const maskRaw = (raw: string) => {
+  const digits = raw.replace(/\D/g, "");
+  return digits ? groupDigits(parseInt(digits, 10)) : "";
+};
 
 const clamp = (n: number, lo: number, hi: number) =>
   Math.min(Math.max(n, lo), hi);
@@ -18,14 +25,16 @@ export type RangeFilterProps = {
   step: number;
   value: RangeValue;
   onChange: (value: RangeValue) => void;
-  /** Префиксы в полях ввода. */
+  /** Префиксы в подсказке полей. */
   fromPrefix?: string;
   toPrefix?: string;
 };
 
 /**
- * Составной фильтр «диапазон»: два кастомных поля с маской сверху и HeroUI-слайдер
- * (двухползунковый) снизу. Двусторонняя связь: правка поля двигает ползунок и наоборот.
+ * Составной фильтр «диапазон»: два поля с маской сверху и HeroUI-слайдер снизу.
+ * Поля работают как подсказка (placeholder) — по умолчанию пустые; при вводе
+ * текст форматируется маской. Двусторонняя связь: правка поля двигает ползунок,
+ * перетаскивание ползунка заполняет поле.
  */
 export function RangeFilter({
   label,
@@ -37,41 +46,70 @@ export function RangeFilter({
   fromPrefix = "от",
   toPrefix = "до",
 }: RangeFilterProps) {
-  const [lo, hi] = value;
+  // какое поле сейчас редактируется и его «сырой» текст (чтобы ввод не перебивался)
+  const [editing, setEditing] = useState<0 | 1 | null>(null);
+  const [editText, setEditText] = useState("");
 
-  const parseDigits = (raw: string) => {
+  const placeholders: [string, string] = [
+    `${fromPrefix} ${groupDigits(min)}`,
+    `${toPrefix} ${groupDigits(max)}`,
+  ];
+
+  // что показывать в поле: при фокусе — сырой текст; иначе значение (или пусто на краю → подсказка)
+  const displayFor = (side: 0 | 1) => {
+    if (editing === side) return editText;
+    const bound = value[side];
+    const isExtreme = side === 0 ? bound <= min : bound >= max;
+    return isExtreme ? "" : groupDigits(bound);
+  };
+
+  const handleInput = (side: 0 | 1, raw: string) => {
+    setEditing(side);
+    setEditText(maskRaw(raw));
     const digits = raw.replace(/\D/g, "");
-    return digits ? parseInt(digits, 10) : min;
+    if (!digits) {
+      // очистили поле → сбрасываем этот край к границе диапазона
+      onChange(side === 0 ? [min, value[1]] : [value[0], max]);
+      return;
+    }
+    const n = parseInt(digits, 10);
+    onChange(
+      side === 0
+        ? [clamp(n, min, value[1]), value[1]]
+        : [value[0], clamp(n, value[0], max)],
+    );
   };
 
-  const handleFrom = (raw: string) => {
-    onChange([clamp(parseDigits(raw), min, hi), hi]);
+  const handleFocus = (side: 0 | 1) => {
+    setEditing(side);
+    setEditText(displayFor(side));
   };
-  const handleTo = (raw: string) => {
-    onChange([lo, clamp(parseDigits(raw), lo, max)]);
+  const handleBlur = () => {
+    setEditing(null);
+    setEditText("");
   };
+
+  const renderInput = (side: 0 | 1) => (
+    <input
+      className="cat-range__input"
+      type="text"
+      inputMode="numeric"
+      aria-label={`${label}: ${side === 0 ? fromPrefix : toPrefix}`}
+      placeholder={placeholders[side]}
+      value={displayFor(side)}
+      onChange={(e) => handleInput(side, e.target.value)}
+      onFocus={() => handleFocus(side)}
+      onBlur={handleBlur}
+    />
+  );
 
   return (
     <div className="cat-range">
       <span className="cat-range__label">{label}</span>
 
       <div className="cat-range__row">
-        <input
-          className="cat-range__input"
-          type="text"
-          inputMode="numeric"
-          aria-label={`${label}: ${fromPrefix}`}
-          value={`${fromPrefix} ${groupDigits(lo)}`}
-          onChange={(e) => handleFrom(e.target.value)}
-        />
-        <input
-          className="cat-range__input"
-          type="text"
-          inputMode="numeric"
-          aria-label={`${label}: ${toPrefix}`}
-          value={`${toPrefix} ${groupDigits(hi)}`}
-          onChange={(e) => handleTo(e.target.value)}
-        />
+        {renderInput(0)}
+        {renderInput(1)}
       </div>
 
       <Slider
