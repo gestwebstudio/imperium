@@ -299,6 +299,7 @@
 /* ---------- Аккордеоны фильтров (HeroUI Accordion) ---------- */
 .cat-acc { display: flex; flex-direction: column; gap: 6px; }
 .cat-acc__item { border: none; }
+.cat-acc__item::after { display: none; }
 .cat-acc__heading { margin: 0; }
 .cat-acc__trigger {
   display: flex;
