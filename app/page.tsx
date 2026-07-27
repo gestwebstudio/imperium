@@ -4,6 +4,8 @@ import { Hero } from "@/components/home/Hero";
 import { BrandsRow } from "@/components/home/BrandsRow";
 import { CarsSection } from "@/components/home/CarsSection";
 import { BodyTypes } from "@/components/home/BodyTypes";
+import { About } from "@/components/home/About";
+import { Contacts } from "@/components/home/Contacts";
 
 export default function HomePage() {
   const cars = getCars();
@@ -19,6 +21,8 @@ export default function HomePage() {
       />
       <BodyTypes />
       <CarsSection title="Ближайшие поступления" cars={cars.slice(8, 16)} />
+      <About />
+      <Contacts />
     </main>
   );
 }
