@@ -334,7 +334,10 @@
   outline: none;
   transition: transform .15s ease, box-shadow .15s ease;
 }
-.cat-color-option:hover { transform: scale(1.08); }
+.cat-color-option:hover {
+  z-index: 4;
+  transform: scale(1.08);
+}
 .cat-color-option[aria-pressed="true"] {
   box-shadow:
     0 0 0 2px var(--color-white, #FFFFFF),
