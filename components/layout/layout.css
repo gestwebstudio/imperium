@@ -1,0 +1,150 @@
+/* ============================================================
+   Site Header — «стеклянная» плавающая плашка
+   Стекло имитируем на CSS: полупрозрачная заливка + backdrop-filter blur
+   (Figma Glass: Fill E4DFDB 30%, Frost 12 → blur 12px).
+   ============================================================ */
+.site-header { position: sticky; top: 0; z-index: 50; padding: 16px 20px 0; }
+.site-header__bar {
+  position: relative;
+  max-width: 1800px;
+  margin: 0 auto;
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 13px 16px 13px 40px;
+  border-radius: 50px;
+  background: rgba(228, 223, 219, 0.3); /* Stone Beige 200 @30% */
+  -webkit-backdrop-filter: blur(12px) saturate(1.4);
+  backdrop-filter: blur(12px) saturate(1.4);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 10px 30px rgba(27, 30, 29, 0.08);
+}
+.site-header__nav { display: flex; align-items: center; gap: 38px; }
+.site-header__nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-medium, 500);
+  font-size: 20px;
+  line-height: 28px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.site-header__nav a:hover { color: var(--color-heritage-green-500, #294434); }
+.site-header__nav svg { width: 15px; height: 15px; }
+.site-header__logo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  height: 32px;
+}
+.site-header__logo img { height: 32px; width: auto; display: block; }
+.site-header__actions { display: flex; align-items: center; gap: 16px; }
+.header-call {
+  width: 46px;
+  height: 46px;
+  flex: none;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background: var(--color-stone-beige-100, #F3F0EE);
+  color: var(--color-carbon-black-500, #1B1E1D);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.header-call svg { width: 22px; height: 22px; }
+.header-call:hover { filter: brightness(0.97); }
+
+@media (max-width: 900px) {
+  .site-header__nav { display: none; }
+  .site-header__logo { position: static; transform: none; }
+  .site-header__bar { padding: 10px 12px 10px 20px; }
+}
+
+/* ============================================================
+   Site Footer
+   ============================================================ */
+.site-footer {
+  background: var(--color-carbon-black-500, #1B1E1D);
+  color: var(--color-stone-beige-200, #E4DFDB);
+  border-radius: 50px 50px 0 0;
+  margin-top: 80px;
+  padding: 60px clamp(24px, 4vw, 60px) 40px;
+  overflow: hidden;
+}
+.site-footer__inner { max-width: 1800px; margin: 0 auto; }
+
+.footer-top { display: flex; flex-wrap: wrap; gap: 48px 98px; justify-content: space-between; }
+.footer-cols { display: flex; flex-wrap: wrap; gap: 48px 98px; }
+.footer-col { display: flex; flex-direction: column; gap: 16px; }
+.footer-col__title {
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-regular, 400);
+  font-size: 20px;
+  line-height: 28px;
+  color: var(--color-stone-beige-200, #E4DFDB);
+  opacity: 0.5;
+}
+.footer-col__list { display: flex; flex-direction: column; gap: 12px; }
+.footer-col__list a {
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-regular, 400);
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--color-stone-beige-200, #E4DFDB);
+  text-decoration: none;
+}
+.footer-col__list a:hover { opacity: 0.7; }
+
+.footer-contacts { display: flex; flex-direction: column; gap: 32px; }
+.footer-phone__label { font-size: 20px; line-height: 28px; opacity: 0.5; margin-bottom: 16px; }
+.footer-phone__value {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: 24px;
+  line-height: 30px;
+  color: var(--color-stone-beige-200, #E4DFDB);
+  text-decoration: none;
+}
+.footer-phone__value .copy { width: 24px; height: 24px; opacity: 0.8; }
+.footer-socials { display: flex; gap: 16px; }
+.footer-social {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--color-carbon-black-500, #1B1E1D);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.footer-social svg { width: 20px; height: 20px; }
+.footer-social:hover { filter: brightness(0.94); }
+
+.footer-legal { text-align: right; display: flex; flex-direction: column; gap: 40px; margin-left: auto; }
+.footer-legal p, .footer-legal a {
+  margin: 0;
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--color-stone-beige-200, #E4DFDB);
+  text-decoration: none;
+}
+.footer-legal a:hover { opacity: 0.7; }
+
+.footer-tagline { margin: 72px 0 0; font-size: 20px; line-height: 28px; color: #fff; opacity: 0.3; max-width: 474px; }
+.footer-logo { margin-top: 8px; }
+.footer-logo img { width: 100%; height: auto; display: block; }
+
+@media (max-width: 900px) {
+  .footer-cols { gap: 32px 48px; }
+  .footer-legal { text-align: left; margin-left: 0; }
+}
