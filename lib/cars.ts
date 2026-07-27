@@ -200,6 +200,52 @@ const VALUE_ORDER: Record<FacetKey, string[]> = {
   fuel: FUELS,
 };
 
+/* ------------------------------ Характеристики ------------------------------ */
+
+export interface Spec {
+  label: string;
+  value: string;
+}
+
+/**
+ * Характеристики авто для страницы модели: primary — видимые сразу (сетка 3×3),
+ * extra — раскрываются по кнопке «Развернуть». Часть значений — из данных,
+ * часть детерминированно выведена из мощности (стабильно между SSR/CSR).
+ */
+export function getCarSpecs(car: Car): { primary: Spec[]; extra: Spec[] } {
+  const accel = Math.max(3.5, 3.6 + (650 - car.power) * 0.006).toFixed(1);
+  const topSpeed = Math.min(320, 230 + Math.round(car.power * 0.13));
+  const displacement = (1.8 + car.power / 260).toFixed(1);
+  const torque = Math.round(car.power * 1.4);
+
+  const primary: Spec[] = [
+    { label: "Год выпуска", value: String(car.year) },
+    { label: "Кузов", value: car.bodyType },
+    { label: "Цвет", value: car.color },
+    { label: "Привод", value: `${car.drive} привод` },
+    { label: "Коробка", value: car.transmission },
+    { label: "Тип топлива", value: car.fuelType },
+    { label: "Мощность", value: `${car.power} л.с.` },
+    { label: "Разгон 0–100 км/ч", value: `${accel} с` },
+    { label: "Максимальная скорость", value: `${topSpeed} км/ч` },
+  ];
+
+  const extra: Spec[] = [
+    { label: "Объём двигателя", value: `${displacement} л` },
+    { label: "Крутящий момент", value: `${torque} Н·м` },
+    { label: "Длина", value: "4 850 мм" },
+    { label: "Ширина", value: "1 900 мм" },
+    { label: "Высота", value: "1 460 мм" },
+    { label: "Колёсная база", value: "2 865 мм" },
+    { label: "Дорожный просвет", value: "140 мм" },
+    { label: "Объём бака", value: "66 л" },
+    { label: "Расход (смешанный)", value: "8.4 л/100 км" },
+    { label: "Гарантия", value: "3 года / 100 000 км" },
+  ];
+
+  return { primary, extra };
+}
+
 /** Доступные значения каждого фасета (в каноническом порядке, только те, что есть в данных). */
 export function getFacetOptions(): Record<FacetKey, string[]> {
   const out = {} as Record<FacetKey, string[]>;
