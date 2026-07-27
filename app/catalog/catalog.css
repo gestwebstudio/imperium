@@ -367,8 +367,7 @@
   transform: translate(-50%, 4px);
   transition: opacity .15s ease, transform .15s ease, visibility .15s ease;
 }
-.cat-color-option:hover .cat-color-option__tooltip,
-.cat-color-option:focus-visible .cat-color-option__tooltip {
+.cat-color-option:hover .cat-color-option__tooltip {
   opacity: 1;
   visibility: visible;
   transform: translate(-50%, 0);
