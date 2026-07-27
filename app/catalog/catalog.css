@@ -242,8 +242,15 @@
   opacity: 1;
 }
 
-/* Слайдер HeroUI (двухползунковый), покрашенный под кит */
-.cat-slider { width: 100%; touch-action: none; }
+/* Слайдер HeroUI (двухползунковый), покрашенный под кит.
+   HeroUI задаёт корню display:grid с тонкой (4px) дорожкой — сбрасываем в block,
+   чтобы высоту определяла наша дорожка (20px). */
+.cat-slider {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: none;
+}
 .cat-slider__track {
   position: relative;
   width: 100%;
