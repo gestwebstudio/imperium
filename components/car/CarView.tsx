@@ -7,6 +7,7 @@ import { Comparison } from "@/components/ui/Comparison";
 import { type Car, formatPrice, getCarSpecs } from "@/lib/cars";
 import { Gallery } from "./Gallery";
 import { Specs } from "./Specs";
+import { Assurance } from "./Assurance";
 
 const GALLERY_PHOTOS = ["/images/gallery/1.webp", "/images/gallery/2.webp"];
 
@@ -56,6 +57,8 @@ export function CarView({ car }: CarViewProps) {
             </header>
 
             <Specs primary={primary} extra={extra} />
+
+            <Assurance />
           </div>
 
           <aside className="car-price">

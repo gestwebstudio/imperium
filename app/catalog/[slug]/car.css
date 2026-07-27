@@ -292,6 +292,113 @@
 }
 .car-specs__toggle[aria-expanded="true"] .car-specs__chevron { transform: rotate(90deg); }
 
+/* ---------- Страховка / Гарантия / Помощь на дорогах ---------- */
+.car-assur { display: flex; flex-direction: column; gap: 24px; }
+.car-assur__cards { display: flex; gap: 24px; }
+.car-assur__card {
+  flex: 1 1 0;
+  min-width: 0;
+  box-sizing: border-box;
+  min-height: 167px;
+  padding: 30px 40px;
+  border-radius: 30px;
+  background: var(--color-white, #FFFFFF);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.car-assur__title {
+  margin: 0;
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: clamp(26px, 2.6vw, 36px);
+  line-height: 1.22;
+  color: var(--color-heritage-green-500, #294434);
+}
+.car-assur__text {
+  margin: 0;
+  max-width: 562px;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 18px;
+  line-height: 24px;
+  color: #61584E;
+  opacity: .7;
+}
+
+.car-help {
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  min-height: 216px;
+  padding: 30px;
+  border-radius: 30px;
+  background: var(--color-heritage-green-500, #294434);
+  display: flex;
+  align-items: center;
+}
+.car-help__img {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: right center;
+  pointer-events: none;
+}
+.car-help::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    rgba(41, 68, 52, .96) 0%,
+    rgba(41, 68, 52, .9) 32%,
+    rgba(41, 68, 52, .35) 68%,
+    rgba(41, 68, 52, 0) 100%
+  );
+}
+.car-help__body {
+  position: relative;
+  z-index: 2;
+  max-width: 686px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+}
+.car-help__text { display: flex; flex-direction: column; gap: 12px; }
+.car-help__title {
+  margin: 0;
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: clamp(26px, 2.6vw, 36px);
+  line-height: 1.22;
+  color: var(--color-white, #FFFFFF);
+}
+.car-help__desc {
+  margin: 0;
+  max-width: 514px;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--color-heritage-green-100, #E1EAE5);
+}
+.car-help__btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 30px;
+  background: var(--color-white, #FFFFFF);
+  color: var(--color-carbon-black-500, #1B1E1D);
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 16px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: filter .15s ease;
+}
+.car-help__btn:hover { filter: brightness(.95); }
+
 /* ---------- Адаптив ---------- */
 @media (max-width: 1080px) {
   .car-main { flex-direction: column; }
@@ -304,4 +411,5 @@
 @media (max-width: 640px) {
   .car-specs__list { column-count: 1; }
   .car-price__buttons { flex-wrap: wrap; }
+  .car-assur__cards { flex-direction: column; }
 }
