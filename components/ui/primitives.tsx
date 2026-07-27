@@ -113,8 +113,11 @@ export type SliderProps = {
 export function Slider({ value = 0, className }: SliderProps) {
   const clamped = Math.max(0, Math.min(100, value));
   return (
-    <div className={cn("slider", className)}>
-      <div className="slider__fill" style={{ width: `${clamped}%` }} />
+    <div className={cn("ui-progress", className)}>
+      <div
+        className="ui-progress__fill"
+        style={{ width: `${clamped}%` }}
+      />
     </div>
   );
 }

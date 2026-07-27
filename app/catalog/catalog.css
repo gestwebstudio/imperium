@@ -242,71 +242,13 @@
   opacity: 1;
 }
 
-/* Слайдер HeroUI (двухползунковый), покрашенный под кит.
-   HeroUI задаёт корню display:grid с тонкой (4px) дорожкой — сбрасываем в block,
-   чтобы высоту определяла наша дорожка (20px). */
+/* Нативный HeroUI Slider: переопределяем только цветовые токены проекта. */
 .cat-slider {
-  display: block;
-  width: 100%;
-  height: auto;
-  touch-action: none;
+  --default: var(--color-warm-taupe-100, #F2EEEA);
+  --accent: var(--color-heritage-green-400, #4E7B60);
+  --accent-foreground: var(--color-white, #FFFFFF);
+  --focus: var(--color-heritage-green-500, #294434);
 }
-.cat-slider__track {
-  position: relative;
-  width: 100%;
-  height: 20px;
-  border: none; /* HeroUI рисует синий border на data-fill-start/end — убираем */
-  border-radius: 12px;
-  background: var(--color-warm-taupe-100, #F2EEEA);
-  cursor: pointer;
-}
-/* точки на дорожке (перекрываются заливкой на активном участке) */
-.cat-slider__track::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background-image: radial-gradient(circle, rgba(106, 98, 89, .15) 1.5px, transparent 1.7px);
-  background-size: 26px 100%;
-  background-position: center;
-  pointer-events: none;
-}
-.cat-slider__fill {
-  position: absolute;
-  top: 0;
-  height: 20px;
-  border-radius: 12px;
-  background: var(--color-heritage-green-400, #4E7B60);
-}
-.cat-slider__thumb {
-  width: 24px;
-  height: 16px;
-  border-radius: 8px;
-  background: #FFFFFF;
-  box-shadow:
-    0 0 1px 0 rgba(0, 0, 0, .06),
-    0 1px 2px 0 rgba(0, 0, 0, .06),
-    0 2px 4px 0 rgba(0, 0, 0, .04);
-  cursor: grab;
-  outline: none;
-}
-/* react-aria центрирует ползунок на значении (translate(-50%)) — на краях он
-   свисает за дорожку. Прижимаем края внутрь: левый — к левому краю, правый — к
-   правому (с зазором ~2px, чтобы зелёное было видно по бокам, как на макете).
-   transform у RAC — инлайн, поэтому !important. */
-.cat-slider__thumb--start { transform: translate(calc(-50% + 3px), -50%) !important; }
-.cat-slider__thumb--end { transform: translate(calc(-50% - 3px), -50%) !important; }
-.cat-slider__thumb[data-dragging] { cursor: grabbing; }
-.cat-slider__thumb[data-focus-visible] {
-  box-shadow: 0 0 0 3px rgba(78, 123, 96, .35);
-}
-/* нативный range-input внутри ползунка не должен рисовать свой (синий) контрол */
-.cat-slider input {
-  appearance: none;
-  -webkit-appearance: none;
-  accent-color: var(--color-heritage-green-500, #294434);
-}
-.cat-slider input::-webkit-slider-thumb { -webkit-appearance: none; }
 
 /* ---------- Аккордеоны фильтров (HeroUI Accordion) ---------- */
 .cat-acc { display: flex; flex-direction: column; gap: 6px; }
