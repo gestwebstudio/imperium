@@ -243,6 +243,7 @@ export type FacetKey =
 export interface Facet {
   key: FacetKey;
   label: string;
+  selectionLabel: string;
   get: (c: Car) => string;
 }
 
@@ -257,13 +258,48 @@ export interface FacetOption {
 
 /** Аккордеон-фильтры (порядок — как на макете). */
 export const FACETS: Facet[] = [
-  { key: "brand", label: "Бренд", get: (c) => c.brand },
-  { key: "model", label: "Модель", get: (c) => c.name },
-  { key: "color", label: "Цвет", get: (c) => c.color.id },
-  { key: "body", label: "Кузов", get: (c) => c.bodyType },
-  { key: "transmission", label: "Коробка", get: (c) => c.transmission },
-  { key: "drive", label: "Привод", get: (c) => c.drive },
-  { key: "fuel", label: "Тип топлива", get: (c) => c.fuelType },
+  {
+    key: "brand",
+    label: "Бренд",
+    selectionLabel: "Бренды",
+    get: (c) => c.brand,
+  },
+  {
+    key: "model",
+    label: "Модель",
+    selectionLabel: "Модели",
+    get: (c) => c.name,
+  },
+  {
+    key: "color",
+    label: "Цвет",
+    selectionLabel: "Цвета",
+    get: (c) => c.color.id,
+  },
+  {
+    key: "body",
+    label: "Кузов",
+    selectionLabel: "Кузова",
+    get: (c) => c.bodyType,
+  },
+  {
+    key: "transmission",
+    label: "Коробка",
+    selectionLabel: "Коробки",
+    get: (c) => c.transmission,
+  },
+  {
+    key: "drive",
+    label: "Привод",
+    selectionLabel: "Приводы",
+    get: (c) => c.drive,
+  },
+  {
+    key: "fuel",
+    label: "Тип топлива",
+    selectionLabel: "Типы топлива",
+    get: (c) => c.fuelType,
+  },
 ];
 
 /** Канонический порядок значений внутри каждого фасета. */

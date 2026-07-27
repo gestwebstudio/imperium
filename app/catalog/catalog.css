@@ -203,6 +203,7 @@
 
 /* Выбранные категории */
 .cat-selected__row {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -218,6 +219,36 @@
 .cat-selected__row .tag--filter {
   border: none;
   font-family: var(--font-text, "Onest", sans-serif);
+}
+.cat-selected__tag {
+  min-width: 0;
+  max-width: 100%;
+}
+.cat-selected__tag:hover { z-index: 4; }
+.cat-selected__tag-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cat-selected__tag > .cat-selected__tag-tooltip {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  bottom: calc(100% + 10px);
+  width: max-content;
+  max-width: 320px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  white-space: normal;
+  text-align: left;
+  transform: translateY(4px);
+  transition: opacity .15s ease, transform .15s ease, visibility .15s ease;
+}
+.cat-selected__tag:hover .cat-selected__tag-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 .cat-selected__clear { flex: none; }
 

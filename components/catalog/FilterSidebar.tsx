@@ -57,22 +57,38 @@ export function FilterSidebar({
         <div className="cat-selected__row">
           {hasSelection ? (
             <>
-              {activeFacets.map((f) => (
-                <Button
-                  key={f.key}
-                  bare
-                  className="tag tag--filter"
-                  onClick={() => onClearFacet(f.key)}
-                  aria-label={`Убрать фильтр «${f.label}»`}
-                >
-                  {selected[f.key]
-                    .map((value) => getOptionLabel(f.key, value))
-                    .join(", ")}
-                  <span className="tag__close">
-                    <CloseIcon />
-                  </span>
-                </Button>
-              ))}
+              {activeFacets.map((f) => {
+                const labels = selected[f.key].map((value) =>
+                  getOptionLabel(f.key, value),
+                );
+                const summary =
+                  labels.length === 1
+                    ? `${f.label}: ${labels[0]}`
+                    : `${f.selectionLabel}: ${labels.length}`;
+
+                return (
+                  <Button
+                    key={f.key}
+                    bare
+                    className="tag tag--filter cat-selected__tag"
+                    onClick={() => onClearFacet(f.key)}
+                    aria-label={`Очистить фильтр «${f.label}»`}
+                  >
+                    <span className="cat-selected__tag-text">{summary}</span>
+                    <span className="tag__close">
+                      <CloseIcon />
+                    </span>
+                    {labels.length > 1 && (
+                      <KitTooltip
+                        size="m"
+                        className="cat-selected__tag-tooltip"
+                      >
+                        {labels.join(", ")}
+                      </KitTooltip>
+                    )}
+                  </Button>
+                );
+              })}
               <Button
                 size="s"
                 variant="secondary-outlined"
