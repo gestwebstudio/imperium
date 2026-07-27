@@ -2,7 +2,8 @@ import Link from "next/link";
 import "./layout.css";
 import { CopyIcon } from "@/components/icons";
 
-const columns: { title: string; links: string[] }[] = [
+type FooterLink = string | { label: string; w: number };
+const columns: { title: string; links: FooterLink[] }[] = [
   {
     title: "Автомобили",
     links: [
@@ -26,7 +27,7 @@ const columns: { title: string; links: string[] }[] = [
       "Лизинг",
       "Авто под заказ",
       "Автоателье",
-      "Индивидуальный дизайн авто",
+      { label: "Индивидуальный дизайн авто", w: 151 },
       "Помощь на дороге",
     ],
   },
@@ -68,11 +69,15 @@ export function Footer() {
               <div className="footer-col" key={col.title}>
                 <div className="footer-col__title">{col.title}</div>
                 <nav className="footer-col__list">
-                  {col.links.map((link) => (
-                    <a href="#" key={link}>
-                      {link}
-                    </a>
-                  ))}
+                  {col.links.map((link) => {
+                    const label = typeof link === "string" ? link : link.label;
+                    const w = typeof link === "string" ? undefined : link.w;
+                    return (
+                      <a href="#" key={label} style={w ? { width: w } : undefined}>
+                        {label}
+                      </a>
+                    );
+                  })}
                 </nav>
               </div>
             ))}
