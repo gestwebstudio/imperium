@@ -23,15 +23,15 @@ export function Header() {
     <header className="site-header">
       <GlassSurface
         className="site-header__bar"
-        backgroundOpacity={0.28}
-        saturation={1.1}
+        backgroundOpacity={0.06}
+        saturation={1.02}
         lightAngle={-45}
-        lightIntensity={80}
+        lightIntensity={35}
         refraction={100}
-        depth={100}
-        dispersion={100}
+        depth={75}
+        dispersion={20}
         frost={12}
-        splay={80}
+        splay={70}
       >
         <nav className="site-header__nav">
           <a href="#">

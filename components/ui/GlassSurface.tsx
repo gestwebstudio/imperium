@@ -72,8 +72,8 @@ export function GlassSurface({
   const borderWidth = 0.025 + depthFactor * 0.025;
   const brightness = 34 + depthFactor * 6;
   const mapOpacity = 0.36 + depthFactor * 0.22;
-  const distortionScale = -(0.75 + refractionFactor * 2.25);
-  const dispersionOffset = dispersionFactor * 0.75;
+  const distortionScale = -(1 + refractionFactor * 7);
+  const dispersionOffset = dispersionFactor * 0.6;
   const lightAlpha = 0.14 + lightFactor * 0.6;
   const lightMidAlpha = 0.04 + lightFactor * 0.14;
   const lightRimAlpha = 0.08 + lightFactor * 0.16;
@@ -170,7 +170,7 @@ export function GlassSurface({
     height: typeof height === "number" ? `${height}px` : height,
     borderRadius: `${borderRadius}px`,
     "--glass-background-opacity": backgroundOpacity,
-    "--glass-depth-shadow-alpha": 0.04 + depthFactor * 0.04,
+    "--glass-depth-shadow-alpha": 0.015 + depthFactor * 0.025,
     "--glass-edge-alpha": 0.2 + depthFactor * 0.22,
     "--glass-filter": `url(#${filterId})`,
     "--glass-frost-blur": `${clamp(frost, 0, 40)}px`,
