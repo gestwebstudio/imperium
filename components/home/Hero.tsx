@@ -41,6 +41,7 @@ export function Hero() {
         <div className="hero__lower">
           <div className="hero__card">
             <CarCard
+              href="/catalog/porsche-911-turbo-s"
               brandLogo="/images/logo_cards/porsche.webp"
               brandName="Porsche"
               title="Porsche 911 turbo S"

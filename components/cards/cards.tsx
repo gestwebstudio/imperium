@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import Link from "next/link";
 import { cn } from "@/lib/cn";
 import { Indicator, PriceBlock, Tag } from "@/components/ui/primitives";
 import { Button, type ButtonVariant } from "@/components/ui/Button";
@@ -51,6 +52,7 @@ export type CarCardProps = {
   price: ReactNode;
   priceLabel?: string;
   action: { label: string; variant: ButtonVariant };
+  href?: string;
   className?: string;
 };
 export function CarCard({
@@ -64,10 +66,19 @@ export function CarCard({
   price,
   priceLabel,
   action,
+  href,
   className,
 }: CarCardProps) {
   return (
     <div className={cn("car-card", className)}>
+      {href && (
+        <Link
+          className="car-card__link"
+          href={href}
+          aria-label={`Открыть страницу ${title}`}
+        />
+      )}
+
       <div className="car-card__main">
         <div className="car-card__content">
           <div className="car-card__top">
@@ -100,9 +111,23 @@ export function CarCard({
 
       <div className="car-card__action">
         <PriceBlock label={priceLabel} value={price} />
-        <Button variant={action.variant} size="m">
-          {action.label}
-        </Button>
+        {href ? (
+          <Link
+            href={href}
+            className={cn(
+              "btn",
+              "btn--m",
+              `btn--${action.variant}`,
+              "car-card__details-link",
+            )}
+          >
+            <span>{action.label}</span>
+          </Link>
+        ) : (
+          <Button variant={action.variant} size="m">
+            {action.label}
+          </Button>
+        )}
       </div>
     </div>
   );

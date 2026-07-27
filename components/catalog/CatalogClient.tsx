@@ -123,6 +123,7 @@ export function CatalogClient({ cars }: CatalogClientProps) {
               {sorted.map((car) => (
                 <CarCard
                   key={car.id}
+                  href={`/catalog/${car.slug}`}
                   brandLogo={car.brandLogo}
                   brandName={car.brand}
                   title={car.name}

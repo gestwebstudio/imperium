@@ -24,6 +24,11 @@ export function CarsSection({
       {cars.map((car) => (
         <CarCard
           key={car.id}
+          href={
+            isUpcoming
+              ? "/catalog/lexus-gx-executive"
+              : `/catalog/${car.slug}`
+          }
           brandLogo={
             isUpcoming ? "/images/logo_cards/lexus.webp" : car.brandLogo
           }

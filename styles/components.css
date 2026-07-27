@@ -490,6 +490,7 @@
    Полупрозрачная белая подложка — показывать на тёплом фоне.
    ============================================================ */
 .car-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -500,12 +501,22 @@
   border-radius: 30px;
   background: rgba(255,255,255,.6);
 }
+.car-card__link {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  border-radius: inherit;
+}
+.car-card__link:focus-visible {
+  outline: 2px solid var(--color-heritage-green-500, #294434);
+  outline-offset: 3px;
+}
 .car-card__main { display: flex; flex-direction: column; gap: 10px; width: 100%; }
 .car-card__content { display: flex; flex-direction: column; gap: 16px; width: 100%; }
 .car-card__top { display: flex; align-items: center; justify-content: space-between; }
 .car-card__brand { height: 24px; display: flex; align-items: center; }
 .car-card__brand img { height: 24px; width: auto; max-width: 90px; object-fit: contain; display: block; }
-.car-card__actions { display: flex; align-items: center; gap: 16px; }
+.car-card__actions { position: relative; z-index: 2; display: flex; align-items: center; gap: 16px; }
 .car-card__info { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; width: 100%; }
 .car-card__title {
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
@@ -523,3 +534,4 @@
 .car-card__photo img { max-width: 100%; max-height: 179px; object-fit: contain; display: block; }
 .car-card__action { display: flex; gap: 24px; align-items: flex-end; }
 .car-card__action .price-block { flex: 1 0 0; }
+.car-card__details-link { z-index: 2; }

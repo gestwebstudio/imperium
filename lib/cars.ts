@@ -135,6 +135,44 @@ function buildCatalog(): Car[] {
 
 const CARS: Car[] = buildCatalog();
 
+/** Машины из промо-блоков главной, которым тоже нужна detail-страница. */
+const FEATURED_CARS: Car[] = [
+  {
+    id: "porsche-911-turbo-s",
+    slug: "porsche-911-turbo-s",
+    brand: "Porsche",
+    brandLogo: "/images/logo_cards/porsche.webp",
+    name: "911 Turbo S",
+    photo: "/images/firstcars/1big.webp",
+    year: 2026,
+    power: 375,
+    drive: "Полный",
+    bodyType: "Купе",
+    color: "Зелёный",
+    transmission: "Робот",
+    fuelType: "Бензин",
+    price: 19_990_000,
+    status: { type: "success", label: "В наличии" },
+  },
+  {
+    id: "lexus-gx-executive",
+    slug: "lexus-gx-executive",
+    brand: "Lexus",
+    brandLogo: "/images/logo_cards/lexus.webp",
+    name: "GX Executive",
+    photo: "/images/cars/mask.webp",
+    year: 2026,
+    power: 354,
+    drive: "Полный",
+    bodyType: "Внедорожник",
+    color: "Чёрный",
+    transmission: "Автомат",
+    fuelType: "Бензин",
+    price: 15_490_000,
+    status: { type: "warning", label: "Ожидаем поступления" },
+  },
+];
+
 /* ------------------------------ Публичный API ------------------------------ */
 
 export function getCars(): Car[] {
@@ -142,7 +180,11 @@ export function getCars(): Car[] {
 }
 
 export function getCarBySlug(slug: string): Car | undefined {
-  return CARS.find((c) => c.slug === slug);
+  return [...FEATURED_CARS, ...CARS].find((c) => c.slug === slug);
+}
+
+export function getCarSlugs(): string[] {
+  return [...FEATURED_CARS, ...CARS].map((c) => c.slug);
 }
 
 /** Теги карточки: год · мощность · привод (по ТЗ — «бензин» заменён на л.с.). */
