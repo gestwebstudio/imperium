@@ -1,0 +1,21 @@
+/* HeroUI v3 + Tailwind v4 (Tailwind подтягивается внутри пакета стилей HeroUI).
+   HeroUI объявляет слои @layer theme/base/components/utilities. */
+@import "@heroui/react/styles";
+
+/* --- Наш дизайн-кит поверх HeroUI ---
+   Кит подключаем БЕЗ @layer: неслойный CSS в каскаде приоритетнее слоёв HeroUI,
+   поэтому наш дизайн перебивает дефолт HeroUI без !important. */
+@import "../styles/tokens.css";
+@import "../styles/typography.css";
+@import "../styles/components.css";
+
+/* Базовые стили страницы (как в кит-витрине) */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  background: var(--color-stone-beige-100, #F3F0EE);
+  color: var(--color-carbon-black-500, #1B1E1D);
+  -webkit-font-smoothing: antialiased;
+}
