@@ -45,11 +45,20 @@
   margin-top: 2px;
 }
 
-.hero__stage { position: relative; margin-top: -20px; min-height: 420px; }
+/* машина — фон, заголовок и карточка поверх */
+.hero__car {
+  position: absolute;
+  right: clamp(24px, 4vw, 60px);
+  top: 104px;
+  width: min(64%, 1200px);
+  height: auto;
+  z-index: 0;
+  pointer-events: none;
+}
 .hero__watermark {
   position: absolute;
-  top: 8%;
-  right: 0;
+  top: 260px;
+  right: clamp(24px, 4vw, 60px);
   text-align: right;
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
   font-weight: 800;
@@ -59,22 +68,21 @@
   color: #F3F0EE;
   opacity: 0.53;
   white-space: nowrap;
-  z-index: 0;
+  z-index: 1;
   pointer-events: none;
 }
-.hero__car {
+.hero__top { position: relative; z-index: 2; }
+.hero__lower {
   position: relative;
-  z-index: 1;
-  display: block;
-  width: 100%;
-  max-width: 1280px;
-  height: auto;
-  margin: 0 0 0 auto;
+  z-index: 2;
+  margin-top: clamp(120px, 13vw, 200px);
+  display: flex;
+  align-items: flex-end;
+  gap: 40px;
 }
-.hero__lower { display: flex; align-items: flex-end; gap: 40px; margin-top: -160px; position: relative; z-index: 2; }
 .hero__card { flex: 0 0 405px; max-width: 405px; width: 100%; }
-
 .hero__stats { flex: 1; display: flex; align-items: center; justify-content: space-between; gap: 17px; padding-bottom: 8px; }
+.hero__slider { position: relative; z-index: 2; }
 .stat { display: flex; flex-direction: column; gap: 8px; padding: 8px 22px; }
 .stat__value {
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
@@ -116,8 +124,8 @@
   .hero__stats { flex-wrap: wrap; gap: 12px 24px; }
 }
 
-/* section spacing */
-.home > section { margin-top: clamp(56px, 6vw, 96px); }
+/* section spacing (не над первым блоком — hero прижат к верху под шапку) */
+.home > section + section { margin-top: clamp(56px, 6vw, 96px); }
 
 /* ---------------- Brands row ---------------- */
 .brands-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
@@ -291,8 +299,7 @@
 .contacts__gallery .tall { grid-column: 1; grid-row: 1 / span 2; height: 100%; aspect-ratio: auto; }
 
 .contacts__info { background: rgba(228, 223, 219, 0.4); border-radius: 22px; padding: 40px; display: flex; flex-direction: column; gap: 40px; }
-.contacts__rows { display: flex; flex-direction: column; gap: 24px; }
-.contacts__rows .btn { width: 100%; }
+.contacts__rows { display: flex; flex-direction: column; gap: 24px; align-items: flex-start; }
 .contacts__row .label { display: block; font-family: var(--font-text, "Onest", sans-serif); font-size: 18px; line-height: 24px; color: var(--color-warm-taupe-400, #8F8579); }
 .contacts__row .value { display: block; margin-top: 4px; font-family: var(--font-text, "Onest", sans-serif); font-weight: 600; font-size: 30px; line-height: 40px; color: var(--color-carbon-black-500, #1B1E1D); }
 .contacts__row .note { display: block; font-family: var(--font-text, "Onest", sans-serif); font-size: 18px; line-height: 24px; color: var(--color-carbon-black-500, #1B1E1D); }

@@ -13,6 +13,14 @@ export function Hero() {
   return (
     <section className="hero">
       <div className="hero__inner">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          className="hero__car"
+          src="/images/firstcars/1big.webp"
+          alt="Porsche 911 turbo S"
+        />
+        <span className="hero__watermark">Porsche 911 turbo S</span>
+
         <div className="hero__top">
           <h1 className="hero__headline">
             <span className="hero__h1-reg">Премиальные</span>
@@ -28,16 +36,6 @@ export function Hero() {
               <br />в наличии и под заказ
             </p>
           </div>
-        </div>
-
-        <div className="hero__stage">
-          <span className="hero__watermark">Porsche 911 turbo S</span>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            className="hero__car"
-            src="/images/firstcars/1big.webp"
-            alt="Porsche 911 turbo S"
-          />
         </div>
 
         <div className="hero__lower">
