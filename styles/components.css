@@ -488,7 +488,7 @@
   gap: 24px;
   box-sizing: border-box;
   width: 100%;
-  max-width: 405px;
+  max-width: 432px; /* 380px фото + 26px паддинг × 2 — фото встаёт нативно */
   padding: 26px;
   border-radius: 30px;
   background: rgba(255,255,255,.6);
