@@ -401,6 +401,92 @@
 }
 .car-help__btn:hover { filter: brightness(.95); }
 
+/* ---------- Комплектация (табы + опции) ---------- */
+.car-comp {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 30px;
+  border-radius: 30px;
+  background: rgba(228, 223, 219, .5);
+}
+.car-comp__title {
+  margin: 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-medium, 500);
+  font-size: 30px;
+  line-height: 40px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.car-comp__inner { display: flex; flex-direction: column; gap: 34px; }
+.car-comp__tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+.car-comp__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: 1px solid var(--color-warm-taupe-300, #B2A79B);
+  border-radius: 30px;
+  background: transparent;
+  color: var(--color-carbon-black-500, #1B1E1D);
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 16px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+.car-comp__tab:hover { border-color: var(--color-warm-taupe-400, #8F8579); }
+.car-comp__tab.is-active {
+  background: var(--color-heritage-green-500, #294434);
+  border-color: var(--color-heritage-green-500, #294434);
+  color: var(--color-white, #FFFFFF);
+}
+.car-comp__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  padding: 1px 7px;
+  border-radius: 10px;
+  background: var(--color-warm-taupe-400, #8F8579);
+  color: var(--color-white, #FFFFFF);
+  font-weight: var(--font-weight-medium, 500);
+  font-size: 14px;
+  line-height: 18px;
+}
+.car-comp__tab.is-active .car-comp__count {
+  background: var(--color-white, #FFFFFF);
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.car-comp__grid { display: flex; gap: 36px; align-items: stretch; }
+.car-comp__col {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.car-comp__div {
+  flex: none;
+  width: 1px;
+  align-self: stretch;
+  background: var(--color-stone-beige-300, #CAC2BB);
+}
+.car-comp__opt { display: flex; flex-direction: column; gap: 2px; }
+.car-comp__opt-label {
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--color-carbon-black-300, #898785);
+}
+.car-comp__opt-value {
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+
 /* ---------- Ателье / Велес (карточки услуг с фото) ---------- */
 .car-atelier { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 
@@ -412,6 +498,10 @@
 }
 @media (max-width: 1000px) {
   .car-gallery { --gal-w: 86vw; }
+}
+@media (max-width: 820px) {
+  .car-comp__grid { flex-direction: column; gap: 16px; }
+  .car-comp__div { display: none; }
 }
 @media (max-width: 640px) {
   .car-specs__list { column-count: 1; }

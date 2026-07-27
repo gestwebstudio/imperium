@@ -9,6 +9,7 @@ import { CarsSection } from "@/components/home/CarsSection";
 import { Contacts } from "@/components/home/Contacts";
 import { Gallery } from "./Gallery";
 import { Specs } from "./Specs";
+import { Complectation } from "./Complectation";
 import { Assurance } from "./Assurance";
 import { Atelier } from "./Atelier";
 
@@ -63,6 +64,8 @@ export function CarView({ car }: CarViewProps) {
             </header>
 
             <Specs primary={primary} extra={extra} />
+
+            <Complectation />
 
             <Assurance />
 
