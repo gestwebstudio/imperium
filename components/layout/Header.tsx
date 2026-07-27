@@ -28,9 +28,10 @@ export function Header() {
         opacity={0.58}
         blur={3}
         displace={0}
-        backgroundOpacity={0.14}
-        saturation={1.08}
-        distortionScale={-6}
+        frostBlur={14}
+        backgroundOpacity={0.68}
+        saturation={1.1}
+        distortionScale={-3}
         redOffset={0}
         greenOffset={0}
         blueOffset={0}

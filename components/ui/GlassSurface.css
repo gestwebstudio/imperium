@@ -3,9 +3,9 @@
   isolation: isolate;
   overflow: hidden;
   background: rgba(
-    255,
-    255,
-    255,
+    243,
+    240,
+    238,
     var(--glass-background-opacity, 0.12)
   );
   box-shadow:
@@ -53,15 +53,21 @@
 }
 
 .liquid-glass--svg {
-  -webkit-backdrop-filter: saturate(var(--glass-saturation, 1.18));
+  -webkit-backdrop-filter:
+    blur(var(--glass-frost-blur, 14px))
+    saturate(var(--glass-saturation, 1.18));
   backdrop-filter:
-    var(--glass-filter) saturate(var(--glass-saturation, 1.18));
+    var(--glass-filter)
+    blur(var(--glass-frost-blur, 14px))
+    saturate(var(--glass-saturation, 1.18));
 }
 
 .liquid-glass--fallback {
   -webkit-backdrop-filter:
+    blur(var(--glass-frost-blur, 14px))
     saturate(var(--glass-saturation, 1.18)) contrast(1.03);
   backdrop-filter:
+    blur(var(--glass-frost-blur, 14px))
     saturate(var(--glass-saturation, 1.18)) contrast(1.03);
 }
 

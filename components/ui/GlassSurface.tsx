@@ -24,6 +24,7 @@ type GlassSurfaceProps = {
   opacity?: number;
   blur?: number;
   displace?: number;
+  frostBlur?: number;
   backgroundOpacity?: number;
   saturation?: number;
   distortionScale?: number;
@@ -37,6 +38,7 @@ type GlassSurfaceProps = {
 type GlassStyle = CSSProperties & {
   "--glass-background-opacity": number;
   "--glass-filter": string;
+  "--glass-frost-blur": string;
   "--glass-saturation": number;
 };
 
@@ -51,6 +53,7 @@ export function GlassSurface({
   opacity = 0.64,
   blur = 3,
   displace = 0.35,
+  frostBlur = 14,
   backgroundOpacity = 0.12,
   saturation = 1.18,
   distortionScale = -24,
@@ -160,6 +163,7 @@ export function GlassSurface({
     borderRadius: `${borderRadius}px`,
     "--glass-background-opacity": backgroundOpacity,
     "--glass-filter": `url(#${filterId})`,
+    "--glass-frost-blur": `${frostBlur}px`,
     "--glass-saturation": saturation,
   };
 
