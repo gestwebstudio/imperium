@@ -44,6 +44,9 @@
   --color-green-100: #DCEFDC;
   --color-green-500: #55AB4D;
 
+  /* ---------- Colors: Effects ---------- */
+  --color-shadow-fin: #B4AAA3;
+
   /* ---------- Typography: Families ---------- */
   --font-display: "Wix Madefor Display", sans-serif; /* заголовки */
   --font-text: "Onest", sans-serif;                  /* основной текст */

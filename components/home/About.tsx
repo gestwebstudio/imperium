@@ -1,17 +1,7 @@
 import { ArrowDiagonalIcon, ArrowIcon } from "@/components/icons";
+import { ServiceCards } from "@/components/ServiceCards";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
-
-const services = [
-  {
-    title: "Трейд-ин",
-    text: "Сдайте свой автомобиль в хорошие руки. Честная оценка, быстрое оформление, зачёт в счёт нового авто",
-  },
-  {
-    title: "Лизинг",
-    text: "Программы для бизнеса с оптимизацией налогов и комфортным графиком платежей – без заморозки капитала и с выкупом автомобиля на ваших условиях",
-  },
-];
 
 function SvcCard({
   title,
@@ -44,17 +34,7 @@ function SvcCard({
 export function About() {
   return (
     <section className="home-wrap about">
-      <div className="about__services">
-        {services.map((s) => (
-          <div className="service-card" key={s.title}>
-            <span className="service-card__arrow">
-              <ArrowDiagonalIcon />
-            </span>
-            <h3 className="service-card__title">{s.title}</h3>
-            <p className="service-card__text">{s.text}</p>
-          </div>
-        ))}
-      </div>
+      <ServiceCards />
 
       <div className="about__identity">
         {/* eslint-disable-next-line @next/next/no-img-element */}
