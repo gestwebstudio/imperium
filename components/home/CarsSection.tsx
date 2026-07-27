@@ -1,7 +1,7 @@
 import type { Car } from "@/lib/cars";
 import { carTags, formatPrice } from "@/lib/cars";
 import { CarCard } from "@/components/cards/cards";
-import { Button } from "@/components/ui/Button";
+import { Button, ButtonLink } from "@/components/ui/Button";
 import { ArrowIcon } from "@/components/icons";
 import { cn } from "@/lib/cn";
 
@@ -72,9 +72,9 @@ export function CarsSection({
           {badge != null && <span className="badge badge--info">{badge}</span>}
         </h2>
         {viewAll && (
-          <a href="/catalog" className="btn btn--l btn--secondary-outlined">
-            <span>{viewAll}</span>
-          </a>
+          <ButtonLink href="/catalog" size="l" variant="secondary-outlined">
+            {viewAll}
+          </ButtonLink>
         )}
       </div>
       {isUpcoming ? (

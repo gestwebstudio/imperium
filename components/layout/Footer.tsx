@@ -1,6 +1,7 @@
 import Link from "next/link";
 import "./layout.css";
 import { CopyIcon } from "@/components/icons";
+import { ButtonLink } from "@/components/ui/Button";
 
 type FooterLink = string | { label: string; w: number };
 const columns: { title: string; links: FooterLink[] }[] = [
@@ -94,15 +95,30 @@ export function Footer() {
               </a>
             </div>
             <div className="footer-socials">
-              <a href="#" className="footer-social" aria-label="Telegram">
+              <ButtonLink
+                href="#"
+                bare
+                className="footer-social"
+                aria-label="Telegram"
+              >
                 <TelegramIcon />
-              </a>
-              <a href="#" className="footer-social" aria-label="Instagram">
+              </ButtonLink>
+              <ButtonLink
+                href="#"
+                bare
+                className="footer-social"
+                aria-label="Instagram"
+              >
                 <InstagramIcon />
-              </a>
-              <a href="#" className="footer-social" aria-label="WhatsApp">
+              </ButtonLink>
+              <ButtonLink
+                href="#"
+                bare
+                className="footer-social"
+                aria-label="WhatsApp"
+              >
                 <WhatsappIcon />
-              </a>
+              </ButtonLink>
             </div>
           </div>
 

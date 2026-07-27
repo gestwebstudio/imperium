@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import { CarCard } from "@/components/cards/cards";
 import { ArrowIcon } from "@/components/icons";
+import { Button } from "@/components/ui/Button";
 
 const stats = [
   { value: "5,8 с", label: "Разгон 0–100 км/ч" },
@@ -67,9 +68,9 @@ export function Hero() {
         </div>
 
         <div className="hero__slider">
-          <button className="hero-arrow" aria-label="Назад">
+          <Button bare className="hero-arrow" aria-label="Назад">
             <ArrowIcon />
-          </button>
+          </Button>
           <div className="hero__track">
             <span className="hero__seg hero__seg--active">
               <span />
@@ -78,9 +79,13 @@ export function Hero() {
             <span className="hero__seg" />
             <span className="hero__seg" />
           </div>
-          <button className="hero-arrow hero-arrow--next" aria-label="Вперёд">
+          <Button
+            bare
+            className="hero-arrow hero-arrow--next"
+            aria-label="Вперёд"
+          >
             <ArrowIcon />
-          </button>
+          </Button>
         </div>
       </div>
     </section>

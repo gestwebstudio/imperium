@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowIcon } from "@/components/icons";
+import { Button } from "@/components/ui/Button";
 
 /** Бесконечная карусель: центр — крупно и без прозрачности, боковые — меньше и 50%.
    При переходе соседний кадр «приезжает» в центр (растёт + проявляется). */
@@ -85,30 +86,30 @@ export function Gallery({ photos, alt }: GalleryProps) {
           })}
         </div>
 
-        <button
-          type="button"
+        <Button
+          bare
           className="car-gallery__all"
           aria-label="Показать все фото"
         >
           Все фото
-        </button>
+        </Button>
 
-        <button
-          type="button"
+        <Button
+          bare
           className="car-gallery__arrow car-gallery__arrow--prev"
           aria-label="Предыдущее фото"
           onClick={() => go(-1)}
         >
           <ArrowIcon />
-        </button>
-        <button
-          type="button"
+        </Button>
+        <Button
+          bare
           className="car-gallery__arrow car-gallery__arrow--next"
           aria-label="Следующее фото"
           onClick={() => go(1)}
         >
           <ArrowIcon />
-        </button>
+        </Button>
       </div>
     </div>
   );

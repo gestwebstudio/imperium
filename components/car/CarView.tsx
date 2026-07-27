@@ -4,6 +4,7 @@ import { Breadcrumbs } from "@heroui/react";
 import { ArrowIcon } from "@/components/icons";
 import { Wishlist } from "@/components/ui/Wishlist";
 import { Comparison } from "@/components/ui/Comparison";
+import { Button } from "@/components/ui/Button";
 import { type Car, formatPrice, getCarSpecs, getCars } from "@/lib/cars";
 import { CarsSection } from "@/components/home/CarsSection";
 import { Contacts } from "@/components/home/Contacts";
@@ -77,12 +78,12 @@ export function CarView({ car }: CarViewProps) {
                 <span className="car-price__amount">{formatPrice(car.price)}</span>
               </div>
               <div className="car-price__buttons">
-                <button type="button" className="btn btn--l btn--primary-surface">
-                  <span>Забронировать</span>
-                </button>
-                <button type="button" className="btn btn--l btn--secondary-outlined">
-                  <span>Онлайн-показ</span>
-                </button>
+                <Button size="l" variant="primary-surface">
+                  Забронировать
+                </Button>
+                <Button size="l" variant="secondary-outlined">
+                  Онлайн-показ
+                </Button>
               </div>
             </div>
 

@@ -43,8 +43,11 @@
    Иконка:  <span class="btn__icon"><svg ...>…</svg></span>  (SVG из папки Icons/, fill="currentColor")
    Бабл:    <span class="bubble bubble--s bubble--white">1</span> внутри .btn
    ============================================================ */
-.btn {
+.ui-button {
   position: relative;
+  isolation: isolate;
+}
+.btn {
   overflow: hidden;
   display: inline-flex;
   align-items: center;
@@ -64,12 +67,19 @@
 .btn:active { transform: translateY(1px); filter: brightness(0.92); }
 .btn:disabled, .btn[aria-disabled="true"] { opacity: .5; pointer-events: none; }
 /* содержимое над волной */
-.btn > :not(.ripple) { position: relative; z-index: 1; }
-
-/* ripple effect (click) — цвет наследуется через currentColor */
-.btn .ripple {
+.ui-button > :not(.ui-button__ripple-layer) { position: relative; z-index: 1; }
+.ui-button__ripple-layer {
   position: absolute;
   z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* ripple effect (click) — цвет наследуется через currentColor */
+.ui-button__ripple-layer .ripple {
+  position: absolute;
   border-radius: 50%;
   transform: scale(0);
   background-color: currentColor;

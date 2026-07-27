@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { cn } from "@/lib/cn";
 import { HeartStrokeIcon, HeartFillIcon } from "@/components/icons";
+import { Button } from "@/components/ui/Button";
 
 export type WishlistProps = {
   /** Управляемый режим. */
@@ -33,8 +34,8 @@ export function Wishlist({
   }
 
   return (
-    <button
-      type="button"
+    <Button
+      bare
       className={cn("wishlist", isActive && "is-active", className)}
       aria-pressed={isActive}
       aria-label={tip ?? "В избранное"}
@@ -43,6 +44,6 @@ export function Wishlist({
       <HeartStrokeIcon className="icon-stroke" />
       <HeartFillIcon className="icon-fill" />
       {tip && <span className="wishlist__tip">{tip}</span>}
-    </button>
+    </Button>
   );
 }

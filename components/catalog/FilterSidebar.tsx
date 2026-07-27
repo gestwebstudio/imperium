@@ -2,6 +2,11 @@
 
 import { Accordion, Checkbox } from "@heroui/react";
 import { CloseIcon } from "@/components/icons";
+import {
+  Button,
+  ButtonRippleLayer,
+  handleButtonRipplePointerDown,
+} from "@/components/ui/Button";
 import { FACETS, type FacetKey } from "@/lib/cars";
 import { RangeFilter, type RangeValue } from "./RangeFilter";
 
@@ -50,9 +55,9 @@ export function FilterSidebar({
           {hasSelection ? (
             <>
               {activeFacets.map((f) => (
-                <button
+                <Button
                   key={f.key}
-                  type="button"
+                  bare
                   className="tag tag--filter"
                   onClick={() => onClearFacet(f.key)}
                   aria-label={`Убрать фильтр «${f.label}»`}
@@ -61,15 +66,16 @@ export function FilterSidebar({
                   <span className="tag__close">
                     <CloseIcon />
                   </span>
-                </button>
+                </Button>
               ))}
-              <button
-                type="button"
-                className="btn btn--s btn--secondary-outlined cat-selected__clear"
+              <Button
+                size="s"
+                variant="secondary-outlined"
+                className="cat-selected__clear"
                 onClick={onClearAll}
               >
                 Очистить
-              </button>
+              </Button>
             </>
           ) : (
             <span className="cat-selected__empty">Нет выбранных фильтров</span>
@@ -96,7 +102,11 @@ export function FilterSidebar({
             {FACETS.map((f) => (
               <Accordion.Item key={f.key} id={f.key} className="cat-acc__item">
                 <Accordion.Heading className="cat-acc__heading">
-                  <Accordion.Trigger className="cat-acc__trigger">
+                  <Accordion.Trigger
+                    className="ui-button ui-button--bare cat-acc__trigger"
+                    onPointerDown={handleButtonRipplePointerDown}
+                  >
+                    <ButtonRippleLayer />
                     <span className="cat-acc__label">{f.label}</span>
                     <Accordion.Indicator className="cat-acc__chevron" />
                   </Accordion.Trigger>

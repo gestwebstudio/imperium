@@ -1,4 +1,5 @@
 import { ArrowDiagonalIcon, ArrowIcon } from "@/components/icons";
+import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
 
 const services = [
@@ -109,12 +110,12 @@ export function About() {
             </p>
           </div>
           <div className="about__testi-nav">
-            <button aria-label="Предыдущий отзыв">
+            <Button bare aria-label="Предыдущий отзыв">
               <ArrowIcon />
-            </button>
-            <button className="next" aria-label="Следующий отзыв">
+            </Button>
+            <Button bare className="next" aria-label="Следующий отзыв">
               <ArrowIcon />
-            </button>
+            </Button>
           </div>
         </div>
       </div>

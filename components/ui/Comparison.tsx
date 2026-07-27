@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { cn } from "@/lib/cn";
 import { ListAddIcon, ListCheckIcon } from "@/components/icons";
+import { Button } from "@/components/ui/Button";
 
 export type ComparisonProps = {
   active?: boolean;
@@ -30,8 +31,8 @@ export function Comparison({
   }
 
   return (
-    <button
-      type="button"
+    <Button
+      bare
       className={cn("compare", isActive && "is-active", className)}
       aria-pressed={isActive}
       aria-label={tip ?? "В сравнение"}
@@ -40,6 +41,6 @@ export function Comparison({
       <ListAddIcon className="icon-add" />
       <ListCheckIcon className="icon-check" />
       {tip && <span className="compare__tip">{tip}</span>}
-    </button>
+    </Button>
   );
 }

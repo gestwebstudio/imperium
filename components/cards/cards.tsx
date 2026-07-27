@@ -2,7 +2,11 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/cn";
 import { Indicator, PriceBlock, Tag } from "@/components/ui/primitives";
-import { Button, type ButtonVariant } from "@/components/ui/Button";
+import {
+  Button,
+  ButtonLink,
+  type ButtonVariant,
+} from "@/components/ui/Button";
 import { Wishlist } from "@/components/ui/Wishlist";
 import { Comparison } from "@/components/ui/Comparison";
 
@@ -112,17 +116,14 @@ export function CarCard({
       <div className="car-card__action">
         <PriceBlock label={priceLabel} value={price} />
         {href ? (
-          <Link
+          <ButtonLink
             href={href}
-            className={cn(
-              "btn",
-              "btn--m",
-              `btn--${action.variant}`,
-              "car-card__details-link",
-            )}
+            size="m"
+            variant={action.variant}
+            className="car-card__details-link"
           >
-            <span>{action.label}</span>
-          </Link>
+            {action.label}
+          </ButtonLink>
         ) : (
           <Button variant={action.variant} size="m">
             {action.label}

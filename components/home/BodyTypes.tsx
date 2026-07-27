@@ -1,5 +1,6 @@
 import { cn } from "@/lib/cn";
 import { ArrowDiagonalIcon } from "@/components/icons";
+import { ButtonLink } from "@/components/ui/Button";
 
 type BodyType = {
   title: string;
@@ -78,9 +79,9 @@ export function BodyTypes() {
             Поможем подобрать автомобиль, который соответствует вашим задачам,
             образу жизни и ожиданиям от комфорта
           </p>
-          <a href="#" className="btn btn--l btn--secondary-outlined">
-            <span>Консультация</span>
-          </a>
+          <ButtonLink href="#" size="l" variant="secondary-outlined">
+            Консультация
+          </ButtonLink>
         </div>
       </div>
 

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import "./layout.css";
 import { PhoneIcon, ArrowDiagonalIcon } from "@/components/icons";
+import { ButtonLink } from "@/components/ui/Button";
 
 function ChevronDown() {
   return (
@@ -35,15 +36,21 @@ export function Header() {
         </Link>
 
         <div className="site-header__actions">
-          <a href="tel:+74997041444" className="header-call" aria-label="Позвонить">
+          <ButtonLink
+            href="tel:+74997041444"
+            bare
+            className="header-call"
+            aria-label="Позвонить"
+          >
             <PhoneIcon />
-          </a>
-          <Link href="/catalog" className="btn btn--primary-cta">
-            <span>Каталог</span>
-            <span className="btn__cta-icon">
-              <ArrowDiagonalIcon />
-            </span>
-          </Link>
+          </ButtonLink>
+          <ButtonLink
+            href="/catalog"
+            variant="primary-cta"
+            ctaIcon={<ArrowDiagonalIcon />}
+          >
+            Каталог
+          </ButtonLink>
         </div>
       </div>
     </header>

@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/Button";
+
 /**
  * Блок «Страхование / Гарантия / Помощь на дорогах» (макет 639:2747).
  * Две белые карточки в ряд + широкая зелёная плашка с фото (help.webp).
@@ -33,9 +35,14 @@ export function Assurance() {
               замена колеса, доставка топлива и выезд механика.
             </p>
           </div>
-          <button type="button" className="car-help__btn">
+          <Button
+            size="m"
+            variant="primary-surface"
+            inverse
+            className="car-help__btn"
+          >
             Подробнее
-          </button>
+          </Button>
         </div>
       </div>
     </section>

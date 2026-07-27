@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ArrowIcon } from "@/components/icons";
+import { Button } from "@/components/ui/Button";
 import type { Spec } from "@/lib/cars";
 
 export type SpecsProps = {
@@ -34,15 +35,15 @@ export function Specs({ primary, extra }: SpecsProps) {
         ))}
       </div>
 
-      <button
-        type="button"
+      <Button
+        bare
         className="car-specs__toggle"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
       >
         {open ? "Свернуть" : "Развернуть"}
         <ArrowIcon className="car-specs__chevron" width={8} height={8} />
-      </button>
+      </Button>
     </section>
   );
 }

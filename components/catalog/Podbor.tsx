@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/Button";
+
 /**
  * Блок «Не нашли подходящий автомобиль?» (услуга подбора).
  * Размеры/тексты — по макету Figma 578:2501, фото — services/podbor.webp.
@@ -34,12 +36,12 @@ export function Podbor() {
         </div>
 
         <div className="podbor__actions">
-          <button type="button" className="btn btn--l btn--primary-surface">
-            <span>Подобрать автомобиль</span>
-          </button>
-          <button type="button" className="btn btn--l btn--secondary-outlined">
-            <span>Подробнее об услуге</span>
-          </button>
+          <Button size="l" variant="primary-surface">
+            Подобрать автомобиль
+          </Button>
+          <Button size="l" variant="secondary-outlined">
+            Подробнее об услуге
+          </Button>
         </div>
       </div>
     </section>

@@ -1,3 +1,5 @@
+import { ButtonLink } from "@/components/ui/Button";
+
 const MAP_SRC =
   "https://yandex.ru/map-widget/v1/?text=" +
   encodeURIComponent("Москва, Кутузовский проспект, 48") +
@@ -46,9 +48,9 @@ export function Contacts() {
               <span className="value">11:00 – 21:00</span>
               <span className="note">(ежедневно)</span>
             </div>
-            <a href="#" className="btn btn--l btn--primary-surface">
-              <span>Построить маршрут</span>
-            </a>
+            <ButtonLink href="#" size="l" variant="primary-surface">
+              Построить маршрут
+            </ButtonLink>
           </div>
 
           <div className="contacts__map">
