@@ -391,3 +391,122 @@
   line-height: 36px;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
+
+
+/* ============================================================
+   Brand Logo Card — плитка с логотипом марки
+   Default — тёплая подложка; hover — белый фон, тень «card brand», лёгкий зум.
+   Логотип: <img> (webp из images/logo_brands/).
+   ============================================================ */
+.brand-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  height: 186px;
+  padding: 20px;
+  border-radius: 22px;
+  background: rgba(228,223,219,.4); /* stone-beige-200 @40% */
+  transition: background .2s ease, box-shadow .2s ease;
+}
+.brand-card:hover {
+  background: rgba(255,255,255,.5);
+  box-shadow: 6px 4px 50px 0 rgba(205,197,190,.5);
+}
+.brand-card img {
+  max-width: 62%;
+  max-height: 70%;
+  object-fit: contain;
+  display: block;
+  transition: transform .2s ease;
+}
+.brand-card:hover img { transform: scale(1.06); }
+
+
+/* ============================================================
+   Body Logo Card — плитка типа кузова (подпись + силуэт авто)
+   Default — тёплая подложка, подпись 24; hover — белый фон, тень, подпись 36.
+   Силуэт: <img class="body-card__img"> (webp из images/body_card/).
+   ============================================================ */
+.body-card {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  height: 186px;
+  border-radius: 22px;
+  background: rgba(228,223,219,.4); /* stone-beige-200 @40% */
+  overflow: hidden;
+  transition: background .2s ease, box-shadow .2s ease;
+}
+.body-card:hover {
+  background: rgba(255,255,255,.5);
+  box-shadow: 6px 4px 50px 0 rgba(205,197,190,.5);
+}
+.body-card__label {
+  position: absolute;
+  top: 15px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-bold, 700);
+  font-size: 24px;
+  line-height: 30px;
+  color: var(--color-warm-taupe-300, #B2A79B);
+  pointer-events: none;
+  transition: font-size .2s ease, line-height .2s ease, color .2s ease;
+}
+.body-card:hover .body-card__label {
+  font-size: 36px;
+  line-height: 42px;
+  color: var(--color-warm-taupe-200, #D5CCC4);
+}
+.body-card__img {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  object-position: bottom;
+  transition: transform .2s ease;
+}
+.body-card:hover .body-card__img { transform: scale(1.04); }
+
+
+/* ============================================================
+   Car Card — карточка автомобиля (композиция компонентов кита)
+   Собрана из: .wishlist, .compare, .indicator, .tag, .price-block, .btn.
+   Полупрозрачная белая подложка — показывать на тёплом фоне.
+   ============================================================ */
+.car-card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 405px;
+  padding: 26px;
+  border-radius: 30px;
+  background: rgba(255,255,255,.6);
+}
+.car-card__top { display: flex; align-items: center; justify-content: space-between; }
+.car-card__brand { height: 24px; display: flex; align-items: center; }
+.car-card__brand img { height: 24px; width: auto; max-width: 90px; object-fit: contain; display: block; }
+.car-card__actions { display: flex; align-items: center; gap: 16px; }
+.car-card__info { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; width: 100%; }
+.car-card__title {
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-medium, 500);
+  font-size: 24px;
+  line-height: 30px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.car-card__tags { display: flex; flex-wrap: wrap; gap: 5px; padding-top: 2px; }
+.car-card__photo { height: 179px; display: flex; align-items: center; justify-content: center; }
+.car-card__photo img { max-width: 100%; max-height: 179px; object-fit: contain; display: block; }
+.car-card__action { display: flex; gap: 24px; align-items: flex-end; }
+.car-card__action .price-block { flex: 1 0 0; }

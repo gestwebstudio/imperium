@@ -116,6 +116,10 @@
     .icon-tile .ic img { width:100%; height:100%; display:block; }
     .icon-tile .icn-name { font-family:var(--font-display); font-weight:600; font-size:12px; color:var(--color-warm-taupe-500,#6A6259); }
 
+    /* cards grids */
+    .brand-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:16px; }
+    .car-stage { display:flex; flex-wrap:wrap; gap:30px; background:var(--color-warm-taupe-200,#D5CCC4); border-radius:20px; padding:36px; }
+
     /* buttons showcase */
     .btn-card { background:#fff; border-radius:18px; padding:8px 28px 24px; box-shadow:0 1px 2px rgba(27,30,29,.04),0 8px 24px rgba(27,30,29,.03); }
     .btn-sub { font-family:var(--font-display); font-weight:600; font-size:13px; letter-spacing:.06em; text-transform:uppercase; color:var(--color-warm-taupe-400,#8F8579); padding:22px 0 6px; }
@@ -915,6 +919,117 @@
         <button class="btn btn--m btn--inverse btn--primary-surface"><span>Кнопка</span></button><button class="btn btn--m btn--inverse btn--primary-flat"><span>Кнопка</span></button><button class="btn btn--m btn--inverse btn--primary-outlined"><span>Кнопка</span></button>
       </div>
       <p class="comp-usage">Использование: <code>&lt;button class="btn btn--m btn--primary-surface"&gt;&lt;span&gt;Кнопка&lt;/span&gt;&lt;/button&gt;</code>. Иконки — инлайн SVG из папки <code>Icons/</code> внутри <code>&lt;span class="btn__icon"&gt;</code> (цвет наследуется через currentColor).</p>
+    </div>
+  </details>
+
+  <details class="section" id="cards">
+    <summary class="sec-summary"><div class="wrap"><h2>Карточки</h2><span class="count">3 карточки</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></summary>
+    <div class="wrap sec-body">
+      <p class="lead">Крупные карточки каталога. При наведении на плитки марок и типов кузова — белый фон, тень и лёгкий зум. Картинки — WebP из папки <code>images/</code>.</p>
+
+      <div class="kit-block">
+      <div class="kit-head"><h3>Brand Logo Card</h3><code>.brand-card</code></div>
+      <p class="kit-lead">Плитка марки. Наведите курсор — фон белеет, появляется тень и логотип чуть увеличивается.</p>
+      <div class="brand-grid">
+        <div class="brand-card"><img src="images/logo_brands/lexus.webp" alt="Lexus"></div>
+        <div class="brand-card"><img src="images/logo_brands/ferrari.webp" alt="Ferrari"></div>
+        <div class="brand-card"><img src="images/logo_brands/bmw.webp" alt="BMW"></div>
+        <div class="brand-card"><img src="images/logo_brands/rollsroyce.webp" alt="Rolls-Royce"></div>
+        <div class="brand-card"><img src="images/logo_brands/mercedes.webp" alt="Mercedes-Benz"></div>
+        <div class="brand-card"><img src="images/logo_brands/audi.webp" alt="Audi"></div>
+      </div>
+      <p class="comp-usage">Использование: <code>&lt;div class="brand-card"&gt;&lt;img src="images/logo_brands/bmw.webp"&gt;&lt;/div&gt;</code>.</p>
+      </div>
+
+      <div class="kit-block">
+      <div class="kit-head"><h3>Body Logo Card</h3><code>.body-card</code></div>
+      <p class="kit-lead">Плитка типа кузова — подпись сверху и силуэт авто снизу. На наведении подпись укрупняется (24 → 36).</p>
+      <div class="brand-grid">
+        <div class="body-card"><span class="body-card__label">СЕДАНЫ</span><img class="body-card__img" src="images/body_card/sedan.webp" alt="Седаны"></div>
+        <div class="body-card"><span class="body-card__label">ВНЕДОРОЖНИКИ</span><img class="body-card__img" src="images/body_card/off-road.webp" alt="Внедорожники"></div>
+        <div class="body-card"><span class="body-card__label">КУПЕ</span><img class="body-card__img" src="images/body_card/coupe.webp" alt="Купе"></div>
+        <div class="body-card"><span class="body-card__label">МИНИВЭНЫ</span><img class="body-card__img" src="images/body_card/minivan.webp" alt="Минивэны"></div>
+        <div class="body-card"><span class="body-card__label">КРОССОВЕРЫ</span><img class="body-card__img" src="images/body_card/crossover.webp" alt="Кроссоверы"></div>
+        <div class="body-card"><span class="body-card__label">КАБРИОЛЕТ</span><img class="body-card__img" src="images/body_card/cabriolet.webp" alt="Кабриолет"></div>
+      </div>
+      <p class="comp-usage">Использование: <code>&lt;div class="body-card"&gt;&lt;span class="body-card__label"&gt;СЕДАНЫ&lt;/span&gt;&lt;img class="body-card__img" src="…sedan.webp"&gt;&lt;/div&gt;</code>.</p>
+      </div>
+
+      <div class="kit-block">
+      <div class="kit-head"><h3>Car Card</h3><code>.car-card</code></div>
+      <p class="kit-lead">Карточка автомобиля — композиция из компонентов кита: Wishlist, Comparison, Indicator, Tag, Price Block и Button. Слева — «в наличии», справа — «ожидается» (машина под тканью, <code>mask.webp</code>).</p>
+      <div class="car-stage">
+
+        <div class="car-card">
+          <div class="car-card__top">
+            <div class="car-card__brand"><img src="images/logo_cards/bmw.webp" alt="BMW"></div>
+            <div class="car-card__actions">
+              <button class="wishlist" onclick="this.classList.toggle('is-active')" aria-label="В избранное">
+                <svg class="icon-stroke" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.6992 4.4803C11.6992 3.51585 11.4258 2.72494 10.9541 2.14534C10.4837 1.56763 9.84262 1.23287 9.16992 1.13264C8.17288 0.984328 7.10026 1.35042 6.34863 2.19515C6.31069 2.2378 6.25631 2.26252 6.19922 2.26253C6.14214 2.26253 6.08776 2.23778 6.0498 2.19515C5.29808 1.3507 4.22625 0.984308 3.22949 1.13264C2.5568 1.23287 1.91568 1.56763 1.44531 2.14534C0.97363 2.72494 0.700233 3.51591 0.700195 4.4803C0.700275 6.44665 2.10713 8.15614 3.36035 9.30746C4.00376 9.89853 4.64402 10.3778 5.12305 10.7078C5.36291 10.8731 5.56449 11.0024 5.70605 11.0907C5.77583 11.1342 5.83146 11.1681 5.87012 11.1912L5.90332 11.2108L5.90625 11.2118L5.91992 11.2205L5.9248 11.2225L5.92773 11.2245L5.93262 11.2274L5.93848 11.2303L5.94531 11.2342C6.10244 11.3204 6.29058 11.3208 6.44824 11.2371L6.45605 11.2323C6.45856 11.2306 6.462 11.2287 6.46582 11.2264L6.46777 11.2254L6.46959 11.2248L6.47166 11.224L6.47852 11.2196L6.48242 11.2176L6.4834 11.2166C6.48539 11.2155 6.48821 11.2148 6.49023 11.2137C6.50003 11.2081 6.51196 11.2014 6.52734 11.1922L6.69434 11.0907C6.83563 11.0026 7.03639 10.8732 7.27637 10.7078C7.75539 10.3778 8.39562 9.89855 9.03906 9.30746C10.2923 8.15614 11.6991 6.44666 11.6992 4.4803ZM1.78125 4.4803C1.78129 3.73672 1.98976 3.2103 2.27539 2.85921C2.56252 2.50645 2.9555 2.29619 3.38477 2.23225C4.24405 2.10438 5.23923 2.56534 5.69531 3.65608L5.73828 3.74202L5.77832 3.80062C5.87893 3.92861 6.03264 4.00667 6.2002 4.00667C6.41868 4.00651 6.61416 3.87265 6.69824 3.66878L6.70117 3.66194L6.78516 3.47835L6.78809 3.47054C7.27517 2.51198 8.20666 2.1121 9.01465 2.23225C9.44392 2.29619 9.8369 2.50645 10.124 2.85921C10.4097 3.21031 10.6181 3.73667 10.6182 4.4803C10.6181 5.93053 9.54544 7.35283 8.31934 8.47933C7.72319 9.027 7.12355 9.47446 6.67285 9.785C6.56864 9.85679 6.46994 9.91968 6.38503 9.97378C6.3577 9.99119 6.33181 10.0077 6.30762 10.0233C6.24163 10.0658 6.1568 10.0658 6.09082 10.0233C6.06876 10.0091 6.04539 9.99412 6.02089 9.97845C5.93433 9.92313 5.83366 9.85878 5.72656 9.785C5.27587 9.47446 4.67622 9.027 4.08008 8.47933C2.85403 7.35285 1.78133 5.93049 1.78125 4.4803Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M6.47166 11.224L6.47266 11.2235L6.46959 11.2248L6.47166 11.224Z" fill="currentColor"/></svg>
+                <svg class="icon-fill" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.6992 4.4803C11.6992 3.51585 11.4258 2.72494 10.9541 2.14534C10.4837 1.56763 9.84262 1.23287 9.16992 1.13264C8.17288 0.984328 7.10026 1.35042 6.34863 2.19515C6.31069 2.2378 6.25631 2.26252 6.19922 2.26253C6.14214 2.26253 6.08776 2.23778 6.0498 2.19515C5.29808 1.3507 4.22625 0.984308 3.22949 1.13264C2.5568 1.23287 1.91568 1.56763 1.44531 2.14534C0.97363 2.72494 0.700233 3.51591 0.700195 4.4803C0.700275 6.44665 2.10713 8.15614 3.36035 9.30746C4.00376 9.89853 4.64402 10.3778 5.12305 10.7078C5.36291 10.8731 5.56449 11.0024 5.70605 11.0907C5.77583 11.1342 5.83146 11.1681 5.87012 11.1912L5.90332 11.2108L5.90625 11.2118L5.91992 11.2205L5.9248 11.2225L5.92773 11.2245L5.93262 11.2274L5.93848 11.2303L5.94531 11.2342C6.10244 11.3204 6.29058 11.3208 6.44824 11.2371L6.45605 11.2323C6.45856 11.2306 6.462 11.2287 6.46582 11.2264L6.46777 11.2254L6.46959 11.2248L6.47166 11.224L6.47852 11.2196L6.48242 11.2176L6.4834 11.2166C6.48539 11.2155 6.48821 11.2148 6.49023 11.2137C6.50003 11.2081 6.51196 11.2014 6.52734 11.1922L6.69434 11.0907C6.83563 11.0026 7.03639 10.8732 7.27637 10.7078C7.75539 10.3778 8.39562 9.89855 9.03906 9.30746C10.2923 8.15614 11.6991 6.44666 11.6992 4.4803Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M6.47166 11.224L6.47266 11.2235L6.46959 11.2248L6.47166 11.224Z" fill="currentColor"/></svg>
+              </button>
+              <button class="compare" onclick="this.classList.toggle('is-active')" aria-label="В сравнение">
+                <svg class="icon-add" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.694889 2.34689H7.51301C7.89534 2.34689 8.209 2.04754 8.209 1.67344C8.209 1.29935 7.89534 1 7.51301 1H0.694889C0.312973 1.00025 0 1.29931 0 1.67344C0 2.04758 0.312973 2.34663 0.694889 2.34689Z" fill="currentColor"/><path d="M0.694889 5.85669H7.51301C7.89534 5.85669 8.209 5.55734 8.209 5.18325C8.209 4.80915 7.89534 4.5098 7.51301 4.5098H0.694889C0.312973 4.51006 0 4.80911 0 5.18325C0 5.55738 0.312973 5.85644 0.694889 5.85669Z" fill="currentColor"/><path d="M0.694889 9.36649H4.60156C4.9839 9.36649 5.29756 9.06714 5.29756 8.69305C5.29756 8.31895 4.9839 8.01961 4.60156 8.01961H0.694889C0.312973 8.01986 0 8.31892 0 8.69305C0 9.06718 0.312973 9.36624 0.694889 9.36649Z" fill="currentColor"/><path d="M6.93739 9.39412H8.19861C8.32397 9.39412 8.42581 9.49491 8.42581 9.61897V10.8266C8.42581 11.2009 8.73875 11.4999 9.1207 11.5C9.50303 11.5 9.8167 11.2007 9.8167 10.8266V9.61897C9.8167 9.49491 9.91854 9.39412 10.0439 9.39412H11.3051C11.687 9.39387 12 9.09481 12 8.72067C12 8.39333 11.7605 8.12298 11.4448 8.06039L11.3051 8.04723H10.0439C9.91854 8.04723 9.8167 7.94644 9.8167 7.82238V6.61479C9.8167 6.2407 9.50303 5.94135 9.1207 5.94135C8.73875 5.94146 8.42581 6.24049 8.42581 6.61479V7.82238C8.42581 7.94644 8.32397 8.04723 8.19861 8.04723H6.93739C6.55506 8.04723 6.2414 8.34658 6.2414 8.72067C6.2414 9.09477 6.55506 9.39412 6.93739 9.39412Z" fill="currentColor"/></svg>
+                <svg class="icon-check" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.3082 6.93729C10.555 6.70152 10.959 6.69864 11.2101 6.93046C11.461 7.16245 11.4641 7.54218 11.2174 7.77821L8.56025 10.3205C8.44035 10.4352 8.27668 10.5 8.10563 10.5C7.93457 10.5 7.7709 10.4352 7.651 10.3205L6.32242 9.04936C6.07573 8.81328 6.0787 8.43358 6.32969 8.2016C6.58095 7.96967 6.98487 7.97328 7.23167 8.20941L8.10459 9.04545L10.3082 6.93729Z" fill="currentColor"/><path d="M0.694889 2.35396H7.51301C7.89534 2.35396 8.209 2.05304 8.209 1.67698C8.209 1.30092 7.89534 1 7.51301 1H0.694889C0.312973 1.00025 0 1.30088 0 1.67698C0 2.05307 0.312973 2.3537 0.694889 2.35396Z" fill="currentColor"/><path d="M0.694889 5.88219H7.51301C7.89534 5.88219 8.209 5.58127 8.209 5.20521C8.209 4.82915 7.89534 4.52823 7.51301 4.52823H0.694889C0.312973 4.52848 0 4.82911 0 5.20521C0 5.5813 0.312973 5.88193 0.694889 5.88219Z" fill="currentColor"/><path d="M0.694889 9.41041H4.60156C4.9839 9.41041 5.29756 9.10949 5.29756 8.73344C5.29756 8.35738 4.9839 8.05646 4.60156 8.05646H0.694889C0.312973 8.05671 0 8.35734 0 8.73344C0 9.10953 0.312973 9.41016 0.694889 9.41041Z" fill="currentColor"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="car-card__info">
+            <div class="car-card__title">X3 xDrive20i</div>
+            <span class="indicator indicator--success"><span class="indicator__dot"></span>В наличии</span>
+            <div class="car-card__tags">
+              <span class="tag tag--card">2026</span>
+              <span class="tag tag--card">Бензин</span>
+              <span class="tag tag--card">Полный привод</span>
+            </div>
+          </div>
+          <div class="car-card__photo"><img src="images/cars/x3-xdrive20i.webp" alt="BMW X3 xDrive20i"></div>
+          <div class="car-card__action">
+            <div class="price-block">
+              <span class="price-block__label">Стоимость автомобиля</span>
+              <span class="price-block__value">28 990 000 ₽</span>
+            </div>
+            <button class="btn btn--m btn--primary-surface"><span>Подробнее</span></button>
+          </div>
+        </div>
+
+        <div class="car-card">
+          <div class="car-card__top">
+            <div class="car-card__brand"><img src="images/logo_cards/bmw.webp" alt="BMW"></div>
+            <div class="car-card__actions">
+              <button class="wishlist" onclick="this.classList.toggle('is-active')" aria-label="В избранное">
+                <svg class="icon-stroke" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.6992 4.4803C11.6992 3.51585 11.4258 2.72494 10.9541 2.14534C10.4837 1.56763 9.84262 1.23287 9.16992 1.13264C8.17288 0.984328 7.10026 1.35042 6.34863 2.19515C6.31069 2.2378 6.25631 2.26252 6.19922 2.26253C6.14214 2.26253 6.08776 2.23778 6.0498 2.19515C5.29808 1.3507 4.22625 0.984308 3.22949 1.13264C2.5568 1.23287 1.91568 1.56763 1.44531 2.14534C0.97363 2.72494 0.700233 3.51591 0.700195 4.4803C0.700275 6.44665 2.10713 8.15614 3.36035 9.30746C4.00376 9.89853 4.64402 10.3778 5.12305 10.7078C5.36291 10.8731 5.56449 11.0024 5.70605 11.0907C5.77583 11.1342 5.83146 11.1681 5.87012 11.1912L5.90332 11.2108L5.90625 11.2118L5.91992 11.2205L5.9248 11.2225L5.92773 11.2245L5.93262 11.2274L5.93848 11.2303L5.94531 11.2342C6.10244 11.3204 6.29058 11.3208 6.44824 11.2371L6.45605 11.2323C6.45856 11.2306 6.462 11.2287 6.46582 11.2264L6.46777 11.2254L6.46959 11.2248L6.47166 11.224L6.47852 11.2196L6.48242 11.2176L6.4834 11.2166C6.48539 11.2155 6.48821 11.2148 6.49023 11.2137C6.50003 11.2081 6.51196 11.2014 6.52734 11.1922L6.69434 11.0907C6.83563 11.0026 7.03639 10.8732 7.27637 10.7078C7.75539 10.3778 8.39562 9.89855 9.03906 9.30746C10.2923 8.15614 11.6991 6.44666 11.6992 4.4803ZM1.78125 4.4803C1.78129 3.73672 1.98976 3.2103 2.27539 2.85921C2.56252 2.50645 2.9555 2.29619 3.38477 2.23225C4.24405 2.10438 5.23923 2.56534 5.69531 3.65608L5.73828 3.74202L5.77832 3.80062C5.87893 3.92861 6.03264 4.00667 6.2002 4.00667C6.41868 4.00651 6.61416 3.87265 6.69824 3.66878L6.70117 3.66194L6.78516 3.47835L6.78809 3.47054C7.27517 2.51198 8.20666 2.1121 9.01465 2.23225C9.44392 2.29619 9.8369 2.50645 10.124 2.85921C10.4097 3.21031 10.6181 3.73667 10.6182 4.4803C10.6181 5.93053 9.54544 7.35283 8.31934 8.47933C7.72319 9.027 7.12355 9.47446 6.67285 9.785C6.56864 9.85679 6.46994 9.91968 6.38503 9.97378C6.3577 9.99119 6.33181 10.0077 6.30762 10.0233C6.24163 10.0658 6.1568 10.0658 6.09082 10.0233C6.06876 10.0091 6.04539 9.99412 6.02089 9.97845C5.93433 9.92313 5.83366 9.85878 5.72656 9.785C5.27587 9.47446 4.67622 9.027 4.08008 8.47933C2.85403 7.35285 1.78133 5.93049 1.78125 4.4803Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M6.47166 11.224L6.47266 11.2235L6.46959 11.2248L6.47166 11.224Z" fill="currentColor"/></svg>
+                <svg class="icon-fill" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.6992 4.4803C11.6992 3.51585 11.4258 2.72494 10.9541 2.14534C10.4837 1.56763 9.84262 1.23287 9.16992 1.13264C8.17288 0.984328 7.10026 1.35042 6.34863 2.19515C6.31069 2.2378 6.25631 2.26252 6.19922 2.26253C6.14214 2.26253 6.08776 2.23778 6.0498 2.19515C5.29808 1.3507 4.22625 0.984308 3.22949 1.13264C2.5568 1.23287 1.91568 1.56763 1.44531 2.14534C0.97363 2.72494 0.700233 3.51591 0.700195 4.4803C0.700275 6.44665 2.10713 8.15614 3.36035 9.30746C4.00376 9.89853 4.64402 10.3778 5.12305 10.7078C5.36291 10.8731 5.56449 11.0024 5.70605 11.0907C5.77583 11.1342 5.83146 11.1681 5.87012 11.1912L5.90332 11.2108L5.90625 11.2118L5.91992 11.2205L5.9248 11.2225L5.92773 11.2245L5.93262 11.2274L5.93848 11.2303L5.94531 11.2342C6.10244 11.3204 6.29058 11.3208 6.44824 11.2371L6.45605 11.2323C6.45856 11.2306 6.462 11.2287 6.46582 11.2264L6.46777 11.2254L6.46959 11.2248L6.47166 11.224L6.47852 11.2196L6.48242 11.2176L6.4834 11.2166C6.48539 11.2155 6.48821 11.2148 6.49023 11.2137C6.50003 11.2081 6.51196 11.2014 6.52734 11.1922L6.69434 11.0907C6.83563 11.0026 7.03639 10.8732 7.27637 10.7078C7.75539 10.3778 8.39562 9.89855 9.03906 9.30746C10.2923 8.15614 11.6991 6.44666 11.6992 4.4803Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M6.47166 11.224L6.47266 11.2235L6.46959 11.2248L6.47166 11.224Z" fill="currentColor"/></svg>
+              </button>
+              <button class="compare" onclick="this.classList.toggle('is-active')" aria-label="В сравнение">
+                <svg class="icon-add" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.694889 2.34689H7.51301C7.89534 2.34689 8.209 2.04754 8.209 1.67344C8.209 1.29935 7.89534 1 7.51301 1H0.694889C0.312973 1.00025 0 1.29931 0 1.67344C0 2.04758 0.312973 2.34663 0.694889 2.34689Z" fill="currentColor"/><path d="M0.694889 5.85669H7.51301C7.89534 5.85669 8.209 5.55734 8.209 5.18325C8.209 4.80915 7.89534 4.5098 7.51301 4.5098H0.694889C0.312973 4.51006 0 4.80911 0 5.18325C0 5.55738 0.312973 5.85644 0.694889 5.85669Z" fill="currentColor"/><path d="M0.694889 9.36649H4.60156C4.9839 9.36649 5.29756 9.06714 5.29756 8.69305C5.29756 8.31895 4.9839 8.01961 4.60156 8.01961H0.694889C0.312973 8.01986 0 8.31892 0 8.69305C0 9.06718 0.312973 9.36624 0.694889 9.36649Z" fill="currentColor"/><path d="M6.93739 9.39412H8.19861C8.32397 9.39412 8.42581 9.49491 8.42581 9.61897V10.8266C8.42581 11.2009 8.73875 11.4999 9.1207 11.5C9.50303 11.5 9.8167 11.2007 9.8167 10.8266V9.61897C9.8167 9.49491 9.91854 9.39412 10.0439 9.39412H11.3051C11.687 9.39387 12 9.09481 12 8.72067C12 8.39333 11.7605 8.12298 11.4448 8.06039L11.3051 8.04723H10.0439C9.91854 8.04723 9.8167 7.94644 9.8167 7.82238V6.61479C9.8167 6.2407 9.50303 5.94135 9.1207 5.94135C8.73875 5.94146 8.42581 6.24049 8.42581 6.61479V7.82238C8.42581 7.94644 8.32397 8.04723 8.19861 8.04723H6.93739C6.55506 8.04723 6.2414 8.34658 6.2414 8.72067C6.2414 9.09477 6.55506 9.39412 6.93739 9.39412Z" fill="currentColor"/></svg>
+                <svg class="icon-check" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.3082 6.93729C10.555 6.70152 10.959 6.69864 11.2101 6.93046C11.461 7.16245 11.4641 7.54218 11.2174 7.77821L8.56025 10.3205C8.44035 10.4352 8.27668 10.5 8.10563 10.5C7.93457 10.5 7.7709 10.4352 7.651 10.3205L6.32242 9.04936C6.07573 8.81328 6.0787 8.43358 6.32969 8.2016C6.58095 7.96967 6.98487 7.97328 7.23167 8.20941L8.10459 9.04545L10.3082 6.93729Z" fill="currentColor"/><path d="M0.694889 2.35396H7.51301C7.89534 2.35396 8.209 2.05304 8.209 1.67698C8.209 1.30092 7.89534 1 7.51301 1H0.694889C0.312973 1.00025 0 1.30088 0 1.67698C0 2.05307 0.312973 2.3537 0.694889 2.35396Z" fill="currentColor"/><path d="M0.694889 5.88219H7.51301C7.89534 5.88219 8.209 5.58127 8.209 5.20521C8.209 4.82915 7.89534 4.52823 7.51301 4.52823H0.694889C0.312973 4.52848 0 4.82911 0 5.20521C0 5.5813 0.312973 5.88193 0.694889 5.88219Z" fill="currentColor"/><path d="M0.694889 9.41041H4.60156C4.9839 9.41041 5.29756 9.10949 5.29756 8.73344C5.29756 8.35738 4.9839 8.05646 4.60156 8.05646H0.694889C0.312973 8.05671 0 8.35734 0 8.73344C0 9.10953 0.312973 9.41016 0.694889 9.41041Z" fill="currentColor"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="car-card__info">
+            <div class="car-card__title">X3 xDrive20i</div>
+            <span class="indicator indicator--warning"><span class="indicator__dot"></span>Ожидается</span>
+            <div class="car-card__tags">
+              <span class="tag tag--card">2026</span>
+              <span class="tag tag--card">Бензин</span>
+              <span class="tag tag--card">Полный привод</span>
+            </div>
+          </div>
+          <div class="car-card__photo"><img src="images/cars/mask.webp" alt="Автомобиль под тканью"></div>
+          <div class="car-card__action">
+            <div class="price-block">
+              <span class="price-block__label">Стоимость автомобиля</span>
+              <span class="price-block__value">28 990 000 ₽</span>
+            </div>
+            <button class="btn btn--m btn--secondary-outlined"><span>Забронировать</span></button>
+          </div>
+        </div>
+
+      </div>
+      <p class="comp-usage">Car Card целиком собран из компонентов кита — своих новых стилей минимум (обёртка <code>.car-card</code> + сетка). Кнопки: <code>.btn--primary-surface</code> / <code>.btn--secondary-outlined</code>.</p>
+      </div>
+
     </div>
   </details>
 
