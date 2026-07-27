@@ -1,14 +1,15 @@
 # Imperium Motors — UI Kit
 
-Дизайн-токены (цвета и типографика), выгруженные из Figma-файла
-[Imperium Motors](https://www.figma.com/design/bERRa0eUHmPImiBdiP62UR/Imperium-Motors).
+Дизайн-система, выгруженная из Figma-файла
+[Imperium Motors](https://www.figma.com/design/bERRa0eUHmPImiBdiP62UR/Imperium-Motors):
+токены (цвета, типографика), иконки, UI-компоненты и карточки каталога.
 
 Живая демонстрация — [`index.html`](index.html).
 
 ## Структура
 
 ```
-index.html            — демо UI Kit (специмены всех стилей + палитра)
+index.html            — демо UI Kit (токены, иконки, компоненты, карточки)
 tokens/
   colors.json         — цвета в формате W3C Design Tokens
   typography.json     — семейства, начертания и все 73 текстовых стиля
@@ -16,7 +17,44 @@ styles/
   tokens.css          — CSS custom properties (--color-*, --font-*)
   tokens.scss         — SCSS-переменные ($color-*, $font-*)
   typography.css      — готовые классы всех текстовых стилей (.t-*)
+  components.css      — стили компонентов (.badge, .tag, .btn, .car-card …)
+Icons/                — SVG-иконки (12×12, currentColor)
+images/               — WebP-картинки карточек (логотипы марок, кузова, авто)
 ```
+
+## Компоненты
+
+Все компоненты — в [`styles/components.css`](styles/components.css), на токенах кита.
+
+| Компонент  | Класс          | Назначение                                            |
+| ---------- | -------------- | ----------------------------------------------------- |
+| Bubble     | `.bubble`      | счётчик / бейдж с числом (S/M/L, 4 цвета)             |
+| Badge      | `.badge`       | статусная метка (Info/Success/Warning/Error, Surface/Outlined) |
+| Tag        | `.tag`         | пилюля-метка: `--card` (на карточке) / `--filter` (удаляемая) |
+| Indicator  | `.indicator`   | статусная точка + подпись (4 статуса)                 |
+| Tooltip    | `.tooltip`     | всплывающая подсказка (S/L)                           |
+| Wishlist   | `.wishlist`    | кнопка «в избранное» (сердечко-тоггл + тултип)         |
+| Comparison | `.compare`     | кнопка «в сравнение» (тоггл + тултип)                  |
+| Slider     | `.slider`      | трек прогресса / заполнения                           |
+| Price Block| `.price-block` | подпись + цена (стиль Price/Value)                    |
+| Button     | `.btn`         | кнопки (S/M/L; Surface/Flat/Outlined/CTA; inverse)    |
+
+## Карточки
+
+| Карточка         | Класс         | Картинки                  |
+| ---------------- | ------------- | ------------------------- |
+| Brand Logo Card  | `.brand-card` | `images/logo_brands/*`    |
+| Body Logo Card   | `.body-card`  | `images/body_card/*`      |
+| Car Card         | `.car-card`   | `images/cars/*`, `images/logo_cards/*` |
+
+**Car Card** собран из компонентов кита (Wishlist, Comparison, Indicator, Tag,
+Price Block, Button) — минимум собственных стилей.
+
+## Иконки
+
+9 SVG в [`Icons/`](Icons): Arrow, Arrow-Diagonal, Close, Copy, Heart-stroke,
+Heart-fill, List-Add, List-Check, Phone. Сетка 12×12, перекрашиваются через
+`currentColor` (инлайн `<svg fill="currentColor">`).
 
 ## Цвета
 
