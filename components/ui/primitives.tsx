@@ -95,7 +95,7 @@ export function Indicator({
 
 /* --- Tooltip (визуальный специмен; интерактивный — через HeroUI) --- */
 export type TooltipProps = {
-  size?: "s" | "l";
+  size?: "s" | "m" | "l";
   className?: string;
   children: ReactNode;
 };

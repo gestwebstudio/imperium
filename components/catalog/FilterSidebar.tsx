@@ -1,17 +1,18 @@
 "use client";
 
-import { Accordion, Checkbox } from "@heroui/react";
+import { Accordion, Checkbox, ColorSwatch } from "@heroui/react";
 import { CloseIcon } from "@/components/icons";
 import {
   Button,
   ButtonRippleLayer,
   handleButtonRipplePointerDown,
 } from "@/components/ui/Button";
-import { FACETS, type FacetKey } from "@/lib/cars";
+import { Tooltip as KitTooltip } from "@/components/ui/primitives";
+import { FACETS, type FacetKey, type FacetOption } from "@/lib/cars";
 import { RangeFilter, type RangeValue } from "./RangeFilter";
 
 export type FilterSidebarProps = {
-  options: Record<FacetKey, string[]>;
+  options: Record<FacetKey, FacetOption[]>;
   selected: Record<FacetKey, string[]>;
   onToggleFacet: (key: FacetKey, value: string) => void;
   onClearFacet: (key: FacetKey) => void;
@@ -45,6 +46,8 @@ export function FilterSidebar({
 }: FilterSidebarProps) {
   const activeFacets = FACETS.filter((f) => selected[f.key].length > 0);
   const hasSelection = activeFacets.length > 0;
+  const getOptionLabel = (key: FacetKey, value: string) =>
+    options[key].find((option) => option.value === value)?.label ?? value;
 
   return (
     <aside className="cat-filters">
@@ -62,7 +65,9 @@ export function FilterSidebar({
                   onClick={() => onClearFacet(f.key)}
                   aria-label={`Убрать фильтр «${f.label}»`}
                 >
-                  {selected[f.key].join(", ")}
+                  {selected[f.key]
+                    .map((value) => getOptionLabel(f.key, value))
+                    .join(", ")}
                   <span className="tag__close">
                     <CloseIcon />
                   </span>
@@ -111,22 +116,61 @@ export function FilterSidebar({
                     <Accordion.Indicator className="cat-acc__chevron" />
                   </Accordion.Trigger>
                 </Accordion.Heading>
-                <Accordion.Panel className="cat-acc__panel">
-                  {options[f.key].map((v) => (
-                    <Checkbox.Root
-                      key={v}
-                      className="cat-check"
-                      isSelected={selected[f.key].includes(v)}
-                      onChange={() => onToggleFacet(f.key, v)}
-                    >
-                      <Checkbox.Content className="cat-check__content">
-                        <Checkbox.Control className="cat-check__box">
-                          <Checkbox.Indicator className="cat-check__mark" />
-                        </Checkbox.Control>
-                        <span className="cat-check__label">{v}</span>
-                      </Checkbox.Content>
-                    </Checkbox.Root>
-                  ))}
+                <Accordion.Panel
+                  className={`cat-acc__panel${
+                    f.key === "color" ? " cat-acc__panel--colors" : ""
+                  }`}
+                >
+                  {f.key === "color"
+                    ? options[f.key].map((option) => {
+                        const isSelected = selected[f.key].includes(
+                          option.value,
+                        );
+                        return (
+                          <Button
+                            key={option.value}
+                            bare
+                            className="cat-color-option"
+                            aria-label={`Цвет: ${option.label}`}
+                            aria-pressed={isSelected}
+                            onClick={() =>
+                              onToggleFacet(f.key, option.value)
+                            }
+                          >
+                            <ColorSwatch
+                              color={option.swatch ?? "transparent"}
+                              colorName={option.label}
+                              size="sm"
+                              shape="square"
+                            />
+                            <KitTooltip
+                              size="m"
+                              className="cat-color-option__tooltip"
+                            >
+                              {option.label}
+                            </KitTooltip>
+                          </Button>
+                        );
+                      })
+                    : options[f.key].map((option) => (
+                        <Checkbox.Root
+                          key={option.value}
+                          className="cat-check"
+                          isSelected={selected[f.key].includes(option.value)}
+                          onChange={() =>
+                            onToggleFacet(f.key, option.value)
+                          }
+                        >
+                          <Checkbox.Content className="cat-check__content">
+                            <Checkbox.Control className="cat-check__box">
+                              <Checkbox.Indicator className="cat-check__mark" />
+                            </Checkbox.Control>
+                            <span className="cat-check__label">
+                              {option.label}
+                            </span>
+                          </Checkbox.Content>
+                        </Checkbox.Root>
+                      ))}
                 </Accordion.Panel>
               </Accordion.Item>
             ))}

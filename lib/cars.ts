@@ -11,6 +11,19 @@
 
 export type CarStatusType = "success" | "warning" | "error" | "info";
 
+/**
+ * Цвет приходит вместе с автомобилем, поэтому админка или 1С может добавить
+ * новое значение без словаря HEX-кодов на фронтенде.
+ */
+export interface CarColor {
+  /** Стабильный код из внешней системы. */
+  id: string;
+  /** Отображаемое локализованное название. */
+  name: string;
+  /** CSS-совместимое значение: HEX, RGB или HSL. */
+  swatch: string;
+}
+
 export interface Car {
   id: string;
   slug: string;
@@ -26,8 +39,8 @@ export interface Car {
   drive: string;
   /** Тип кузова. */
   bodyType: string;
-  /** Цвет. */
-  color: string;
+  /** Цвет с кодом и визуальным образцом из источника данных. */
+  color: CarColor;
   /** Коробка передач. */
   transmission: string;
   /** Тип топлива. */
@@ -74,7 +87,14 @@ const SEED = [
 ] as const;
 
 /* Наборы значений для псевдослучайной генерации характеристик. */
-const COLORS = ["Чёрный", "Серый", "Белый", "Серебристый", "Синий", "Зелёный"];
+export const CAR_COLORS: readonly CarColor[] = [
+  { id: "black", name: "Чёрный", swatch: "#1B1E1D" },
+  { id: "gray", name: "Серый", swatch: "#898785" },
+  { id: "white", name: "Белый", swatch: "#FFFFFF" },
+  { id: "silver", name: "Серебристый", swatch: "#C4C7C7" },
+  { id: "blue", name: "Синий", swatch: "#315878" },
+  { id: "green", name: "Зелёный", swatch: "#4E7B60" },
+];
 const TRANSMISSIONS = ["Автомат", "Робот"];
 const DRIVES = ["Полный", "Задний", "Передний"];
 const FUELS = ["Бензин", "Дизель", "Гибрид", "Электро"];
@@ -94,8 +114,14 @@ function mulberry32(seed: number): () => number {
 const COPIES = 6; // 4 базовые × 6 = 24 машины
 const YEAR = 2026;
 
-const pick = (rand: () => number, arr: string[]) =>
+const pick = <T>(rand: () => number, arr: readonly T[]): T =>
   arr[Math.floor(rand() * arr.length)];
+
+function getSeedColor(id: string): CarColor {
+  const color = CAR_COLORS.find((item) => item.id === id);
+  if (!color) throw new Error(`Unknown seed color: ${id}`);
+  return color;
+}
 
 function buildCatalog(): Car[] {
   const rand = mulberry32(20260727);
@@ -106,7 +132,7 @@ function buildCatalog(): Car[] {
       const power = 200 + Math.floor(rand() * 451);
       // цена 5.9–42 млн ₽, округление до 10 000
       const price = Math.round((5_900_000 + rand() * 36_100_000) / 10_000) * 10_000;
-      const color = pick(rand, COLORS);
+      const color = pick(rand, CAR_COLORS);
       const transmission = pick(rand, TRANSMISSIONS);
       const drive = pick(rand, DRIVES);
       const fuelType = pick(rand, FUELS);
@@ -148,7 +174,7 @@ const FEATURED_CARS: Car[] = [
     power: 375,
     drive: "Полный",
     bodyType: "Купе",
-    color: "Зелёный",
+    color: getSeedColor("green"),
     transmission: "Робот",
     fuelType: "Бензин",
     price: 19_990_000,
@@ -165,7 +191,7 @@ const FEATURED_CARS: Car[] = [
     power: 354,
     drive: "Полный",
     bodyType: "Внедорожник",
-    color: "Чёрный",
+    color: getSeedColor("black"),
     transmission: "Автомат",
     fuelType: "Бензин",
     price: 15_490_000,
@@ -220,11 +246,20 @@ export interface Facet {
   get: (c: Car) => string;
 }
 
+export interface FacetOption {
+  /** Значение, используемое в фильтрации и передаваемое в API. */
+  value: string;
+  /** Подпись для интерфейса. */
+  label: string;
+  /** Только для цветов: значение, которое отображает HeroUI ColorSwatch. */
+  swatch?: string;
+}
+
 /** Аккордеон-фильтры (порядок — как на макете). */
 export const FACETS: Facet[] = [
   { key: "brand", label: "Бренд", get: (c) => c.brand },
   { key: "model", label: "Модель", get: (c) => c.name },
-  { key: "color", label: "Цвет", get: (c) => c.color },
+  { key: "color", label: "Цвет", get: (c) => c.color.id },
   { key: "body", label: "Кузов", get: (c) => c.bodyType },
   { key: "transmission", label: "Коробка", get: (c) => c.transmission },
   { key: "drive", label: "Привод", get: (c) => c.drive },
@@ -235,7 +270,7 @@ export const FACETS: Facet[] = [
 const VALUE_ORDER: Record<FacetKey, string[]> = {
   brand: ["BMW", "Mercedes-Benz", "Land Rover"],
   model: SEED.map((s) => s.name),
-  color: COLORS,
+  color: CAR_COLORS.map((color) => color.id),
   body: ["Внедорожник", "Кроссовер", "Купе", "Минивэн"],
   transmission: TRANSMISSIONS,
   drive: DRIVES,
@@ -263,7 +298,7 @@ export function getCarSpecs(car: Car): { primary: Spec[]; extra: Spec[] } {
   const primary: Spec[] = [
     { label: "Год выпуска", value: String(car.year) },
     { label: "Кузов", value: car.bodyType },
-    { label: "Цвет", value: car.color },
+    { label: "Цвет", value: car.color.name },
     { label: "Привод", value: `${car.drive} привод` },
     { label: "Коробка", value: car.transmission },
     { label: "Тип топлива", value: car.fuelType },
@@ -288,13 +323,39 @@ export function getCarSpecs(car: Car): { primary: Spec[]; extra: Spec[] } {
   return { primary, extra };
 }
 
-/** Доступные значения каждого фасета (в каноническом порядке, только те, что есть в данных). */
-export function getFacetOptions(): Record<FacetKey, string[]> {
-  const out = {} as Record<FacetKey, string[]>;
+/**
+ * Доступные значения фасетов строятся из переданного каталога. Это позволяет
+ * заменить моки ответом админки/1С без изменений в компонентах фильтра.
+ */
+export function getFacetOptions(
+  cars: Car[] = CARS,
+): Record<FacetKey, FacetOption[]> {
+  const out = {} as Record<FacetKey, FacetOption[]>;
   for (const f of FACETS) {
-    const present = new Set(CARS.map(f.get));
+    const present = new Map<string, FacetOption>();
+    for (const car of cars) {
+      const value = f.get(car);
+      present.set(
+        value,
+        f.key === "color"
+          ? {
+              value,
+              label: car.color.name,
+              swatch: car.color.swatch,
+            }
+          : { value, label: value },
+      );
+    }
+
     const order = VALUE_ORDER[f.key];
-    out[f.key] = order.filter((v) => present.has(v));
+    const known = order.flatMap((value) => {
+      const option = present.get(value);
+      return option ? [option] : [];
+    });
+    const unknown = [...present.values()]
+      .filter((option) => !order.includes(option.value))
+      .sort((a, b) => a.label.localeCompare(b.label, "ru"));
+    out[f.key] = [...known, ...unknown];
   }
   return out;
 }

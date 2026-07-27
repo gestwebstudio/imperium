@@ -312,6 +312,68 @@
 }
 .cat-acc__panel[aria-hidden="true"] { padding-block: 0; }
 
+/* Цвета: HeroUI ColorSwatch, мультивыбор — через китовую кнопку. */
+.cat-acc__panel--colors {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 8px 12px 10px;
+  overflow: visible;
+}
+.cat-color-option {
+  position: relative;
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--color-carbon-black-500, #1B1E1D);
+  cursor: pointer;
+  outline: none;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.cat-color-option:hover { transform: scale(1.08); }
+.cat-color-option[aria-pressed="true"] {
+  box-shadow:
+    0 0 0 2px var(--color-white, #FFFFFF),
+    0 0 0 4px var(--color-heritage-green-400, #4E7B60);
+}
+.cat-color-option:focus-visible {
+  box-shadow:
+    0 0 0 2px var(--color-white, #FFFFFF),
+    0 0 0 4px var(--color-heritage-green-500, #294434);
+}
+.cat-color-option .color-swatch {
+  display: block;
+  width: 24px;
+  height: 24px;
+  border: 1px solid rgba(27, 30, 29, .18);
+  border-radius: 6px;
+}
+.cat-color-option > .ui-button__ripple-layer {
+  z-index: 2;
+  color: var(--color-white, #FFFFFF);
+}
+.cat-color-option__tooltip {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-50%, 4px);
+  transition: opacity .15s ease, transform .15s ease, visibility .15s ease;
+}
+.cat-color-option:hover .cat-color-option__tooltip,
+.cat-color-option:focus-visible .cat-color-option__tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
 /* ---------- Чекбоксы (HeroUI Checkbox) ---------- */
 .cat-check {
   --accent: var(--color-heritage-green-400, #4E7B60);

@@ -31,7 +31,7 @@ export type CatalogClientProps = {
 };
 
 export function CatalogClient({ cars }: CatalogClientProps) {
-  const options = useMemo(() => getFacetOptions(), []);
+  const options = useMemo(() => getFacetOptions(cars), [cars]);
 
   const [selected, setSelected] =
     useState<Record<FacetKey, string[]>>(emptySelection);
