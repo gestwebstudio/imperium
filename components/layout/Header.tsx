@@ -2,6 +2,7 @@ import Link from "next/link";
 import "./layout.css";
 import { PhoneIcon, ArrowDiagonalIcon } from "@/components/icons";
 import { ButtonLink } from "@/components/ui/Button";
+import { GlassSurface } from "@/components/ui/GlassSurface";
 
 function ChevronDown() {
   return (
@@ -20,7 +21,20 @@ function ChevronDown() {
 export function Header() {
   return (
     <header className="site-header">
-      <div className="site-header__bar">
+      <GlassSurface
+        className="site-header__bar"
+        borderWidth={0.05}
+        brightness={40}
+        opacity={0.58}
+        blur={3}
+        displace={0}
+        backgroundOpacity={0.14}
+        saturation={1.08}
+        distortionScale={-6}
+        redOffset={0}
+        greenOffset={0}
+        blueOffset={0}
+      >
         <nav className="site-header__nav">
           <a href="#">
             Услуги
@@ -52,7 +66,7 @@ export function Header() {
             Каталог
           </ButtonLink>
         </div>
-      </div>
+      </GlassSurface>
     </header>
   );
 }
