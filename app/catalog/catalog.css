@@ -359,11 +359,11 @@
   z-index: 2;
   color: var(--color-white, #FFFFFF);
 }
-.cat-color-option__tooltip {
+.cat-color-option > .cat-color-option__tooltip {
   position: absolute;
   z-index: 3;
   left: 50%;
-  bottom: calc(100% + 8px);
+  bottom: calc(100% + 12px);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
