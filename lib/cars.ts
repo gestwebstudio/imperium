@@ -65,7 +65,7 @@ const SEED = [
   },
   {
     slug: "cle-53-amg-4matic",
-    name: "CLE AMG AMG CLE 53 4matic+",
+    name: "CLE 53 AMG 4MATIC+",
     brand: "Mercedes-Benz",
     brandLogo: "/images/logo_cards/mercedes.webp",
     photo: "/images/cars/cle-53-amg-4matic.webp",

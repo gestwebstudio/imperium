@@ -9,6 +9,7 @@ import { CarsSection } from "@/components/home/CarsSection";
 import { Contacts } from "@/components/home/Contacts";
 import { Gallery } from "./Gallery";
 import { Specs } from "./Specs";
+import { Equipment } from "./Equipment";
 import { Assurance } from "./Assurance";
 import { Atelier } from "./Atelier";
 
@@ -40,9 +41,6 @@ export function CarView({ car }: CarViewProps) {
           <Breadcrumbs.Item href="/catalog" className="cat-crumbs__item">
             Каталог
           </Breadcrumbs.Item>
-          <Breadcrumbs.Item className="cat-crumbs__item cat-crumbs__item--current">
-            {title}
-          </Breadcrumbs.Item>
         </Breadcrumbs>
       </div>
 
@@ -50,19 +48,22 @@ export function CarView({ car }: CarViewProps) {
 
       <div className="car-wrap">
         <div className="car-main">
-          <div className="car-main__left">
-            <header className="car-title">
-              <div className="car-title__head">
-                <h1 className="car-title__name">{title}</h1>
-                <span className="car-title__badge">{car.status.label}</span>
-              </div>
-              <div className="car-title__actions">
-                <Wishlist tip="В избранное" />
-                <Comparison tip="В сравнение" />
-              </div>
-            </header>
+          <header className="car-title">
+            <div className="car-title__head">
+              <h1 className="car-title__name">{title}</h1>
+              <span className="car-title__badge">{car.status.label}</span>
+            </div>
+            <div className="car-title__actions">
+              <Wishlist tip="В избранное" />
+              <Comparison tip="В сравнение" />
+            </div>
+          </header>
 
-            <Specs primary={primary} extra={extra} />
+          <div className="car-details">
+            <div className="car-details__technical">
+              <Specs primary={primary} extra={extra} />
+              <Equipment />
+            </div>
 
             <Assurance />
 
@@ -105,6 +106,11 @@ export function CarView({ car }: CarViewProps) {
       <CarsSection title="Рекомендованные автомобили" cars={recommended} />
 
       <Contacts />
+
+      <div className="car-floating-actions" aria-label="Действия с автомобилем">
+        <Wishlist tip="В избранное" />
+        <Comparison tip="В сравнение" />
+      </div>
     </main>
   );
 }

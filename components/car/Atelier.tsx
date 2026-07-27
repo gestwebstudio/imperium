@@ -1,7 +1,5 @@
 import { ArrowDiagonalIcon } from "@/components/icons";
 
-/** Карточки услуг «Ателье» и «Дизайн с Велесом» — как на главной,
-   в сетке 2×1 под ширину левой колонки страницы авто (макет 639:2698). */
 const cards = [
   {
     title: "Ателье персонализации",
@@ -19,17 +17,17 @@ export function Atelier() {
   return (
     <div className="car-atelier">
       {cards.map((c) => (
-        <article className="svc-card" key={c.title}>
+        <article className="car-atelier__card" key={c.title}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="svc-card__img" src={c.image} alt={c.title} />
-          <div className="svc-card__body">
-            <div className="svc-card__head">
-              <h3 className="svc-card__title">{c.title}</h3>
-              <span className="svc-card__arrow">
+          <img className="car-atelier__img" src={c.image} alt={c.title} />
+          <div className="car-atelier__body">
+            <div className="car-atelier__head">
+              <h3 className="car-atelier__title">{c.title}</h3>
+              <span className="car-atelier__arrow">
                 <ArrowDiagonalIcon />
               </span>
             </div>
-            <p className="svc-card__text">{c.text}</p>
+            <p className="car-atelier__text">{c.text}</p>
           </div>
         </article>
       ))}

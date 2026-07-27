@@ -12,16 +12,24 @@ export type SpecsProps = {
 export function Specs({ primary, extra }: SpecsProps) {
   const [open, setOpen] = useState(false);
   const items = open ? [...primary, ...extra] : primary;
+  const chunkSize = Math.ceil(items.length / 3);
+  const columns = Array.from({ length: 3 }, (_, index) =>
+    items.slice(index * chunkSize, (index + 1) * chunkSize),
+  ).filter((column) => column.length > 0);
 
   return (
-    <section className="car-specs">
+    <section className={`car-specs${open ? " is-open" : ""}`}>
       <h2 className="car-specs__title">Характеристики</h2>
 
       <div className="car-specs__list">
-        {items.map((s) => (
-          <div className="car-specs__row" key={s.label}>
-            <span className="car-specs__label">{s.label}</span>
-            <span className="car-specs__value">{s.value}</span>
+        {columns.map((column, index) => (
+          <div className="car-specs__column" key={index}>
+            {column.map((spec) => (
+              <div className="car-specs__row" key={spec.label}>
+                <span className="car-specs__label">{spec.label}</span>
+                <span className="car-specs__value">{spec.value}</span>
+              </div>
+            ))}
           </div>
         ))}
       </div>
