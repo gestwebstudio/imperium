@@ -29,8 +29,7 @@ export function Header() {
         lightIntensity={35}
         refraction={100}
         depth={75}
-        dispersion={20}
-        frost={12}
+        frost={3}
         splay={70}
       >
         <nav className="site-header__nav">

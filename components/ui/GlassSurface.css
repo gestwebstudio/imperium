@@ -53,20 +53,20 @@
 
 .liquid-glass--svg {
   -webkit-backdrop-filter:
-    blur(var(--glass-frost-blur, 14px))
+    blur(var(--glass-frost-blur, 3px))
     saturate(var(--glass-saturation, 1.18));
   backdrop-filter:
+    blur(var(--glass-frost-blur, 3px))
     var(--glass-filter)
-    blur(var(--glass-frost-blur, 14px))
     saturate(var(--glass-saturation, 1.18));
 }
 
 .liquid-glass--fallback {
   -webkit-backdrop-filter:
-    blur(var(--glass-frost-blur, 14px))
+    blur(var(--glass-frost-blur, 3px))
     saturate(var(--glass-saturation, 1.18)) contrast(1.03);
   backdrop-filter:
-    blur(var(--glass-frost-blur, 14px))
+    blur(var(--glass-frost-blur, 3px))
     saturate(var(--glass-saturation, 1.18)) contrast(1.03);
 }
 
