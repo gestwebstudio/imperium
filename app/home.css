@@ -65,7 +65,7 @@
 
 .hero__car {
   position: absolute;
-  z-index: 0;
+  z-index: 1;
   top: 403px;
   left: 615px;
   width: 1120px;
@@ -75,7 +75,7 @@
 }
 .hero__watermark {
   position: absolute;
-  z-index: 1;
+  z-index: 0;
   top: 363px;
   left: 486px;
   width: 1445px;
