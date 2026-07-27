@@ -6,15 +6,21 @@
    ============================================================ */
 
 /* ---------- Раскладка страницы ---------- */
-.catalog { padding-bottom: clamp(80px, 8vw, 120px); }
-/* отступ между блоком каталога и статичными секциями ниже
-   (специфичность (0,2,0) перебивает `.home-wrap { margin: 0 auto }`) */
-.catalog > .home-wrap { margin-top: clamp(56px, 6vw, 96px); }
+.catalog { padding-bottom: 0; }
+.catalog > .catalog-services,
+.catalog > .podbor,
+.catalog > .cars-section--upcoming,
+.catalog > .cars-section--available {
+  margin-top: clamp(96px, 8.333vw, 160px);
+}
+.catalog > .contacts {
+  margin-top: clamp(120px, 10.416vw, 200px);
+}
 
 .catalog-page {
   max-width: 1920px;
   margin: 0 auto;
-  padding: 128px clamp(24px, 4vw, 60px) 0;
+  padding: clamp(128px, 8.073vw, 155px) clamp(24px, 4vw, 60px) 0;
 }
 
 /* ---------- Хлебные крошки (HeroUI Breadcrumbs) ---------- */
@@ -27,8 +33,13 @@
   margin: 0;
   padding: 0;
 }
-.cat-crumbs { margin-bottom: 22px; }
-.cat-crumbs li { display: inline-flex; align-items: center; gap: 4px; }
+.cat-crumbs { height: 18px; margin-bottom: 10px; }
+.cat-crumbs li {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 18px;
+}
 .cat-crumbs__item {
   font-family: var(--font-text, "Onest", sans-serif);
   font-weight: var(--font-weight-regular, 400);
@@ -52,7 +63,7 @@
 /* ---------- Шапка: заголовок + бейдж + сортировка ---------- */
 .catalog-head {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 24px;
   flex-wrap: wrap;
@@ -77,6 +88,7 @@
   padding: 0;
   border: none;
   background: transparent;
+  margin-bottom: 8px;
   cursor: pointer;
   font-family: var(--font-text, "Onest", sans-serif);
 }
@@ -159,6 +171,7 @@
   align-self: flex-start;
   position: sticky;
   top: 34px;
+  height: 764px;
   max-height: calc(100vh - 68px);
   overflow-y: auto;
   box-sizing: border-box;
@@ -171,6 +184,8 @@
   overscroll-behavior: contain;
 }
 .cat-filters__block { display: flex; flex-direction: column; gap: 14px; }
+.cat-filters__block:first-child { gap: 12px; }
+.cat-filters__block:last-child { gap: 16px; }
 .cat-filters__title {
   margin: 0;
   font-family: var(--font-text, "Onest", sans-serif);
@@ -295,6 +310,7 @@
   gap: 2px;
   padding: 2px 0 6px;
 }
+.cat-acc__panel[aria-hidden="true"] { padding-block: 0; }
 
 /* ---------- Чекбоксы (HeroUI Checkbox) ---------- */
 .cat-check {
@@ -335,6 +351,7 @@
 }
 .cat-check[data-selected="true"] .cat-check__box {
   border-color: transparent;
+  background: var(--color-heritage-green-400, #4E7B60);
 }
 .cat-check__mark {
   display: flex;
@@ -354,6 +371,77 @@
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 
+/* ---------- Закреплённые действия ---------- */
+.catalog-tools {
+  position: fixed;
+  z-index: 20;
+  top: clamp(180px, 26.354vw, 506px);
+  right: 0;
+  box-sizing: border-box;
+  width: 56px;
+  height: 96px;
+  padding: 16px;
+  border-radius: 12px 0 0 12px;
+  background: var(--color-warm-taupe-100, #F2EEEA);
+  box-shadow: 6px 4px 50px rgba(180, 170, 163, .45);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.catalog-tools__item {
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+.catalog-tools__count {
+  position: absolute;
+  top: -3px;
+  left: 16px;
+  min-width: 15px;
+  height: 15px;
+  box-sizing: border-box;
+  padding: 2px;
+  border-radius: 50%;
+  background: var(--color-heritage-green-500, #294434);
+  color: var(--color-white, #FFFFFF);
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-medium, 500);
+  font-size: 10px;
+  line-height: 11px;
+  text-align: center;
+  pointer-events: none;
+}
+
+/* ---------- Секции каталога ---------- */
+.catalog > .cars-section--upcoming {
+  padding-inline: clamp(24px, 5.208vw, 100px);
+}
+.catalog > .cars-section--upcoming .cars-section__head {
+  width: 100%;
+  margin-inline: 0;
+}
+.catalog > .cars-section--upcoming .cars-carousel {
+  display: block;
+}
+.catalog > .cars-section--upcoming .cars-section__nav {
+  display: none;
+}
+.catalog > .cars-section--upcoming .cars-row {
+  width: 100%;
+  overflow: hidden;
+}
+.catalog > .cars-section--upcoming .cars-row > * {
+  flex-basis: calc((100% - 72px) / 4);
+  max-width: none;
+}
+.catalog > .cars-section--available .car-card {
+  height: 484px;
+}
+.catalog > .cars-section--available .car-card__brand,
+.catalog > .cars-section--available .car-card__brand img {
+  height: 39px;
+}
+
 /* ---------- Адаптив ---------- */
 @media (max-width: 1440px) {
   .catalog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -368,6 +456,13 @@
     overflow: visible;
   }
   .catalog-results { width: 100%; }
+  .catalog-tools { display: none; }
+  .catalog > .cars-section--upcoming .cars-row {
+    overflow-x: auto;
+  }
+  .catalog > .cars-section--upcoming .cars-row > * {
+    flex-basis: calc((100% - 24px) / 2);
+  }
 }
 @media (max-width: 680px) {
   .catalog-grid { grid-template-columns: 1fr; }

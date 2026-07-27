@@ -20,6 +20,11 @@ export default function CatalogPage() {
       <CatalogClient cars={cars} />
       <TradeLeasing />
       <Podbor />
+      <CarsSection
+        title="Ближайшие поступления"
+        cars={cars.slice(0, 4)}
+        variant="upcoming"
+      />
       <CarsSection title="Просмотренные автомобили" cars={cars.slice(20, 24)} />
       <Contacts />
     </main>

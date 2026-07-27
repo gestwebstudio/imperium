@@ -14,7 +14,7 @@ const services = [
 
 export function TradeLeasing() {
   return (
-    <section className="home-wrap">
+    <section className="home-wrap catalog-services">
       <div className="about__services">
         {services.map((s) => (
           <div className="service-card" key={s.title}>
