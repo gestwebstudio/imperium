@@ -621,7 +621,6 @@
   .car-price { width: 100%; min-height: 0; position: static; }
   .car-specs__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .car-equipment__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); height: auto; }
-  .car-equipment__column:last-child { display: none; }
   .car-floating-actions { display: none; }
 }
 @media (max-width: 1000px) {
@@ -636,7 +635,6 @@
   .car-specs__list { grid-template-columns: minmax(0, 1fr); }
   .car-price__buttons { flex-wrap: wrap; }
   .car-equipment__grid { grid-template-columns: minmax(0, 1fr); }
-  .car-equipment__column:not(:first-child) { display: none; }
   .car-assur__cards { flex-direction: column; }
   .car-atelier { height: auto; grid-template-columns: minmax(0, 1fr); }
   .car-atelier__card { height: auto; }
