@@ -123,8 +123,16 @@ export function RangeFilter({
       >
         <Slider.Track className="cat-slider__track">
           <Slider.Fill className="cat-slider__fill" />
-          <Slider.Thumb index={0} className="cat-slider__thumb" aria-label={fromPrefix} />
-          <Slider.Thumb index={1} className="cat-slider__thumb" aria-label={toPrefix} />
+          <Slider.Thumb
+            index={0}
+            className="cat-slider__thumb cat-slider__thumb--start"
+            aria-label={fromPrefix}
+          />
+          <Slider.Thumb
+            index={1}
+            className="cat-slider__thumb cat-slider__thumb--end"
+            aria-label={toPrefix}
+          />
         </Slider.Track>
       </Slider>
     </div>
