@@ -1,0 +1,421 @@
+/* ============================================================
+   Страница автомобиля — макет Figma 625:6038 (блоки до «Комплектации»).
+   Компоненты/цвета — из кита; HeroUI — для крошек. CSS без @layer.
+   ============================================================ */
+
+.car { padding-bottom: clamp(80px, 8vw, 120px); }
+.car-wrap { max-width: 1920px; margin: 0 auto; padding: 0 clamp(24px, 4vw, 60px); }
+.car-wrap--top { padding-top: 128px; padding-bottom: 20px; }
+/* отступ полноширинных секций (рекомендованные, контакты) под основным блоком */
+.car > .home-wrap { margin-top: clamp(56px, 6vw, 96px); }
+
+/* ---------- Хлебные крошки (HeroUI Breadcrumbs) ---------- */
+.cat-crumbs,
+.cat-crumbs ol {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+}
+.cat-crumbs li { display: inline-flex; align-items: center; gap: 4px; }
+.cat-crumbs__item {
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-regular, 400);
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--color-warm-taupe-400, #8F8579);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color .15s ease;
+}
+.cat-crumbs__item[href]:hover { color: var(--color-carbon-black-500, #1B1E1D); }
+.cat-crumbs__item--current { color: var(--color-carbon-black-500, #1B1E1D); cursor: default; }
+.cat-crumbs__sep {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  color: var(--color-warm-taupe-300, #B2A79B);
+  transform: rotate(180deg);
+}
+
+/* ---------- Галерея (бесконечная карусель) ---------- */
+.car-gallery {
+  --gal-w: min(1222px, 66vw);
+  --gal-h: calc(var(--gal-w) * 722 / 1222);
+  margin-top: 20px;
+}
+.car-gallery__viewport {
+  position: relative;
+  width: 100%;
+  height: var(--gal-h);
+  overflow-x: hidden;
+}
+.car-gallery__track {
+  display: flex;
+  gap: 26px;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  will-change: transform;
+  transition: transform .5s cubic-bezier(.4, 0, .2, 1);
+}
+.car-gallery__slot {
+  flex: 0 0 var(--gal-w);
+  width: var(--gal-w);
+  height: var(--gal-h);
+  border-radius: 36px;
+  overflow: hidden;
+  opacity: .5;
+  transform: scale(.9377); /* 677/722 — размер боковых кадров */
+  transition: transform .5s cubic-bezier(.4, 0, .2, 1), opacity .5s ease;
+}
+.car-gallery__slot.is-center { opacity: 1; transform: scale(1); }
+.car-gallery__slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  user-select: none;
+}
+/* бесшовный сброс позиции — без анимации */
+.car-gallery__track.no-trans,
+.car-gallery__track.no-trans .car-gallery__slot { transition: none !important; }
+
+/* стрелки и кнопка «Все фото» — привязаны к краям центрального кадра */
+.car-gallery__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: var(--color-white, #FFFFFF);
+  color: var(--color-carbon-black-500, #1B1E1D);
+  box-shadow: 4px 4px 20px 0 rgba(106, 98, 89, .18);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: filter .15s ease;
+}
+.car-gallery__arrow:hover { filter: brightness(.96); }
+.car-gallery__arrow svg { width: 14px; height: 14px; fill: currentColor; }
+.car-gallery__arrow--prev { left: calc(50% - var(--gal-w) / 2 + 20px); }
+.car-gallery__arrow--next { right: calc(50% - var(--gal-w) / 2 + 20px); }
+.car-gallery__arrow--next svg { transform: rotate(180deg); }
+.car-gallery__all {
+  position: absolute;
+  top: 20px;
+  right: calc(50% - var(--gal-w) / 2 + 20px);
+  z-index: 2;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 30px;
+  background: var(--color-white, #FFFFFF);
+  color: var(--color-carbon-black-500, #1B1E1D);
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 18px;
+  line-height: 24px;
+  cursor: pointer;
+  box-shadow: 4px 4px 20px 0 rgba(106, 98, 89, .12);
+}
+
+/* ---------- Основной блок: заголовок + характеристики / цена ---------- */
+.car-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+  margin-top: clamp(48px, 5vw, 80px);
+}
+.car-main__left {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 3vw, 40px);
+}
+
+/* Заголовок */
+.car-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+.car-title__head { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.car-title__name {
+  margin: 0;
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: clamp(28px, 3.2vw, 48px);
+  line-height: 1.16;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.car-title__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 21px;
+  background: rgba(85, 171, 77, .15);
+  color: var(--color-green-500, #55AB4D);
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 16px;
+  line-height: 20px;
+  white-space: nowrap;
+}
+.car-title__actions { flex: none; display: flex; align-items: center; gap: 16px; padding-top: 6px; }
+
+/* Карточка цены */
+.car-price {
+  flex: 0 0 400px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 30px;
+  border-radius: 30px;
+  background: var(--color-white, #FFFFFF);
+  box-shadow: 4px 4px 10px 0 rgba(106, 98, 89, .1);
+}
+.car-price__section { display: flex; flex-direction: column; gap: 20px; }
+.car-price__value { display: flex; flex-direction: column; gap: 4px; }
+.car-price__label {
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--color-carbon-black-300, #898785);
+}
+.car-price__amount {
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-weight: var(--font-weight-extrabold, 800);
+  font-size: 28px;
+  line-height: 36px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.car-price__buttons { display: flex; gap: 8px; }
+.car-price__buttons .btn { flex: 0 1 auto; }
+.car-price__row { display: flex; flex-direction: column; gap: 4px; }
+.car-price__row-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.car-price__dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-heritage-green-500, #294434);
+}
+.car-price__note {
+  margin: 0;
+  padding-left: 15px;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+
+/* ---------- Характеристики ---------- */
+.car-specs {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 30px 30px 24px;
+  border-radius: 30px;
+  background: rgba(228, 223, 219, .5);
+}
+.car-specs__title {
+  margin: 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-medium, 500);
+  font-size: 30px;
+  line-height: 40px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.car-specs__list { column-count: 3; column-gap: 36px; }
+.car-specs__row {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--color-stone-beige-300, #CAC2BB);
+  break-inside: avoid;
+}
+.car-specs__label {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--color-carbon-black-300, #898785);
+}
+.car-specs__value {
+  flex: none;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+  text-align: right;
+}
+.car-specs__toggle {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--color-heritage-green-500, #294434);
+}
+.car-specs__chevron {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  fill: currentColor;
+  transform: rotate(-90deg);
+  transition: transform .2s ease;
+}
+.car-specs__toggle[aria-expanded="true"] .car-specs__chevron { transform: rotate(90deg); }
+
+/* ---------- Страховка / Гарантия / Помощь на дорогах ---------- */
+.car-assur { display: flex; flex-direction: column; gap: 24px; }
+.car-assur__cards { display: flex; gap: 24px; }
+.car-assur__card {
+  flex: 1 1 0;
+  min-width: 0;
+  box-sizing: border-box;
+  min-height: 167px;
+  padding: 30px 40px;
+  border-radius: 30px;
+  background: var(--color-white, #FFFFFF);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.car-assur__title {
+  margin: 0;
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: clamp(26px, 2.6vw, 36px);
+  line-height: 1.22;
+  color: var(--color-heritage-green-500, #294434);
+}
+.car-assur__text {
+  margin: 0;
+  max-width: 562px;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 18px;
+  line-height: 24px;
+  color: #61584E;
+  opacity: .7;
+}
+
+.car-help {
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  min-height: 216px;
+  padding: 30px;
+  border-radius: 30px;
+  background: var(--color-heritage-green-500, #294434);
+  display: flex;
+  align-items: center;
+}
+.car-help__img {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: right center;
+  pointer-events: none;
+}
+.car-help::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    rgba(41, 68, 52, .96) 0%,
+    rgba(41, 68, 52, .9) 32%,
+    rgba(41, 68, 52, .35) 68%,
+    rgba(41, 68, 52, 0) 100%
+  );
+}
+.car-help__body {
+  position: relative;
+  z-index: 2;
+  max-width: 686px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+}
+.car-help__text { display: flex; flex-direction: column; gap: 12px; }
+.car-help__title {
+  margin: 0;
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: clamp(26px, 2.6vw, 36px);
+  line-height: 1.22;
+  color: var(--color-white, #FFFFFF);
+}
+.car-help__desc {
+  margin: 0;
+  max-width: 514px;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--color-heritage-green-100, #E1EAE5);
+}
+.car-help__btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 30px;
+  background: var(--color-white, #FFFFFF);
+  color: var(--color-carbon-black-500, #1B1E1D);
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 16px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: filter .15s ease;
+}
+.car-help__btn:hover { filter: brightness(.95); }
+
+/* ---------- Ателье / Велес (карточки услуг с фото) ---------- */
+.car-atelier { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+/* ---------- Адаптив ---------- */
+@media (max-width: 1080px) {
+  .car-main { flex-direction: column; }
+  .car-price { flex-basis: auto; width: 100%; }
+  .car-specs__list { column-count: 2; }
+}
+@media (max-width: 1000px) {
+  .car-gallery { --gal-w: 86vw; }
+}
+@media (max-width: 640px) {
+  .car-specs__list { column-count: 1; }
+  .car-price__buttons { flex-wrap: wrap; }
+  .car-assur__cards { flex-direction: column; }
+  .car-atelier { grid-template-columns: 1fr; }
+}
