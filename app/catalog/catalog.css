@@ -297,7 +297,16 @@
 }
 
 /* ---------- Чекбоксы (HeroUI Checkbox) ---------- */
-.cat-check { display: block; width: 100%; cursor: pointer; }
+.cat-check {
+  --accent: var(--color-heritage-green-400, #4E7B60);
+  --accent-hover: var(--color-heritage-green-400, #4E7B60);
+  --accent-foreground: var(--color-white, #FFFFFF);
+  --focus: var(--color-heritage-green-400, #4E7B60);
+
+  display: block;
+  width: 100%;
+  cursor: pointer;
+}
 .cat-check__content {
   display: flex;
   align-items: center;
@@ -324,9 +333,8 @@
   background: var(--color-white, #FFFFFF);
   transition: background-color .15s ease, border-color .15s ease;
 }
-.cat-check__content[data-selected] .cat-check__box {
-  background: var(--color-heritage-green-500, #294434);
-  border-color: var(--color-heritage-green-500, #294434);
+.cat-check[data-selected="true"] .cat-check__box {
+  border-color: transparent;
 }
 .cat-check__mark {
   display: flex;
