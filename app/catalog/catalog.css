@@ -6,10 +6,15 @@
    ============================================================ */
 
 /* ---------- Раскладка страницы ---------- */
+.catalog { padding-bottom: clamp(80px, 8vw, 120px); }
+/* отступ между блоком каталога и статичными секциями ниже
+   (специфичность (0,2,0) перебивает `.home-wrap { margin: 0 auto }`) */
+.catalog > .home-wrap { margin-top: clamp(56px, 6vw, 96px); }
+
 .catalog-page {
   max-width: 1920px;
   margin: 0 auto;
-  padding: 128px clamp(24px, 4vw, 60px) 100px;
+  padding: 128px clamp(24px, 4vw, 60px) 0;
 }
 
 /* ---------- Хлебные крошки (HeroUI Breadcrumbs) ---------- */
@@ -389,4 +394,49 @@
 }
 @media (max-width: 680px) {
   .catalog-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   Блок «Не нашли подходящий автомобиль?» (подбор) — макет 578:2501
+   ============================================================ */
+.podbor { display: flex; align-items: stretch; gap: 50px; }
+.podbor__media { flex: 1 1 0; min-width: 0; }
+.podbor__media img {
+  width: 100%;
+  aspect-ratio: 875 / 583;
+  object-fit: cover;
+  border-radius: 36px;
+  display: block;
+}
+.podbor__body {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+}
+.podbor__text { display: flex; flex-direction: column; gap: 16px; }
+.podbor__title { display: flex; flex-direction: column; }
+.podbor__title .reg,
+.podbor__title .bold {
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-size: clamp(32px, 3.4vw, 48px);
+  line-height: 1.16;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.podbor__title .reg { font-weight: var(--font-weight-regular, 400); }
+.podbor__title .bold { font-weight: var(--font-weight-semibold, 600); }
+.podbor__desc {
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.podbor__desc p { margin: 0; }
+.podbor__desc p + p { margin-top: 24px; }
+.podbor__actions { display: flex; gap: 30px; flex-wrap: wrap; }
+
+@media (max-width: 900px) {
+  .podbor { flex-direction: column; gap: 32px; }
 }

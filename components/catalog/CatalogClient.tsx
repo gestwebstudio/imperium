@@ -77,7 +77,7 @@ export function CatalogClient({ cars }: CatalogClientProps) {
   }, [filtered, sort]);
 
   return (
-    <main className="catalog-page">
+    <div className="catalog-page">
       <Breadcrumbs
         className="cat-crumbs"
         separator={
@@ -142,7 +142,7 @@ export function CatalogClient({ cars }: CatalogClientProps) {
           )}
         </div>
       </div>
-    </main>
+    </div>
   );
 }
 
