@@ -1,26 +1,39 @@
-# Imperium Motors — UI Kit
+# Imperium Motors
 
-Дизайн-система, выгруженная из Figma-файла
-[Imperium Motors](https://www.figma.com/design/bERRa0eUHmPImiBdiP62UR/Imperium-Motors):
-токены (цвета, типографика), иконки, UI-компоненты и карточки каталога.
+Сайт автосалона на **Next.js (App Router) + TypeScript**, дизайн — собственный
+UI-кит из Figma-файла
+[Imperium Motors](https://www.figma.com/design/bERRa0eUHmPImiBdiP62UR/Imperium-Motors).
+Интерактивные функции — на **HeroUI** (React Aria), стилизованные под кит.
 
-Живая демонстрация — [`index.html`](index.html).
+## Запуск
+
+```bash
+npm install
+npm run dev     # http://localhost:3000  ·  витрина кита: /kit
+```
 
 ## Структура
 
 ```
-index.html            — демо UI Kit (токены, иконки, компоненты, карточки)
-tokens/
-  colors.json         — цвета в формате W3C Design Tokens
-  typography.json     — семейства, начертания и все 73 текстовых стиля
-styles/
-  tokens.css          — CSS custom properties (--color-*, --font-*)
-  tokens.scss         — SCSS-переменные ($color-*, $font-*)
-  typography.css      — готовые классы всех текстовых стилей (.t-*)
-  components.css      — стили компонентов (.badge, .tag, .btn, .car-card …)
-Icons/                — SVG-иконки (12×12, currentColor)
-images/               — WebP-картинки карточек (логотипы марок, кузова, авто)
+app/
+  layout.tsx          — корневой layout (шрифты, globals.css)
+  page.tsx            — главная (заглушка)
+  globals.css         — HeroUI + Tailwind v4 + импорт кита
+  kit/                — витрина компонентов кита (маршрут /kit)
+components/
+  icons.tsx           — SVG-иконки (12×12, currentColor)
+  ui/                 — Button, Wishlist, Comparison, примитивы
+  cards/              — BrandCard, BodyCard, CarCard
+lib/cn.ts             — склейка классов
+styles/               — CSS-кит (tokens.css, typography.css, components.css)
+tokens/               — дизайн-токены в JSON (цвета, типографика)
+public/
+  icons/              — SVG-иконки
+  images/             — WebP-картинки (логотипы марок, кузова, авто)
 ```
+
+Стили кита (`styles/*.css`) подключаются глобально в `app/globals.css` без
+`@layer`, поэтому перебивают дефолтные стили HeroUI — наш дизайн выигрывает.
 
 ## Компоненты
 

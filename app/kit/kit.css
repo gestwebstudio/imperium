@@ -1,0 +1,62 @@
+/* Стили витрины кита (только для маршрута /kit). Компоненты кита стилизуются
+   глобально через styles/components.css — здесь только раскладка демо. */
+
+.kit-wrap { max-width: 1120px; margin: 0 auto; padding: 0 32px; }
+
+/* hero */
+.kit-hero { background: var(--color-heritage-green-500); color: #fff; padding: 64px 0 52px; }
+.kit-hero .eyebrow { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--color-heritage-green-200); margin-bottom: 16px; }
+.kit-hero h1 { font-family: var(--font-display); font-weight: 800; font-size: clamp(36px, 6vw, 64px); line-height: 1; letter-spacing: -.02em; }
+.kit-hero p { margin-top: 16px; max-width: 620px; color: var(--color-stone-beige-200); font-size: 16px; line-height: 1.5; }
+
+/* section */
+.kit-section { border-top: 1px solid var(--color-stone-beige-300); padding: 44px 0; }
+.kit-section > .kit-wrap > h2 { font-family: var(--font-display); font-weight: 700; font-size: 30px; letter-spacing: -.01em; margin-bottom: 4px; }
+.kit-section .section-lead { color: var(--color-warm-taupe-500); font-size: 15px; line-height: 1.55; max-width: 640px; margin-bottom: 28px; }
+
+/* block inside a section */
+.kit-block { margin-bottom: 40px; }
+.kit-block:last-child { margin-bottom: 0; }
+.kit-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
+.kit-head h3 { font-family: var(--font-display); font-weight: 600; font-size: 19px; }
+.kit-head code { font-family: var(--font-display); font-size: 12px; color: var(--color-warm-taupe-400); background: var(--color-stone-beige-200); padding: 2px 8px; border-radius: 6px; }
+.kit-lead { color: var(--color-warm-taupe-500); font-size: 14px; line-height: 1.55; margin: 2px 0 16px; max-width: 660px; }
+
+/* stage — площадка для компонентов */
+.kit-stage { background: #fff; border-radius: 16px; padding: 28px; display: flex; flex-wrap: wrap; gap: 22px; align-items: center; box-shadow: 0 1px 2px rgba(27,30,29,.04), 0 8px 24px rgba(27,30,29,.03); }
+.kit-stage--beige { background: var(--color-stone-beige-200); }
+.kit-stage--col { flex-direction: column; align-items: flex-start; }
+.stage-label { width: 100%; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--color-warm-taupe-400); }
+.stage-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+
+/* icons */
+.icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 14px; }
+.icon-tile { background: #fff; border-radius: 14px; padding: 24px 12px 14px; display: flex; flex-direction: column; align-items: center; gap: 14px; box-shadow: 0 1px 2px rgba(27,30,29,.04), 0 8px 24px rgba(27,30,29,.03); }
+.icon-tile .ic { width: 26px; height: 26px; color: var(--color-carbon-black-500); display: flex; align-items: center; justify-content: center; }
+.icon-tile .ic svg { width: 100%; height: 100%; }
+.icon-tile .icn-name { font-family: var(--font-display); font-weight: 600; font-size: 12px; color: var(--color-warm-taupe-500); }
+
+/* cards grids */
+.brand-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+.car-stage { display: flex; flex-wrap: wrap; gap: 30px; background: var(--color-stone-beige-100); border-radius: 20px; padding: 36px; }
+
+/* buttons layout */
+.btn-card { background: #fff; border-radius: 18px; padding: 8px 28px 24px; box-shadow: 0 1px 2px rgba(27,30,29,.04), 0 8px 24px rgba(27,30,29,.03); }
+.btn-sub { font-family: var(--font-display); font-weight: 600; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--color-warm-taupe-400); padding: 22px 0 6px; }
+.btn-row { display: grid; grid-template-columns: 190px 1fr; gap: 24px; align-items: center; padding: 14px 0; border-top: 1px solid var(--color-stone-beige-200); }
+.btn-rowhead { font-size: 13px; font-weight: 500; }
+.btn-rowhead code { display: inline-block; font-family: var(--font-display); font-size: 11px; color: var(--color-warm-taupe-400); background: var(--color-stone-beige-100); padding: 1px 6px; border-radius: 5px; margin-top: 6px; }
+.btn-group { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.btn-dark { background: var(--color-heritage-green-500); border-radius: 18px; padding: 22px 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 16px; }
+
+/* colors */
+.swatches { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+.swatch { border-radius: 14px; overflow: hidden; background: #fff; box-shadow: 0 1px 2px rgba(27,30,29,.05), 0 8px 24px rgba(27,30,29,.04); }
+.swatch .chip { height: 76px; box-shadow: inset 0 0 0 1px rgba(27,30,29,.06); }
+.swatch .meta { padding: 10px 12px 12px; }
+.swatch .cname { font-weight: 500; font-size: 13px; }
+.swatch .hex { font-family: var(--font-display); font-size: 12px; color: var(--color-warm-taupe-400); margin-top: 3px; text-transform: uppercase; }
+
+@media (max-width: 640px) {
+  .btn-row { grid-template-columns: 1fr; gap: 10px; }
+}
