@@ -29,6 +29,22 @@
 .stage-label { width: 100%; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--color-warm-taupe-400); }
 .stage-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
 
+/* bubble matrix (цвет × размер) */
+.bubble-demo { gap: 0; padding: 8px 24px; }
+.bubble-row { display: grid; grid-template-columns: 220px repeat(3, 1fr); align-items: center; border-top: 1px solid var(--color-stone-beige-200); }
+.bubble-row.bubble-head { border-top: none; }
+.bubble-rowlabel { display: flex; flex-direction: column; gap: 3px; align-items: flex-start; font-size: 13px; font-weight: 500; padding: 14px 0; }
+.bubble-rowlabel code { font-family: var(--font-display); font-size: 11px; color: var(--color-warm-taupe-400); background: var(--color-stone-beige-100); padding: 1px 6px; border-radius: 5px; }
+.bubble-col { display: flex; flex-direction: column; gap: 2px; text-align: center; font-family: var(--font-display); font-weight: 600; font-size: 14px; padding: 14px 0; }
+.bubble-col small { font-family: var(--font-text); font-weight: 400; font-size: 11px; color: var(--color-warm-taupe-400); }
+.bubble-cell { display: flex; align-items: center; justify-content: center; padding: 14px 0; }
+/* белый бабл на белой сцене — тонкая обводка для наглядности */
+.bubble-demo .bubble--white { box-shadow: inset 0 0 0 1px var(--color-stone-beige-300); }
+
+@media (max-width: 640px) {
+  .bubble-row { grid-template-columns: 120px repeat(3, 1fr); }
+}
+
 /* icons */
 .icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 14px; }
 .icon-tile { background: #fff; border-radius: 14px; padding: 24px 12px 14px; display: flex; flex-direction: column; align-items: center; gap: 14px; box-shadow: 0 1px 2px rgba(27,30,29,.04), 0 8px 24px rgba(27,30,29,.03); }

@@ -100,6 +100,13 @@ const colorGroups: { title: string; items: [string, string][] }[] = [
   },
 ];
 
+const bubbleColors = [
+  ["White", "white"],
+  ["Green 200", "green-200"],
+  ["Green 500", "green-500"],
+  ["Warm Taupe 400", "taupe-400"],
+] as const;
+
 export default function KitPage() {
   return (
     <div className="kit-page">
@@ -254,19 +261,42 @@ export default function KitPage() {
               <h3>Bubble</h3>
               <code>&lt;Bubble&gt;</code>
             </div>
-            <div className="kit-stage">
-              <Bubble size="s" color="green-500">
-                1
-              </Bubble>
-              <Bubble size="m" color="green-500">
-                12
-              </Bubble>
-              <Bubble size="l" color="taupe-400">
-                99+
-              </Bubble>
-              <Bubble size="m" color="green-200">
-                3
-              </Bubble>
+            <div className="kit-stage kit-stage--col bubble-demo">
+              <div className="bubble-row bubble-head">
+                <span className="bubble-rowlabel" />
+                <span className="bubble-col">
+                  S<small>16 px · Onest 10</small>
+                </span>
+                <span className="bubble-col">
+                  M<small>20 px · Onest 14</small>
+                </span>
+                <span className="bubble-col">
+                  L<small>24 px · Onest 14</small>
+                </span>
+              </div>
+              {bubbleColors.map(([label, color]) => (
+                <div className="bubble-row" key={color}>
+                  <span className="bubble-rowlabel">
+                    {label}
+                    <code>.bubble--{color}</code>
+                  </span>
+                  <span className="bubble-cell">
+                    <Bubble size="s" color={color}>
+                      1
+                    </Bubble>
+                  </span>
+                  <span className="bubble-cell">
+                    <Bubble size="m" color={color}>
+                      1
+                    </Bubble>
+                  </span>
+                  <span className="bubble-cell">
+                    <Bubble size="l" color={color}>
+                      1
+                    </Bubble>
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
 
