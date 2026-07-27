@@ -11,36 +11,42 @@ import {
 import { cn } from "@/lib/cn";
 import "./GlassSurface.css";
 
-type Channel = "R" | "G" | "B";
-
 type GlassSurfaceProps = {
   children: ReactNode;
   className?: string;
   width?: number | string;
   height?: number | string;
   borderRadius?: number;
-  borderWidth?: number;
-  brightness?: number;
-  opacity?: number;
-  blur?: number;
-  displace?: number;
-  frostBlur?: number;
   backgroundOpacity?: number;
   saturation?: number;
-  distortionScale?: number;
-  redOffset?: number;
-  greenOffset?: number;
-  blueOffset?: number;
-  xChannel?: Channel;
-  yChannel?: Channel;
+  lightAngle?: number;
+  lightIntensity?: number;
+  refraction?: number;
+  depth?: number;
+  dispersion?: number;
+  frost?: number;
+  splay?: number;
 };
 
 type GlassStyle = CSSProperties & {
   "--glass-background-opacity": number;
+  "--glass-depth-shadow-alpha": number;
+  "--glass-edge-alpha": number;
   "--glass-filter": string;
   "--glass-frost-blur": string;
+  "--glass-light-alpha": number;
+  "--glass-light-angle": string;
+  "--glass-light-mid-alpha": number;
+  "--glass-light-midpoint": string;
+  "--glass-light-opposite-angle": string;
+  "--glass-light-rim-alpha": number;
+  "--glass-light-splay": string;
   "--glass-saturation": number;
 };
+
+function clamp(value: number, min = 0, max = 100) {
+  return Math.min(max, Math.max(min, value));
+}
 
 export function GlassSurface({
   children,
@@ -48,21 +54,29 @@ export function GlassSurface({
   width = "100%",
   height = 78,
   borderRadius = 50,
-  borderWidth = 0.055,
-  brightness = 42,
-  opacity = 0.64,
-  blur = 3,
-  displace = 0.35,
-  frostBlur = 14,
   backgroundOpacity = 0.12,
   saturation = 1.18,
-  distortionScale = -24,
-  redOffset = -2,
-  greenOffset = 0,
-  blueOffset = 2,
-  xChannel = "R",
-  yChannel = "G",
+  lightAngle = -45,
+  lightIntensity = 80,
+  refraction = 100,
+  depth = 100,
+  dispersion = 100,
+  frost = 12,
+  splay = 80,
 }: GlassSurfaceProps) {
+  const depthFactor = clamp(depth) / 100;
+  const dispersionFactor = clamp(dispersion) / 100;
+  const lightFactor = clamp(lightIntensity) / 100;
+  const refractionFactor = clamp(refraction) / 100;
+  const splayValue = clamp(splay, 1, 100);
+  const borderWidth = 0.025 + depthFactor * 0.025;
+  const brightness = 34 + depthFactor * 6;
+  const mapOpacity = 0.36 + depthFactor * 0.22;
+  const distortionScale = -(0.75 + refractionFactor * 2.25);
+  const dispersionOffset = dispersionFactor * 0.75;
+  const lightAlpha = 0.14 + lightFactor * 0.6;
+  const lightMidAlpha = 0.04 + lightFactor * 0.14;
+  const lightRimAlpha = 0.08 + lightFactor * 0.16;
   const reactId = useId().replace(/:/g, "");
   const filterId = `liquid-glass-filter-${reactId}`;
   const redGradientId = `liquid-glass-red-${reactId}`;
@@ -100,7 +114,7 @@ export function GlassSurface({
           <rect width="${rect.width}" height="${rect.height}" fill="black"/>
           <rect width="${rect.width}" height="${rect.height}" rx="${borderRadius}" fill="url(#${redGradientId})"/>
           <rect width="${rect.width}" height="${rect.height}" rx="${borderRadius}" fill="url(#${blueGradientId})" style="mix-blend-mode:difference"/>
-          <rect x="${edgeSize}" y="${edgeSize}" width="${innerWidth}" height="${innerHeight}" rx="${borderRadius}" fill="hsl(0 0% ${brightness}% / ${opacity})" style="filter:blur(${blur}px)"/>
+          <rect x="${edgeSize}" y="${edgeSize}" width="${innerWidth}" height="${innerHeight}" rx="${borderRadius}" fill="hsl(0 0% ${brightness}% / ${mapOpacity})" style="filter:blur(3px)"/>
         </svg>
       `;
 
@@ -111,17 +125,17 @@ export function GlassSurface({
     }
 
     const channels = [
-      [redChannelRef, redOffset],
-      [greenChannelRef, greenOffset],
-      [blueChannelRef, blueOffset],
+      [redChannelRef, -dispersionOffset],
+      [greenChannelRef, 0],
+      [blueChannelRef, dispersionOffset],
     ] as const;
 
     channels.forEach(([ref, offset]) => {
       ref.current?.setAttribute("scale", String(distortionScale + offset));
-      ref.current?.setAttribute("xChannelSelector", xChannel);
-      ref.current?.setAttribute("yChannelSelector", yChannel);
+      ref.current?.setAttribute("xChannelSelector", "R");
+      ref.current?.setAttribute("yChannelSelector", "G");
     });
-    outputBlurRef.current?.setAttribute("stdDeviation", String(displace));
+    outputBlurRef.current?.setAttribute("stdDeviation", "0");
 
     const resizeObserver = new ResizeObserver(() => updateFilter(container));
     resizeObserver.observe(container);
@@ -130,19 +144,13 @@ export function GlassSurface({
     return () => resizeObserver.disconnect();
   }, [
     blueGradientId,
-    blueOffset,
-    blur,
     borderRadius,
     borderWidth,
     brightness,
-    displace,
+    dispersionOffset,
     distortionScale,
-    greenOffset,
-    opacity,
+    mapOpacity,
     redGradientId,
-    redOffset,
-    xChannel,
-    yChannel,
   ]);
 
   useEffect(() => {
@@ -162,8 +170,17 @@ export function GlassSurface({
     height: typeof height === "number" ? `${height}px` : height,
     borderRadius: `${borderRadius}px`,
     "--glass-background-opacity": backgroundOpacity,
+    "--glass-depth-shadow-alpha": 0.04 + depthFactor * 0.04,
+    "--glass-edge-alpha": 0.2 + depthFactor * 0.22,
     "--glass-filter": `url(#${filterId})`,
-    "--glass-frost-blur": `${frostBlur}px`,
+    "--glass-frost-blur": `${clamp(frost, 0, 40)}px`,
+    "--glass-light-alpha": lightAlpha,
+    "--glass-light-angle": `${lightAngle}deg`,
+    "--glass-light-mid-alpha": lightMidAlpha,
+    "--glass-light-midpoint": `${Math.round(splayValue * 0.48)}%`,
+    "--glass-light-opposite-angle": `${lightAngle + 180}deg`,
+    "--glass-light-rim-alpha": lightRimAlpha,
+    "--glass-light-splay": `${splayValue}%`,
     "--glass-saturation": saturation,
   };
 
@@ -258,7 +275,7 @@ export function GlassSurface({
             <feGaussianBlur
               ref={outputBlurRef}
               in="displacedOutput"
-              stdDeviation={displace}
+              stdDeviation={0}
             />
           </filter>
         </defs>
