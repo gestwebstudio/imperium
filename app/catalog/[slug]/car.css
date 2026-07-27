@@ -6,6 +6,8 @@
 .car { padding-bottom: clamp(80px, 8vw, 120px); }
 .car-wrap { max-width: 1920px; margin: 0 auto; padding: 0 clamp(24px, 4vw, 60px); }
 .car-wrap--top { padding-top: 128px; padding-bottom: 20px; }
+/* отступ полноширинных секций (рекомендованные, контакты) под основным блоком */
+.car > .home-wrap { margin-top: clamp(56px, 6vw, 96px); }
 
 /* ---------- Хлебные крошки (HeroUI Breadcrumbs) ---------- */
 .cat-crumbs,
@@ -399,6 +401,9 @@
 }
 .car-help__btn:hover { filter: brightness(.95); }
 
+/* ---------- Ателье / Велес (карточки услуг с фото) ---------- */
+.car-atelier { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
 /* ---------- Адаптив ---------- */
 @media (max-width: 1080px) {
   .car-main { flex-direction: column; }
@@ -412,4 +417,5 @@
   .car-specs__list { column-count: 1; }
   .car-price__buttons { flex-wrap: wrap; }
   .car-assur__cards { flex-direction: column; }
+  .car-atelier { grid-template-columns: 1fr; }
 }

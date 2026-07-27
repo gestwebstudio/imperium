@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import "./car.css";
+import "../../home.css";
 import { getCarBySlug, getCars } from "@/lib/cars";
 import { CarView } from "@/components/car/CarView";
 

@@ -4,10 +4,13 @@ import { Breadcrumbs } from "@heroui/react";
 import { ArrowIcon } from "@/components/icons";
 import { Wishlist } from "@/components/ui/Wishlist";
 import { Comparison } from "@/components/ui/Comparison";
-import { type Car, formatPrice, getCarSpecs } from "@/lib/cars";
+import { type Car, formatPrice, getCarSpecs, getCars } from "@/lib/cars";
+import { CarsSection } from "@/components/home/CarsSection";
+import { Contacts } from "@/components/home/Contacts";
 import { Gallery } from "./Gallery";
 import { Specs } from "./Specs";
 import { Assurance } from "./Assurance";
+import { Atelier } from "./Atelier";
 
 const GALLERY_PHOTOS = ["/images/gallery/1.webp", "/images/gallery/2.webp"];
 
@@ -18,6 +21,9 @@ export type CarViewProps = {
 export function CarView({ car }: CarViewProps) {
   const { primary, extra } = getCarSpecs(car);
   const title = `${car.brand} ${car.name}`;
+  const recommended = getCars()
+    .filter((c) => c.slug !== car.slug)
+    .slice(0, 4);
 
   return (
     <main className="car">
@@ -59,6 +65,8 @@ export function CarView({ car }: CarViewProps) {
             <Specs primary={primary} extra={extra} />
 
             <Assurance />
+
+            <Atelier />
           </div>
 
           <aside className="car-price">
@@ -93,6 +101,10 @@ export function CarView({ car }: CarViewProps) {
           </aside>
         </div>
       </div>
+
+      <CarsSection title="Рекомендованные автомобили" cars={recommended} />
+
+      <Contacts />
     </main>
   );
 }
