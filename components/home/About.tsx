@@ -1,4 +1,5 @@
 import { ArrowDiagonalIcon, ArrowIcon } from "@/components/icons";
+import { cn } from "@/lib/cn";
 
 const services = [
   {
@@ -15,13 +16,15 @@ function SvcCard({
   title,
   image,
   text,
+  className,
 }: {
   title: string;
   image: string;
   text: string;
+  className?: string;
 }) {
   return (
-    <article className="svc-card">
+    <article className={cn("svc-card", className)}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img className="svc-card__img" src={image} alt={title} />
       <div className="svc-card__body">
@@ -55,35 +58,32 @@ export function About() {
       <div className="about__identity">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img className="about__wordmark-bg" src="/images/logo_head.svg" alt="" aria-hidden="true" />
-        <div className="about__identity-grid">
-          <div className="about__identity-col">
-            <p className="about__lead">
-              <span className="reg">
-                От доработки серийных моделей до поиска редких экземпляров —{" "}
-              </span>
-              <span className="bold">
-                воплощаем индивидуальный подход в каждой детали
-              </span>
-            </p>
-            <SvcCard
-              title="Индивидуальный подбор"
-              image="/images/services/podbor.webp"
-              text="Мы находим редкие комплектации и привозим автомобили под заказ со всего мира."
-            />
-          </div>
-          <div className="about__identity-col">
-            <SvcCard
-              title="Ателье персонализации"
-              image="/images/services/atelie.webp"
-              text="Защита бронепленкой, смена цвета автомобиля, апгрейд мультимедиа, подбор дисков — всё в одном месте."
-            />
-            <SvcCard
-              title="Дизайн с Александром Велесом"
-              image="/images/services/veles.webp"
-              text="Авторская концепция экстерьера вашего автомобиля: уникальный дизайн, который делает автомобиль продолжением вас."
-            />
-          </div>
-        </div>
+        <p className="about__lead">
+          <span className="reg">
+            От доработки серийных моделей до поиска редких экземпляров —{" "}
+          </span>
+          <span className="bold">
+            воплощаем индивидуальный подход в каждой детали
+          </span>
+        </p>
+        <SvcCard
+          className="svc-card--atelier"
+          title="Ателье персонализации"
+          image="/images/services/atelie.webp"
+          text="Защита бронепленкой, смена цвета автомобиля, апгрейд мультимедиа, подбор дисков — всё в одном месте."
+        />
+        <SvcCard
+          className="svc-card--selection"
+          title="Индивидуальный подбор"
+          image="/images/services/podbor.webp"
+          text="Мы находим редкие комплектации и привозим автомобили под заказ со всего мира."
+        />
+        <SvcCard
+          className="svc-card--veles"
+          title="Дизайн с Александром Велесом"
+          image="/images/services/veles.webp"
+          text="Авторская концепция экстерьера вашего автомобиля: уникальный дизайн, который делает автомобиль продолжением вас."
+        />
       </div>
 
       <div className="about__testimonial">

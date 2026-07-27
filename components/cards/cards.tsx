@@ -68,30 +68,34 @@ export function CarCard({
 }: CarCardProps) {
   return (
     <div className={cn("car-card", className)}>
-      <div className="car-card__top">
-        <div className="car-card__brand">
+      <div className="car-card__main">
+        <div className="car-card__content">
+          <div className="car-card__top">
+            <div className="car-card__brand">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={brandLogo} alt={brandName} />
+            </div>
+            <div className="car-card__actions">
+              <Wishlist tip="В избранное" />
+              <Comparison tip="В сравнение" />
+            </div>
+          </div>
+
+          <div className="car-card__info">
+            <div className="car-card__title">{title}</div>
+            <Indicator status={status.type}>{status.label}</Indicator>
+            <div className="car-card__tags">
+              {tags.map((t) => (
+                <Tag key={t}>{t}</Tag>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="car-card__photo">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={brandLogo} alt={brandName} />
+          <img src={photo} alt={photoAlt ?? title} />
         </div>
-        <div className="car-card__actions">
-          <Wishlist tip="В избранное" />
-          <Comparison tip="В сравнение" />
-        </div>
-      </div>
-
-      <div className="car-card__info">
-        <div className="car-card__title">{title}</div>
-        <Indicator status={status.type}>{status.label}</Indicator>
-        <div className="car-card__tags">
-          {tags.map((t) => (
-            <Tag key={t}>{t}</Tag>
-          ))}
-        </div>
-      </div>
-
-      <div className="car-card__photo">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={photo} alt={photoAlt ?? title} />
       </div>
 
       <div className="car-card__action">

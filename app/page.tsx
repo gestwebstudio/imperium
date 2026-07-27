@@ -20,7 +20,11 @@ export default function HomePage() {
         cars={cars.slice(0, 8)}
       />
       <BodyTypes />
-      <CarsSection title="Ближайшие поступления" cars={cars.slice(8, 16)} />
+      <CarsSection
+        title="Ближайшие поступления"
+        cars={cars.slice(8, 12)}
+        variant="upcoming"
+      />
       <About />
       <Contacts />
     </main>
