@@ -3,7 +3,7 @@
    Стекло имитируем на CSS: полупрозрачная заливка + backdrop-filter blur
    (Figma Glass: Fill E4DFDB 30%, Frost 12 → blur 12px).
    ============================================================ */
-.site-header { position: sticky; top: 0; z-index: 50; padding: 16px 20px 0; }
+.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 16px 20px 0; }
 .site-header__bar {
   position: relative;
   max-width: 1800px;
