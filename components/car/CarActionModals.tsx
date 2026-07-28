@@ -2,14 +2,31 @@
 
 import { useState, type FormEvent } from "react";
 import {
+  Checkbox,
   Input,
   Label,
+  ListBox,
   Modal,
-  TextArea,
+  Select,
   TextField,
   useOverlayState,
 } from "@heroui/react";
+import { ArrowIcon } from "@/components/icons";
 import { Button, type ButtonVariant } from "@/components/ui/Button";
+
+const CALL_TIME_OPTIONS = [
+  { id: "as-soon-as-possible", label: "Как можно скорее" },
+  { id: "09-12", label: "09:00–12:00" },
+  { id: "12-15", label: "12:00–15:00" },
+  { id: "15-18", label: "15:00–18:00" },
+  { id: "18-21", label: "18:00–21:00" },
+];
+
+const MESSENGERS = [
+  { id: "telegram", label: "Telegram" },
+  { id: "max", label: "MAX" },
+  { id: "vk", label: "ВК" },
+];
 
 type CarActionModalProps = {
   carTitle: string;
@@ -21,8 +38,6 @@ type CarActionModalProps = {
   submitLabel: string;
   successTitle: string;
   successText: string;
-  messageLabel: string;
-  messagePlaceholder: string;
 };
 
 function CarActionModal({
@@ -35,8 +50,6 @@ function CarActionModal({
   submitLabel,
   successTitle,
   successText,
-  messageLabel,
-  messagePlaceholder,
 }: CarActionModalProps) {
   const [submitted, setSubmitted] = useState(false);
   const state = useOverlayState({
@@ -149,16 +162,75 @@ function CarActionModal({
                         />
                       </TextField>
 
-                      <TextField className="car-action-modal__field">
+                      <Select.Root
+                        className="car-action-modal__field car-action-modal__field--full car-action-modal__select"
+                        name="callTime"
+                        placeholder="Выберите удобное время"
+                        isRequired
+                      >
                         <Label className="car-action-modal__label">
-                          {messageLabel}
+                          Время для звонка
                         </Label>
-                        <TextArea
-                          className="car-action-modal__textarea"
-                          name="message"
-                          placeholder={messagePlaceholder}
-                        />
-                      </TextField>
+                        <Select.Trigger className="car-action-modal__select-trigger">
+                          <Select.Value className="car-action-modal__select-value" />
+                          <ArrowIcon
+                            className="car-action-modal__select-chevron"
+                            width={12}
+                            height={12}
+                          />
+                        </Select.Trigger>
+                        <Select.Popover
+                          className="car-action-modal__select-popover"
+                          placement="bottom"
+                        >
+                          <ListBox
+                            className="car-action-modal__select-list"
+                            aria-label="Время для звонка"
+                          >
+                            {CALL_TIME_OPTIONS.map((option) => (
+                              <ListBox.Item
+                                key={option.id}
+                                id={option.id}
+                                textValue={option.label}
+                                className="car-action-modal__select-option"
+                              >
+                                <span>{option.label}</span>
+                                <ListBox.ItemIndicator className="car-action-modal__select-option-mark">
+                                  ✓
+                                </ListBox.ItemIndicator>
+                              </ListBox.Item>
+                            ))}
+                          </ListBox>
+                        </Select.Popover>
+                      </Select.Root>
+
+                      <fieldset className="car-action-modal__field car-action-modal__field--full car-action-modal__messengers">
+                        <legend className="car-action-modal__label">
+                          Мессенджеры
+                        </legend>
+                        <span className="car-action-modal__hint">
+                          Можно выбрать несколько
+                        </span>
+                        <div className="car-action-modal__messenger-list">
+                          {MESSENGERS.map((messenger) => (
+                            <Checkbox.Root
+                              key={messenger.id}
+                              className="car-action-modal__messenger"
+                              name="messengers"
+                              value={messenger.id}
+                            >
+                              <Checkbox.Content className="car-action-modal__messenger-content">
+                                <Checkbox.Control className="car-action-modal__messenger-box">
+                                  <Checkbox.Indicator className="car-action-modal__messenger-mark" />
+                                </Checkbox.Control>
+                                <span className="car-action-modal__messenger-label">
+                                  {messenger.label}
+                                </span>
+                              </Checkbox.Content>
+                            </Checkbox.Root>
+                          ))}
+                        </div>
+                      </fieldset>
                     </div>
 
                     <p className="car-action-modal__legal">
@@ -212,8 +284,6 @@ export function CarActionModals({
         submitLabel="Отправить заявку"
         successTitle="Автомобиль забронирован"
         successText="Заявка принята. Менеджер Imperium Motors свяжется с вами в ближайшее время."
-        messageLabel="Комментарий"
-        messagePlaceholder="Укажите удобное время для звонка"
       />
       <CarActionModal
         carTitle={carTitle}
@@ -225,8 +295,6 @@ export function CarActionModals({
         submitLabel="Записаться"
         successTitle="Онлайн-показ запланирован"
         successText="Заявка принята. Менеджер свяжется с вами и согласует удобное время и формат звонка."
-        messageLabel="Удобное время и мессенджер"
-        messagePlaceholder="Например: сегодня после 18:00, Telegram"
       />
     </>
   );
