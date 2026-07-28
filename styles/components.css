@@ -63,8 +63,8 @@
 .floating-vehicle-actions__bubble {
   position: absolute;
   z-index: 1;
-  top: -10px;
-  right: -12px;
+  top: -6px;
+  right: -8px;
   pointer-events: none;
 }
 .floating-vehicle-actions__status {
@@ -330,7 +330,7 @@
   color: var(--color-carbon-black-500, #1B1E1D);
   -webkit-tap-highlight-color: transparent;
 }
-.wishlist svg { position: absolute; width: 24px; height: 24px; display: block; fill: currentColor; transition: opacity .12s ease; }
+.ui-button.wishlist > svg { position: absolute; width: 24px; height: 24px; display: block; fill: currentColor; transition: opacity .12s ease; }
 .wishlist .icon-fill { opacity: 0; }
 .wishlist:hover .icon-stroke { opacity: .6; }
 .wishlist.is-active { color: var(--color-red-500, #BB4545); }
@@ -377,7 +377,7 @@
   color: var(--color-carbon-black-500, #1B1E1D);
   -webkit-tap-highlight-color: transparent;
 }
-.compare svg { position: absolute; width: 24px; height: 24px; display: block; fill: currentColor; transition: opacity .12s ease; }
+.ui-button.compare > svg { position: absolute; width: 24px; height: 24px; display: block; fill: currentColor; transition: opacity .12s ease; }
 .compare .icon-check { opacity: 0; }
 .compare:hover .icon-add { opacity: .6; }
 .compare.is-active { color: var(--color-heritage-green-500, #294434); }

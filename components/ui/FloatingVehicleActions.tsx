@@ -21,7 +21,7 @@ function ActionCount({
       {children}
       {count > 0 && (
         <Bubble
-          size="xl"
+          size="s"
           color="green-500"
           className="floating-vehicle-actions__bubble"
         >
