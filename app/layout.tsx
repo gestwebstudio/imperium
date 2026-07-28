@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { FloatingVehicleActions } from "@/components/ui/FloatingVehicleActions";
+import { VehicleActionsProvider } from "@/components/ui/VehicleActionsContext";
 
 export const metadata: Metadata = {
   title: "Imperium Motors — Автосалон",
@@ -29,9 +31,12 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <Header />
-        {children}
-        <Footer />
+        <VehicleActionsProvider>
+          <Header />
+          {children}
+          <FloatingVehicleActions />
+          <Footer />
+        </VehicleActionsProvider>
       </body>
     </html>
   );

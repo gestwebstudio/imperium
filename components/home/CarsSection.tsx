@@ -109,6 +109,7 @@ export function CarsSection({
           {cars.map((car) => (
             <CarCard
               key={car.id}
+              vehicleId={isUpcoming ? "lexus-gx-executive" : car.id}
               href={
                 isUpcoming
                   ? "/catalog/lexus-gx-executive"

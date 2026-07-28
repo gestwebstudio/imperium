@@ -9,7 +9,7 @@ import { CloseIcon } from "@/components/icons";
 
 /* --- Bubble --- */
 export type BubbleProps = {
-  size?: "s" | "m" | "l";
+  size?: "s" | "m" | "l" | "xl";
   color?: "white" | "green-200" | "green-500" | "taupe-400";
   className?: string;
   children: ReactNode;

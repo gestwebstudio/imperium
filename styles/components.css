@@ -4,7 +4,7 @@
 /* ============================================================
    Bubble — счётчик / бейдж с числом
    Варианты:
-     size:  .bubble--s | .bubble--m | .bubble--l
+     size:  .bubble--s | .bubble--m | .bubble--l | .bubble--xl
      color: .bubble--white | .bubble--green-200 | .bubble--green-500 | .bubble--taupe-400
    Одна цифра — круг, несколько — pill (растягивается по ширине).
    ============================================================ */
@@ -24,12 +24,60 @@
 .bubble--s { min-width: 16px; height: 16px; padding: 0 6px; font-size: 10px; line-height: 10px; }
 .bubble--m { min-width: 20px; height: 20px; padding: 0 7px; font-size: 14px; line-height: 18px; }
 .bubble--l { min-width: 24px; height: 24px; padding: 0 9px; font-size: 14px; line-height: 18px; }
+.bubble--xl { min-width: 28px; height: 28px; padding: 0 8px; font-size: 16px; line-height: 20px; }
 
 /* --- Colors --- */
 .bubble--white     { background: var(--color-white, #FFFFFF);            color: var(--color-carbon-black-500, #1B1E1D); }
 .bubble--green-200 { background: var(--color-heritage-green-200, #A8BCB1); color: var(--color-carbon-black-500, #1B1E1D); }
 .bubble--green-500 { background: var(--color-heritage-green-500, #294434); color: var(--color-white, #FFFFFF); }
 .bubble--taupe-400 { background: var(--color-warm-taupe-400, #8F8579);   color: var(--color-white, #FFFFFF); }
+
+/* Floating saved-vehicle counters, vertically centered in the viewport. */
+.floating-vehicle-actions {
+  position: fixed;
+  z-index: 40;
+  top: 50%;
+  right: 0;
+  width: 56px;
+  height: 96px;
+  padding: 16px;
+  border-radius: 16px 0 0 16px;
+  background: var(--color-white, #FFFFFF);
+  box-shadow: 6px 4px 50px rgba(180, 170, 163, .45);
+  color: var(--color-warm-taupe-400, #8F8579);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transform: translateY(-50%);
+}
+.floating-vehicle-actions__item {
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+.floating-vehicle-actions__item > svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+.floating-vehicle-actions__bubble {
+  position: absolute;
+  z-index: 1;
+  top: -10px;
+  right: -12px;
+  pointer-events: none;
+}
+.floating-vehicle-actions__status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 
 
 /* ============================================================

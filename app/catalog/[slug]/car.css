@@ -572,24 +572,6 @@
 .car > .cars-section .car-card__brand img {
   height: 39px;
 }
-.car-floating-actions {
-  box-sizing: border-box;
-  position: fixed;
-  z-index: 20;
-  top: 506px;
-  right: 0;
-  width: 56px;
-  height: 96px;
-  padding: 6px 10px;
-  border-radius: 16px 0 0 16px;
-  background: var(--color-white, #FFFFFF);
-  box-shadow: 4px 4px 20px rgba(106, 98, 89, .18);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
-
 /* ---------- Адаптив ---------- */
 @media (max-width: 1279px) {
   .car-wrap--top { padding-top: 128px; padding-bottom: 20px; }
@@ -621,7 +603,6 @@
   .car-price { width: 100%; min-height: 0; position: static; }
   .car-specs__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .car-equipment__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); height: auto; }
-  .car-floating-actions { display: none; }
 }
 @media (max-width: 1000px) {
   .car-gallery { --gal-w: 86vw; }

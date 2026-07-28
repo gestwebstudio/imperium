@@ -4,8 +4,10 @@ import { useState } from "react";
 import { cn } from "@/lib/cn";
 import { ListAddIcon, ListCheckIcon } from "@/components/icons";
 import { Button } from "@/components/ui/Button";
+import { useVehicleActionsOptional } from "@/components/ui/VehicleActionsContext";
 
 export type ComparisonProps = {
+  vehicleId?: string;
   active?: boolean;
   defaultActive?: boolean;
   onChange?: (active: boolean) => void;
@@ -15,6 +17,7 @@ export type ComparisonProps = {
 
 /** Кнопка «в сравнение» — тоггл (List-Add → зелёный List-Check). */
 export function Comparison({
+  vehicleId,
   active,
   defaultActive = false,
   onChange,
@@ -22,11 +25,22 @@ export function Comparison({
   className,
 }: ComparisonProps) {
   const [internal, setInternal] = useState(defaultActive);
-  const isActive = active ?? internal;
+  const vehicleActions = useVehicleActionsOptional();
+  const globalActive =
+    vehicleId && vehicleActions
+      ? vehicleActions.isCompared(vehicleId)
+      : undefined;
+  const isActive = active ?? globalActive ?? internal;
 
   function toggle() {
     const next = !isActive;
-    if (active === undefined) setInternal(next);
+    if (active === undefined) {
+      if (vehicleId && vehicleActions) {
+        vehicleActions.setCompared(vehicleId, next);
+      } else {
+        setInternal(next);
+      }
+    }
     onChange?.(next);
   }
 

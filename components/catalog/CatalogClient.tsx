@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Breadcrumbs } from "@heroui/react";
-import { Badge, CarCard, Comparison, Wishlist } from "@/components";
+import { Badge, CarCard } from "@/components";
 import { ArrowIcon } from "@/components/icons";
 import {
   type Car,
@@ -38,8 +38,6 @@ export function CatalogClient({ cars }: CatalogClientProps) {
   const [price, setPrice] = useState<RangeValue>([PRICE_MIN, PRICE_MAX]);
   const [power, setPower] = useState<RangeValue>([POWER_MIN, POWER_MAX]);
   const [sort, setSort] = useState<SortKey>("popular");
-  const [wishlistCount, setWishlistCount] = useState(2);
-  const [comparisonCount, setComparisonCount] = useState(10);
 
   const toggleFacet = (key: FacetKey, value: string) =>
     setSelected((s) => {
@@ -126,6 +124,7 @@ export function CatalogClient({ cars }: CatalogClientProps) {
               {displayedCars.map((car) => (
                 <CarCard
                   key={car.id}
+                  vehicleId={car.id}
                   href={`/catalog/${car.slug}`}
                   brandLogo={car.brandLogo}
                   brandName={car.brand}
@@ -147,30 +146,6 @@ export function CatalogClient({ cars }: CatalogClientProps) {
         </div>
       </div>
 
-      <aside className="catalog-tools" aria-label="Сохранённые автомобили">
-        <div className="catalog-tools__item">
-          <Wishlist
-            onChange={(active) =>
-              setWishlistCount((count) => Math.max(0, count + (active ? 1 : -1)))
-            }
-          />
-          <span className="catalog-tools__count" aria-hidden="true">
-            {wishlistCount}
-          </span>
-        </div>
-        <div className="catalog-tools__item">
-          <Comparison
-            onChange={(active) =>
-              setComparisonCount((count) =>
-                Math.max(0, count + (active ? 1 : -1)),
-              )
-            }
-          />
-          <span className="catalog-tools__count" aria-hidden="true">
-            {comparisonCount}
-          </span>
-        </div>
-      </aside>
     </div>
   );
 }

@@ -55,8 +55,8 @@ export function CarView({ car }: CarViewProps) {
               <span className="car-title__badge">{car.status.label}</span>
             </div>
             <div className="car-title__actions">
-              <Wishlist tip="В избранное" />
-              <Comparison tip="В сравнение" />
+              <Wishlist vehicleId={car.id} tip="В избранное" />
+              <Comparison vehicleId={car.id} tip="В сравнение" />
             </div>
           </header>
 
@@ -107,11 +107,6 @@ export function CarView({ car }: CarViewProps) {
       <CarsSection title="Рекомендованные автомобили" cars={recommended} />
 
       <Contacts />
-
-      <div className="car-floating-actions" aria-label="Действия с автомобилем">
-        <Wishlist tip="В избранное" />
-        <Comparison tip="В сравнение" />
-      </div>
     </main>
   );
 }

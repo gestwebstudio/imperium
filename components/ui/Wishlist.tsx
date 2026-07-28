@@ -4,8 +4,11 @@ import { useState } from "react";
 import { cn } from "@/lib/cn";
 import { HeartStrokeIcon, HeartFillIcon } from "@/components/icons";
 import { Button } from "@/components/ui/Button";
+import { useVehicleActionsOptional } from "@/components/ui/VehicleActionsContext";
 
 export type WishlistProps = {
+  /** Стабильный ID автомобиля для синхронизации с глобальным избранным. */
+  vehicleId?: string;
   /** Управляемый режим. */
   active?: boolean;
   /** Начальное значение в неуправляемом режиме. */
@@ -18,6 +21,7 @@ export type WishlistProps = {
 
 /** Кнопка «в избранное» — сердечко-тоггл (контур → залитое красное). */
 export function Wishlist({
+  vehicleId,
   active,
   defaultActive = false,
   onChange,
@@ -25,11 +29,22 @@ export function Wishlist({
   className,
 }: WishlistProps) {
   const [internal, setInternal] = useState(defaultActive);
-  const isActive = active ?? internal;
+  const vehicleActions = useVehicleActionsOptional();
+  const globalActive =
+    vehicleId && vehicleActions
+      ? vehicleActions.isFavorite(vehicleId)
+      : undefined;
+  const isActive = active ?? globalActive ?? internal;
 
   function toggle() {
     const next = !isActive;
-    if (active === undefined) setInternal(next);
+    if (active === undefined) {
+      if (vehicleId && vehicleActions) {
+        vehicleActions.setFavorite(vehicleId, next);
+      } else {
+        setInternal(next);
+      }
+    }
     onChange?.(next);
   }
 

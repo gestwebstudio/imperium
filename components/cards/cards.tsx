@@ -43,6 +43,7 @@ export function BodyCard({ label, src, className }: BodyCardProps) {
 
 /* --- Car Card (композиция компонентов кита) --- */
 export type CarCardProps = {
+  vehicleId?: string;
   brandLogo: string;
   brandName?: string;
   title: string;
@@ -60,6 +61,7 @@ export type CarCardProps = {
   className?: string;
 };
 export function CarCard({
+  vehicleId,
   brandLogo,
   brandName = "",
   title,
@@ -91,8 +93,8 @@ export function CarCard({
               <img src={brandLogo} alt={brandName} />
             </div>
             <div className="car-card__actions">
-              <Wishlist tip="В избранное" />
-              <Comparison tip="В сравнение" />
+              <Wishlist vehicleId={vehicleId} tip="В избранное" />
+              <Comparison vehicleId={vehicleId} tip="В сравнение" />
             </div>
           </div>
 
