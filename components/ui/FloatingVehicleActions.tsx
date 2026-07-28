@@ -68,7 +68,11 @@ export function FloatingVehicleActions() {
       >
         <HeartStrokeIcon />
       </ActionCount>
-      <ActionCount count={comparisonCount} label="В сравнении">
+      <ActionCount
+        count={comparisonCount}
+        label="В сравнении"
+        href="/comparison"
+      >
         <ListAddIcon />
       </ActionCount>
       <span className="floating-vehicle-actions__status" aria-live="polite">

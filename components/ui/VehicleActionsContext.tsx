@@ -19,6 +19,7 @@ type StoredVehicleActions = {
 
 type VehicleActionsContextValue = {
   favoriteIds: string[];
+  comparisonIds: string[];
   favoriteCount: number;
   comparisonCount: number;
   storageReady: boolean;
@@ -101,6 +102,7 @@ export function VehicleActionsProvider({ children }: { children: ReactNode }) {
     <VehicleActionsContext.Provider
       value={{
         favoriteIds: favorites,
+        comparisonIds: comparisons,
         favoriteCount: favorites.length,
         comparisonCount: comparisons.length,
         storageReady,
