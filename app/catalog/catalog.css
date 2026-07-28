@@ -9,6 +9,7 @@
 .catalog { padding-bottom: 0; }
 .catalog > .catalog-services,
 .catalog > .podbor,
+.catalog > .body-types,
 .catalog > .cars-section--upcoming,
 .catalog > .cars-section--available {
   margin-top: clamp(96px, 8.333vw, 160px);

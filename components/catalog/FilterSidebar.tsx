@@ -32,6 +32,8 @@ export type FilterSidebarProps = {
   open?: boolean;
   /** Закрыть мобильный drawer. */
   onClose?: () => void;
+  /** Фасеты, скрытые из фильтра (для урезанных подборок). */
+  hiddenFacets?: FacetKey[];
 };
 
 export function FilterSidebar({
@@ -50,8 +52,14 @@ export function FilterSidebar({
   powerMax,
   open,
   onClose,
+  hiddenFacets,
 }: FilterSidebarProps) {
-  const activeFacets = FACETS.filter((f) => selected[f.key].length > 0);
+  const visibleFacets = FACETS.filter(
+    (f) => !hiddenFacets?.includes(f.key),
+  );
+  const activeFacets = visibleFacets.filter(
+    (f) => selected[f.key].length > 0,
+  );
   const hasSelection = activeFacets.length > 0;
   const getOptionLabel = (key: FacetKey, value: string) =>
     options[key].find((option) => option.value === value)?.label ?? value;
@@ -140,7 +148,7 @@ export function FilterSidebar({
           />
 
           <Accordion className="cat-acc" allowsMultipleExpanded>
-            {FACETS.map((f) => (
+            {visibleFacets.map((f) => (
               <Accordion.Item key={f.key} id={f.key} className="cat-acc__item">
                 <Accordion.Heading className="cat-acc__heading">
                   <Accordion.Trigger
