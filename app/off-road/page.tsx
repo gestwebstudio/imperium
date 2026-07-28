@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "../catalog/catalog.css";
 import "../home.css";
-import { getCars } from "@/lib/cars";
+import { getCars, getCarsForBody } from "@/lib/cars";
 import { CollectionPage } from "@/components/collection/CollectionPage";
 
 export const metadata: Metadata = {
@@ -11,17 +11,13 @@ export const metadata: Metadata = {
 };
 
 export default function OffRoadPage() {
-  const all = getCars();
-  const cars = all.filter((c) => c.bodyType === "Внедорожник");
-  const viewed = all.slice(16, 24);
-
   return (
     <CollectionPage
       title="Новые внедорожники в наличии в Москве"
       crumbLabel="Внедорожники"
-      cars={cars}
+      cars={getCarsForBody("Внедорожник")}
       hiddenFacets={["body"]}
-      viewed={viewed}
+      viewed={getCars().slice(16, 24)}
       excludeBody="ВНЕДОРОЖНИКИ"
     />
   );

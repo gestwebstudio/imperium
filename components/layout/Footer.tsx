@@ -3,18 +3,18 @@ import "./layout.css";
 import { CopyIcon } from "@/components/icons";
 import { ButtonLink } from "@/components/ui/Button";
 
-type FooterLink = string | { label: string; w: number };
+type FooterLink = string | { label: string; w?: number; href?: string };
 const columns: { title: string; links: FooterLink[] }[] = [
   {
     title: "Автомобили",
     links: [
-      "Полный каталог",
-      "Седаны",
-      "Кроссоверы",
-      "Внедорожники",
-      "Купе",
-      "Минивэны",
-      "Кабриолеты",
+      { label: "Полный каталог", href: "/catalog" },
+      { label: "Седаны", href: "/sedan" },
+      { label: "Кроссоверы", href: "/crossover" },
+      { label: "Внедорожники", href: "/off-road" },
+      { label: "Купе", href: "/coupe" },
+      { label: "Минивэны", href: "/minivan" },
+      { label: "Кабриолеты", href: "/cabriolet" },
     ],
   },
   {
@@ -73,8 +73,14 @@ export function Footer() {
                   {col.links.map((link) => {
                     const label = typeof link === "string" ? link : link.label;
                     const w = typeof link === "string" ? undefined : link.w;
-                    return (
-                      <a href="#" key={label} style={w ? { width: w } : undefined}>
+                    const href = typeof link === "string" ? "#" : link.href ?? "#";
+                    const style = w ? { width: w } : undefined;
+                    return href.startsWith("/") ? (
+                      <Link href={href} key={label} style={style}>
+                        {label}
+                      </Link>
+                    ) : (
+                      <a href={href} key={label} style={style}>
                         {label}
                       </a>
                     );

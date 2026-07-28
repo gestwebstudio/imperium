@@ -217,6 +217,18 @@ export function getCars(): Car[] {
   return CARS;
 }
 
+/**
+ * Машины для SEO-страницы-подборки по кузову: сначала нужного типа, при нехватке
+ * добираем любыми до `min` (у части кузовов нет своих фото — по ТЗ можно любые).
+ */
+export function getCarsForBody(bodyType: string, min = 8): Car[] {
+  const all = getCars();
+  const typed = all.filter((c) => c.bodyType === bodyType);
+  if (typed.length >= min) return typed;
+  const rest = all.filter((c) => c.bodyType !== bodyType);
+  return [...typed, ...rest].slice(0, min);
+}
+
 export function getCarBySlug(slug: string): Car | undefined {
   return [...FEATURED_CARS, ...CARS].find((c) => c.slug === slug);
 }
