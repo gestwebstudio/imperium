@@ -27,6 +27,11 @@ export type FilterSidebarProps = {
   priceMax: number;
   powerMin: number;
   powerMax: number;
+
+  /** Открыт ли сайдбар как drawer (мобилка ≤1200). */
+  open?: boolean;
+  /** Закрыть мобильный drawer. */
+  onClose?: () => void;
 };
 
 export function FilterSidebar({
@@ -43,6 +48,8 @@ export function FilterSidebar({
   priceMax,
   powerMin,
   powerMax,
+  open,
+  onClose,
 }: FilterSidebarProps) {
   const activeFacets = FACETS.filter((f) => selected[f.key].length > 0);
   const hasSelection = activeFacets.length > 0;
@@ -50,7 +57,20 @@ export function FilterSidebar({
     options[key].find((option) => option.value === value)?.label ?? value;
 
   return (
-    <aside className="cat-filters">
+    <aside className={`cat-filters${open ? " is-open" : ""}`}>
+      {/* Шапка мобильного drawer (на десктопе скрыта) */}
+      <div className="cat-filters__bar">
+        <span className="cat-filters__bar-title">Фильтры</span>
+        <button
+          type="button"
+          className="cat-filters__close"
+          aria-label="Закрыть фильтры"
+          onClick={onClose}
+        >
+          <CloseIcon width={16} height={16} />
+        </button>
+      </div>
+
       {/* --- Выбранные категории --- */}
       <div className="cat-filters__block">
         <h2 className="cat-filters__title">Выбранные категории</h2>

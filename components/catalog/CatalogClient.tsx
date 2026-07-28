@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Breadcrumbs } from "@heroui/react";
 import { Badge, CarCard } from "@/components";
 import { ArrowIcon } from "@/components/icons";
@@ -38,6 +38,39 @@ export function CatalogClient({ cars }: CatalogClientProps) {
   const [price, setPrice] = useState<RangeValue>([PRICE_MIN, PRICE_MAX]);
   const [power, setPower] = useState<RangeValue>([POWER_MIN, POWER_MAX]);
   const [sort, setSort] = useState<SortKey>("popular");
+  const [filtersOpen, setFiltersOpen] = useState(false);
+
+  // Кол-во активных фильтров — для бейджа на кнопке «Фильтры»
+  const filterCount =
+    FACETS.reduce((n, f) => n + selected[f.key].length, 0) +
+    (price[0] !== PRICE_MIN || price[1] !== PRICE_MAX ? 1 : 0) +
+    (power[0] !== POWER_MIN || power[1] !== POWER_MAX ? 1 : 0);
+
+  // Мобильный drawer фильтров: блокировка скролла, Escape, авто-закрытие >1200
+  useEffect(() => {
+    document.body.style.overflow = filtersOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [filtersOpen]);
+
+  useEffect(() => {
+    if (!filtersOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setFiltersOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [filtersOpen]);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1201px)");
+    const onChange = (e: MediaQueryListEvent) => {
+      if (e.matches) setFiltersOpen(false);
+    };
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
 
   const toggleFacet = (key: FacetKey, value: string) =>
     setSelected((s) => {
@@ -98,11 +131,28 @@ export function CatalogClient({ cars }: CatalogClientProps) {
           <h1>Автомобили в наличии</h1>
           <Badge color="info">{sorted.length}</Badge>
         </div>
-        <SortDropdown value={sort} onChange={setSort} />
+        <div className="catalog-head__tools">
+          <button
+            type="button"
+            className="cat-filters-toggle"
+            aria-expanded={filtersOpen}
+            onClick={() => setFiltersOpen(true)}
+          >
+            Фильтры
+            {filterCount > 0 && <Badge color="info">{filterCount}</Badge>}
+          </button>
+          <SortDropdown value={sort} onChange={setSort} />
+        </div>
       </header>
 
       <div className="catalog-body">
+        <div
+          className={`cat-filters-backdrop${filtersOpen ? " is-open" : ""}`}
+          onClick={() => setFiltersOpen(false)}
+        />
         <FilterSidebar
+          open={filtersOpen}
+          onClose={() => setFiltersOpen(false)}
           options={options}
           selected={selected}
           onToggleFacet={toggleFacet}
