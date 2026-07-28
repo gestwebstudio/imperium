@@ -211,10 +211,6 @@
   gap: 32px;
 }
 .comparison-table-section__title {
-  position: sticky;
-  z-index: 6;
-  left: 0;
-  width: max-content;
   margin: 0 0 14px;
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
   font-weight: var(--font-weight-semibold, 600);
@@ -226,7 +222,7 @@
 .comparison-spec-table {
   width: 100%;
   padding: 4px;
-  overflow: visible;
+  overflow: hidden;
   border-radius: 26px;
   background: rgba(228, 223, 219, .72);
 }
@@ -256,11 +252,7 @@
   background: var(--color-stone-beige-300, #C9C0B8);
 }
 .comparison-spec-table__column--label {
-  position: sticky;
-  z-index: 4;
-  left: 0;
   width: var(--comparison-label-width);
-  background: var(--color-stone-beige-200, #E4DFDB);
 }
 .comparison-spec-table__cell {
   height: 64px;
@@ -274,13 +266,9 @@
   transition: background-color 150ms ease;
 }
 .comparison-spec-table__cell--label {
-  position: sticky;
-  z-index: 3;
-  left: 0;
   width: var(--comparison-label-width);
   font-weight: var(--font-weight-medium, 500);
   color: var(--color-warm-taupe-500, #6A6259);
-  box-shadow: inset -1px 0 0 var(--color-stone-beige-200, #E4DFDB);
 }
 .comparison-spec-table__cell--value {
   gap: 10px;

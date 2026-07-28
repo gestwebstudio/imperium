@@ -203,7 +203,7 @@ export function ComparisonClient({ cars }: { cars: Car[] }) {
 
               <div className="comparison-table-stack">
                 {groups.map(
-                  (group, groupIndex) =>
+                  (group) =>
                     group.rows.length > 0 && (
                       <section
                         className="comparison-table-section"
@@ -239,10 +239,10 @@ export function ComparisonClient({ cars }: { cars: Car[] }) {
                             </Table.Header>
 
                             <Table.Body className="comparison-spec-table__body">
-                              {group.rows.map((row, rowIndex) => (
+                              {group.rows.map((row) => (
                                 <Table.Row
                                   className="comparison-spec-table__row"
-                                  id={`${groupIndex}-${rowIndex}`}
+                                  id={`${group.title}-${row.label}`}
                                   key={row.label}
                                 >
                                   <Table.Cell className="comparison-spec-table__cell comparison-spec-table__cell--label">
