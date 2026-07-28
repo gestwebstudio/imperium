@@ -19,3 +19,24 @@ body {
   color: var(--color-carbon-black-500, #1B1E1D);
   -webkit-font-smoothing: antialiased;
 }
+
+.page-transition {
+  animation: page-enter 360ms cubic-bezier(.22, 1, .36, 1) both;
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-transition {
+    animation: none;
+  }
+}
