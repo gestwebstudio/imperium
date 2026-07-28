@@ -576,6 +576,10 @@
 .car-card__brand { height: 24px; display: flex; align-items: center; }
 .car-card__brand img { height: 24px; width: auto; max-width: 90px; object-fit: contain; display: block; }
 .car-card__actions { position: relative; z-index: 2; display: flex; align-items: center; gap: 16px; }
+.car-card__actions .wishlist:not(.is-active),
+.car-card__actions .compare:not(.is-active) {
+  color: var(--color-warm-taupe-300, #B2A79B);
+}
 .car-card__info { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; width: 100%; }
 .car-card__title {
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
