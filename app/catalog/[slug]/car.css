@@ -320,7 +320,6 @@
 .car-action-modal__body {
   display: flex;
   flex-direction: column;
-  gap: 24px;
   padding: 28px 38px 0;
 }
 .car-action-modal__vehicle {
@@ -360,6 +359,7 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px;
+  margin-top: 24px;
 }
 .car-action-modal__field {
   min-width: 0;
@@ -409,7 +409,7 @@
   box-shadow: 0 0 0 3px rgba(78, 123, 96, .14);
 }
 .car-action-modal__legal {
-  margin: -4px 0 0;
+  margin: 6px 0 0;
   font-family: var(--font-text, "Onest", sans-serif);
   font-size: 12px;
   line-height: 18px;
