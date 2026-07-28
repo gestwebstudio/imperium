@@ -90,7 +90,7 @@
 
 @media (min-width: 901px) {
   .header-call:focus-visible {
-    width: 234px;
+    width: 222px;
   }
   .header-call:focus-visible .header-call__number {
     max-width: 160px;
@@ -101,7 +101,7 @@
 
 @media (min-width: 901px) and (hover: hover) and (pointer: fine) {
   .header-call:hover {
-    width: 234px;
+    width: 222px;
   }
   .header-call:hover .header-call__number {
     max-width: 160px;
