@@ -25,7 +25,7 @@ export function CarView({ car }: CarViewProps) {
   const title = `${car.brand} ${car.name}`;
   const recommended = getCars()
     .filter((c) => c.slug !== car.slug)
-    .slice(0, 4);
+    .slice(0, 8);
 
   return (
     <main className="car">

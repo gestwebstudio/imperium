@@ -509,27 +509,6 @@
 }
 
 /* ---------- Секции каталога ---------- */
-.catalog > .cars-section--upcoming {
-  padding-inline: clamp(24px, 5.208vw, 100px);
-}
-.catalog > .cars-section--upcoming .cars-section__head {
-  width: 100%;
-  margin-inline: 0;
-}
-.catalog > .cars-section--upcoming .cars-carousel {
-  display: block;
-}
-.catalog > .cars-section--upcoming .cars-section__nav {
-  display: none;
-}
-.catalog > .cars-section--upcoming .cars-row {
-  width: 100%;
-  overflow: hidden;
-}
-.catalog > .cars-section--upcoming .cars-row > * {
-  flex-basis: calc((100% - 72px) / 4);
-  max-width: none;
-}
 .catalog > .cars-section--available .car-card {
   height: 484px;
 }
@@ -553,12 +532,6 @@
   }
   .catalog-results { width: 100%; }
   .catalog-tools { display: none; }
-  .catalog > .cars-section--upcoming .cars-row {
-    overflow-x: auto;
-  }
-  .catalog > .cars-section--upcoming .cars-row > * {
-    flex-basis: calc((100% - 24px) / 2);
-  }
 }
 @media (max-width: 680px) {
   .catalog-grid { grid-template-columns: 1fr; }
