@@ -1,35 +1,7 @@
-import { ArrowDiagonalIcon, ArrowIcon } from "@/components/icons";
+import { ArrowIcon } from "@/components/icons";
+import { ServiceImageCard } from "@/components/cards/cards";
 import { ServiceCards } from "@/components/ServiceCards";
 import { Button } from "@/components/ui/Button";
-import { cn } from "@/lib/cn";
-
-function SvcCard({
-  title,
-  image,
-  text,
-  className,
-}: {
-  title: string;
-  image: string;
-  text: string;
-  className?: string;
-}) {
-  return (
-    <article className={cn("svc-card", className)}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img className="svc-card__img" src={image} alt={title} />
-      <div className="svc-card__body">
-        <div className="svc-card__head">
-          <h3 className="svc-card__title">{title}</h3>
-          <span className="svc-card__arrow">
-            <ArrowDiagonalIcon />
-          </span>
-        </div>
-        <p className="svc-card__text">{text}</p>
-      </div>
-    </article>
-  );
-}
 
 export function About() {
   return (
@@ -47,19 +19,19 @@ export function About() {
             воплощаем индивидуальный подход в каждой детали
           </span>
         </p>
-        <SvcCard
+        <ServiceImageCard
           className="svc-card--atelier"
           title="Ателье персонализации"
           image="/images/services/atelie.webp"
           text="Защита бронепленкой, смена цвета автомобиля, апгрейд мультимедиа, подбор дисков — всё в одном месте."
         />
-        <SvcCard
+        <ServiceImageCard
           className="svc-card--selection"
           title="Индивидуальный подбор"
           image="/images/services/podbor.webp"
           text="Мы находим редкие комплектации и привозим автомобили под заказ со всего мира."
         />
-        <SvcCard
+        <ServiceImageCard
           className="svc-card--veles"
           title="Дизайн с Александром Велесом"
           image="/images/services/veles.webp"
