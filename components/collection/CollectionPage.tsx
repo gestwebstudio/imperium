@@ -2,7 +2,7 @@ import type { Car, FacetKey } from "@/lib/cars";
 import { CatalogClient } from "@/components/catalog/CatalogClient";
 import { TradeLeasing } from "@/components/catalog/TradeLeasing";
 import { Podbor } from "@/components/catalog/Podbor";
-import { BodyTypes } from "@/components/home/BodyTypes";
+import { BodyTypesNav } from "@/components/collection/BodyTypesNav";
 import { CarsSection } from "@/components/home/CarsSection";
 import { Contacts } from "@/components/home/Contacts";
 
@@ -23,6 +23,8 @@ export type CollectionPageProps = {
   hiddenFacets: FacetKey[];
   /** Машины для блока «Просмотренные автомобили». */
   viewed: Car[];
+  /** Лейбл плитки кузова, который скрыть в блоке «типы кузова». */
+  excludeBody?: string;
 };
 
 export function CollectionPage({
@@ -31,6 +33,7 @@ export function CollectionPage({
   cars,
   hiddenFacets,
   viewed,
+  excludeBody,
 }: CollectionPageProps) {
   return (
     <main className="catalog">
@@ -40,7 +43,7 @@ export function CollectionPage({
         crumbLabel={crumbLabel}
         hiddenFacets={hiddenFacets}
       />
-      <BodyTypes />
+      <BodyTypesNav exclude={excludeBody} />
       <Podbor />
       <TradeLeasing />
       <CarsSection title="Просмотренные автомобили" cars={viewed} />

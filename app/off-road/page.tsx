@@ -22,6 +22,7 @@ export default function OffRoadPage() {
       cars={cars}
       hiddenFacets={["body"]}
       viewed={viewed}
+      excludeBody="ВНЕДОРОЖНИКИ"
     />
   );
 }
