@@ -84,12 +84,24 @@ export function useInfiniteCarousel(itemCount: number) {
     function normalizePosition() {
       if (cycleWidth <= 0) return;
 
-      const phase =
-        (((rowElement.scrollLeft - middleStart) % cycleWidth) + cycleWidth) %
-        cycleWidth;
-      const nextLeft = middleStart + phase;
+      const items = Array.from(rowElement.children) as HTMLElement[];
+      const nearestIndex = items.reduce(
+        (nearest, item, index) => {
+          const distance = Math.abs(item.offsetLeft - rowElement.scrollLeft);
+          return distance < nearest.distance
+            ? { index, distance }
+            : nearest;
+        },
+        { index: 0, distance: Number.POSITIVE_INFINITY },
+      ).index;
+      const itemIndex =
+        ((nearestIndex % itemCount) + itemCount) % itemCount;
+      const normalizedIndex =
+        INFINITE_CAROUSEL_MIDDLE_COPY * itemCount + itemIndex;
+      const nextLeft = items[normalizedIndex]?.offsetLeft;
+      if (nextLeft == null) return;
 
-      if (Math.abs(nextLeft - rowElement.scrollLeft) > 1) {
+      if (Math.abs(nextLeft - rowElement.scrollLeft) > 0.5) {
         jumpTo(nextLeft);
       }
     }
@@ -128,8 +140,33 @@ export function useInfiniteCarousel(itemCount: number) {
   }, [itemCount]);
 
   function scroll(direction: -1 | 1) {
-    rowRef.current?.scrollBy({
-      left: direction * rowRef.current.clientWidth,
+    const row = rowRef.current;
+    if (!row || row.children.length < 2) return;
+
+    const items = Array.from(row.children) as HTMLElement[];
+    const firstItem = items[0];
+    const secondItem = items[1];
+    const itemStep = secondItem.offsetLeft - firstItem.offsetLeft;
+    if (itemStep <= 0) return;
+
+    const gap = Math.max(0, itemStep - firstItem.offsetWidth);
+    const itemsPerPage = Math.max(
+      1,
+      Math.round((row.clientWidth + gap) / itemStep),
+    );
+    const currentIndex = Math.round(
+      (row.scrollLeft - firstItem.offsetLeft) / itemStep,
+    );
+    const targetIndex = Math.max(
+      0,
+      Math.min(
+        items.length - 1,
+        currentIndex + direction * itemsPerPage,
+      ),
+    );
+
+    row.scrollTo({
+      left: items[targetIndex].offsetLeft,
       behavior: "smooth",
     });
   }
