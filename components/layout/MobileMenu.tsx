@@ -35,7 +35,7 @@ export function MobileMenu() {
 
   // Закрыть меню, если ширина ушла выше мобильного брейка (960px)
   useEffect(() => {
-    const mq = window.matchMedia("(min-width: 961px)");
+    const mq = window.matchMedia("(min-width: 1201px)");
     const onChange = (e: MediaQueryListEvent) => {
       if (e.matches) setOpen(false);
     };

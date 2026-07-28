@@ -14,14 +14,14 @@
   gap: 24px;
   padding: 16px 40px;
 }
-.site-header__nav { display: flex; align-items: center; gap: 38px; }
+.site-header__nav { display: flex; align-items: center; gap: clamp(24px, 2.6vw, 38px); }
 .site-header__nav a {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   font-family: var(--font-text, "Onest", sans-serif);
   font-weight: var(--font-weight-medium, 500);
-  font-size: 20px;
+  font-size: var(--fs-20);
   line-height: 28px;
   color: var(--color-carbon-black-500, #1B1E1D);
   text-decoration: none;
@@ -91,7 +91,7 @@
   filter: brightness(0.97);
 }
 
-@media (min-width: 961px) {
+@media (min-width: 1201px) {
   .header-call:focus-visible {
     width: 222px;
   }
@@ -102,7 +102,7 @@
   }
 }
 
-@media (min-width: 961px) and (hover: hover) and (pointer: fine) {
+@media (min-width: 1201px) and (hover: hover) and (pointer: fine) {
   .header-call:hover {
     width: 222px;
   }
@@ -113,7 +113,7 @@
   }
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1200px) {
   .site-header__nav { display: none; }
   .site-header__logo { position: static; transform: none; }
   .site-header__bar > .liquid-glass__content { padding: 10px 12px; gap: 12px; }
