@@ -262,9 +262,63 @@
 .home > .contacts { margin-top: 240px; }
 
 /* ---------------- Brands row ---------------- */
-.brands-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
-@media (max-width: 1200px) { .brands-row { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 768px) { .brands-row { grid-template-columns: repeat(2, 1fr); gap: 16px; } }
+.brands-carousel {
+  position: relative;
+  width: 100%;
+}
+.brands-row {
+  width: 100%;
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.brands-row::-webkit-scrollbar { display: none; }
+.brands-row > * {
+  flex: 0 0 calc((100% - 96px) / 5);
+  min-width: 0;
+  scroll-snap-align: start;
+}
+.brands-carousel__nav {
+  position: absolute;
+  z-index: 5;
+  top: 50%;
+  left: -22px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-50%);
+  transition:
+    opacity 180ms ease,
+    visibility 180ms ease;
+}
+.brands-carousel__nav--next {
+  right: -22px;
+  left: auto;
+}
+.brands-carousel:hover .brands-carousel__nav,
+.brands-carousel:focus-within .brands-carousel__nav {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.brands-carousel:hover .brands-carousel__nav:disabled,
+.brands-carousel:focus-within .brands-carousel__nav:disabled {
+  opacity: .45;
+}
+.brands-carousel__nav.btn:active { transform: translateY(-50%); }
+.brands-carousel__nav--next .btn__icon { transform: rotate(180deg); }
+@media (max-width: 1200px) {
+  .brands-row > * { flex-basis: calc((100% - 48px) / 3); }
+}
+@media (max-width: 768px) {
+  .brands-row { gap: 16px; }
+  .brands-row > * { flex-basis: calc((100% - 16px) / 2); }
+  .brands-carousel__nav { display: none; }
+}
 
 /* ---------------- Cars section (карусель карточек) ---------------- */
 .cars-section__head {
