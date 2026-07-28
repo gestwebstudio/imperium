@@ -22,11 +22,7 @@ export function FavoritesClient({ cars }: { cars: Car[] }) {
       <Breadcrumbs
         className="favorites-crumbs"
         separator={
-          <ArrowIcon
-            className="favorites-crumbs__separator"
-            width={12}
-            height={12}
-          />
+          <ArrowIcon width={12} height={12} />
         }
       >
         <Breadcrumbs.Item href="/" className="favorites-crumbs__item">
