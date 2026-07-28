@@ -1,7 +1,7 @@
 "use client";
 
-import { Fragment, useState, type CSSProperties } from "react";
-import { Breadcrumbs, Switch } from "@heroui/react";
+import { useState, type CSSProperties } from "react";
+import { Breadcrumbs, Switch, Table } from "@heroui/react";
 import { ArrowIcon, ListAddIcon } from "@/components/icons";
 import { CarCard } from "@/components/cards/cards";
 import { Button, ButtonLink } from "@/components/ui/Button";
@@ -75,10 +75,10 @@ export function ComparisonClient({ cars }: { cars: Car[] }) {
       : group.rows,
   }));
 
-  const tableStyle: CSSProperties = {
-    gridTemplateColumns: `minmax(190px, 240px) repeat(${comparedCars.length}, minmax(300px, 1fr))`,
+  const comparisonStyle = {
+    "--comparison-columns": comparedCars.length,
     minWidth: `${220 + comparedCars.length * 324}px`,
-  };
+  } as CSSProperties;
 
   function clearComparison() {
     comparisonIds.forEach((id) => setCompared(id, false));
@@ -174,67 +174,108 @@ export function ComparisonClient({ cars }: { cars: Car[] }) {
             tabIndex={0}
             aria-label="Таблица сравнения автомобилей"
           >
-            <div className="comparison-table" style={tableStyle}>
-              <div className="comparison-table__corner">
-                Выбранные автомобили
-              </div>
-              {comparedCars.map((car) => (
-                <div className="comparison-table__card" key={car.id}>
-                  <CarCard
-                    vehicleId={car.id}
-                    href={`/catalog/${car.slug}`}
-                    brandLogo={car.brandLogo}
-                    brandName={car.brand}
-                    title={car.name}
-                    status={car.status}
-                    tags={carTags(car)}
-                    photo={car.photo}
-                    photoAlt={car.name}
-                    price={formatPrice(car.price)}
-                    action={{
-                      label: "Подробнее",
-                      variant: "primary-surface",
-                    }}
-                  />
+            <div className="comparison-data" style={comparisonStyle}>
+              <div className="comparison-products">
+                <div className="comparison-products__corner">
+                  Выбранные автомобили
                 </div>
-              ))}
+                {comparedCars.map((car) => (
+                  <div className="comparison-products__card" key={car.id}>
+                    <CarCard
+                      vehicleId={car.id}
+                      href={`/catalog/${car.slug}`}
+                      brandLogo={car.brandLogo}
+                      brandName={car.brand}
+                      title={car.name}
+                      status={car.status}
+                      tags={carTags(car)}
+                      photo={car.photo}
+                      photoAlt={car.name}
+                      price={formatPrice(car.price)}
+                      action={{
+                        label: "Подробнее",
+                        variant: "primary-surface",
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
 
-              {groups.map(
-                (group) =>
-                  group.rows.length > 0 && (
-                    <Fragment key={group.title}>
-                      <div className="comparison-table__group">
-                        {group.title}
-                      </div>
-                      {group.rows.flatMap((row) => [
-                        <div
-                          className="comparison-table__label"
-                          key={`${group.title}-${row.label}-label`}
+              <div className="comparison-table-stack">
+                {groups.map(
+                  (group, groupIndex) =>
+                    group.rows.length > 0 && (
+                      <section
+                        className="comparison-table-section"
+                        key={group.title}
+                      >
+                        <h2 className="comparison-table-section__title">
+                          {group.title}
+                        </h2>
+
+                        <Table.Root
+                          className="comparison-spec-table"
+                          variant="primary"
                         >
-                          {row.label}
-                        </div>,
-                        ...row.values.map((value, carIndex) => (
-                          <div
-                            className="comparison-table__value"
-                            key={`${group.title}-${row.label}-${comparedCars[carIndex].id}`}
+                          <Table.Content
+                            className="comparison-spec-table__content"
+                            aria-label={group.title}
                           >
-                            {row.label === "Цвет" && (
-                              <span
-                                className="comparison-table__swatch"
-                                style={{
-                                  backgroundColor:
-                                    comparedCars[carIndex].color.swatch,
-                                }}
-                                aria-hidden="true"
-                              />
-                            )}
-                            {value}
-                          </div>
-                        )),
-                      ])}
-                    </Fragment>
-                  ),
-              )}
+                            <Table.Header className="comparison-spec-table__header">
+                              <Table.Column
+                                className="comparison-spec-table__column comparison-spec-table__column--label"
+                                isRowHeader
+                              >
+                                Характеристика
+                              </Table.Column>
+                              {comparedCars.map((car) => (
+                                <Table.Column
+                                  className="comparison-spec-table__column"
+                                  key={car.id}
+                                >
+                                  {car.name}
+                                </Table.Column>
+                              ))}
+                            </Table.Header>
+
+                            <Table.Body className="comparison-spec-table__body">
+                              {group.rows.map((row, rowIndex) => (
+                                <Table.Row
+                                  className="comparison-spec-table__row"
+                                  id={`${groupIndex}-${rowIndex}`}
+                                  key={row.label}
+                                >
+                                  <Table.Cell className="comparison-spec-table__cell comparison-spec-table__cell--label">
+                                    {row.label}
+                                  </Table.Cell>
+                                  {row.values.map((value, carIndex) => (
+                                    <Table.Cell
+                                      className="comparison-spec-table__cell comparison-spec-table__cell--value"
+                                      key={comparedCars[carIndex].id}
+                                    >
+                                      {row.label === "Цвет" && (
+                                        <span
+                                          className="comparison-spec-table__swatch"
+                                          style={{
+                                            backgroundColor:
+                                              comparedCars[carIndex].color
+                                                .swatch,
+                                          }}
+                                          aria-hidden="true"
+                                        />
+                                      )}
+                                      {value}
+                                    </Table.Cell>
+                                  ))}
+                                </Table.Row>
+                              ))}
+                            </Table.Body>
+                          </Table.Content>
+                        </Table.Root>
+                      </section>
+                    ),
+                )}
+              </div>
             </div>
           </div>
         </>
