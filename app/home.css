@@ -282,6 +282,7 @@
   min-width: 0;
   scroll-snap-align: start;
 }
+.brands-carousel__item > .brand-card { height: 100%; }
 .brands-carousel__nav {
   position: absolute;
   z-index: 5;
@@ -304,10 +305,6 @@
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-}
-.brands-carousel:hover .brands-carousel__nav:disabled,
-.brands-carousel:focus-within .brands-carousel__nav:disabled {
-  opacity: .45;
 }
 .brands-carousel__nav.btn:active { transform: translateY(-50%); }
 .brands-carousel__nav--next .btn__icon { transform: rotate(180deg); }
@@ -356,6 +353,10 @@
   max-width: 432px;
   scroll-snap-align: start;
 }
+.cars-carousel__item > .car-card {
+  height: 100%;
+  max-width: none;
+}
 .cars-carousel {
   position: relative;
   width: 100%;
@@ -382,10 +383,6 @@
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-}
-.cars-carousel:hover .cars-section__nav:disabled,
-.cars-carousel:focus-within .cars-section__nav:disabled {
-  opacity: .45;
 }
 .cars-section__nav.btn:active { transform: translateY(-50%); }
 .cars-section__nav--next .btn__icon { transform: rotate(180deg); }

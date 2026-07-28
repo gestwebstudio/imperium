@@ -1,12 +1,16 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import type { Car } from "@/lib/cars";
 import { carTags, formatPrice } from "@/lib/cars";
 import { CarCard } from "@/components/cards/cards";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { ArrowIcon } from "@/components/icons";
 import { cn } from "@/lib/cn";
+import {
+  INFINITE_CAROUSEL_COPIES,
+  INFINITE_CAROUSEL_MIDDLE_COPY,
+  useInfiniteCarousel,
+} from "@/components/ui/useInfiniteCarousel";
 
 export function CarsSection({
   title,
@@ -22,58 +26,7 @@ export function CarsSection({
   variant?: "available" | "upcoming";
 }) {
   const isUpcoming = variant === "upcoming";
-  const rowRef = useRef<HTMLDivElement>(null);
-  const [scrollAvailability, setScrollAvailability] = useState({
-    previous: false,
-    next: false,
-  });
-
-  useEffect(() => {
-    const currentRow = rowRef.current;
-    if (!currentRow) return;
-    const rowElement: HTMLDivElement = currentRow;
-
-    function syncScrollAvailability() {
-      const rowRect = rowElement.getBoundingClientRect();
-      const lastCard = rowElement.lastElementChild;
-      const nextAvailability = {
-        previous: rowElement.scrollLeft > 2,
-        next:
-          lastCard != null &&
-          lastCard.getBoundingClientRect().right > rowRect.right + 2,
-      };
-
-      setScrollAvailability((current) =>
-        current.previous === nextAvailability.previous &&
-        current.next === nextAvailability.next
-          ? current
-          : nextAvailability,
-      );
-    }
-
-    syncScrollAvailability();
-    rowElement.addEventListener("scroll", syncScrollAvailability, {
-      passive: true,
-    });
-
-    const resizeObserver = new ResizeObserver(syncScrollAvailability);
-    resizeObserver.observe(rowElement);
-    Array.from(rowElement.children).forEach((card) =>
-      resizeObserver.observe(card),
-    );
-
-    return () => {
-      rowElement.removeEventListener("scroll", syncScrollAvailability);
-      resizeObserver.disconnect();
-    };
-  }, [cars.length]);
-
-  function scrollCards(direction: -1 | 1) {
-    rowRef.current?.scrollBy({
-      left: direction * rowRef.current.clientWidth,
-      behavior: "smooth",
-    });
-  }
+  const { rowRef, scroll } = useInfiniteCarousel(cars.length);
 
   return (
     <section
@@ -102,45 +55,60 @@ export function CarsSection({
           startIcon={<ArrowIcon />}
           className="cars-section__nav"
           aria-label="Предыдущие автомобили"
-          disabled={!scrollAvailability.previous}
-          onClick={() => scrollCards(-1)}
+          onClick={() => scroll(-1)}
         />
         <div className="cars-row" ref={rowRef}>
-          {cars.map((car) => (
-            <CarCard
-              key={car.id}
-              vehicleId={isUpcoming ? "lexus-gx-executive" : car.id}
-              href={
-                isUpcoming
-                  ? "/catalog/lexus-gx-executive"
-                  : `/catalog/${car.slug}`
-              }
-              brandLogo={
-                isUpcoming ? "/images/logo_cards/lexus.webp" : car.brandLogo
-              }
-              brandName={isUpcoming ? "Lexus" : car.brand}
-              title={isUpcoming ? "GX Executive" : car.name}
-              status={
-                isUpcoming
-                  ? { type: "warning", label: "Ожидаем поступления" }
-                  : car.status
-              }
-              tags={
-                isUpcoming
-                  ? ["2026", "Бензин", "Полный привод"]
-                  : carTags(car)
-              }
-              photo={isUpcoming ? "/images/cars/mask.webp" : car.photo}
-              photoAlt={isUpcoming ? "Автомобиль ожидается" : car.name}
-              price={isUpcoming ? "15 490 000 ₽" : formatPrice(car.price)}
-              action={{
-                label: "Подробнее",
-                variant: isUpcoming
-                  ? "secondary-outlined"
-                  : "primary-surface",
-              }}
-            />
-          ))}
+          {INFINITE_CAROUSEL_COPIES.map((copy) =>
+            cars.map((car, index) => {
+              const isMiddleCopy = copy === INFINITE_CAROUSEL_MIDDLE_COPY;
+              return (
+                <div
+                  key={`${copy}-${car.id}`}
+                  className="cars-carousel__item"
+                  data-carousel-cycle-start={index === 0 ? "" : undefined}
+                  aria-hidden={isMiddleCopy ? undefined : true}
+                  inert={isMiddleCopy ? undefined : true}
+                >
+                  <CarCard
+                    vehicleId={isUpcoming ? "lexus-gx-executive" : car.id}
+                    href={
+                      isUpcoming
+                        ? "/catalog/lexus-gx-executive"
+                        : `/catalog/${car.slug}`
+                    }
+                    brandLogo={
+                      isUpcoming
+                        ? "/images/logo_cards/lexus.webp"
+                        : car.brandLogo
+                    }
+                    brandName={isUpcoming ? "Lexus" : car.brand}
+                    title={isUpcoming ? "GX Executive" : car.name}
+                    status={
+                      isUpcoming
+                        ? { type: "warning", label: "Ожидаем поступления" }
+                        : car.status
+                    }
+                    tags={
+                      isUpcoming
+                        ? ["2026", "Бензин", "Полный привод"]
+                        : carTags(car)
+                    }
+                    photo={isUpcoming ? "/images/cars/mask.webp" : car.photo}
+                    photoAlt={isUpcoming ? "Автомобиль ожидается" : car.name}
+                    price={
+                      isUpcoming ? "15 490 000 ₽" : formatPrice(car.price)
+                    }
+                    action={{
+                      label: "Подробнее",
+                      variant: isUpcoming
+                        ? "secondary-outlined"
+                        : "primary-surface",
+                    }}
+                  />
+                </div>
+              );
+            }),
+          )}
         </div>
         <Button
           size="l"
@@ -149,8 +117,7 @@ export function CarsSection({
           startIcon={<ArrowIcon />}
           className="cars-section__nav cars-section__nav--next"
           aria-label="Следующие автомобили"
-          disabled={!scrollAvailability.next}
-          onClick={() => scrollCards(1)}
+          onClick={() => scroll(1)}
         />
       </div>
     </section>

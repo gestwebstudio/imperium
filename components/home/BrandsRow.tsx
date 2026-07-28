@@ -1,9 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { BrandCard } from "@/components/cards/cards";
 import { ArrowIcon } from "@/components/icons";
 import { Button } from "@/components/ui/Button";
+import {
+  INFINITE_CAROUSEL_COPIES,
+  INFINITE_CAROUSEL_MIDDLE_COPY,
+  useInfiniteCarousel,
+} from "@/components/ui/useInfiniteCarousel";
 
 const brands = [
   {
@@ -39,58 +43,7 @@ const brands = [
 ];
 
 export function BrandsRow() {
-  const rowRef = useRef<HTMLDivElement>(null);
-  const [scrollAvailability, setScrollAvailability] = useState({
-    previous: false,
-    next: false,
-  });
-
-  useEffect(() => {
-    const row = rowRef.current;
-    if (!row) return;
-    const rowElement: HTMLDivElement = row;
-
-    function syncScrollAvailability() {
-      const lastCard = rowElement.lastElementChild;
-      const rowRect = rowElement.getBoundingClientRect();
-      const nextAvailability = {
-        previous: rowElement.scrollLeft > 2,
-        next:
-          lastCard != null &&
-          lastCard.getBoundingClientRect().right > rowRect.right + 2,
-      };
-
-      setScrollAvailability((current) =>
-        current.previous === nextAvailability.previous &&
-        current.next === nextAvailability.next
-          ? current
-          : nextAvailability,
-      );
-    }
-
-    syncScrollAvailability();
-    rowElement.addEventListener("scroll", syncScrollAvailability, {
-      passive: true,
-    });
-
-    const resizeObserver = new ResizeObserver(syncScrollAvailability);
-    resizeObserver.observe(rowElement);
-    Array.from(rowElement.children).forEach((card) =>
-      resizeObserver.observe(card),
-    );
-
-    return () => {
-      rowElement.removeEventListener("scroll", syncScrollAvailability);
-      resizeObserver.disconnect();
-    };
-  }, []);
-
-  function scrollBrands(direction: -1 | 1) {
-    rowRef.current?.scrollBy({
-      left: direction * rowRef.current.clientWidth,
-      behavior: "smooth",
-    });
-  }
+  const { rowRef, scroll } = useInfiniteCarousel(brands.length);
 
   return (
     <section className="home-wrap brands">
@@ -102,18 +55,25 @@ export function BrandsRow() {
           startIcon={<ArrowIcon />}
           className="brands-carousel__nav"
           aria-label="Предыдущие бренды"
-          disabled={!scrollAvailability.previous}
-          onClick={() => scrollBrands(-1)}
+          onClick={() => scroll(-1)}
         />
         <div className="brands-row" ref={rowRef}>
-          {brands.map(({ name, src, className }) => (
-            <BrandCard
-              key={name}
-              src={src}
-              alt={name}
-              className={className}
-            />
-          ))}
+          {INFINITE_CAROUSEL_COPIES.map((copy) =>
+            brands.map(({ name, src, className }, index) => {
+              const isMiddleCopy = copy === INFINITE_CAROUSEL_MIDDLE_COPY;
+              return (
+                <div
+                  key={`${copy}-${name}`}
+                  className="brands-carousel__item"
+                  data-carousel-cycle-start={index === 0 ? "" : undefined}
+                  aria-hidden={isMiddleCopy ? undefined : true}
+                  inert={isMiddleCopy ? undefined : true}
+                >
+                  <BrandCard src={src} alt={name} className={className} />
+                </div>
+              );
+            }),
+          )}
         </div>
         <Button
           size="l"
@@ -122,8 +82,7 @@ export function BrandsRow() {
           startIcon={<ArrowIcon />}
           className="brands-carousel__nav brands-carousel__nav--next"
           aria-label="Следующие бренды"
-          disabled={!scrollAvailability.next}
-          onClick={() => scrollBrands(1)}
+          onClick={() => scroll(1)}
         />
       </div>
     </section>
