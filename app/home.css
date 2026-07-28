@@ -162,7 +162,7 @@
 .hero__seg--active { background: rgba(143, 133, 121, 0.4); }
 .hero__seg--active > span { display: block; height: 4px; width: 22%; border-radius: 10px; background: var(--color-heritage-green-500, #294434); }
 
-@media (max-width: 1599px) {
+@media (max-width: 1536px) {
   .hero__inner {
     height: auto;
     min-height: 900px;
@@ -210,9 +210,9 @@
   .hero__slider { position: relative; inset: auto; margin-top: 28px; }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 960px) {
   .hero__top { flex-direction: column; gap: 20px; }
-  .hero__unique { text-align: left; }
+  .hero__unique { text-align: left; padding-top: 0; }
   .hero__car { top: 360px; width: min(96vw, 760px); }
   .hero__watermark { display: none; }
   .hero__lower { flex-direction: column; align-items: stretch; gap: 24px; margin-top: 300px; }
@@ -221,14 +221,34 @@
   .stat { min-width: 180px; }
 }
 
-@media (max-width: 640px) {
-  .hero__inner { min-height: 0; padding-top: 112px; }
+@media (max-width: 768px) {
+  /* Мобилка: hero в поток колонкой, машина между заголовком и карточкой */
+  .hero__inner {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    height: auto;
+    padding: 112px clamp(24px, 4vw, 60px) 32px;
+  }
+  .hero__top { order: 1; margin: 0; }
   .hero__h1-reg,
-  .hero__h1-bold { font-size: clamp(34px, 10.4vw, 44px); line-height: 1.08; }
-  .hero__car { top: 335px; right: -22%; width: 120vw; }
-  .hero__lower { margin-top: 250px; }
+  .hero__h1-bold { font-size: clamp(34px, 10.4vw, 46px); line-height: 1.08; }
+  .hero__car {
+    order: 2;
+    position: relative;
+    inset: auto;
+    top: auto;
+    left: auto;
+    right: auto;
+    width: 100%;
+    max-width: 520px;
+    height: auto;
+    margin: 12px auto 0;
+  }
+  .hero__lower { order: 3; margin-top: 20px; }
   .hero__card { max-width: none; }
-  .hero__stats { display: grid; grid-template-columns: 1fr 1fr; }
+  .hero__slider { order: 4; margin-top: 20px; }
+  .hero__stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 16px; }
   .stat { min-width: 0; padding: 8px 0; }
   .stat__div { display: none; }
 }
