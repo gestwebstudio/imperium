@@ -313,6 +313,7 @@
 .cars-carousel:focus-within .cars-section__nav:disabled {
   opacity: .45;
 }
+.cars-section__nav.btn:active { transform: translateY(-50%); }
 .cars-section__nav--next .btn__icon { transform: rotate(180deg); }
 @media (max-width: 640px) { .cars-row > * { flex: 0 0 300px; } }
 
