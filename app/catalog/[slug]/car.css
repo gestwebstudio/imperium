@@ -325,7 +325,7 @@
 /* ---------- Комплектация ---------- */
 .car-equipment {
   box-sizing: border-box;
-  height: 422px;
+  min-height: 422px;
   padding: 30px;
   border-radius: 30px;
   background: rgba(228, 223, 219, .5);
@@ -360,7 +360,7 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 36px;
-  height: 232px;
+  min-height: 232px;
 }
 .car-equipment__column {
   position: relative;
@@ -389,9 +389,7 @@
   color: var(--color-carbon-black-300, #898785);
 }
 .car-equipment__value {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: break-word;
   font-family: var(--font-text, "Onest", sans-serif);
   font-weight: var(--font-weight-semibold, 600);
   font-size: 18px;
