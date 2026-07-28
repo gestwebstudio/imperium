@@ -108,7 +108,7 @@ export function CatalogClient({ cars }: CatalogClientProps) {
     else if (sort === "price-desc") arr.sort((a, b) => b.price - a.price);
     return arr; // popular → исходный порядок
   }, [filtered, sort]);
-  const displayedCars = sorted.slice(0, 12);
+  const displayedCars = sorted;
 
   return (
     <div className="catalog-page">
