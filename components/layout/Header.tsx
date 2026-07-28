@@ -1,9 +1,49 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import "./layout.css";
 import { PhoneIcon, ArrowDiagonalIcon } from "@/components/icons";
 import { ButtonLink } from "@/components/ui/Button";
 import { GlassSurface } from "@/components/ui/GlassSurface";
 import { MobileMenu } from "./MobileMenu";
+
+/**
+ * «Headroom»: при скролле вниз шапка уезжает вверх (скрывается),
+ * при скролле вверх — возвращается и остаётся зафиксированной.
+ * У самого верха страницы всегда видима.
+ */
+function useHideOnScroll() {
+  const [hidden, setHidden] = useState(false);
+
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let ticking = false;
+
+    const TOLERANCE = 8; // порог, чтобы дрожание/отскок не переключали шапку
+    const update = () => {
+      ticking = false;
+      const y = Math.max(0, window.scrollY);
+      if (Math.abs(y - lastY) < TOLERANCE) return; // игнор мелких движений
+      if (y <= 8) setHidden(false); // у верха — всегда видима
+      else if (y > lastY) setHidden(true); // вниз — прячем
+      else setHidden(false); // вверх — показываем
+      lastY = y;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return hidden;
+}
 
 function ChevronDown() {
   return (
@@ -20,8 +60,10 @@ function ChevronDown() {
 }
 
 export function Header() {
+  const hidden = useHideOnScroll();
+
   return (
-    <header className="site-header">
+    <header className={`site-header${hidden ? " is-hidden" : ""}`}>
       <GlassSurface
         className="site-header__bar"
         backgroundOpacity={0.06}
