@@ -556,7 +556,7 @@
   padding: 30px;
   overflow: hidden;
   border-radius: 40px;
-  background: var(--color-stone-beige-200, #E4DFDB);
+  background: transparent;
   display: flex;
   flex-direction: column;
   gap: 30px;
