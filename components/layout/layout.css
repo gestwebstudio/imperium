@@ -44,9 +44,8 @@
   width: 46px;
   height: 46px;
   flex: none;
-  gap: 0;
   overflow: hidden;
-  padding: 0 11px;
+  padding: 0;
   border: none;
   border-radius: 90px;
   cursor: pointer;
@@ -57,11 +56,11 @@
   justify-content: flex-end;
   transition:
     width 280ms cubic-bezier(0.22, 1, 0.36, 1),
-    gap 280ms cubic-bezier(0.22, 1, 0.36, 1),
-    padding 280ms cubic-bezier(0.22, 1, 0.36, 1),
     filter 150ms ease;
 }
-.header-call__number {
+.ui-button.header-call > .header-call__number {
+  position: absolute;
+  left: 22px;
   max-width: 0;
   overflow: hidden;
   opacity: 0;
@@ -76,10 +75,14 @@
     opacity 160ms ease,
     transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
 }
-.header-call svg {
+.ui-button.header-call > svg {
+  position: absolute;
+  top: 50%;
+  right: 11px;
   width: 24px;
   height: 24px;
   flex: none;
+  transform: translateY(-50%);
 }
 .header-call:hover {
   filter: brightness(0.97);
@@ -88,8 +91,6 @@
 @media (min-width: 901px) {
   .header-call:focus-visible {
     width: 234px;
-    gap: 12px;
-    padding-inline: 22px;
   }
   .header-call:focus-visible .header-call__number {
     max-width: 160px;
@@ -101,8 +102,6 @@
 @media (min-width: 901px) and (hover: hover) and (pointer: fine) {
   .header-call:hover {
     width: 234px;
-    gap: 12px;
-    padding-inline: 22px;
   }
   .header-call:hover .header-call__number {
     max-width: 160px;
