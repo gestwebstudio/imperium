@@ -335,7 +335,6 @@
 }
 .cars-section__nav.btn:active { transform: translateY(-50%); }
 .cars-section__nav--next .btn__icon { transform: rotate(180deg); }
-@media (max-width: 768px) { .cars-row > * { flex: 0 0 min(82vw, 320px); min-width: 0; } }
 
 /* ---------------- Body types (bento) ---------------- */
 .body-types__head {
@@ -433,8 +432,8 @@
 .service-card__title {
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
   font-weight: 600;
-  font-size: 36px;
-  line-height: 44px;
+  font-size: var(--fs-36);
+  line-height: 1.22;
   color: var(--color-heritage-green-500, #294434);
   transition: color 280ms cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -564,8 +563,8 @@
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
   color: var(--color-carbon-black-500, #1B1E1D);
 }
-.about__lead .reg { font-weight: 400; font-size: 50px; line-height: 70px; }
-.about__lead .bold { font-weight: 700; font-size: 66px; line-height: 70px; }
+.about__lead .reg { font-weight: 400; font-size: var(--fs-50); line-height: 1.4; }
+.about__lead .bold { font-weight: 700; font-size: var(--fs-66); line-height: 1.06; }
 
 /* карточка услуги с фото (Ателье / Подбор / Велес) */
 .svc-card {
@@ -585,7 +584,7 @@
 .svc-card__img { width: 100%; height: 438px; flex: 0 0 438px; border-radius: 30px; object-fit: cover; display: block; }
 .svc-card__body { display: flex; flex-direction: column; gap: 12px; }
 .svc-card__head { display: flex; gap: 12px; align-items: center; }
-.svc-card__title { flex: 1; font-family: var(--font-display, "Wix Madefor Display", sans-serif); font-weight: 600; font-size: 36px; line-height: 44px; color: var(--color-carbon-black-500, #1B1E1D); }
+.svc-card__title { flex: 1; font-family: var(--font-display, "Wix Madefor Display", sans-serif); font-weight: 600; font-size: var(--fs-36); line-height: 1.22; color: var(--color-carbon-black-500, #1B1E1D); }
 .svc-card__arrow {
   flex: none; width: 46px; height: 46px; border-radius: 30px;
   border: 1px solid var(--color-heritage-green-500, #294434);
@@ -615,7 +614,7 @@
 .about__testi-nav svg { width: 14px; height: 14px; }
 .about__testi-nav .next svg { transform: rotate(180deg); }
 
-@media (max-width: 900px) {
+@media (max-width: 960px) {
   .about__services { grid-template-columns: 1fr; }
   .service-card { height: auto; min-height: 167px; }
   .about__identity {
@@ -632,8 +631,7 @@
     inset: auto;
     width: 100%;
   }
-  .about__lead .reg { font-size: clamp(30px, 7vw, 50px); line-height: 1.3; }
-  .about__lead .bold { font-size: clamp(38px, 9vw, 66px); line-height: 1.08; }
+  .about__lead .bold { line-height: 1.08; }
   .svc-card { height: auto; min-height: 0; }
   .svc-card__img { height: auto; flex-basis: auto; aspect-ratio: 16 / 10; }
   .about__testimonial { grid-template-columns: 1fr; }
@@ -645,8 +643,8 @@
 .contacts__title .l1,
 .contacts__title .l2 {
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
-  font-size: 88px;
-  line-height: 100px;
+  font-size: var(--fs-88);
+  line-height: 1.136;
   text-transform: uppercase;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
@@ -677,10 +675,8 @@
 .contacts__map { flex: 1; min-height: 0; border-radius: 32px; overflow: hidden; background: var(--color-stone-beige-200, #E4DFDB); }
 .contacts__map iframe { width: 100%; height: 100%; border: 0; display: block; }
 
-@media (max-width: 900px) {
+@media (max-width: 960px) {
   .contacts__title { gap: 0; }
-  .contacts__title .l1,
-  .contacts__title .l2 { font-size: clamp(40px, 10vw, 72px); line-height: 1.05; }
   .contacts__sub { margin-top: 20px; }
   .contacts__grid { grid-template-columns: 1fr; gap: 32px; }
   .contacts__gallery { grid-template-rows: auto auto; row-gap: 24px; }
@@ -689,7 +685,7 @@
   .contacts__info { height: auto; min-height: 760px; margin-top: 0; gap: 40px; }
 }
 
-@media (min-width: 901px) and (max-width: 1599px) {
+@media (min-width: 961px) and (max-width: 1536px) {
   .home > .brands,
   .home > .cars-section--available,
   .home > .body-types,
@@ -704,14 +700,6 @@
     max-width: none;
   }
 
-  .body-types__title .l1,
-  .body-types__title .l2,
-  .contacts__title .l1,
-  .contacts__title .l2 {
-    font-size: clamp(60px, 5vw, 80px);
-    line-height: 1.12;
-    white-space: nowrap;
-  }
   .body-types__title { gap: 4px; }
   .body-types__head { min-height: 0; margin-bottom: 48px; }
   .body-types__aside { width: min(44%, 594px); padding-top: 72px; }
@@ -747,7 +735,7 @@
   .contacts__sub { margin-top: 24px; }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 960px) {
   .home > .brands,
   .home > .cars-section--available,
   .home > .body-types,
@@ -762,7 +750,6 @@
     min-height: 48px;
     margin-bottom: 24px;
   }
-  .cars-section__title { font-size: clamp(30px, 8vw, 42px); line-height: 1.15; }
   .cars-row > * {
     flex-basis: calc((100% - 24px) / 2);
     max-width: none;
@@ -770,13 +757,13 @@
   .about__testimonial { margin-top: 80px; }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .cars-section__head { align-items: flex-start; }
   .cars-section__head > .btn { display: none; }
   .cars-section__nav { display: none; }
   .cars-row > * {
-    flex: 0 0 min(100%, 340px);
-    min-width: 280px;
+    flex: 0 0 min(82vw, 320px);
+    min-width: 0;
   }
   .contacts__gallery {
     grid-template-columns: 1fr;
@@ -789,5 +776,5 @@
     aspect-ratio: 4 / 5;
   }
   .contacts__info { min-height: 700px; padding: 28px; }
-  .contacts__row .value { font-size: 24px; line-height: 32px; }
+  .contacts__row .value { font-size: var(--fs-24); line-height: 1.33; }
 }
