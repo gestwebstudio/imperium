@@ -1,7 +1,6 @@
-import { ArrowIcon } from "@/components/icons";
 import { ServiceImageCard } from "@/components/cards/cards";
 import { ServiceCards } from "@/components/ServiceCards";
-import { Button } from "@/components/ui/Button";
+import { Testimonials } from "@/components/home/Testimonials";
 
 export function About() {
   return (
@@ -39,38 +38,7 @@ export function About() {
         />
       </div>
 
-      <div className="about__testimonial">
-        <div className="about__testi-img">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/reviews/review1.webp" alt="Отзыв клиента" />
-        </div>
-        <div className="about__testi-body">
-          <h3 className="about__testi-title">
-            <span className="reg">Выбор, </span>
-            <span className="bold">которым делятся</span>
-          </h3>
-          <div className="about__testi-quote">
-            <div className="about__testi-author">
-              <b>Михаил</b>
-              <span>BMW 7 Series</span>
-            </div>
-            <p className="about__testi-text">
-              «Искал автомобиль без компромиссов по комплектации и состоянию.
-              Команда быстро поняла задачу, предложила несколько точных вариантов
-              и полностью взяла на себя сопровождение сделки. В результате я
-              получил именно тот автомобиль, который хотел.»
-            </p>
-          </div>
-          <div className="about__testi-nav">
-            <Button bare aria-label="Предыдущий отзыв">
-              <ArrowIcon />
-            </Button>
-            <Button bare className="next" aria-label="Следующий отзыв">
-              <ArrowIcon />
-            </Button>
-          </div>
-        </div>
-      </div>
+      <Testimonials />
     </section>
   );
 }
