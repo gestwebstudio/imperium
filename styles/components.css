@@ -580,6 +580,9 @@
 .car-card__actions .compare:not(.is-active) {
   color: var(--color-warm-taupe-300, #B2A79B);
 }
+.car-card__actions .compare.is-active {
+  color: var(--color-heritage-green-400, #4E7B60);
+}
 .car-card__info { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; width: 100%; }
 .car-card__title {
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
