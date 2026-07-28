@@ -166,7 +166,7 @@
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
   font-weight: var(--font-weight-semibold, 600);
   font-size: clamp(28px, 3.2vw, 48px);
-  line-height: 56px;
+  line-height: 1.167;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 .car-title__badge {
@@ -573,7 +573,7 @@
   height: 39px;
 }
 /* ---------- Адаптив ---------- */
-@media (max-width: 1279px) {
+@media (max-width: 1200px) {
   .car-wrap--top { padding-top: 128px; padding-bottom: 20px; }
   .cat-crumbs,
   .cat-crumbs ol,
@@ -591,7 +591,7 @@
     flex-wrap: wrap;
   }
 }
-@media (max-width: 1080px) {
+@media (max-width: 1200px) {
   .car-main {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
@@ -604,10 +604,10 @@
   .car-specs__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .car-equipment__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); height: auto; }
 }
-@media (max-width: 1000px) {
+@media (max-width: 960px) {
   .car-gallery { --gal-w: 86vw; }
 }
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .car-details { gap: 48px; }
   .car-details__technical { gap: 20px; }
   .car-title { flex-direction: column; }
