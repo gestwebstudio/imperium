@@ -233,10 +233,15 @@
 .footer-logo { margin-top: 1px; }
 .footer-logo img { width: 100%; height: auto; display: block; }
 
-@media (max-width: 900px) {
+@media (max-width: 960px) {
   .footer-cols { gap: 32px 48px; }
   .footer-legal { text-align: left; margin-left: 0; }
   .footer-tagline { margin-top: 72px; }
+}
+
+@media (max-width: 768px) {
+  .footer-top { gap: 40px; }
+  .footer-legal { gap: 24px; }
 }
 
 /* ============================================================
