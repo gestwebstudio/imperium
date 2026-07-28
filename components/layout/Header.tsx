@@ -3,6 +3,7 @@ import "./layout.css";
 import { PhoneIcon, ArrowDiagonalIcon } from "@/components/icons";
 import { ButtonLink } from "@/components/ui/Button";
 import { GlassSurface } from "@/components/ui/GlassSurface";
+import { MobileMenu } from "./MobileMenu";
 
 function ChevronDown() {
   return (
@@ -32,6 +33,8 @@ export function Header() {
         frost={3}
         splay={70}
       >
+        <MobileMenu />
+
         <nav className="site-header__nav">
           <a href="#">
             Услуги
@@ -61,6 +64,7 @@ export function Header() {
           <ButtonLink
             href="/catalog"
             variant="primary-cta"
+            className="site-header__cta"
             ctaIcon={<ArrowDiagonalIcon />}
           >
             Каталог

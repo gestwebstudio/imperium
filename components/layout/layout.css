@@ -39,6 +39,9 @@
 }
 .site-header__logo img { height: 32px; width: auto; display: block; }
 .site-header__actions { display: flex; align-items: center; gap: 16px; }
+
+/* Бургер (моб. навигация) — скрыт на десктопе, показывается ≤960 */
+.site-header__burger { display: none; }
 .header-call {
   box-sizing: border-box;
   width: 46px;
@@ -88,7 +91,7 @@
   filter: brightness(0.97);
 }
 
-@media (min-width: 901px) {
+@media (min-width: 961px) {
   .header-call:focus-visible {
     width: 222px;
   }
@@ -99,7 +102,7 @@
   }
 }
 
-@media (min-width: 901px) and (hover: hover) and (pointer: fine) {
+@media (min-width: 961px) and (hover: hover) and (pointer: fine) {
   .header-call:hover {
     width: 222px;
   }
@@ -110,10 +113,40 @@
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 960px) {
   .site-header__nav { display: none; }
   .site-header__logo { position: static; transform: none; }
-  .site-header__bar > .liquid-glass__content { padding: 10px 12px 10px 20px; }
+  .site-header__bar > .liquid-glass__content { padding: 10px 12px; gap: 12px; }
+
+  .site-header__burger {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    box-sizing: border-box;
+    width: 46px;
+    height: 46px;
+    flex: none;
+    padding: 0 12px;
+    border: none;
+    border-radius: 90px;
+    cursor: pointer;
+    background: var(--color-stone-beige-100, #F3F0EE);
+    color: var(--color-carbon-black-500, #1B1E1D);
+  }
+  .site-header__burger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    margin: 0 auto;
+    border-radius: 2px;
+    background: currentColor;
+  }
+}
+
+/* На телефоне CTA «Каталог» уезжает в drawer — в баре остаётся бургер+лого+телефон */
+@media (max-width: 768px) {
+  .site-header__cta { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -204,4 +237,104 @@
   .footer-cols { gap: 32px 48px; }
   .footer-legal { text-align: left; margin-left: 0; }
   .footer-tagline { margin-top: 72px; }
+}
+
+/* ============================================================
+   Mobile menu (drawer) — портал в <body>
+   ============================================================ */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  visibility: hidden;
+  pointer-events: none;
+}
+.mobile-menu.is-open {
+  visibility: visible;
+  pointer-events: auto;
+}
+.mobile-menu__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(27, 30, 29, 0.5);
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+.mobile-menu.is-open .mobile-menu__backdrop {
+  opacity: 1;
+}
+.mobile-menu__panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: min(88vw, 420px);
+  box-sizing: border-box;
+  padding: 24px clamp(20px, 5vw, 32px) 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  background: var(--color-stone-beige-100, #F3F0EE);
+  box-shadow: -20px 0 60px rgba(27, 30, 29, 0.15);
+  transform: translateX(100%);
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.mobile-menu.is-open .mobile-menu__panel {
+  transform: translateX(0);
+}
+.mobile-menu__close {
+  align-self: flex-end;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background: var(--color-white, #fff);
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.mobile-menu__nav {
+  display: flex;
+  flex-direction: column;
+}
+.mobile-menu__nav a {
+  padding: 14px 0;
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-weight: var(--font-weight-medium, 500);
+  font-size: var(--fs-24);
+  line-height: 1.25;
+  color: var(--color-carbon-black-500, #1B1E1D);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-stone-beige-300, #CAC2BB);
+}
+.mobile-menu__nav a:hover {
+  color: var(--color-heritage-green-500, #294434);
+}
+.mobile-menu__actions {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.mobile-menu__phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: var(--fs-18);
+  line-height: 1.33;
+  color: var(--color-heritage-green-500, #294434);
+  text-decoration: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu__backdrop,
+  .mobile-menu__panel {
+    transition-duration: 0.01ms;
+  }
 }
