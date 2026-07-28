@@ -83,7 +83,7 @@ export function Header() {
             <ChevronDown />
           </a>
           <a href="#">О салоне</a>
-          <a href="#">Контакты</a>
+          <Link href="/contacts">Контакты</Link>
         </nav>
 
         <Link href="/" className="site-header__logo" aria-label="Imperium Motors">

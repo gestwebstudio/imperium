@@ -5,16 +5,22 @@ const MAP_SRC =
   encodeURIComponent("Москва, Кутузовский проспект, 48") +
   "&z=16";
 
-export function Contacts() {
+export function Contacts({
+  headingLevel = "h2",
+}: {
+  headingLevel?: "h1" | "h2";
+}) {
+  const Heading = headingLevel;
+
   return (
     <section className="home-wrap contacts" id="contacts">
       <div className="contacts__grid">
         <div className="contacts__left">
           <div className="contacts__head">
-            <h2 className="contacts__title">
+            <Heading className="contacts__title">
               <span className="l1">Ждём вас в салоне</span>
               <span className="l2">Imperium Motors</span>
-            </h2>
+            </Heading>
             <p className="contacts__sub">
               Выберите удобное время, и мы подготовим автомобили к вашему приезду.
               Ответим на вопросы, проведём тест-драйв и обсудим детали сделки в
