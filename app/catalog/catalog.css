@@ -477,10 +477,6 @@
 .catalog > .cars-section--available .car-card {
   height: 484px;
 }
-.catalog > .cars-section--available .car-card__brand,
-.catalog > .cars-section--available .car-card__brand img {
-  height: 39px;
-}
 
 /* ---------- Адаптив ---------- */
 @media (max-width: 1440px) {
