@@ -10,13 +10,28 @@ export type SpecsProps = {
   extra: Spec[];
 };
 
+function distributeIntoColumns(items: Spec[], columnCount: number) {
+  const baseSize = Math.floor(items.length / columnCount);
+  const remainder = items.length % columnCount;
+  let offset = 0;
+
+  return Array.from({ length: columnCount }, (_, index) => {
+    const size = baseSize + (index < remainder ? 1 : 0);
+    const column = items.slice(offset, offset + size);
+    offset += size;
+    return column;
+  });
+}
+
 export function Specs({ primary, extra }: SpecsProps) {
   const [open, setOpen] = useState(false);
-  const items = open ? [...primary, ...extra] : primary;
-  const chunkSize = Math.ceil(items.length / 3);
-  const columns = Array.from({ length: 3 }, (_, index) =>
-    items.slice(index * chunkSize, (index + 1) * chunkSize),
-  ).filter((column) => column.length > 0);
+  const primaryColumns = distributeIntoColumns(primary, 3);
+  const extraColumns = distributeIntoColumns(extra, 3);
+  const columns = primaryColumns
+    .map((column, index) =>
+      open ? [...column, ...extraColumns[index]] : column,
+    )
+    .filter((column) => column.length > 0);
 
   return (
     <section className={`car-specs${open ? " is-open" : ""}`}>

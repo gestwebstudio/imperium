@@ -70,6 +70,12 @@
   margin-bottom: 34px;
 }
 .catalog-head__title { display: flex; align-items: center; gap: 16px; }
+.catalog-head__tools { display: flex; align-items: center; gap: 20px; }
+
+/* Кнопка «Фильтры» и шапка/бэкдроп drawer — только на мобилке (≤1200) */
+.cat-filters-toggle { display: none; }
+.cat-filters__bar { display: none; }
+.cat-filters-backdrop { display: none; }
 .catalog-head h1 {
   margin: 0;
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
@@ -467,74 +473,104 @@
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 
-/* ---------- Закреплённые действия ---------- */
-.catalog-tools {
-  position: fixed;
-  z-index: 20;
-  top: clamp(180px, 26.354vw, 506px);
-  right: 0;
-  box-sizing: border-box;
-  width: 56px;
-  height: 96px;
-  padding: 16px;
-  border-radius: 12px 0 0 12px;
-  background: var(--color-warm-taupe-100, #F2EEEA);
-  box-shadow: 6px 4px 50px rgba(180, 170, 163, .45);
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.catalog-tools__item {
-  position: relative;
-  width: 24px;
-  height: 24px;
-}
-.catalog-tools__count {
-  position: absolute;
-  top: -3px;
-  left: 16px;
-  min-width: 15px;
-  height: 15px;
-  box-sizing: border-box;
-  padding: 2px;
-  border-radius: 50%;
-  background: var(--color-heritage-green-500, #294434);
-  color: var(--color-white, #FFFFFF);
-  font-family: var(--font-text, "Onest", sans-serif);
-  font-weight: var(--font-weight-medium, 500);
-  font-size: 10px;
-  line-height: 11px;
-  text-align: center;
-  pointer-events: none;
-}
-
 /* ---------- Секции каталога ---------- */
 .catalog > .cars-section--available .car-card {
   height: 484px;
-}
-.catalog > .cars-section--available .car-card__brand,
-.catalog > .cars-section--available .car-card__brand img {
-  height: 39px;
 }
 
 /* ---------- Адаптив ---------- */
 @media (max-width: 1440px) {
   .catalog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-@media (max-width: 1080px) {
-  .catalog-body { flex-direction: column; }
-  .cat-filters {
-    position: static;
-    max-height: none;
-    width: 100%;
-    flex-basis: auto;
-    overflow: visible;
+
+/* ≤1200: сайдбар фильтров → правый drawer по кнопке «Фильтры» */
+@media (max-width: 1200px) {
+  .cat-filters-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 44px;
+    padding: 0 20px;
+    border-radius: 90px;
+    border: 1px solid var(--color-heritage-green-500, #294434);
+    background: transparent;
+    color: var(--color-heritage-green-500, #294434);
+    font-family: var(--font-text, "Onest", sans-serif);
+    font-weight: var(--font-weight-medium, 500);
+    font-size: 16px;
+    line-height: 20px;
+    cursor: pointer;
   }
-  .catalog-results { width: 100%; }
-  .catalog-tools { display: none; }
+
+  .cat-filters-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+    background: rgba(27, 30, 29, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 200ms ease, visibility 200ms ease;
+  }
+  .cat-filters-backdrop.is-open { opacity: 1; visibility: visible; }
+
+  .cat-filters {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    z-index: 100;
+    width: min(92vw, 432px);
+    height: 100%;
+    max-height: none;
+    flex: none;
+    border-radius: 0;
+    background: var(--color-stone-beige-100, #F3F0EE);
+    box-shadow: -20px 0 60px rgba(27, 30, 29, 0.15);
+    transform: translateX(100%);
+    transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .cat-filters.is-open { transform: translateX(0); }
+
+  .cat-filters__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .cat-filters__bar-title {
+    font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+    font-weight: var(--font-weight-semibold, 600);
+    font-size: var(--fs-24);
+    line-height: 1.25;
+    color: var(--color-carbon-black-500, #1B1E1D);
+  }
+  .cat-filters__close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    flex: none;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    background: var(--color-white, #fff);
+    color: var(--color-carbon-black-500, #1B1E1D);
+  }
 }
-@media (max-width: 680px) {
+
+@media (max-width: 768px) {
   .catalog-grid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cat-filters,
+  .cat-filters-backdrop {
+    transition-duration: 0.01ms;
+  }
 }
 
 /* ============================================================
@@ -578,6 +614,6 @@
 .podbor__desc p + p { margin-top: 24px; }
 .podbor__actions { display: flex; gap: 30px; flex-wrap: wrap; }
 
-@media (max-width: 900px) {
+@media (max-width: 960px) {
   .podbor { flex-direction: column; gap: 32px; }
 }

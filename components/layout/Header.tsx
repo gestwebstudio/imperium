@@ -1,8 +1,49 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import "./layout.css";
 import { PhoneIcon, ArrowDiagonalIcon } from "@/components/icons";
 import { ButtonLink } from "@/components/ui/Button";
 import { GlassSurface } from "@/components/ui/GlassSurface";
+import { MobileMenu } from "./MobileMenu";
+
+/**
+ * «Headroom»: при скролле вниз шапка уезжает вверх (скрывается),
+ * при скролле вверх — возвращается и остаётся зафиксированной.
+ * У самого верха страницы всегда видима.
+ */
+function useHideOnScroll() {
+  const [hidden, setHidden] = useState(false);
+
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let ticking = false;
+
+    const TOLERANCE = 8; // порог, чтобы дрожание/отскок не переключали шапку
+    const update = () => {
+      ticking = false;
+      const y = Math.max(0, window.scrollY);
+      if (Math.abs(y - lastY) < TOLERANCE) return; // игнор мелких движений
+      if (y <= 8) setHidden(false); // у верха — всегда видима
+      else if (y > lastY) setHidden(true); // вниз — прячем
+      else setHidden(false); // вверх — показываем
+      lastY = y;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return hidden;
+}
 
 function ChevronDown() {
   return (
@@ -19,8 +60,10 @@ function ChevronDown() {
 }
 
 export function Header() {
+  const hidden = useHideOnScroll();
+
   return (
-    <header className="site-header">
+    <header className={`site-header${hidden ? " is-hidden" : ""}`}>
       <GlassSurface
         className="site-header__bar"
         backgroundOpacity={0.06}
@@ -32,13 +75,15 @@ export function Header() {
         frost={3}
         splay={70}
       >
+        <MobileMenu />
+
         <nav className="site-header__nav">
           <a href="#">
             Услуги
             <ChevronDown />
           </a>
           <a href="#">О салоне</a>
-          <a href="#">Контакты</a>
+          <Link href="/contacts">Контакты</Link>
         </nav>
 
         <Link href="/" className="site-header__logo" aria-label="Imperium Motors">
@@ -51,13 +96,17 @@ export function Header() {
             href="tel:+74997041444"
             bare
             className="header-call"
-            aria-label="Позвонить"
+            aria-label="Позвонить: +7 499 704-14-44"
           >
+            <span className="header-call__number" aria-hidden="true">
+              +7 499 704-14-44
+            </span>
             <PhoneIcon />
           </ButtonLink>
           <ButtonLink
             href="/catalog"
             variant="primary-cta"
+            className="site-header__cta"
             ctaIcon={<ArrowDiagonalIcon />}
           >
             Каталог

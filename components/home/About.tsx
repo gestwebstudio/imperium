@@ -1,35 +1,6 @@
-import { ArrowDiagonalIcon, ArrowIcon } from "@/components/icons";
+import { ServiceImageCard } from "@/components/cards/cards";
 import { ServiceCards } from "@/components/ServiceCards";
-import { Button } from "@/components/ui/Button";
-import { cn } from "@/lib/cn";
-
-function SvcCard({
-  title,
-  image,
-  text,
-  className,
-}: {
-  title: string;
-  image: string;
-  text: string;
-  className?: string;
-}) {
-  return (
-    <article className={cn("svc-card", className)}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img className="svc-card__img" src={image} alt={title} />
-      <div className="svc-card__body">
-        <div className="svc-card__head">
-          <h3 className="svc-card__title">{title}</h3>
-          <span className="svc-card__arrow">
-            <ArrowDiagonalIcon />
-          </span>
-        </div>
-        <p className="svc-card__text">{text}</p>
-      </div>
-    </article>
-  );
-}
+import { Testimonials } from "@/components/home/Testimonials";
 
 export function About() {
   return (
@@ -47,19 +18,19 @@ export function About() {
             воплощаем индивидуальный подход в каждой детали
           </span>
         </p>
-        <SvcCard
+        <ServiceImageCard
           className="svc-card--atelier"
           title="Ателье персонализации"
           image="/images/services/atelie.webp"
           text="Защита бронепленкой, смена цвета автомобиля, апгрейд мультимедиа, подбор дисков — всё в одном месте."
         />
-        <SvcCard
+        <ServiceImageCard
           className="svc-card--selection"
           title="Индивидуальный подбор"
           image="/images/services/podbor.webp"
           text="Мы находим редкие комплектации и привозим автомобили под заказ со всего мира."
         />
-        <SvcCard
+        <ServiceImageCard
           className="svc-card--veles"
           title="Дизайн с Александром Велесом"
           image="/images/services/veles.webp"
@@ -67,38 +38,7 @@ export function About() {
         />
       </div>
 
-      <div className="about__testimonial">
-        <div className="about__testi-img">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/reviews/review1.webp" alt="Отзыв клиента" />
-        </div>
-        <div className="about__testi-body">
-          <h3 className="about__testi-title">
-            <span className="reg">Выбор, </span>
-            <span className="bold">которым делятся</span>
-          </h3>
-          <div className="about__testi-quote">
-            <div className="about__testi-author">
-              <b>Михаил</b>
-              <span>BMW 7 Series</span>
-            </div>
-            <p className="about__testi-text">
-              «Искал автомобиль без компромиссов по комплектации и состоянию.
-              Команда быстро поняла задачу, предложила несколько точных вариантов
-              и полностью взяла на себя сопровождение сделки. В результате я
-              получил именно тот автомобиль, который хотел.»
-            </p>
-          </div>
-          <div className="about__testi-nav">
-            <Button bare aria-label="Предыдущий отзыв">
-              <ArrowIcon />
-            </Button>
-            <Button bare className="next" aria-label="Следующий отзыв">
-              <ArrowIcon />
-            </Button>
-          </div>
-        </div>
-      </div>
+      <Testimonials />
     </section>
   );
 }

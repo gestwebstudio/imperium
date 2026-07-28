@@ -273,6 +273,9 @@ export default function KitPage() {
                 <span className="bubble-col">
                   L<small>24 px · Onest 14</small>
                 </span>
+                <span className="bubble-col">
+                  XL<small>28 px · Onest 16</small>
+                </span>
               </div>
               {bubbleColors.map(([label, color]) => (
                 <div className="bubble-row" key={color}>
@@ -293,6 +296,11 @@ export default function KitPage() {
                   <span className="bubble-cell">
                     <Bubble size="l" color={color}>
                       1
+                    </Bubble>
+                  </span>
+                  <span className="bubble-cell">
+                    <Bubble size="xl" color={color}>
+                      10
                     </Bubble>
                   </span>
                 </div>

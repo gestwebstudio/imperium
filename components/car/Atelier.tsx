@@ -1,4 +1,4 @@
-import { ArrowDiagonalIcon } from "@/components/icons";
+import { ServiceImageCard } from "@/components/cards/cards";
 
 const cards = [
   {
@@ -17,19 +17,7 @@ export function Atelier() {
   return (
     <div className="car-atelier">
       {cards.map((c) => (
-        <article className="car-atelier__card" key={c.title}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="car-atelier__img" src={c.image} alt={c.title} />
-          <div className="car-atelier__body">
-            <div className="car-atelier__head">
-              <h3 className="car-atelier__title">{c.title}</h3>
-              <span className="car-atelier__arrow">
-                <ArrowDiagonalIcon />
-              </span>
-            </div>
-            <p className="car-atelier__text">{c.text}</p>
-          </div>
-        </article>
+        <ServiceImageCard {...c} key={c.title} />
       ))}
     </div>
   );

@@ -73,10 +73,11 @@ export function Footer() {
                   {col.links.map((link) => {
                     const label = typeof link === "string" ? link : link.label;
                     const w = typeof link === "string" ? undefined : link.w;
+                    const href = label === "Контакты" ? "/contacts" : "#";
                     return (
-                      <a href="#" key={label} style={w ? { width: w } : undefined}>
+                      <Link href={href} key={label} style={w ? { width: w } : undefined}>
                         {label}
-                      </a>
+                      </Link>
                     );
                   })}
                 </nav>

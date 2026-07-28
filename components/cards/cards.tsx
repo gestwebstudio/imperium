@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/Button";
 import { Wishlist } from "@/components/ui/Wishlist";
 import { Comparison } from "@/components/ui/Comparison";
+import { ArrowDiagonalIcon } from "@/components/icons";
 
 /* --- Brand Logo Card --- */
 export type BrandCardProps = {
@@ -41,8 +42,47 @@ export function BodyCard({ label, src, className }: BodyCardProps) {
   );
 }
 
+/* --- Service Card with Image --- */
+export type ServiceImageCardProps = {
+  title: string;
+  image: string;
+  text: string;
+  href?: string;
+  className?: string;
+};
+export function ServiceImageCard({
+  title,
+  image,
+  text,
+  href = "#contacts",
+  className,
+}: ServiceImageCardProps) {
+  return (
+    <article className={cn("image-service-card", className)}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img className="image-service-card__img" src={image} alt={title} />
+      <div className="image-service-card__body">
+        <div className="image-service-card__head">
+          <h3 className="image-service-card__title">{title}</h3>
+          <ButtonLink
+            href={href}
+            size="l"
+            variant="primary-outlined"
+            iconOnly
+            startIcon={<ArrowDiagonalIcon />}
+            className="image-service-card__arrow"
+            aria-label={`Подробнее: ${title}`}
+          />
+        </div>
+        <p className="image-service-card__text">{text}</p>
+      </div>
+    </article>
+  );
+}
+
 /* --- Car Card (композиция компонентов кита) --- */
 export type CarCardProps = {
+  vehicleId?: string;
   brandLogo: string;
   brandName?: string;
   title: string;
@@ -60,6 +100,7 @@ export type CarCardProps = {
   className?: string;
 };
 export function CarCard({
+  vehicleId,
   brandLogo,
   brandName = "",
   title,
@@ -91,8 +132,8 @@ export function CarCard({
               <img src={brandLogo} alt={brandName} />
             </div>
             <div className="car-card__actions">
-              <Wishlist tip="В избранное" />
-              <Comparison tip="В сравнение" />
+              <Wishlist vehicleId={vehicleId} tip="В избранное" />
+              <Comparison vehicleId={vehicleId} tip="В сравнение" />
             </div>
           </div>
 

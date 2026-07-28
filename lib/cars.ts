@@ -50,40 +50,58 @@ export interface Car {
   status: { type: CarStatusType; label: string };
 }
 
-/** Базовые машины (из public/images/cars/ + логотипы из logo_cards/). */
-const SEED = [
-  {
-    slug: "x5-m60i-sport-pro",
-    name: "X5 M60i Sport Pro",
-    brand: "BMW",
-    brandLogo: "/images/logo_cards/bmw.webp",
-    photo: "/images/cars/x5-m60i-sport-pro.webp",
-    bodyType: "Кроссовер",
-  },
-  {
-    slug: "range-rover-sv",
-    name: "Range Rover SV",
-    brand: "Land Rover",
-    brandLogo: "/images/logo_cards/landrover.webp",
-    photo: "/images/cars/range-rover-sv.webp",
-    bodyType: "Внедорожник",
-  },
-  {
-    slug: "v-class-exclusive",
-    name: "V-Класс Exclusive",
-    brand: "Mercedes-Benz",
-    brandLogo: "/images/logo_cards/mercedes.webp",
-    photo: "/images/cars/v-class-exclusive.webp",
-    bodyType: "Минивэн",
-  },
-  {
-    slug: "cle-53-amg-4matic",
-    name: "CLE 53 AMG 4MATIC+",
-    brand: "Mercedes-Benz",
-    brandLogo: "/images/logo_cards/mercedes.webp",
-    photo: "/images/cars/cle-53-amg-4matic.webp",
-    bodyType: "Купе",
-  },
+/**
+ * Каталог: по 2 модели на каждый из 15 брендов (логотипы — из logo_cards/) = 30 машин.
+ * Фото переиспользуются из имеющихся в public/images/ — точное соответствие модели
+ * фотографии не требуется (реальные фото придут позже внешними URL).
+ */
+const CARS_PHOTO = "/images/cars";
+const MODELS = [
+  // BMW
+  { slug: "x5-m60i-sport-pro", name: "X5 M60i Sport Pro", brand: "BMW", brandLogo: "/images/logo_cards/bmw.webp", photo: `${CARS_PHOTO}/x5-m60i-sport-pro.webp`, bodyType: "Кроссовер" },
+  { slug: "x3-xdrive20i", name: "X3 xDrive20i", brand: "BMW", brandLogo: "/images/logo_cards/bmw.webp", photo: `${CARS_PHOTO}/x3-xdrive20i.webp`, bodyType: "Кроссовер" },
+  // Mercedes-Benz
+  { slug: "v-class-exclusive", name: "V-Класс Exclusive", brand: "Mercedes-Benz", brandLogo: "/images/logo_cards/mercedes.webp", photo: `${CARS_PHOTO}/v-class-exclusive.webp`, bodyType: "Минивэн" },
+  { slug: "cle-53-amg-4matic", name: "CLE 53 AMG 4MATIC+", brand: "Mercedes-Benz", brandLogo: "/images/logo_cards/mercedes.webp", photo: `${CARS_PHOTO}/cle-53-amg-4matic.webp`, bodyType: "Купе" },
+  // Land Rover
+  { slug: "range-rover-sv", name: "Range Rover SV", brand: "Land Rover", brandLogo: "/images/logo_cards/land-rover.webp", photo: `${CARS_PHOTO}/range-rover-sv.webp`, bodyType: "Внедорожник" },
+  { slug: "defender-110-x", name: "Defender 110 X", brand: "Land Rover", brandLogo: "/images/logo_cards/land-rover.webp", photo: `${CARS_PHOTO}/range-rover-sv.webp`, bodyType: "Внедорожник" },
+  // Porsche
+  { slug: "cayenne-turbo-gt", name: "Cayenne Turbo GT", brand: "Porsche", brandLogo: "/images/logo_cards/porsche.webp", photo: `${CARS_PHOTO}/mask.webp`, bodyType: "Кроссовер" },
+  { slug: "panamera-turbo", name: "Panamera Turbo", brand: "Porsche", brandLogo: "/images/logo_cards/porsche.webp", photo: `${CARS_PHOTO}/cle-53-amg-4matic.webp`, bodyType: "Купе" },
+  // Ferrari
+  { slug: "ferrari-roma", name: "Roma", brand: "Ferrari", brandLogo: "/images/logo_cards/ferrari.webp", photo: `${CARS_PHOTO}/cle-53-amg-4matic.webp`, bodyType: "Купе" },
+  { slug: "ferrari-296-gtb", name: "296 GTB", brand: "Ferrari", brandLogo: "/images/logo_cards/ferrari.webp", photo: "/images/firstcars/1big.webp", bodyType: "Спорткар" },
+  // Lamborghini
+  { slug: "lamborghini-urus-s", name: "Urus S", brand: "Lamborghini", brandLogo: "/images/logo_cards/lamborghini.webp", photo: `${CARS_PHOTO}/x5-m60i-sport-pro.webp`, bodyType: "Внедорожник" },
+  { slug: "lamborghini-huracan-evo", name: "Huracán EVO", brand: "Lamborghini", brandLogo: "/images/logo_cards/lamborghini.webp", photo: "/images/firstcars/1big.webp", bodyType: "Спорткар" },
+  // Rolls-Royce
+  { slug: "rolls-royce-cullinan", name: "Cullinan", brand: "Rolls-Royce", brandLogo: "/images/logo_cards/rolls-royce.webp", photo: `${CARS_PHOTO}/range-rover-sv.webp`, bodyType: "Внедорожник" },
+  { slug: "rolls-royce-ghost", name: "Ghost", brand: "Rolls-Royce", brandLogo: "/images/logo_cards/rolls-royce.webp", photo: `${CARS_PHOTO}/v-class-exclusive.webp`, bodyType: "Седан" },
+  // Lexus
+  { slug: "rx-500h-f-sport", name: "RX 500h F Sport", brand: "Lexus", brandLogo: "/images/logo_cards/lexus.webp", photo: `${CARS_PHOTO}/x3-xdrive20i.webp`, bodyType: "Кроссовер" },
+  { slug: "lx-600", name: "LX 600", brand: "Lexus", brandLogo: "/images/logo_cards/lexus.webp", photo: `${CARS_PHOTO}/mask.webp`, bodyType: "Внедорожник" },
+  // Chevrolet
+  { slug: "tahoe-high-country", name: "Tahoe High Country", brand: "Chevrolet", brandLogo: "/images/logo_cards/chevrolet.webp", photo: `${CARS_PHOTO}/range-rover-sv.webp`, bodyType: "Внедорожник" },
+  { slug: "corvette-stingray", name: "Corvette Stingray", brand: "Chevrolet", brandLogo: "/images/logo_cards/chevrolet.webp", photo: `${CARS_PHOTO}/cle-53-amg-4matic.webp`, bodyType: "Спорткар" },
+  // Honda
+  { slug: "honda-pilot-elite", name: "Pilot Elite", brand: "Honda", brandLogo: "/images/logo_cards/honda.webp", photo: `${CARS_PHOTO}/x5-m60i-sport-pro.webp`, bodyType: "Кроссовер" },
+  { slug: "honda-accord-touring", name: "Accord Touring", brand: "Honda", brandLogo: "/images/logo_cards/honda.webp", photo: `${CARS_PHOTO}/v-class-exclusive.webp`, bodyType: "Седан" },
+  // Hyundai
+  { slug: "palisade-calligraphy", name: "Palisade Calligraphy", brand: "Hyundai", brandLogo: "/images/logo_cards/hyundai.webp", photo: `${CARS_PHOTO}/x5-m60i-sport-pro.webp`, bodyType: "Кроссовер" },
+  { slug: "santa-fe-calligraphy", name: "Santa Fe Calligraphy", brand: "Hyundai", brandLogo: "/images/logo_cards/hyundai.webp", photo: `${CARS_PHOTO}/x3-xdrive20i.webp`, bodyType: "Кроссовер" },
+  // Toyota
+  { slug: "land-cruiser-300", name: "Land Cruiser 300", brand: "Toyota", brandLogo: "/images/logo_cards/toyota.webp", photo: `${CARS_PHOTO}/range-rover-sv.webp`, bodyType: "Внедорожник" },
+  { slug: "toyota-camry-35", name: "Camry 3.5", brand: "Toyota", brandLogo: "/images/logo_cards/toyota.webp", photo: `${CARS_PHOTO}/v-class-exclusive.webp`, bodyType: "Седан" },
+  // Volvo
+  { slug: "xc90-ultimate", name: "XC90 Ultimate", brand: "Volvo", brandLogo: "/images/logo_cards/volvo.webp", photo: `${CARS_PHOTO}/x5-m60i-sport-pro.webp`, bodyType: "Кроссовер" },
+  { slug: "xc60-recharge", name: "XC60 Recharge", brand: "Volvo", brandLogo: "/images/logo_cards/volvo.webp", photo: `${CARS_PHOTO}/x3-xdrive20i.webp`, bodyType: "Кроссовер" },
+  // BYD
+  { slug: "byd-han-ev", name: "Han EV", brand: "BYD", brandLogo: "/images/logo_cards/byd.webp", photo: `${CARS_PHOTO}/cle-53-amg-4matic.webp`, bodyType: "Седан" },
+  { slug: "byd-tang", name: "Tang", brand: "BYD", brandLogo: "/images/logo_cards/byd.webp", photo: `${CARS_PHOTO}/x5-m60i-sport-pro.webp`, bodyType: "Кроссовер" },
+  // GMC
+  { slug: "yukon-denali", name: "Yukon Denali", brand: "GMC", brandLogo: "/images/logo_cards/gmc.webp", photo: `${CARS_PHOTO}/range-rover-sv.webp`, bodyType: "Внедорожник" },
+  { slug: "sierra-1500-denali", name: "Sierra 1500 Denali", brand: "GMC", brandLogo: "/images/logo_cards/gmc.webp", photo: `${CARS_PHOTO}/mask.webp`, bodyType: "Пикап" },
 ] as const;
 
 /* Наборы значений для псевдослучайной генерации характеристик. */
@@ -111,7 +129,6 @@ function mulberry32(seed: number): () => number {
   };
 }
 
-const COPIES = 6; // 4 базовые × 6 = 24 машины
 const YEAR = 2026;
 
 const pick = <T>(rand: () => number, arr: readonly T[]): T =>
@@ -125,38 +142,33 @@ function getSeedColor(id: string): CarColor {
 
 function buildCatalog(): Car[] {
   const rand = mulberry32(20260727);
-  const cars: Car[] = [];
-  for (let copy = 0; copy < COPIES; copy++) {
-    for (const base of SEED) {
-      // мощность 200–650 л.с., шаг 1
-      const power = 200 + Math.floor(rand() * 451);
-      // цена 5.9–42 млн ₽, округление до 10 000
-      const price = Math.round((5_900_000 + rand() * 36_100_000) / 10_000) * 10_000;
-      const color = pick(rand, CAR_COLORS);
-      const transmission = pick(rand, TRANSMISSIONS);
-      const drive = pick(rand, DRIVES);
-      const fuelType = pick(rand, FUELS);
-      const slug = copy === 0 ? base.slug : `${base.slug}-${copy + 1}`;
-      cars.push({
-        id: slug,
-        slug,
-        brand: base.brand,
-        brandLogo: base.brandLogo,
-        name: base.name,
-        photo: base.photo,
-        year: YEAR,
-        power,
-        drive,
-        bodyType: base.bodyType,
-        color,
-        transmission,
-        fuelType,
-        price,
-        status: { type: "success", label: "В наличии" },
-      });
-    }
-  }
-  return cars;
+  return MODELS.map((base) => {
+    // мощность 250–750 л.с., шаг 1
+    const power = 250 + Math.floor(rand() * 501);
+    // цена 6–48 млн ₽, округление до 10 000
+    const price = Math.round((6_000_000 + rand() * 42_000_000) / 10_000) * 10_000;
+    const color = pick(rand, CAR_COLORS);
+    const transmission = pick(rand, TRANSMISSIONS);
+    const drive = pick(rand, DRIVES);
+    const fuelType = pick(rand, FUELS);
+    return {
+      id: base.slug,
+      slug: base.slug,
+      brand: base.brand,
+      brandLogo: base.brandLogo,
+      name: base.name,
+      photo: base.photo,
+      year: YEAR,
+      power,
+      drive,
+      bodyType: base.bodyType,
+      color,
+      transmission,
+      fuelType,
+      price,
+      status: { type: "success", label: "В наличии" },
+    };
+  });
 }
 
 const CARS: Car[] = buildCatalog();
@@ -205,12 +217,17 @@ export function getCars(): Car[] {
   return CARS;
 }
 
+/** Все автомобили, которые могут быть добавлены в избранное или сравнение. */
+export function getAllCars(): Car[] {
+  return [...FEATURED_CARS, ...CARS];
+}
+
 export function getCarBySlug(slug: string): Car | undefined {
-  return [...FEATURED_CARS, ...CARS].find((c) => c.slug === slug);
+  return getAllCars().find((c) => c.slug === slug);
 }
 
 export function getCarSlugs(): string[] {
-  return [...FEATURED_CARS, ...CARS].map((c) => c.slug);
+  return getAllCars().map((c) => c.slug);
 }
 
 /** Теги карточки: год · мощность · привод (по ТЗ — «бензин» заменён на л.с.). */
@@ -304,10 +321,26 @@ export const FACETS: Facet[] = [
 
 /** Канонический порядок значений внутри каждого фасета. */
 const VALUE_ORDER: Record<FacetKey, string[]> = {
-  brand: ["BMW", "Mercedes-Benz", "Land Rover"],
-  model: SEED.map((s) => s.name),
+  brand: [
+    "BMW",
+    "Mercedes-Benz",
+    "Land Rover",
+    "Porsche",
+    "Ferrari",
+    "Lamborghini",
+    "Rolls-Royce",
+    "Lexus",
+    "Chevrolet",
+    "Honda",
+    "Hyundai",
+    "Toyota",
+    "Volvo",
+    "BYD",
+    "GMC",
+  ],
+  model: MODELS.map((m) => m.name),
   color: CAR_COLORS.map((color) => color.id),
-  body: ["Внедорожник", "Кроссовер", "Купе", "Минивэн"],
+  body: ["Внедорожник", "Кроссовер", "Купе", "Минивэн", "Седан", "Спорткар", "Пикап"],
   transmission: TRANSMISSIONS,
   drive: DRIVES,
   fuel: FUELS,
