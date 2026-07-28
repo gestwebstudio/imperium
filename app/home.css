@@ -263,8 +263,8 @@
 
 /* ---------------- Brands row ---------------- */
 .brands-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
-@media (max-width: 1100px) { .brands-row { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 640px) { .brands-row { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 1200px) { .brands-row { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 768px) { .brands-row { grid-template-columns: repeat(2, 1fr); gap: 16px; } }
 
 /* ---------------- Cars section (карусель карточек) ---------------- */
 .cars-section__head {
@@ -281,8 +281,8 @@
   gap: 14px;
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
   font-weight: 600;
-  font-size: 48px;
-  line-height: 56px;
+  font-size: var(--fs-48);
+  line-height: 1.17;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 .cars-row {
@@ -335,7 +335,7 @@
 }
 .cars-section__nav.btn:active { transform: translateY(-50%); }
 .cars-section__nav--next .btn__icon { transform: rotate(180deg); }
-@media (max-width: 640px) { .cars-row > * { flex: 0 0 300px; } }
+@media (max-width: 768px) { .cars-row > * { flex: 0 0 min(82vw, 320px); min-width: 0; } }
 
 /* ---------------- Body types (bento) ---------------- */
 .body-types__head {
@@ -350,8 +350,8 @@
 .body-types__title .l1,
 .body-types__title .l2 {
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
-  font-size: 88px;
-  line-height: 100px;
+  font-size: var(--fs-88);
+  line-height: 1.136;
   text-transform: uppercase;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
@@ -388,7 +388,7 @@
 .body-type-card__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .body-type-card__grad { position: absolute; left: 0; right: 0; top: 0; height: 290px; background: linear-gradient(to bottom, rgba(26, 24, 22, 0.75), rgba(26, 24, 22, 0)); }
 .body-type-card__text { position: absolute; left: 40px; top: 30px; right: 96px; z-index: 1; }
-.body-type-card__title { font-family: var(--font-display, "Wix Madefor Display", sans-serif); font-weight: 600; font-size: 40px; line-height: 48px; color: #fff; }
+.body-type-card__title { font-family: var(--font-display, "Wix Madefor Display", sans-serif); font-weight: 600; font-size: var(--fs-40); line-height: 1.2; color: #fff; }
 .body-type-card__sub { margin-top: 14px; font-family: var(--font-text, "Onest", sans-serif); font-weight: 400; font-size: 18px; line-height: 24px; color: #fff; max-width: 484px; }
 .body-type-card__arrow {
   position: absolute; top: 40px; right: 40px; z-index: 1;
@@ -399,13 +399,12 @@
 .body-type-card__arrow svg { width: 16px; height: 16px; }
 .body-type-card--wide { margin-top: 24px; min-height: 464px; }
 
-@media (max-width: 900px) {
+@media (max-width: 960px) {
   .body-types__head { min-height: 0; margin-bottom: 40px; flex-wrap: wrap; }
   .body-types__title { gap: 0; }
-  .body-types__title .l1,
-  .body-types__title .l2 { font-size: clamp(40px, 10vw, 72px); line-height: 1.05; }
   .bento { grid-template-columns: 1fr; grid-template-rows: none; }
   .bento__a, .bento__b, .bento__c, .bento__d, .bento__e { grid-column: 1; grid-row: auto; }
+  .body-type-card--wide { margin-top: 0; }
   .body-types__aside { width: 100%; padding-top: 0; text-align: left; align-items: flex-start; }
 }
 
