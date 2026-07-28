@@ -1,0 +1,151 @@
+.favorites-page {
+  width: 100%;
+  max-width: 1920px;
+  min-height: 70vh;
+  margin: 0 auto;
+  padding: clamp(128px, 8.073vw, 155px) clamp(24px, 4vw, 60px) 80px;
+}
+
+.favorites-crumbs,
+.favorites-crumbs ol {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.favorites-crumbs {
+  min-height: 18px;
+  margin-bottom: 10px;
+}
+.favorites-crumbs li {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.favorites-crumbs__item {
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--color-warm-taupe-400, #8F8579);
+  text-decoration: none;
+  transition: color .15s ease;
+}
+.favorites-crumbs__item[href]:hover {
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.favorites-crumbs__item--current {
+  color: var(--color-carbon-black-500, #1B1E1D);
+  cursor: default;
+}
+.favorites-crumbs__separator {
+  width: 12px;
+  height: 12px;
+  flex: none;
+  color: var(--color-warm-taupe-300, #B2A79B);
+  transform: rotate(180deg);
+}
+
+.favorites-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 34px;
+}
+.favorites-head h1 {
+  margin: 0;
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: clamp(36px, 3.4vw, 48px);
+  line-height: 1.16;
+  letter-spacing: -.01em;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+
+.favorites-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+}
+.favorites-grid > .car-card {
+  max-width: none;
+  height: 100%;
+  min-height: 484px;
+}
+
+.favorites-loading {
+  min-height: 484px;
+}
+
+.favorites-empty {
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  padding: 48px 24px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, .6);
+  text-align: center;
+}
+.favorites-empty__icon {
+  width: 56px;
+  height: 56px;
+  color: var(--color-warm-taupe-300, #B2A79B);
+}
+.favorites-empty__text {
+  max-width: 560px;
+}
+.favorites-empty__text h2 {
+  margin: 0 0 10px;
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: 30px;
+  line-height: 38px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.favorites-empty__text p {
+  margin: 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 18px;
+  line-height: 26px;
+  color: var(--color-warm-taupe-500, #6A6259);
+}
+
+@media (max-width: 1536px) {
+  .favorites-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 960px) {
+  .favorites-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .favorites-page {
+    padding-top: 120px;
+    padding-bottom: 56px;
+  }
+  .favorites-head {
+    margin-bottom: 24px;
+  }
+  .favorites-grid {
+    grid-template-columns: 1fr;
+  }
+  .favorites-grid > .car-card {
+    min-height: 0;
+  }
+  .favorites-empty {
+    min-height: 360px;
+    border-radius: 24px;
+  }
+  .favorites-empty__text h2 {
+    font-size: 26px;
+    line-height: 32px;
+  }
+}
