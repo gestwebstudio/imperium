@@ -4,7 +4,6 @@ import { Breadcrumbs } from "@heroui/react";
 import { ArrowIcon } from "@/components/icons";
 import { Wishlist } from "@/components/ui/Wishlist";
 import { Comparison } from "@/components/ui/Comparison";
-import { Button } from "@/components/ui/Button";
 import { type Car, formatPrice, getCarSpecs, getCars } from "@/lib/cars";
 import { CarsSection } from "@/components/home/CarsSection";
 import { Contacts } from "@/components/home/Contacts";
@@ -13,6 +12,7 @@ import { Specs } from "./Specs";
 import { Equipment } from "./Equipment";
 import { Assurance } from "./Assurance";
 import { Atelier } from "./Atelier";
+import { CarActionModals } from "./CarActionModals";
 
 const GALLERY_PHOTOS = ["/images/gallery/1.webp", "/images/gallery/2.webp"];
 
@@ -78,12 +78,10 @@ export function CarView({ car }: CarViewProps) {
                 <span className="car-price__amount">{formatPrice(car.price)}</span>
               </div>
               <div className="car-price__buttons">
-                <Button size="l" variant="primary-surface">
-                  Забронировать
-                </Button>
-                <Button size="l" variant="secondary-outlined">
-                  Онлайн-показ
-                </Button>
+                <CarActionModals
+                  carTitle={title}
+                  price={formatPrice(car.price)}
+                />
               </div>
             </div>
 
