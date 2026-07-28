@@ -51,8 +51,11 @@ export function Header() {
             href="tel:+74997041444"
             bare
             className="header-call"
-            aria-label="Позвонить"
+            aria-label="Позвонить: +7 499 704-14-44"
           >
+            <span className="header-call__number" aria-hidden="true">
+              +7 499 704-14-44
+            </span>
             <PhoneIcon />
           </ButtonLink>
           <ButtonLink

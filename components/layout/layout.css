@@ -40,25 +40,88 @@
 .site-header__logo img { height: 32px; width: auto; display: block; }
 .site-header__actions { display: flex; align-items: center; gap: 16px; }
 .header-call {
+  box-sizing: border-box;
   width: 46px;
   height: 46px;
   flex: none;
+  gap: 0;
+  overflow: hidden;
+  padding: 0 11px;
   border: none;
-  border-radius: 50%;
+  border-radius: 90px;
   cursor: pointer;
   background: var(--color-stone-beige-100, #F3F0EE);
-  color: var(--color-carbon-black-500, #1B1E1D);
+  color: var(--color-heritage-green-500, #294434);
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  transition:
+    width 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    gap 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    padding 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 150ms ease;
 }
-.header-call svg { width: 22px; height: 22px; }
-.header-call:hover { filter: brightness(0.97); }
+.header-call__number {
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateX(8px);
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: 18px;
+  line-height: 24px;
+  white-space: nowrap;
+  transition:
+    max-width 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 160ms ease,
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.header-call svg {
+  width: 24px;
+  height: 24px;
+  flex: none;
+}
+.header-call:hover {
+  filter: brightness(0.97);
+}
+
+@media (min-width: 901px) {
+  .header-call:focus-visible {
+    width: 234px;
+    gap: 12px;
+    padding-inline: 22px;
+  }
+  .header-call:focus-visible .header-call__number {
+    max-width: 160px;
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (min-width: 901px) and (hover: hover) and (pointer: fine) {
+  .header-call:hover {
+    width: 234px;
+    gap: 12px;
+    padding-inline: 22px;
+  }
+  .header-call:hover .header-call__number {
+    max-width: 160px;
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
 
 @media (max-width: 900px) {
   .site-header__nav { display: none; }
   .site-header__logo { position: static; transform: none; }
   .site-header__bar > .liquid-glass__content { padding: 10px 12px 10px 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-call,
+  .header-call__number {
+    transition-duration: .01ms;
+  }
 }
 
 /* ============================================================
