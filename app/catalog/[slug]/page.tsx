@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import "./car.css";
 import "../../home.css";
-import { getCarBySlug, getCars } from "@/lib/cars";
+import { getCarBySlug, getCarSlugs } from "@/lib/cars";
 import { CarView } from "@/components/car/CarView";
 
 type Params = { slug: string };
 
 export function generateStaticParams(): Params[] {
-  return getCars().map((c) => ({ slug: c.slug }));
+  return getCarSlugs().map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({

@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Breadcrumbs } from "@heroui/react";
-import { Badge, CarCard } from "@/components";
+import { Badge, CarCard, Comparison, Wishlist } from "@/components";
 import { ArrowIcon } from "@/components/icons";
 import {
   type Car,
@@ -31,13 +31,15 @@ export type CatalogClientProps = {
 };
 
 export function CatalogClient({ cars }: CatalogClientProps) {
-  const options = useMemo(() => getFacetOptions(), []);
+  const options = useMemo(() => getFacetOptions(cars), [cars]);
 
   const [selected, setSelected] =
     useState<Record<FacetKey, string[]>>(emptySelection);
   const [price, setPrice] = useState<RangeValue>([PRICE_MIN, PRICE_MAX]);
   const [power, setPower] = useState<RangeValue>([POWER_MIN, POWER_MAX]);
   const [sort, setSort] = useState<SortKey>("popular");
+  const [wishlistCount, setWishlistCount] = useState(2);
+  const [comparisonCount, setComparisonCount] = useState(10);
 
   const toggleFacet = (key: FacetKey, value: string) =>
     setSelected((s) => {
@@ -75,6 +77,7 @@ export function CatalogClient({ cars }: CatalogClientProps) {
     else if (sort === "price-desc") arr.sort((a, b) => b.price - a.price);
     return arr; // popular → исходный порядок
   }, [filtered, sort]);
+  const displayedCars = sorted.slice(0, 12);
 
   return (
     <div className="catalog-page">
@@ -120,9 +123,10 @@ export function CatalogClient({ cars }: CatalogClientProps) {
         <div className="catalog-results">
           {sorted.length > 0 ? (
             <div className="catalog-grid">
-              {sorted.map((car) => (
+              {displayedCars.map((car) => (
                 <CarCard
                   key={car.id}
+                  href={`/catalog/${car.slug}`}
                   brandLogo={car.brandLogo}
                   brandName={car.brand}
                   title={car.name}
@@ -142,6 +146,31 @@ export function CatalogClient({ cars }: CatalogClientProps) {
           )}
         </div>
       </div>
+
+      <aside className="catalog-tools" aria-label="Сохранённые автомобили">
+        <div className="catalog-tools__item">
+          <Wishlist
+            onChange={(active) =>
+              setWishlistCount((count) => Math.max(0, count + (active ? 1 : -1)))
+            }
+          />
+          <span className="catalog-tools__count" aria-hidden="true">
+            {wishlistCount}
+          </span>
+        </div>
+        <div className="catalog-tools__item">
+          <Comparison
+            onChange={(active) =>
+              setComparisonCount((count) =>
+                Math.max(0, count + (active ? 1 : -1)),
+              )
+            }
+          />
+          <span className="catalog-tools__count" aria-hidden="true">
+            {comparisonCount}
+          </span>
+        </div>
+      </aside>
     </div>
   );
 }

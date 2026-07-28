@@ -1,6 +1,8 @@
 import Link from "next/link";
 import "./layout.css";
 import { PhoneIcon, ArrowDiagonalIcon } from "@/components/icons";
+import { ButtonLink } from "@/components/ui/Button";
+import { GlassSurface } from "@/components/ui/GlassSurface";
 
 function ChevronDown() {
   return (
@@ -19,7 +21,17 @@ function ChevronDown() {
 export function Header() {
   return (
     <header className="site-header">
-      <div className="site-header__bar">
+      <GlassSurface
+        className="site-header__bar"
+        backgroundOpacity={0.06}
+        saturation={1.02}
+        lightAngle={-45}
+        lightIntensity={35}
+        refraction={100}
+        depth={75}
+        frost={3}
+        splay={70}
+      >
         <nav className="site-header__nav">
           <a href="#">
             Услуги
@@ -35,17 +47,23 @@ export function Header() {
         </Link>
 
         <div className="site-header__actions">
-          <a href="tel:+74997041444" className="header-call" aria-label="Позвонить">
+          <ButtonLink
+            href="tel:+74997041444"
+            bare
+            className="header-call"
+            aria-label="Позвонить"
+          >
             <PhoneIcon />
-          </a>
-          <Link href="/catalog" className="btn btn--primary-cta">
-            <span>Каталог</span>
-            <span className="btn__cta-icon">
-              <ArrowDiagonalIcon />
-            </span>
-          </Link>
+          </ButtonLink>
+          <ButtonLink
+            href="/catalog"
+            variant="primary-cta"
+            ctaIcon={<ArrowDiagonalIcon />}
+          >
+            Каталог
+          </ButtonLink>
         </div>
-      </div>
+      </GlassSurface>
     </header>
   );
 }

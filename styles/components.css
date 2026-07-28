@@ -43,8 +43,11 @@
    Иконка:  <span class="btn__icon"><svg ...>…</svg></span>  (SVG из папки Icons/, fill="currentColor")
    Бабл:    <span class="bubble bubble--s bubble--white">1</span> внутри .btn
    ============================================================ */
-.btn {
+.ui-button {
   position: relative;
+  isolation: isolate;
+}
+.btn {
   overflow: hidden;
   display: inline-flex;
   align-items: center;
@@ -64,12 +67,19 @@
 .btn:active { transform: translateY(1px); filter: brightness(0.92); }
 .btn:disabled, .btn[aria-disabled="true"] { opacity: .5; pointer-events: none; }
 /* содержимое над волной */
-.btn > :not(.ripple) { position: relative; z-index: 1; }
-
-/* ripple effect (click) — цвет наследуется через currentColor */
-.btn .ripple {
+.ui-button > :not(.ui-button__ripple-layer) { position: relative; z-index: 1; }
+.ui-button__ripple-layer {
   position: absolute;
   z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* ripple effect (click) — цвет наследуется через currentColor */
+.ui-button__ripple-layer .ripple {
+  position: absolute;
   border-radius: 50%;
   transform: scale(0);
   background-color: currentColor;
@@ -233,7 +243,7 @@
 
 /* ============================================================
    Tooltip — всплывающая подсказка
-     size: .tooltip--s | .tooltip--l
+     size: .tooltip--s | .tooltip--m | .tooltip--l
    Тень — «Shadow popover» из Figma.
    ============================================================ */
 .tooltip {
@@ -248,6 +258,7 @@
   box-shadow: 4px 4px 10px 0 rgba(106,98,89,.1);
 }
 .tooltip--s { padding: 4px 8px;  border-radius: 4px; font-weight: var(--font-weight-medium, 500);  font-size: 10px; line-height: 10px; }
+.tooltip--m { padding: 4px 10px; border-radius: 6px; font-weight: var(--font-weight-regular, 400); font-size: 14px; line-height: 18px; }
 .tooltip--l { padding: 4px 10px; border-radius: 6px; font-weight: var(--font-weight-regular, 400); font-size: 14px; line-height: 18px; }
 
 
@@ -347,9 +358,9 @@
 
 /* ============================================================
    Slider — трек прогресса / заполнения
-   Ширину заполнения задаёт .slider__fill (inline width или модификатор).
+   Ширину заполнения задаёт .ui-progress__fill (inline width).
    ============================================================ */
-.slider {
+.ui-progress {
   position: relative;
   width: 100%;
   height: 4px;
@@ -357,7 +368,7 @@
   background: rgba(143,133,121,.4); /* warm-taupe-400 @40% */
   overflow: hidden;
 }
-.slider__fill {
+.ui-progress__fill {
   position: absolute;
   left: 0;
   top: 0;
@@ -404,7 +415,7 @@
   justify-content: center;
   box-sizing: border-box;
   width: 100%;
-  height: 186px;
+  height: 187px;
   padding: 20px;
   border-radius: 22px;
   background: rgba(228,223,219,.4); /* stone-beige-200 @40% */
@@ -415,12 +426,19 @@
   box-shadow: 6px 4px 50px 0 rgba(205,197,190,.5);
 }
 .brand-card img {
-  max-width: 62%;
-  max-height: 70%;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain;
   display: block;
   transition: transform .2s ease;
 }
+.brand-card--mercedes img { width: 213px; }
+.brand-card--bmw img { width: 220px; }
+.brand-card--lexus img { width: 294px; }
+.brand-card--ferrari img { width: 258px; }
+.brand-card--rollsroyce img { width: 227px; }
 .brand-card:hover img { transform: scale(1.06); }
 
 
@@ -483,6 +501,7 @@
    Полупрозрачная белая подложка — показывать на тёплом фоне.
    ============================================================ */
 .car-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -493,20 +512,37 @@
   border-radius: 30px;
   background: rgba(255,255,255,.6);
 }
+.car-card__link {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  border-radius: inherit;
+}
+.car-card__link:focus-visible {
+  outline: 2px solid var(--color-heritage-green-500, #294434);
+  outline-offset: 3px;
+}
+.car-card__main { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+.car-card__content { display: flex; flex-direction: column; gap: 16px; width: 100%; }
 .car-card__top { display: flex; align-items: center; justify-content: space-between; }
 .car-card__brand { height: 24px; display: flex; align-items: center; }
 .car-card__brand img { height: 24px; width: auto; max-width: 90px; object-fit: contain; display: block; }
-.car-card__actions { display: flex; align-items: center; gap: 16px; }
+.car-card__actions { position: relative; z-index: 2; display: flex; align-items: center; gap: 16px; }
 .car-card__info { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; width: 100%; }
 .car-card__title {
-  font-family: var(--font-text, "Onest", sans-serif);
-  font-weight: var(--font-weight-medium, 500);
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
   font-size: 24px;
   line-height: 30px;
   color: var(--color-carbon-black-500, #1B1E1D);
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .car-card__tags { display: flex; flex-wrap: wrap; gap: 5px; padding-top: 2px; }
 .car-card__photo { height: 179px; display: flex; align-items: center; justify-content: center; }
 .car-card__photo img { max-width: 100%; max-height: 179px; object-fit: contain; display: block; }
 .car-card__action { display: flex; gap: 24px; align-items: flex-end; }
 .car-card__action .price-block { flex: 1 0 0; }
+.car-card__details-link { z-index: 2; }
