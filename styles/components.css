@@ -548,6 +548,99 @@
 
 
 /* ============================================================
+   Service Image Card — карточка услуги с изображением
+   ============================================================ */
+.image-service-card {
+  min-width: 0;
+  min-height: 634px;
+  padding: 30px;
+  overflow: hidden;
+  border-radius: 40px;
+  background: var(--color-stone-beige-200, #E4DFDB);
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  transition: background-color 220ms cubic-bezier(.22, 1, .36, 1);
+}
+.image-service-card:is(:hover, :focus-within) {
+  background: var(--color-white, #FFFFFF);
+}
+.image-service-card__img {
+  width: 100%;
+  height: 438px;
+  flex: 0 0 438px;
+  border-radius: 30px;
+  object-fit: cover;
+  display: block;
+}
+.image-service-card__body {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.image-service-card__head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.image-service-card__title {
+  flex: 1 1 0;
+  min-width: 0;
+  margin: 0;
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: 36px;
+  line-height: 44px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+  overflow-wrap: anywhere;
+}
+.image-service-card__arrow.btn {
+  flex: none;
+  width: 46px;
+  height: 46px;
+}
+.image-service-card__text {
+  width: min(100%, 688px);
+  margin: 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+@media (max-width: 900px) {
+  .image-service-card {
+    min-height: 0;
+  }
+  .image-service-card__img {
+    height: auto;
+    flex-basis: auto;
+    aspect-ratio: 815 / 438;
+  }
+}
+@media (max-width: 640px) {
+  .image-service-card {
+    padding: 20px;
+    gap: 24px;
+    border-radius: 30px;
+  }
+  .image-service-card__img {
+    border-radius: 22px;
+  }
+  .image-service-card__title {
+    font-size: 28px;
+    line-height: 34px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .image-service-card {
+    transition-duration: .01ms;
+  }
+}
+
+
+/* ============================================================
    Car Card — карточка автомобиля (композиция компонентов кита)
    Собрана из: .wishlist, .compare, .indicator, .tag, .price-block, .btn.
    Полупрозрачная белая подложка — показывать на тёплом фоне.
