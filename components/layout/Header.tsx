@@ -66,6 +66,7 @@ export function Header() {
     <header className={`site-header${hidden ? " is-hidden" : ""}`}>
       <GlassSurface
         className="site-header__bar"
+        height="var(--site-header-height)"
         backgroundOpacity={0.06}
         saturation={1.02}
         lightAngle={-45}

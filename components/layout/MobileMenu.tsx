@@ -18,6 +18,15 @@ function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
+function getMotionFactor() {
+  const width = window.innerWidth;
+  if (width <= 390) return 0.68;
+  if (width <= 640) return 0.78;
+  if (width <= 768) return 0.84;
+  if (width <= 1024) return 0.92;
+  return 1;
+}
+
 export function MobileMenu() {
   const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -63,6 +72,7 @@ export function MobileMenu() {
 
     const labels = panel.querySelectorAll(".mobile-menu__item-label");
     const panelHead = panel.querySelector(".mobile-menu__panel-head");
+    const motion = getMotionFactor();
 
     if (prefersReducedMotion()) {
       gsap.set([panel, ...layers], { xPercent: -100 });
@@ -82,25 +92,37 @@ export function MobileMenu() {
         {
           yPercent: 125,
           rotate: 4,
-          duration: 0.22,
+          duration: 0.22 * motion,
           ease: "power2.in",
-          stagger: { each: 0.035, from: "end" },
+          stagger: { each: 0.035 * motion, from: "end" },
         },
         0,
       )
-      .to(panelHead, { y: 16, opacity: 0, duration: 0.18 }, 0)
-      .to(panel, { xPercent: -100, duration: 0.36, ease: "power3.in" }, 0.08)
+      .to(panelHead, { y: 16, opacity: 0, duration: 0.18 * motion }, 0)
+      .to(
+        panel,
+        {
+          xPercent: -100,
+          duration: 0.36 * motion,
+          ease: "power3.in",
+        },
+        0.08 * motion,
+      )
       .to(
         [...layers].reverse(),
         {
           xPercent: -100,
-          duration: 0.3,
+          duration: 0.3 * motion,
           ease: "power3.in",
-          stagger: 0.04,
+          stagger: 0.04 * motion,
         },
-        0.12,
+        0.12 * motion,
       )
-      .to(backdrop, { opacity: 0, duration: 0.24, ease: "power2.in" }, 0.08);
+      .to(
+        backdrop,
+        { opacity: 0, duration: 0.24 * motion, ease: "power2.in" },
+        0.08 * motion,
+      );
   }, [finishClose, visible]);
 
   const openMenu = useCallback(() => {
@@ -122,6 +144,7 @@ export function MobileMenu() {
       timelineRef.current?.kill();
       const labels = panel.querySelectorAll(".mobile-menu__item-label");
       const panelHead = panel.querySelector(".mobile-menu__panel-head");
+      const motion = getMotionFactor();
 
       gsap.set(backdrop, { opacity: 0 });
       gsap.set([panel, ...layers], { xPercent: -100 });
@@ -144,26 +167,26 @@ export function MobileMenu() {
       });
       timelineRef.current = timeline;
 
-      timeline.to(backdrop, { opacity: 1, duration: 0.22 }, 0);
+      timeline.to(backdrop, { opacity: 1, duration: 0.22 * motion }, 0);
       layers.forEach((layer, index) => {
         timeline.to(
           layer,
           {
             xPercent: 0,
-            duration: 0.48,
+            duration: 0.48 * motion,
             ease: "power4.out",
           },
-          index * 0.07,
+          index * 0.07 * motion,
         );
       });
 
-      const panelStart = Math.max(0.08, layers.length * 0.07);
+      const panelStart = Math.max(0.08, layers.length * 0.07) * motion;
       timeline
         .to(
           panel,
           {
             xPercent: 0,
-            duration: 0.62,
+            duration: 0.62 * motion,
             ease: "power4.out",
           },
           panelStart,
@@ -173,21 +196,21 @@ export function MobileMenu() {
           {
             y: 0,
             opacity: 1,
-            duration: 0.45,
+            duration: 0.45 * motion,
             ease: "power3.out",
           },
-          panelStart + 0.12,
+          panelStart + 0.12 * motion,
         )
         .to(
           labels,
           {
             yPercent: 0,
             rotate: 0,
-            duration: 0.82,
+            duration: 0.82 * motion,
             ease: "power4.out",
-            stagger: 0.09,
+            stagger: 0.09 * motion,
           },
-          panelStart + 0.14,
+          panelStart + 0.14 * motion,
         );
     });
   }, []);
