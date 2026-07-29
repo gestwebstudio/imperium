@@ -341,7 +341,8 @@
 .mobile-menu__panel-head {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
+  gap: 24px;
 }
 .mobile-menu__close {
   display: inline-flex;
@@ -359,6 +360,7 @@
   font-weight: var(--font-weight-regular, 400);
   font-size: clamp(18px, 1.7vw, 24px);
   line-height: 1;
+  white-space: nowrap;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 .mobile-menu__close svg {
@@ -434,6 +436,7 @@
   font-weight: var(--font-weight-semibold, 600);
   font-size: var(--fs-18);
   line-height: 1.33;
+  white-space: nowrap;
   color: var(--color-heritage-green-500, #294434);
   text-decoration: none;
 }
@@ -485,6 +488,25 @@
   }
   .mobile-menu__actions {
     margin-top: 24px;
+  }
+}
+
+@media (max-width: 420px) {
+  .mobile-menu__panel-head {
+    gap: 12px;
+  }
+  .mobile-menu__phone {
+    gap: 6px;
+    font-size: 15px;
+  }
+  .mobile-menu__phone svg,
+  .mobile-menu__close svg {
+    width: 18px;
+    height: 18px;
+  }
+  .mobile-menu__close {
+    gap: 8px;
+    font-size: 16px;
   }
 }
 

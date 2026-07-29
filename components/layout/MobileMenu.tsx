@@ -63,7 +63,7 @@ export function MobileMenu() {
 
     const labels = panel.querySelectorAll(".mobile-menu__item-label");
     const actions = panel.querySelector(".mobile-menu__actions");
-    const closeControl = panel.querySelector(".mobile-menu__close");
+    const panelHead = panel.querySelector(".mobile-menu__panel-head");
 
     if (prefersReducedMotion()) {
       gsap.set([panel, ...layers], { xPercent: -100 });
@@ -89,7 +89,7 @@ export function MobileMenu() {
         },
         0,
       )
-      .to([actions, closeControl], { y: 16, opacity: 0, duration: 0.18 }, 0)
+      .to([actions, panelHead], { y: 16, opacity: 0, duration: 0.18 }, 0)
       .to(panel, { xPercent: -100, duration: 0.36, ease: "power3.in" }, 0.08)
       .to(
         [...layers].reverse(),
@@ -123,18 +123,18 @@ export function MobileMenu() {
       timelineRef.current?.kill();
       const labels = panel.querySelectorAll(".mobile-menu__item-label");
       const actions = panel.querySelector(".mobile-menu__actions");
-      const closeControl = panel.querySelector(".mobile-menu__close");
+      const panelHead = panel.querySelector(".mobile-menu__panel-head");
 
       gsap.set(backdrop, { opacity: 0 });
       gsap.set([panel, ...layers], { xPercent: -100 });
       gsap.set(labels, { yPercent: 130, rotate: 6 });
-      gsap.set([actions, closeControl], { y: 24, opacity: 0 });
+      gsap.set([actions, panelHead], { y: 24, opacity: 0 });
 
       if (prefersReducedMotion()) {
         gsap.set([panel, ...layers], { xPercent: 0 });
         gsap.set(backdrop, { opacity: 1 });
         gsap.set(labels, { yPercent: 0, rotate: 0 });
-        gsap.set([actions, closeControl], { y: 0, opacity: 1 });
+        gsap.set([actions, panelHead], { y: 0, opacity: 1 });
         panel.querySelector<HTMLAnchorElement>(".mobile-menu__item")?.focus();
         return;
       }
@@ -171,7 +171,7 @@ export function MobileMenu() {
           panelStart,
         )
         .to(
-          closeControl,
+          panelHead,
           {
             y: 0,
             opacity: 1,
@@ -300,13 +300,21 @@ export function MobileMenu() {
               inert={open ? undefined : true}
             >
               <div className="mobile-menu__panel-head">
+                <a
+                  className="mobile-menu__phone"
+                  href="tel:+74997041444"
+                  onClick={close}
+                >
+                  <PhoneIcon width={20} height={20} />
+                  +7 499 704-14-44
+                </a>
                 <button
                   type="button"
                   className="mobile-menu__close"
                   aria-label="Закрыть меню"
                   onClick={close}
                 >
-                  <span>Close</span>
+                  <span>Закрыть</span>
                   <CloseIcon width={20} height={20} />
                 </button>
               </div>
@@ -339,14 +347,6 @@ export function MobileMenu() {
                 >
                   Каталог
                 </ButtonLink>
-                <a
-                  className="mobile-menu__phone"
-                  href="tel:+74997041444"
-                  onClick={close}
-                >
-                  <PhoneIcon width={20} height={20} />
-                  +7 499 704-14-44
-                </a>
               </div>
             </aside>
           </div>,
