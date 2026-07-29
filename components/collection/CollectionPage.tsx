@@ -3,6 +3,7 @@ import { CatalogClient } from "@/components/catalog/CatalogClient";
 import { TradeLeasing } from "@/components/catalog/TradeLeasing";
 import { Podbor } from "@/components/catalog/Podbor";
 import { BodyTypesNav } from "@/components/collection/BodyTypesNav";
+import { BrandsNav } from "@/components/collection/BrandsNav";
 import { CarsSection } from "@/components/home/CarsSection";
 import { Contacts } from "@/components/home/Contacts";
 
@@ -23,8 +24,11 @@ export type CollectionPageProps = {
   hiddenFacets: FacetKey[];
   /** Машины для блока «Просмотренные автомобили». */
   viewed: Car[];
-  /** Лейбл плитки кузова, который скрыть в блоке «типы кузова». */
+  /** Лейбл плитки кузова, который скрыть в блоке «типы кузова» (подборки по кузову). */
   excludeBody?: string;
+  /** Имя бренда — если задано, вместо сетки кузовов рендерим сетку брендов
+   *  (подборки по бренду), скрывая текущий бренд. */
+  excludeBrand?: string;
 };
 
 export function CollectionPage({
@@ -34,6 +38,7 @@ export function CollectionPage({
   hiddenFacets,
   viewed,
   excludeBody,
+  excludeBrand,
 }: CollectionPageProps) {
   return (
     <main className="catalog">
@@ -43,7 +48,11 @@ export function CollectionPage({
         crumbLabel={crumbLabel}
         hiddenFacets={hiddenFacets}
       />
-      <BodyTypesNav exclude={excludeBody} />
+      {excludeBrand !== undefined ? (
+        <BrandsNav exclude={excludeBrand} />
+      ) : (
+        <BodyTypesNav exclude={excludeBody} />
+      )}
       <Podbor />
       <TradeLeasing />
       <CarsSection title="Просмотренные автомобили" cars={viewed} />

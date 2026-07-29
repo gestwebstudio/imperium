@@ -229,6 +229,15 @@ export function getCarsForBody(bodyType: string, min = 8): Car[] {
   return [...typed, ...rest].slice(0, min);
 }
 
+/** То же для SEO-подборки по бренду: сначала машины бренда, добор любыми до `min`. */
+export function getCarsForBrand(brand: string, min = 8): Car[] {
+  const all = getCars();
+  const typed = all.filter((c) => c.brand === brand);
+  if (typed.length >= min) return typed;
+  const rest = all.filter((c) => c.brand !== brand);
+  return [...typed, ...rest].slice(0, min);
+}
+
 /** Все автомобили, которые могут быть добавлены в избранное или сравнение. */
 export function getAllCars(): Car[] {
   return [...FEATURED_CARS, ...CARS];

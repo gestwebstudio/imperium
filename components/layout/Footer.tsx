@@ -19,7 +19,11 @@ const columns: { title: string; links: FooterLink[] }[] = [
   },
   {
     title: "Подборки брендов",
-    links: ["BMW", "Mercedes", "Porsche", "Lexus", "Ferrari"],
+    links: [
+      { label: "BMW", href: "/bmw" },
+      { label: "Mercedes", href: "/mercedes" },
+      { label: "Lexus", href: "/lexus" },
+    ],
   },
   {
     title: "Услуги",
