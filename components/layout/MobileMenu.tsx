@@ -5,10 +5,10 @@ import { createPortal } from "react-dom";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { CloseIcon, PhoneIcon } from "@/components/icons";
-import { ButtonLink } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
 
 const menuItems = [
+  { label: "Каталог", href: "/catalog" },
   { label: "Услуги", href: "#" },
   { label: "О салоне", href: "#" },
   { label: "Контакты", href: "/contacts" },
@@ -62,7 +62,6 @@ export function MobileMenu() {
     }
 
     const labels = panel.querySelectorAll(".mobile-menu__item-label");
-    const actions = panel.querySelector(".mobile-menu__actions");
     const panelHead = panel.querySelector(".mobile-menu__panel-head");
 
     if (prefersReducedMotion()) {
@@ -89,7 +88,7 @@ export function MobileMenu() {
         },
         0,
       )
-      .to([actions, panelHead], { y: 16, opacity: 0, duration: 0.18 }, 0)
+      .to(panelHead, { y: 16, opacity: 0, duration: 0.18 }, 0)
       .to(panel, { xPercent: -100, duration: 0.36, ease: "power3.in" }, 0.08)
       .to(
         [...layers].reverse(),
@@ -122,19 +121,18 @@ export function MobileMenu() {
 
       timelineRef.current?.kill();
       const labels = panel.querySelectorAll(".mobile-menu__item-label");
-      const actions = panel.querySelector(".mobile-menu__actions");
       const panelHead = panel.querySelector(".mobile-menu__panel-head");
 
       gsap.set(backdrop, { opacity: 0 });
       gsap.set([panel, ...layers], { xPercent: -100 });
       gsap.set(labels, { yPercent: 130, rotate: 6 });
-      gsap.set([actions, panelHead], { y: 24, opacity: 0 });
+      gsap.set(panelHead, { y: 24, opacity: 0 });
 
       if (prefersReducedMotion()) {
         gsap.set([panel, ...layers], { xPercent: 0 });
         gsap.set(backdrop, { opacity: 1 });
         gsap.set(labels, { yPercent: 0, rotate: 0 });
-        gsap.set([actions, panelHead], { y: 0, opacity: 1 });
+        gsap.set(panelHead, { y: 0, opacity: 1 });
         panel.querySelector<HTMLAnchorElement>(".mobile-menu__item")?.focus();
         return;
       }
@@ -190,16 +188,6 @@ export function MobileMenu() {
             stagger: 0.09,
           },
           panelStart + 0.14,
-        )
-        .to(
-          actions,
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.5,
-            ease: "power3.out",
-          },
-          panelStart + 0.34,
         );
     });
   }, []);
@@ -337,17 +325,6 @@ export function MobileMenu() {
                   ))}
                 </ol>
               </nav>
-
-              <div className="mobile-menu__actions">
-                <ButtonLink
-                  href="/catalog"
-                  variant="primary-surface"
-                  size="m"
-                  onClick={close}
-                >
-                  Каталог
-                </ButtonLink>
-              </div>
             </aside>
           </div>,
           document.body,

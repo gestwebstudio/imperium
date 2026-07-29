@@ -421,13 +421,6 @@
 .mobile-menu__item:focus-visible {
   color: var(--color-heritage-green-500, #294434);
 }
-.mobile-menu__actions {
-  margin-top: 28px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 18px;
-}
 .mobile-menu__phone {
   display: inline-flex;
   align-items: center;
@@ -485,9 +478,6 @@
     right: 4px;
     font-size: 12px;
     line-height: 16px;
-  }
-  .mobile-menu__actions {
-    margin-top: 24px;
   }
 }
 
