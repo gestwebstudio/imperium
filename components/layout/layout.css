@@ -420,10 +420,10 @@
   color: var(--color-heritage-green-500, #294434);
 }
 .mobile-menu__actions {
-  margin-top: auto;
-  padding-top: 48px;
+  margin-top: 28px;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 18px;
 }
 .mobile-menu__phone {
@@ -484,10 +484,7 @@
     line-height: 16px;
   }
   .mobile-menu__actions {
-    padding-top: 36px;
-  }
-  .mobile-menu__actions > .btn {
-    width: 100%;
+    margin-top: 24px;
   }
 }
 

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import { gsap } from "gsap";
-import { CloseIcon, PhoneIcon, ArrowDiagonalIcon } from "@/components/icons";
+import { CloseIcon, PhoneIcon } from "@/components/icons";
 import { ButtonLink } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
 
@@ -333,8 +333,8 @@ export function MobileMenu() {
               <div className="mobile-menu__actions">
                 <ButtonLink
                   href="/catalog"
-                  variant="primary-cta"
-                  ctaIcon={<ArrowDiagonalIcon />}
+                  variant="primary-surface"
+                  size="m"
                   onClick={close}
                 >
                   Каталог
