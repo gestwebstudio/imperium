@@ -83,3 +83,25 @@
 - Подборки: `components/collection/*`.
 - Главная: `app/page.tsx`, `app/home.css`, `components/home/*`.
 - Данные: `lib/cars.ts`.
+- Trade-in: `app/trade-in/*`, `components/tradein/TradeInPage.tsx`.
+- Лизинг: `app/leasing/*`, `components/leasing/LeasingPage.tsx`.
+
+## 6. Сессия 3 (правки Trade-in + страница Лизинг)
+
+### Воркфлоу вёрстки по Figma (ВАЖНО, соблюдать)
+- По каждому блоку: точные значения из Figma (`get_design_context` + при нужде `get_variable_defs`) **И скриншот узла** (`get_screenshot`) — не достраивать структуру по одному лишь код-контексту (на этом слепил 4 карточки в одну).
+- После вёрстки — **числовая сверка DOM↔Figma до px** через `getBoundingClientRect` (ширины/отступы/зазоры/позиции). «На глаз» по встроенному браузеру НЕ проверять — он даунскейлит десктоп.
+- **Playwright (1:1 + overlay на экспорт макета) — только на финальной вычитке страницы** (картинки дороги по токенам). Числовая сверка ~бесплатна — держать всегда.
+- На новой странице — напомнить заказчику это правило и спросить, подключать ли Playwright для приёмки.
+
+### Trade-in — переделка блока преимуществ (макет `775:5197`)
+- Плашка преимуществ = **4 отдельные стеклянные карточки** (не один пилюль). Каждая — свой `GlassSurface` (те же параметры стекла, что у шапки: `backgroundOpacity 0.06, saturation 1.02, frost 3…`), `borderRadius 30`, ряд 1398px по центру, зазор 17.
+- Карточка наезжает нижней **половиной** на кромку hero: `.ti-hero` получает `display: flow-root` (свой BFC), `.ti-hero__stats-wrap { margin-bottom: -58 }`, `.ti-steps { margin-top: 178 }` (десктоп ≥961). Зазор заголовок→карточки 57px, карточки→этапы 120px.
+- Центрирование/паддинг карточки — на `.ti-stat .liquid-glass__content` (корень `.ti-stat` — сам GlassSurface). Кавычкам-выделениям `opacity: .4`; в accept-блоке кавычка `right: -30px` + `scaleX(-1)`.
+
+### Страница Лизинг — `/leasing` (макет `812:8593`)
+- Копия Trade-in: `app/leasing/{page.tsx,leasing.css}` + `components/leasing/LeasingPage.tsx`. **Переиспользует `trade-in.css`** (импортируется в page), root = `<main className="trade-in leasing">`.
+- `leasing.css` — только дельта: карточки преимуществ **без подписи** (только заголовок → высота 86 вместо 116). Отступы вокруг блока те же (57 сверху / 120 снизу): `.trade-in.leasing .ti-hero__stats-wrap { margin-bottom: -33 }` и `.trade-in.leasing > .ti-steps { margin-top: 153 }` (десктоп).
+- Тексты — из макета. В 3-м этапе исправлена опечатка макета «отовим» → «Готовим».
+- Футер: «Лизинг» → `/leasing` (`components/layout/Footer.tsx`).
+- **Не доделано:** числовая сверка 1920 не показана (прервано на лимитах) и финальная приёмка Playwright не сделана — проверить при возврате.
