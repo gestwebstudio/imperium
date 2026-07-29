@@ -1,10 +1,11 @@
 import { Fragment } from "react";
 import type { Car } from "@/lib/cars";
+import { Badge } from "@/components";
 import { Button } from "@/components/ui/Button";
 import { CarsSection } from "@/components/home/CarsSection";
 import { Contacts } from "@/components/home/Contacts";
 
-/* Данные страницы Trade-in (тексты — из макета 775:4922). */
+/* Данные страницы Trade-in (тексты и стили — из макета 775:4922). */
 const HERO_STATS = [
   { value: "Экспресс-оценка", label: "по фото, видео и VIN" },
   { value: "Полная прозрачность", label: "без скрытых комиссий" },
@@ -75,14 +76,11 @@ export function TradeInPage({ cars }: { cars: Car[] }) {
           </div>
 
           <div className="ti-hero__stats">
-            {HERO_STATS.map((s, i) => (
-              <Fragment key={s.value}>
-                {i > 0 && <span className="ti-stat__div" />}
-                <div className="ti-stat">
-                  <span className="ti-stat__value">{s.value}</span>
-                  <span className="ti-stat__label">{s.label}</span>
-                </div>
-              </Fragment>
+            {HERO_STATS.map((s) => (
+              <div className="ti-stat" key={s.value}>
+                <span className="ti-stat__value">{s.value}</span>
+                <span className="ti-stat__label">{s.label}</span>
+              </div>
             ))}
           </div>
         </div>
@@ -94,7 +92,9 @@ export function TradeInPage({ cars }: { cars: Car[] }) {
         <div className="ti-steps__grid">
           {STEPS.map((s) => (
             <article className="ti-step" key={s.stage}>
-              <span className="ti-step__badge">{s.stage}</span>
+              <Badge color="info" className="ti-step__badge">
+                {s.stage}
+              </Badge>
               <h3 className="ti-step__title">{s.title}</h3>
               <p className="ti-step__text">{s.text}</p>
             </article>
@@ -108,18 +108,19 @@ export function TradeInPage({ cars }: { cars: Car[] }) {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/images/services/podbor.webp" alt="Оценка автомобиля" />
         </div>
-        <div className="ti-factors__body">
-          <h2 className="ti-factors__title">
+        <div className="ti-block__body ti-factors__body">
+          <h2 className="ti-block__title">
             <span className="reg">Что влияет</span>
             <span className="bold">на оценку автомобиля?</span>
           </h2>
-          <ul className="ti-factors__list">
+          <ul className="ti-list">
             {FACTORS.map((f) => (
               <li key={f}>{f}</li>
             ))}
           </ul>
-          <p className="ti-factors__note">
-            <b>Чем полнее история автомобиля</b> тем выгоднее итоговое предложение
+          <p className="ti-callout">
+            <span className="reg">Чем полнее история автомобиля</span>
+            <span className="bold">тем выгоднее итоговое предложение</span>
           </p>
         </div>
       </section>
@@ -132,25 +133,24 @@ export function TradeInPage({ cars }: { cars: Car[] }) {
 
       {/* ---------- Мы готовы принять ---------- */}
       <section className="home-wrap ti-accept">
-        <div className="ti-accept__body">
-          <h2 className="ti-accept__title">
+        <div className="ti-block__body ti-accept__body">
+          <h2 className="ti-block__title">
             <span className="reg">Мы готовы принять ваш</span>
             <span className="bold">автомобиль в trade-in, если:</span>
           </h2>
-          <ul className="ti-accept__list">
+          <ul className="ti-list">
             {CONDITIONS.map((c) => (
               <li key={c}>{c}</li>
             ))}
           </ul>
-          <div className="ti-accept__notes">
-            <p className="ti-accept__note">
-              <b>Не ограничиваем</b> марками и годами выпуска
-            </p>
-            <p className="ti-accept__note ti-accept__note--muted">
-              Принимаем любые автомобили при условии юридической чистоты и
-              технической исправности
-            </p>
-          </div>
+          <p className="ti-callout">
+            <span className="reg">Не ограничиваем</span>
+            <span className="bold">марками и годами выпуска</span>
+          </p>
+          <p className="ti-accept__note">
+            Принимаем любые автомобили при условии юридической чистоты и
+            технической исправности
+          </p>
         </div>
         <div className="ti-accept__media">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -171,7 +171,7 @@ export function TradeInPage({ cars }: { cars: Car[] }) {
               колеса, доставка топлива и выезд механика.
             </p>
           </div>
-          <Button variant="primary-surface" inverse size="l">
+          <Button variant="primary-surface" inverse size="m">
             Подробнее
           </Button>
         </div>
