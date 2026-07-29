@@ -28,7 +28,7 @@ const columns: { title: string; links: FooterLink[] }[] = [
   {
     title: "Услуги",
     links: [
-      "Трейд-ин",
+      { label: "Трейд-ин", href: "/trade-in" },
       "Лизинг",
       "Авто под заказ",
       "Автоателье",
