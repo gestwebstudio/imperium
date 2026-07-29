@@ -317,7 +317,6 @@
 .mobile-menu__prelayer {
   position: absolute;
   inset: 0;
-  transform: translateX(-100%);
 }
 .mobile-menu__prelayer--taupe {
   background: var(--color-warm-taupe-300, #B2A79B);
@@ -327,7 +326,6 @@
 }
 .mobile-menu__panel {
   z-index: 2;
-  transform: translateX(-100%);
   box-sizing: border-box;
   padding:
     max(28px, env(safe-area-inset-top))
