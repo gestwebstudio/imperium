@@ -1,7 +1,7 @@
 /* Стили витрины кита (только для маршрута /kit). Компоненты кита стилизуются
    глобально через styles/components.css — здесь только раскладка демо. */
 
-.kit-wrap { max-width: 1120px; margin: 0 auto; padding: 0 32px; }
+.kit-wrap { max-width: 1120px; margin: 0 auto; padding: 0 var(--page-gutter, 32px); }
 
 /* hero */
 .kit-hero { background: var(--color-heritage-green-500); color: #fff; padding: 120px 0 52px; }
@@ -75,4 +75,6 @@
 
 @media (max-width: 640px) {
   .btn-row { grid-template-columns: 1fr; gap: 10px; }
+  .brand-grid { grid-template-columns: minmax(0, 1fr); }
+  .kit-card { padding: 20px; }
 }

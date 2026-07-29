@@ -12,12 +12,25 @@
 /* Базовые стили страницы (как в кит-витрине) */
 * { box-sizing: border-box; }
 
+html {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
 body {
   margin: 0;
+  min-width: 320px;
+  max-width: 100%;
+  overflow-x: clip;
   font-family: var(--font-text, "Onest", sans-serif);
   background: var(--color-stone-beige-100, #F3F0EE);
   color: var(--color-carbon-black-500, #1B1E1D);
   -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg {
+  max-width: 100%;
 }
 
 .page-transition {
