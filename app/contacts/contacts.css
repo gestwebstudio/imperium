@@ -1,13 +1,13 @@
 .contacts-page {
   width: 100%;
-  padding: clamp(128px, 8.073vw, 155px) 0 40px;
+  padding: var(--page-top, 155px) 0 40px;
 }
 
 .contacts-page__crumbs-wrap {
   width: 100%;
-  max-width: 1920px;
+  max-width: var(--layout-max, 1920px);
   margin: 0 auto clamp(40px, 3.333vw, 64px);
-  padding: 0 clamp(24px, 4vw, 60px);
+  padding: 0 var(--page-gutter, 60px);
 }
 
 .contacts-page__crumbs,
@@ -58,7 +58,6 @@
 
 @media (max-width: 640px) {
   .contacts-page {
-    padding-top: 120px;
     padding-bottom: 16px;
   }
 

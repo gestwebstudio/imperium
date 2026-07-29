@@ -22,7 +22,7 @@
 .brands-nav__grid {
   display: grid;
   grid-template-columns: repeat(var(--cols, 6), minmax(0, 1fr));
-  gap: 24px;
+  gap: clamp(16px, 1.25vw, 24px);
 }
 @media (max-width: 1200px) {
   .body-types-nav__grid,
@@ -37,9 +37,9 @@
 }
 
 .catalog-page {
-  max-width: 1920px;
+  max-width: var(--layout-max, 1920px);
   margin: 0 auto;
-  padding: clamp(128px, 8.073vw, 155px) clamp(24px, 4vw, 60px) 0;
+  padding: var(--page-top, 155px) var(--page-gutter, 60px) 0;
 }
 
 /* ---------- Хлебные крошки (HeroUI Breadcrumbs) ---------- */
@@ -99,7 +99,7 @@
   margin: 0;
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
   font-weight: var(--font-weight-semibold, 600);
-  font-size: clamp(30px, 3.4vw, 48px);
+  font-size: var(--fs-48);
   line-height: 1.16;
   letter-spacing: -0.01em;
   color: var(--color-carbon-black-500, #1B1E1D);
@@ -180,7 +180,7 @@
 .catalog-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
+  gap: clamp(16px, 1.25vw, 24px);
 }
 .catalog-empty {
   margin: 0;
@@ -583,6 +583,10 @@
 
 @media (max-width: 768px) {
   .catalog-grid { grid-template-columns: 1fr; }
+  .catalog > .cars-section--available .car-card {
+    height: auto;
+    min-height: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -635,4 +639,86 @@
 
 @media (max-width: 960px) {
   .podbor { flex-direction: column; gap: 32px; }
+}
+
+@media (max-width: 640px) {
+  .catalog > .catalog-services,
+  .catalog > .podbor,
+  .catalog > .body-types-nav,
+  .catalog > .brands-nav,
+  .catalog > .cars-section--upcoming,
+  .catalog > .cars-section--available {
+    margin-top: var(--section-space, 72px);
+  }
+  .catalog > .contacts {
+    margin-top: var(--section-space-lg, 88px);
+  }
+  .catalog-head {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 18px;
+    margin-bottom: 24px;
+  }
+  .catalog-head__title {
+    gap: 10px;
+  }
+  .catalog-head__tools {
+    width: 100%;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .cat-sort {
+    min-width: 0;
+    margin-bottom: 0;
+  }
+  .cat-sort__label {
+    display: none;
+  }
+  .cat-filters-toggle {
+    flex: none;
+  }
+  .cat-filters {
+    width: min(100vw, 432px);
+    padding: 24px 20px;
+  }
+  .cat-selected__tag > .cat-selected__tag-tooltip,
+  .cat-color-option > .cat-color-option__tooltip {
+    display: none;
+  }
+  .podbor {
+    gap: 24px;
+  }
+  .podbor__media img {
+    border-radius: var(--radius-media, 24px);
+  }
+  .podbor__body,
+  .podbor__text {
+    gap: 20px;
+  }
+  .podbor__actions {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .body-types-nav__grid,
+  .brands-nav__grid {
+    gap: 12px;
+  }
+  .cat-crumbs {
+    margin-bottom: 14px;
+  }
+  .cat-filters {
+    width: 100%;
+  }
+  .cat-range__row {
+    flex-direction: column;
+  }
+  .cat-range__input {
+    flex-basis: auto;
+    height: 44px;
+  }
+  .podbor__actions .btn {
+    width: 100%;
+  }
 }

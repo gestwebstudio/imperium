@@ -479,9 +479,9 @@
   justify-content: center;
   box-sizing: border-box;
   width: 100%;
-  height: 187px;
-  padding: 20px;
-  border-radius: 22px;
+  height: clamp(120px, 9.74vw, 187px);
+  padding: clamp(14px, 1.042vw, 20px);
+  border-radius: var(--radius-card, 22px);
   background: rgba(228,223,219,.4); /* stone-beige-200 @40% */
   transition: background .2s ease, box-shadow .2s ease;
 }
@@ -516,8 +516,8 @@
   position: relative;
   box-sizing: border-box;
   width: 100%;
-  height: 186px;
-  border-radius: 22px;
+  height: clamp(132px, 9.688vw, 186px);
+  border-radius: var(--radius-card, 22px);
   background: rgba(228,223,219,.4); /* stone-beige-200 @40% */
   overflow: hidden;
   transition: background .2s ease, box-shadow .2s ease;
@@ -534,14 +534,14 @@
   text-align: center;
   font-family: var(--font-text, "Onest", sans-serif);
   font-weight: var(--font-weight-bold, 700);
-  font-size: 24px;
+  font-size: var(--fs-24);
   line-height: 30px;
   color: var(--color-warm-taupe-300, #B2A79B);
   pointer-events: none;
   transition: font-size .2s ease, line-height .2s ease, color .2s ease;
 }
 .body-card:hover .body-card__label {
-  font-size: 36px;
+  font-size: var(--fs-36);
   line-height: 42px;
   color: var(--color-warm-taupe-200, #D5CCC4);
 }
@@ -566,9 +566,9 @@
 .image-service-card {
   min-width: 0;
   min-height: 634px;
-  padding: 30px;
+  padding: clamp(20px, 1.563vw, 30px);
   overflow: hidden;
-  border-radius: 40px;
+  border-radius: clamp(28px, 2.083vw, 40px);
   background: transparent;
   display: flex;
   flex-direction: column;
@@ -604,8 +604,8 @@
   margin: 0;
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
   font-weight: var(--font-weight-semibold, 600);
-  font-size: 36px;
-  line-height: 44px;
+  font-size: var(--fs-36);
+  line-height: 1.22;
   color: var(--color-carbon-black-500, #1B1E1D);
   overflow-wrap: anywhere;
 }
@@ -618,8 +618,8 @@
   width: min(100%, 688px);
   margin: 0;
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: 18px;
-  line-height: 24px;
+  font-size: var(--fs-18);
+  line-height: 1.33;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 @media (max-width: 900px) {
@@ -662,12 +662,12 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: clamp(18px, 1.25vw, 24px);
   box-sizing: border-box;
   width: 100%;
   max-width: 432px; /* 380px фото + 26px паддинг × 2 — фото встаёт нативно */
-  padding: 26px;
-  border-radius: 30px;
+  padding: clamp(18px, 1.354vw, 26px);
+  border-radius: var(--radius-card, 30px);
   background: rgba(255,255,255,.6);
 }
 .car-card__link {
@@ -697,8 +697,8 @@
 .car-card__title {
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
   font-weight: var(--font-weight-semibold, 600);
-  font-size: 24px;
-  line-height: 30px;
+  font-size: var(--fs-24);
+  line-height: 1.25;
   color: var(--color-carbon-black-500, #1B1E1D);
   width: 100%;
   overflow: hidden;
@@ -708,7 +708,7 @@
 .car-card__tags { display: flex; flex-wrap: wrap; gap: 5px; padding-top: 2px; }
 .car-card__photo { height: 179px; display: flex; align-items: center; justify-content: center; }
 .car-card__photo img { max-width: 100%; max-height: 179px; object-fit: contain; display: block; }
-.car-card__action { display: flex; gap: 24px; align-items: flex-end; }
+.car-card__action { display: flex; gap: clamp(12px, 1.25vw, 24px); align-items: flex-end; }
 .car-card__action .price-block { flex: 1 0 0; min-width: 0; }
 .car-card__details-link { z-index: 2; }
 
@@ -718,4 +718,75 @@
 .car-card .price-block__value {
   white-space: nowrap;
   font-size: min(28px, 8cqi);
+}
+
+@media (max-width: 768px) {
+  .floating-vehicle-actions {
+    top: calc(50% - 44px);
+    width: 48px;
+    height: 88px;
+    padding: 12px;
+    border-radius: 14px 0 0 14px;
+  }
+
+  .brand-card:hover img,
+  .body-card:hover .body-card__img {
+    transform: none;
+  }
+
+  .car-card__actions {
+    gap: 12px;
+  }
+
+  .car-card__photo {
+    height: clamp(150px, 46vw, 179px);
+  }
+
+  .car-card__photo img {
+    max-height: clamp(150px, 46vw, 179px);
+  }
+}
+
+@media (max-width: 480px) {
+  .btn--primary-cta {
+    height: 44px;
+    padding-left: 18px;
+    gap: 10px;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .btn--primary-cta .btn__cta-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .badge {
+    padding: 4px 8px;
+    font-size: var(--fs-16);
+    line-height: 20px;
+  }
+
+  .tag {
+    padding: 3px 10px;
+    font-size: var(--fs-14);
+    line-height: 18px;
+  }
+
+  .indicator {
+    font-size: var(--fs-14);
+    line-height: 18px;
+  }
+
+  .price-block__value,
+  .car-card .price-block__value {
+    font-size: clamp(20px, 6.5cqi, 24px);
+    line-height: 1.25;
+  }
+
+  .car-card__action .btn {
+    min-width: 0;
+    padding-inline: 12px;
+    font-size: 15px;
+  }
 }
