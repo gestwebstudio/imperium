@@ -63,10 +63,10 @@ export function MobileMenu() {
 
     const labels = panel.querySelectorAll(".mobile-menu__item-label");
     const actions = panel.querySelector(".mobile-menu__actions");
-    const logo = panel.querySelector(".mobile-menu__panel-logo");
+    const closeControl = panel.querySelector(".mobile-menu__close");
 
     if (prefersReducedMotion()) {
-      gsap.set([panel, ...layers], { xPercent: 100 });
+      gsap.set([panel, ...layers], { xPercent: -100 });
       gsap.set(backdrop, { opacity: 0 });
       finishClose();
       return;
@@ -89,12 +89,12 @@ export function MobileMenu() {
         },
         0,
       )
-      .to([actions, logo], { y: 16, opacity: 0, duration: 0.18 }, 0)
-      .to(panel, { xPercent: 100, duration: 0.36, ease: "power3.in" }, 0.08)
+      .to([actions, closeControl], { y: 16, opacity: 0, duration: 0.18 }, 0)
+      .to(panel, { xPercent: -100, duration: 0.36, ease: "power3.in" }, 0.08)
       .to(
         [...layers].reverse(),
         {
-          xPercent: 100,
+          xPercent: -100,
           duration: 0.3,
           ease: "power3.in",
           stagger: 0.04,
@@ -123,18 +123,18 @@ export function MobileMenu() {
       timelineRef.current?.kill();
       const labels = panel.querySelectorAll(".mobile-menu__item-label");
       const actions = panel.querySelector(".mobile-menu__actions");
-      const logo = panel.querySelector(".mobile-menu__panel-logo");
+      const closeControl = panel.querySelector(".mobile-menu__close");
 
       gsap.set(backdrop, { opacity: 0 });
-      gsap.set([panel, ...layers], { xPercent: 100 });
+      gsap.set([panel, ...layers], { xPercent: -100 });
       gsap.set(labels, { yPercent: 130, rotate: 6 });
-      gsap.set([actions, logo], { y: 24, opacity: 0 });
+      gsap.set([actions, closeControl], { y: 24, opacity: 0 });
 
       if (prefersReducedMotion()) {
         gsap.set([panel, ...layers], { xPercent: 0 });
         gsap.set(backdrop, { opacity: 1 });
         gsap.set(labels, { yPercent: 0, rotate: 0 });
-        gsap.set([actions, logo], { y: 0, opacity: 1 });
+        gsap.set([actions, closeControl], { y: 0, opacity: 1 });
         panel.querySelector<HTMLAnchorElement>(".mobile-menu__item")?.focus();
         return;
       }
@@ -171,7 +171,7 @@ export function MobileMenu() {
           panelStart,
         )
         .to(
-          logo,
+          closeControl,
           {
             y: 0,
             opacity: 1,
@@ -300,22 +300,14 @@ export function MobileMenu() {
               inert={open ? undefined : true}
             >
               <div className="mobile-menu__panel-head">
-                <Link
-                  href="/"
-                  className="mobile-menu__panel-logo"
-                  aria-label="Imperium Motors"
-                  onClick={close}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/images/logo_head.svg" alt="Imperium Motors" />
-                </Link>
                 <button
                   type="button"
                   className="mobile-menu__close"
                   aria-label="Закрыть меню"
                   onClick={close}
                 >
-                  <CloseIcon width={18} height={18} />
+                  <span>Close</span>
+                  <CloseIcon width={20} height={20} />
                 </button>
               </div>
 
