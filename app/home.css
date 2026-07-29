@@ -626,7 +626,28 @@
 .svc-card--selection { top: 535px; left: 0; width: 660px; }
 .svc-card--veles { top: 688px; left: 725px; width: 1075px; }
 
-.about__testimonial { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: stretch; margin-top: 198px; }
+.about__testimonial {
+  margin-top: 198px;
+  overflow: hidden;
+}
+.about__testimonial-track {
+  position: relative;
+  display: flex;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.about__testimonial-track::-webkit-scrollbar { display: none; }
+.about__testimonial-slide {
+  flex: 0 0 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: stretch;
+  scroll-snap-align: start;
+}
 .about__testi-img { overflow: hidden; border-radius: 36px; }
 .about__testi-img img { width: 100%; height: 100%; border-radius: 36px; display: block; object-fit: cover; }
 .about__testi-body { display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
@@ -646,27 +667,8 @@
 }
 .about__testi-nav svg { width: 14px; height: 14px; }
 .about__testi-nav .next svg { transform: rotate(180deg); }
-.about__testimonial--next .about__testi-img,
-.about__testimonial--next .about__testi-quote {
-  animation: testimonial-enter-next 420ms cubic-bezier(.22, 1, .36, 1);
-}
-.about__testimonial--previous .about__testi-img,
-.about__testimonial--previous .about__testi-quote {
-  animation: testimonial-enter-previous 420ms cubic-bezier(.22, 1, .36, 1);
-}
-@keyframes testimonial-enter-next {
-  from { opacity: .25; transform: translateX(18px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-@keyframes testimonial-enter-previous {
-  from { opacity: .25; transform: translateX(-18px); }
-  to { opacity: 1; transform: translateX(0); }
-}
 @media (prefers-reduced-motion: reduce) {
-  .about__testi-img,
-  .about__testi-quote {
-    animation-duration: .01ms !important;
-  }
+  .about__testimonial-track { scroll-behavior: auto; }
 }
 
 @media (max-width: 960px) {
@@ -687,7 +689,7 @@
     width: 100%;
   }
   .about__lead .bold { line-height: 1.08; }
-  .about__testimonial { grid-template-columns: 1fr; }
+  .about__testimonial-slide { grid-template-columns: 1fr; }
 }
 
 /* ---------------- Contacts ---------------- */

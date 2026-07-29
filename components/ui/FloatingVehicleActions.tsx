@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { HeartStrokeIcon, ListAddIcon } from "@/components/icons";
 import { Bubble } from "@/components/ui/primitives";
 import { useVehicleActions } from "@/components/ui/VehicleActionsContext";
@@ -7,17 +8,16 @@ import { useVehicleActions } from "@/components/ui/VehicleActionsContext";
 function ActionCount({
   count,
   label,
+  href,
   children,
 }: {
   count: number;
   label: string;
+  href?: string;
   children: React.ReactNode;
 }) {
-  return (
-    <div
-      className="floating-vehicle-actions__item"
-      aria-label={`${label}: ${count}`}
-    >
+  const content = (
+    <>
       {children}
       {count > 0 && (
         <Bubble
@@ -28,6 +28,27 @@ function ActionCount({
           {count}
         </Bubble>
       )}
+    </>
+  );
+
+  if (href) {
+    return (
+      <Link
+        href={href}
+        className="floating-vehicle-actions__item"
+        aria-label={`${label}: ${count}`}
+      >
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <div
+      className="floating-vehicle-actions__item"
+      aria-label={`${label}: ${count}`}
+    >
+      {content}
     </div>
   );
 }
@@ -40,10 +61,18 @@ export function FloatingVehicleActions() {
       className="floating-vehicle-actions"
       aria-label="Сохранённые автомобили"
     >
-      <ActionCount count={favoriteCount} label="В избранном">
+      <ActionCount
+        count={favoriteCount}
+        label="В избранном"
+        href="/favorites"
+      >
         <HeartStrokeIcon />
       </ActionCount>
-      <ActionCount count={comparisonCount} label="В сравнении">
+      <ActionCount
+        count={comparisonCount}
+        label="В сравнении"
+        href="/comparison"
+      >
         <ListAddIcon />
       </ActionCount>
       <span className="floating-vehicle-actions__status" aria-live="polite">

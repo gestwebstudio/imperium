@@ -56,8 +56,20 @@
 }
 .floating-vehicle-actions__item {
   position: relative;
+  display: block;
   width: 24px;
   height: 24px;
+  border-radius: 6px;
+  color: inherit;
+  text-decoration: none;
+  transition: color .15s ease;
+}
+.floating-vehicle-actions__item[href]:hover {
+  color: var(--color-heritage-green-500, #294434);
+}
+.floating-vehicle-actions__item[href]:focus-visible {
+  outline: 2px solid var(--color-heritage-green-400, #4E7B60);
+  outline-offset: 4px;
 }
 .floating-vehicle-actions__item > svg {
   width: 24px;

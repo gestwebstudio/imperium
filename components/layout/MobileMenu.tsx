@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import Link from "next/link";
 import { CloseIcon, PhoneIcon, ArrowDiagonalIcon } from "@/components/icons";
 import { ButtonLink } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
@@ -85,9 +86,9 @@ export function MobileMenu() {
                 <a href="#" onClick={close}>
                   О салоне
                 </a>
-                <a href="#" onClick={close}>
+                <Link href="/contacts" onClick={close}>
                   Контакты
-                </a>
+                </Link>
               </nav>
 
               <div className="mobile-menu__actions">

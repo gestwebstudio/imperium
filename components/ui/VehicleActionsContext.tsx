@@ -18,8 +18,11 @@ type StoredVehicleActions = {
 };
 
 type VehicleActionsContextValue = {
+  favoriteIds: string[];
+  comparisonIds: string[];
   favoriteCount: number;
   comparisonCount: number;
+  storageReady: boolean;
   isFavorite: (vehicleId: string) => boolean;
   isCompared: (vehicleId: string) => boolean;
   setFavorite: (vehicleId: string, active: boolean) => void;
@@ -98,8 +101,11 @@ export function VehicleActionsProvider({ children }: { children: ReactNode }) {
   return (
     <VehicleActionsContext.Provider
       value={{
+        favoriteIds: favorites,
+        comparisonIds: comparisons,
         favoriteCount: favorites.length,
         comparisonCount: comparisons.length,
+        storageReady,
         isFavorite: (vehicleId) => favorites.includes(vehicleId),
         isCompared: (vehicleId) => comparisons.includes(vehicleId),
         setFavorite,

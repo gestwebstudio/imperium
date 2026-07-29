@@ -243,6 +243,395 @@
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 
+/* ---------- Модальные окна действий ---------- */
+.car-action-modal__backdrop {
+  z-index: 1200;
+  background: rgba(27, 30, 29, .42);
+  backdrop-filter: blur(8px);
+}
+.car-action-modal__container {
+  box-sizing: border-box;
+  width: min(100%, 632px);
+  padding: 0;
+}
+.car-action-modal__dialog {
+  position: relative;
+  width: min(calc(100vw - 32px), 600px);
+  max-width: 600px;
+  max-height: min(820px, calc(100dvh - 32px));
+  padding: 0;
+  overflow: auto;
+  border: 1px solid rgba(178, 167, 155, .32);
+  border-radius: 30px;
+  background: var(--color-white, #FFFFFF);
+  box-shadow: 6px 8px 60px rgba(27, 30, 29, .2);
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.car-action-modal__close {
+  position: absolute;
+  z-index: 2;
+  top: 24px;
+  right: 24px;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-stone-beige-100, #F3F0EE);
+  color: var(--color-warm-taupe-500, #6A6259);
+  cursor: pointer;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
+}
+.car-action-modal__close:hover {
+  background: var(--color-stone-beige-200, #E4DFDB);
+  color: var(--color-heritage-green-500, #294434);
+}
+.car-action-modal__close:focus-visible {
+  outline: 2px solid var(--color-heritage-green-400, #4E7B60);
+  outline-offset: 2px;
+}
+.car-action-modal__form {
+  display: flex;
+  flex-direction: column;
+}
+.car-action-modal__header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 38px 76px 0 38px;
+}
+.car-action-modal__title,
+.car-action-modal__success-title {
+  margin: 0;
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: 36px;
+  line-height: 42px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.car-action-modal__description {
+  margin: 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 17px;
+  line-height: 24px;
+  color: var(--color-carbon-black-300, #898785);
+}
+.car-action-modal__body {
+  display: flex;
+  flex-direction: column;
+  padding: 28px 38px 0;
+}
+.car-action-modal__vehicle {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 20px;
+  padding: 18px 20px;
+  border-radius: 18px;
+  background: var(--color-stone-beige-100, #F3F0EE);
+}
+.car-action-modal__vehicle span {
+  grid-column: 1 / -1;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--color-carbon-black-300, #898785);
+}
+.car-action-modal__vehicle strong,
+.car-action-modal__vehicle b {
+  min-width: 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 17px;
+  line-height: 24px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.car-action-modal__vehicle strong {
+  overflow: hidden;
+  font-weight: var(--font-weight-semibold, 600);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.car-action-modal__vehicle b {
+  font-weight: var(--font-weight-semibold, 600);
+  white-space: nowrap;
+}
+.car-action-modal__fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 24px;
+}
+.car-action-modal__field {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.car-action-modal__field--full { grid-column: 1 / -1; }
+.car-action-modal__label {
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-medium, 500);
+  font-size: 15px;
+  line-height: 20px;
+  color: var(--color-warm-taupe-500, #6A6259);
+}
+.car-action-modal__input {
+  width: 100%;
+  border: 1px solid var(--color-stone-beige-300, #C9C0B8);
+  border-radius: 16px;
+  background: var(--color-white, #FFFFFF);
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 17px;
+  line-height: 24px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+.car-action-modal__input {
+  height: 54px;
+  padding: 14px 16px;
+}
+.car-action-modal__input::placeholder {
+  color: var(--color-carbon-black-300, #898785);
+}
+.car-action-modal__input:focus {
+  border-color: var(--color-heritage-green-400, #4E7B60);
+  outline: 0;
+  box-shadow: 0 0 0 3px rgba(78, 123, 96, .14);
+}
+.car-action-modal__select {
+  width: 100%;
+}
+.car-action-modal__select-trigger {
+  width: 100%;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--color-stone-beige-300, #C9C0B8);
+  border-radius: 16px;
+  background: var(--color-white, #FFFFFF);
+  cursor: pointer;
+  outline: none;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 17px;
+  line-height: 24px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+.car-action-modal__select-trigger[data-focus-visible],
+.car-action-modal__select-trigger:focus-visible {
+  border-color: var(--color-heritage-green-400, #4E7B60);
+  box-shadow: 0 0 0 3px rgba(78, 123, 96, .14);
+}
+.car-action-modal__select-value {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
+}
+.car-action-modal__select-value[data-placeholder] {
+  color: var(--color-carbon-black-300, #898785);
+}
+.car-action-modal__select-chevron {
+  width: 12px;
+  height: 12px;
+  flex: none;
+  color: var(--color-warm-taupe-500, #6A6259);
+  transform: rotate(-90deg);
+  transition: transform 180ms ease;
+}
+.car-action-modal__select-trigger[aria-expanded="true"] .car-action-modal__select-chevron {
+  transform: rotate(90deg);
+}
+.car-action-modal__select-popover {
+  z-index: 1300;
+  width: var(--trigger-width);
+  padding: 6px;
+  border: 1px solid var(--color-stone-beige-200, #E4DFDB);
+  border-radius: 16px;
+  background: var(--color-white, #FFFFFF);
+  box-shadow: 6px 12px 36px rgba(27, 30, 29, .18);
+  outline: none;
+}
+.car-action-modal__select-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  outline: none;
+}
+.car-action-modal__select-option {
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  outline: none;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 16px;
+  line-height: 22px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.car-action-modal__select-option[data-focused],
+.car-action-modal__select-option[data-hovered] {
+  background: var(--color-warm-taupe-100, #F2EEEA);
+}
+.car-action-modal__select-option[data-selected] {
+  background: var(--color-heritage-green-100, #E1EAE5);
+  color: var(--color-heritage-green-500, #294434);
+}
+.car-action-modal__select-option-mark {
+  color: var(--color-heritage-green-500, #294434);
+}
+.car-action-modal__messengers {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.car-action-modal__hint {
+  margin-top: -4px;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--color-carbon-black-300, #898785);
+}
+.car-action-modal__messenger-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+}
+.car-action-modal__messenger {
+  cursor: pointer;
+  outline: none;
+}
+.car-action-modal__messenger-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.car-action-modal__messenger-box {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-warm-taupe-300, #B2A79B);
+  border-radius: 6px;
+  background: var(--color-white, #FFFFFF);
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+.car-action-modal__messenger[data-selected="true"] .car-action-modal__messenger-box {
+  border-color: var(--color-heritage-green-400, #4E7B60);
+  background: var(--color-heritage-green-400, #4E7B60);
+}
+.car-action-modal__messenger[data-focus-visible="true"] .car-action-modal__messenger-box {
+  box-shadow: 0 0 0 3px rgba(78, 123, 96, .14);
+}
+.car-action-modal__messenger-mark {
+  width: 13px;
+  height: 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white, #FFFFFF);
+}
+.car-action-modal__messenger-mark svg {
+  width: 100%;
+  height: 100%;
+}
+.car-action-modal__messenger-label {
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 16px;
+  line-height: 22px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.car-action-modal__legal {
+  margin: 6px 0 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--color-carbon-black-300, #898785);
+}
+.car-action-modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 30px 38px 38px;
+}
+.car-action-modal__success {
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 56px 48px;
+  text-align: center;
+}
+.car-action-modal__success-icon {
+  width: 64px;
+  height: 64px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--color-heritage-green-100, #DDE9E0);
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-size: 30px;
+  line-height: 1;
+  color: var(--color-heritage-green-500, #294434);
+}
+.car-action-modal__success-text {
+  max-width: 430px;
+  margin: 0 0 10px;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 17px;
+  line-height: 24px;
+  color: var(--color-carbon-black-300, #898785);
+}
+@media (max-width: 640px) {
+  .car-action-modal__container { padding: 0; }
+  .car-action-modal__dialog {
+    max-height: calc(100dvh - 16px);
+    border-radius: 24px;
+  }
+  .car-action-modal__close { top: 18px; right: 18px; }
+  .car-action-modal__header { padding: 30px 68px 0 24px; }
+  .car-action-modal__title,
+  .car-action-modal__success-title {
+    font-size: 28px;
+    line-height: 34px;
+  }
+  .car-action-modal__body { padding: 24px 24px 0; }
+  .car-action-modal__vehicle { grid-template-columns: minmax(0, 1fr); }
+  .car-action-modal__vehicle b { white-space: normal; }
+  .car-action-modal__fields { grid-template-columns: minmax(0, 1fr); }
+  .car-action-modal__field--full { grid-column: auto; }
+  .car-action-modal__footer {
+    flex-direction: column-reverse;
+    padding: 24px;
+  }
+  .car-action-modal__footer .btn { width: 100%; }
+  .car-action-modal__success {
+    min-height: 440px;
+    padding: 48px 24px;
+  }
+}
+
 /* ---------- Характеристики ---------- */
 .car-specs {
   box-sizing: border-box;

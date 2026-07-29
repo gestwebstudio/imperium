@@ -229,12 +229,17 @@ export function getCarsForBody(bodyType: string, min = 8): Car[] {
   return [...typed, ...rest].slice(0, min);
 }
 
+/** Все автомобили, которые могут быть добавлены в избранное или сравнение. */
+export function getAllCars(): Car[] {
+  return [...FEATURED_CARS, ...CARS];
+}
+
 export function getCarBySlug(slug: string): Car | undefined {
-  return [...FEATURED_CARS, ...CARS].find((c) => c.slug === slug);
+  return getAllCars().find((c) => c.slug === slug);
 }
 
 export function getCarSlugs(): string[] {
-  return [...FEATURED_CARS, ...CARS].map((c) => c.slug);
+  return getAllCars().map((c) => c.slug);
 }
 
 /** Теги карточки: год · мощность · привод (по ТЗ — «бензин» заменён на л.с.). */

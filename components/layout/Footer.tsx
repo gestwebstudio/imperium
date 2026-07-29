@@ -34,7 +34,7 @@ const columns: { title: string; links: FooterLink[] }[] = [
   },
   {
     title: "Imperium Motors",
-    links: ["О салоне", "Контакты"],
+    links: ["О салоне", { label: "Контакты", href: "/contacts" }],
   },
 ];
 
@@ -73,7 +73,8 @@ export function Footer() {
                   {col.links.map((link) => {
                     const label = typeof link === "string" ? link : link.label;
                     const w = typeof link === "string" ? undefined : link.w;
-                    const href = typeof link === "string" ? "#" : link.href ?? "#";
+                    const href =
+                      typeof link === "string" ? "#" : link.href ?? "#";
                     const style = w ? { width: w } : undefined;
                     return href.startsWith("/") ? (
                       <Link href={href} key={label} style={style}>
