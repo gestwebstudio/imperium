@@ -1,0 +1,269 @@
+/* ============================================================
+   Страница Trade-in — макет Figma 775:4922.
+   Компоненты/токены — из кита; контейнер 1800, обёртка .home-wrap.
+   ============================================================ */
+
+.trade-in {
+  padding-bottom: 0;
+}
+
+/* Вертикальный ритм секций (как на каталоге) */
+.trade-in > .ti-steps,
+.trade-in > .ti-factors,
+.trade-in > .cars-section,
+.trade-in > .ti-accept {
+  margin-top: clamp(88px, 8.333vw, 160px);
+}
+.trade-in > section:has(.ti-call) {
+  margin-top: clamp(88px, 8.333vw, 160px);
+}
+.trade-in > .contacts {
+  margin-top: clamp(112px, 10.416vw, 200px);
+}
+
+/* ---------------- Hero ---------------- */
+.ti-hero {
+  background: var(--color-stone-beige-200, #E4DFDB);
+  border-radius: 0 0 50px 50px;
+  overflow: hidden;
+}
+.ti-hero__inner {
+  padding-top: clamp(128px, 8.5vw, 164px);
+  padding-bottom: clamp(40px, 3.3vw, 60px);
+}
+.ti-hero__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: clamp(32px, 5vw, 96px);
+}
+.ti-hero__title {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  text-transform: uppercase;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.ti-hero__title .reg { font-weight: var(--font-weight-medium, 500); font-size: var(--fs-66); line-height: 1.06; }
+.ti-hero__title .bold { font-weight: var(--font-weight-extrabold, 800); font-size: var(--fs-66); line-height: 1.06; }
+.ti-hero__aside {
+  flex: 0 1 730px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 28px;
+  padding-top: 12px;
+}
+.ti-hero__sub {
+  margin: 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: var(--fs-20);
+  line-height: 1.4;
+  color: var(--color-carbon-black-400, #4C4B49);
+}
+.ti-hero__cta { align-self: flex-end; }
+
+/* Плашка-статы hero (4 пункта + разделители) */
+.ti-hero__stats {
+  margin-top: clamp(40px, 5vw, 84px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 17px;
+}
+.ti-stat {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0 clamp(12px, 1.5vw, 22px);
+}
+.ti-stat__value {
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: var(--fs-30);
+  line-height: 1.2;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.ti-stat__label {
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: var(--fs-20);
+  line-height: 1.3;
+  color: var(--color-warm-taupe-400, #8F8579);
+}
+.ti-stat__div { width: 1px; align-self: stretch; background: var(--color-stone-beige-300, #CAC2BB); flex: none; }
+
+/* Общий заголовок секции */
+.ti-section-title {
+  margin: 0 0 clamp(28px, 3vw, 45px);
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: var(--fs-48);
+  line-height: 1.17;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+
+/* ---------------- Как проходит trade-in ---------------- */
+.ti-steps__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+.ti-step {
+  position: relative;
+  margin-top: 14px;
+  padding: 44px 30px 30px;
+  border-radius: 30px;
+  background: rgba(228, 223, 219, 0.4);
+}
+.ti-step__badge {
+  position: absolute;
+  top: -14px;
+  left: 30px;
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 14px;
+  border-radius: 21px;
+  background: var(--color-heritage-green-500, #294434);
+  color: var(--color-white, #FFFFFF);
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-medium, 500);
+  font-size: 14px;
+  line-height: 18px;
+}
+.ti-step__title {
+  margin: 0 0 12px;
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: var(--fs-40);
+  line-height: 1.15;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.ti-step__text {
+  margin: 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: var(--fs-18);
+  line-height: 1.35;
+  color: var(--color-warm-taupe-500, #6A6259);
+}
+
+/* ---------------- Что влияет / Мы готовы принять (два блока с фото) ---------------- */
+.ti-factors,
+.ti-accept {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(32px, 4vw, 50px);
+  align-items: center;
+}
+.ti-factors__media,
+.ti-accept__media {
+  min-width: 0;
+}
+.ti-factors__media img,
+.ti-accept__media img {
+  width: 100%;
+  aspect-ratio: 875 / 459;
+  object-fit: cover;
+  border-radius: 36px;
+  display: block;
+}
+.ti-accept__media { order: 1; }
+
+.ti-factors__title,
+.ti-accept__title {
+  margin: 0 0 28px;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.ti-factors__title .reg,
+.ti-accept__title .reg { font-weight: var(--font-weight-regular, 400); font-size: var(--fs-48); line-height: 1.17; }
+.ti-factors__title .bold,
+.ti-accept__title .bold { font-weight: var(--font-weight-semibold, 600); font-size: var(--fs-48); line-height: 1.17; }
+
+.ti-factors__list,
+.ti-accept__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+.ti-factors__list li,
+.ti-accept__list li {
+  padding: 14px 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: var(--fs-20);
+  line-height: 1.3;
+  color: var(--color-carbon-black-500, #1B1E1D);
+  border-bottom: 1px solid var(--color-stone-beige-300, #CAC2BB);
+}
+.ti-factors__list li:first-child,
+.ti-accept__list li:first-child { border-top: 1px solid var(--color-stone-beige-300, #CAC2BB); }
+
+.ti-factors__note,
+.ti-accept__note {
+  margin: 28px 0 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: var(--fs-20);
+  line-height: 1.3;
+  color: var(--color-warm-taupe-400, #8F8579);
+}
+.ti-factors__note b,
+.ti-accept__note b { color: var(--color-carbon-black-500, #1B1E1D); font-weight: var(--font-weight-semibold, 600); }
+.ti-accept__notes { display: flex; flex-direction: column; gap: 8px; }
+.ti-accept__note--muted { font-size: var(--fs-18); }
+
+/* ---------------- Позвоните нам (баннер) ---------------- */
+.ti-call {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 24px;
+  padding: clamp(32px, 3.3vw, 40px);
+  border-radius: 40px;
+  background: var(--color-heritage-green-500, #294434);
+  color: var(--color-white, #FFFFFF);
+}
+.ti-call__text { display: flex; flex-direction: column; gap: 8px; max-width: 686px; }
+.ti-call__title {
+  margin: 0;
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: var(--fs-40);
+  line-height: 1.15;
+}
+.ti-call__sub {
+  margin: 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: var(--fs-20);
+  line-height: 1.4;
+  color: var(--color-stone-beige-200, #E4DFDB);
+}
+
+/* ---------------- Адаптив ---------------- */
+@media (max-width: 960px) {
+  .ti-hero__top { flex-direction: column; gap: 24px; }
+  .ti-hero__aside { flex-basis: auto; align-self: stretch; padding-top: 0; }
+  .ti-hero__cta { align-self: flex-start; }
+  .ti-hero__stats { flex-wrap: wrap; gap: 20px 24px; }
+  .ti-stat { flex: 1 1 40%; min-width: 180px; }
+  .ti-stat__div { display: none; }
+
+  .ti-factors,
+  .ti-accept { grid-template-columns: minmax(0, 1fr); }
+  .ti-factors__media,
+  .ti-accept__media { order: 0; }
+}
+
+@media (max-width: 768px) {
+  .ti-steps__grid { grid-template-columns: minmax(0, 1fr); }
+  .ti-hero__stats { display: grid; grid-template-columns: 1fr 1fr; }
+  .ti-stat { min-width: 0; padding: 0; }
+}
