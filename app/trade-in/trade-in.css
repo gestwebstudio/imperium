@@ -115,7 +115,7 @@
   .ti-hero { display: flow-root; overflow: visible; }
   .ti-hero__inner { padding-bottom: 0; }
   .ti-hero__stats-wrap {
-    margin-top: clamp(72px, 6.2vw, 119px);
+    margin-top: clamp(40px, 4vw, 57px);
     margin-bottom: -58px;
     position: relative;
     z-index: 3;
@@ -255,7 +255,8 @@
   pointer-events: none;
 }
 .ti-factors .ti-callout::before { left: -25px; }
-.ti-accept .ti-callout::before { left: calc(100% + 30px); transform: scaleX(-1); }
+/* accept: кавычка на верхнем правом крае выделения (правый край +30px за колонку), зеркальная */
+.ti-accept .ti-callout::before { right: -30px; left: auto; transform: scaleX(-1); }
 
 .ti-accept__note {
   margin: 0;
@@ -309,7 +310,7 @@
   .ti-accept__media { order: 0; }
   .ti-accept__body { align-items: flex-start; text-align: left; }
   /* В одну колонку кавычка обоих блоков — слева, без зеркала */
-  .ti-accept .ti-callout::before { left: -25px; transform: none; }
+  .ti-accept .ti-callout::before { left: -25px; right: auto; transform: none; }
 }
 
 @media (max-width: 768px) {
