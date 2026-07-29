@@ -632,7 +632,7 @@
     aspect-ratio: 815 / 438;
   }
 }
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .image-service-card {
     padding: 20px;
     gap: 24px;
@@ -745,9 +745,56 @@
   .car-card__photo img {
     max-height: clamp(150px, 46vw, 179px);
   }
+
+  .image-service-card {
+    width: 100%;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    gap: 20px;
+  }
+
+  .image-service-card:is(:hover, :focus-within) {
+    background: transparent;
+  }
+
+  .image-service-card__arrow.btn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .car-card .price-block__label {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .car-card .price-block__value {
+    font-size: clamp(22px, 8cqi, 28px);
+    line-height: 1.16;
+    letter-spacing: -.02em;
+  }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 640px) {
+  .btn--m,
+  .btn--l {
+    height: 28px;
+    padding: 0 12px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .btn--m .btn__icon,
+  .btn--l .btn__icon {
+    width: 12px;
+    height: 12px;
+  }
+
+  .btn--icon.btn--m,
+  .btn--icon.btn--l {
+    width: 28px;
+  }
+
   .btn--primary-cta {
     height: 44px;
     padding-left: 18px;
@@ -762,31 +809,109 @@
   }
 
   .badge {
-    padding: 4px 8px;
-    font-size: var(--fs-16);
-    line-height: 20px;
+    padding: 2px 8px;
+    font-size: 12px;
+    line-height: 16px;
   }
 
   .tag {
-    padding: 3px 10px;
-    font-size: var(--fs-14);
-    line-height: 18px;
+    padding: 2px 8px;
+    font-size: 12px;
+    line-height: 16px;
   }
 
   .indicator {
-    font-size: var(--fs-14);
-    line-height: 18px;
+    gap: 4px;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .indicator__dot {
+    width: 5px;
+    height: 5px;
+  }
+
+  .wishlist,
+  .compare {
+    width: 20px;
+    height: 20px;
+  }
+
+  .ui-button.wishlist > svg,
+  .ui-button.compare > svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .wishlist__tip,
+  .compare__tip {
+    display: none;
+  }
+
+  .floating-vehicle-actions {
+    top: calc(50% - 40px);
+    width: 44px;
+    height: 80px;
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .floating-vehicle-actions__item,
+  .floating-vehicle-actions__item > svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .floating-vehicle-actions__bubble {
+    top: -6px;
+    right: -7px;
   }
 
   .price-block__value,
   .car-card .price-block__value {
-    font-size: clamp(20px, 6.5cqi, 24px);
-    line-height: 1.25;
+    font-size: clamp(22px, 8cqi, 28px);
+    line-height: 1.16;
   }
 
   .car-card__action .btn {
     min-width: 0;
     padding-inline: 12px;
-    font-size: 15px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .btn--primary-cta {
+    height: 40px;
+    padding-left: 14px;
+    gap: 8px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .btn--primary-cta .btn__cta-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .wishlist,
+  .compare,
+  .ui-button.wishlist > svg,
+  .ui-button.compare > svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .car-card__actions {
+    gap: 10px;
+  }
+
+  .car-card .price-block__label {
+    font-size: 10px;
+    line-height: 13px;
+  }
+
+  .car-card__action {
+    gap: 8px;
   }
 }
