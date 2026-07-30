@@ -55,4 +55,15 @@ $font-weight-bold: 700;
 $font-weight-extrabold: 800;
 $font-weight-black: 900;
 
+// ---------- Responsive layout ----------
+$layout-max: 1920px;
+$page-gutter: clamp(16px, 3.125vw, 60px);
+$page-top: clamp(104px, 8.073vw, 155px);
+$section-space: clamp(72px, 8.333vw, 160px);
+$section-space-lg: clamp(88px, 10.416vw, 200px);
+$surface-padding: clamp(20px, 2.083vw, 40px);
+$radius-page: clamp(28px, 2.604vw, 50px);
+$radius-card: clamp(22px, 1.563vw, 30px);
+$radius-media: clamp(22px, 1.875vw, 36px);
+
 // Готовые текстовые стили (73 шт.) — в styles/typography.css (классы .t-*)

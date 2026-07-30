@@ -1,9 +1,9 @@
 .favorites-page {
   width: 100%;
-  max-width: 1920px;
+  max-width: var(--layout-max, 1920px);
   min-height: 70vh;
   margin: 0 auto;
-  padding: clamp(128px, 8.073vw, 155px) clamp(24px, 4vw, 60px) 80px;
+  padding: var(--page-top, 155px) var(--page-gutter, 60px) clamp(56px, 4.167vw, 80px);
 }
 
 .favorites-crumbs,
@@ -57,7 +57,7 @@
   margin: 0;
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
   font-weight: var(--font-weight-semibold, 600);
-  font-size: clamp(36px, 3.4vw, 48px);
+  font-size: var(--fs-48);
   line-height: 1.16;
   letter-spacing: -.01em;
   color: var(--color-carbon-black-500, #1B1E1D);
@@ -66,7 +66,7 @@
 .favorites-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 24px;
+  gap: clamp(16px, 1.25vw, 24px);
 }
 .favorites-grid > .car-card {
   max-width: none;
@@ -128,7 +128,6 @@
 
 @media (max-width: 640px) {
   .favorites-page {
-    padding-top: 120px;
     padding-bottom: 56px;
   }
   .favorites-head {
@@ -145,7 +144,23 @@
     border-radius: 24px;
   }
   .favorites-empty__text h2 {
-    font-size: 26px;
-    line-height: 32px;
+    font-size: var(--fs-30);
+    line-height: 1.27;
+  }
+}
+
+@media (max-width: 480px) {
+  .favorites-head {
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .favorites-empty {
+    min-height: 320px;
+    gap: 20px;
+    padding: 36px 20px;
+  }
+  .favorites-empty__text p {
+    font-size: var(--fs-16);
+    line-height: 1.4;
   }
 }

@@ -1,12 +1,32 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import Link from "next/link";
+import { Alert, Button as HeroButton } from "@heroui/react";
 import "./layout.css";
-import { PhoneIcon, ArrowDiagonalIcon } from "@/components/icons";
+import { PhoneIcon, ArrowDiagonalIcon, CloseIcon } from "@/components/icons";
 import { ButtonLink } from "@/components/ui/Button";
 import { GlassSurface } from "@/components/ui/GlassSurface";
 import { MobileMenu } from "./MobileMenu";
+
+const PHONE_NUMBER = "+7 499 704-14-44";
+
+function copyWithFallback(value: string) {
+  const input = document.createElement("textarea");
+  input.value = value;
+  input.setAttribute("readonly", "");
+  input.style.position = "fixed";
+  input.style.opacity = "0";
+  document.body.appendChild(input);
+  input.select();
+
+  const copied = document.execCommand("copy");
+  input.remove();
+
+  if (!copied) {
+    throw new Error("The browser rejected the copy command.");
+  }
+}
 
 /**
  * «Headroom»: при скролле вниз шапка уезжает вверх (скрывается),
@@ -61,11 +81,67 @@ function ChevronDown() {
 
 export function Header() {
   const hidden = useHideOnScroll();
+  const [copyStatus, setCopyStatus] = useState<"idle" | "success" | "error">(
+    "idle",
+  );
+  const copyStatusTimer = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyStatusTimer.current !== null) {
+        window.clearTimeout(copyStatusTimer.current);
+      }
+    };
+  }, []);
+
+  function showCopyStatus(status: "success" | "error") {
+    setCopyStatus(status);
+
+    if (copyStatusTimer.current !== null) {
+      window.clearTimeout(copyStatusTimer.current);
+    }
+
+    copyStatusTimer.current = window.setTimeout(() => {
+      setCopyStatus("idle");
+      copyStatusTimer.current = null;
+    }, 2400);
+  }
+
+  function hideCopyStatus() {
+    if (copyStatusTimer.current !== null) {
+      window.clearTimeout(copyStatusTimer.current);
+      copyStatusTimer.current = null;
+    }
+    setCopyStatus("idle");
+  }
+
+  async function handlePhoneClick(event: MouseEvent<HTMLAnchorElement>) {
+    if (!window.matchMedia("(min-width: 1200px)").matches) return;
+
+    event.preventDefault();
+
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(PHONE_NUMBER);
+      } else {
+        copyWithFallback(PHONE_NUMBER);
+      }
+      showCopyStatus("success");
+    } catch {
+      try {
+        copyWithFallback(PHONE_NUMBER);
+        showCopyStatus("success");
+      } catch {
+        showCopyStatus("error");
+      }
+    }
+  }
 
   return (
     <header className={`site-header${hidden ? " is-hidden" : ""}`}>
       <GlassSurface
         className="site-header__bar"
+        height="var(--site-header-height)"
         backgroundOpacity={0.06}
         saturation={1.02}
         lightAngle={-45}
@@ -97,9 +173,10 @@ export function Header() {
             bare
             className="header-call"
             aria-label="Позвонить: +7 499 704-14-44"
+            onClick={handlePhoneClick}
           >
             <span className="header-call__number" aria-hidden="true">
-              +7 499 704-14-44
+              {PHONE_NUMBER}
             </span>
             <PhoneIcon />
           </ButtonLink>
@@ -113,6 +190,36 @@ export function Header() {
           </ButtonLink>
         </div>
       </GlassSurface>
+      <Alert
+        status={copyStatus === "error" ? "danger" : "success"}
+        className={`header-copy-alert${
+          copyStatus !== "idle" ? " is-visible" : ""
+        }${copyStatus === "error" ? " is-error" : ""}`}
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        <Alert.Indicator />
+        <Alert.Content>
+          <Alert.Title>
+            {copyStatus === "error"
+              ? "Не удалось скопировать номер"
+              : copyStatus === "success"
+                ? "Номер скопирован"
+                : ""}
+          </Alert.Title>
+        </Alert.Content>
+        <HeroButton
+          isIconOnly
+          size="sm"
+          variant="tertiary"
+          className="header-copy-alert__close"
+          aria-label="Закрыть уведомление"
+          onClick={hideCopyStatus}
+        >
+          <CloseIcon />
+        </HeroButton>
+      </Alert>
     </header>
   );
 }

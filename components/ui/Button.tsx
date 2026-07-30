@@ -98,12 +98,10 @@ function getButtonClassName({
   bare?: boolean;
   className?: string;
 }) {
-  const isCta = variant === "primary-cta";
-
   return cn(
     "ui-button",
     !bare && "btn",
-    !bare && !isCta && `btn--${size}`,
+    !bare && `btn--${size}`,
     !bare && `btn--${variant}`,
     !bare && inverse && "btn--inverse",
     !bare && iconOnly && "btn--icon",
@@ -126,7 +124,8 @@ function ButtonContent({
       <ButtonRippleLayer />
       {startIcon &&
         (bare ? startIcon : <span className="btn__icon">{startIcon}</span>)}
-      {children != null && (bare ? children : <span>{children}</span>)}
+      {children != null &&
+        (bare ? children : <span className="btn__label">{children}</span>)}
       {endSlot}
       {endIcon &&
         (bare ? endIcon : <span className="btn__icon">{endIcon}</span>)}
@@ -137,7 +136,7 @@ function ButtonContent({
 
 /** Кнопка кита с эффектом ripple (порт scripts/ripple.js). */
 export function Button({
-  size = "m",
+  size,
   variant = "primary-surface",
   inverse,
   iconOnly,
@@ -154,6 +153,7 @@ export function Button({
   ...rest
 }: ButtonProps) {
   const isCta = variant === "primary-cta";
+  const resolvedSize = size ?? (isCta ? "l" : "m");
 
   function handlePointerDown(e: PointerEvent<HTMLButtonElement>) {
     handleButtonRipplePointerDown(e);
@@ -169,7 +169,7 @@ export function Button({
     <button
       type={type}
       className={getButtonClassName({
-        size,
+        size: resolvedSize,
         variant,
         inverse,
         iconOnly,
@@ -196,7 +196,7 @@ export function Button({
 
 /** Ссылочная кнопка кита с теми же вариантами и Ripple. */
 export function ButtonLink({
-  size = "m",
+  size,
   variant = "primary-surface",
   inverse,
   iconOnly,
@@ -212,8 +212,9 @@ export function ButtonLink({
   ...rest
 }: ButtonLinkProps) {
   const isCta = variant === "primary-cta";
+  const resolvedSize = size ?? (isCta ? "l" : "m");
   const classNames = getButtonClassName({
-    size,
+    size: resolvedSize,
     variant,
     inverse,
     iconOnly,

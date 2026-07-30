@@ -112,6 +112,7 @@ export const CAR_COLORS: readonly CarColor[] = [
   { id: "silver", name: "Серебристый", swatch: "#C4C7C7" },
   { id: "blue", name: "Синий", swatch: "#315878" },
   { id: "green", name: "Зелёный", swatch: "#4E7B60" },
+  { id: "red", name: "Красный", swatch: "#A51C1C" },
 ];
 const TRANSMISSIONS = ["Автомат", "Робот"];
 const DRIVES = ["Полный", "Задний", "Передний"];
@@ -193,6 +194,23 @@ const FEATURED_CARS: Car[] = [
     status: { type: "success", label: "В наличии" },
   },
   {
+    id: "porsche-911-carrera-4-gts",
+    slug: "porsche-911-carrera-4-gts",
+    brand: "Porsche",
+    brandLogo: "/images/logo_cards/porsche.webp",
+    name: "911 Carrera 4 GTS",
+    photo: "/images/firstcars/2big.webp",
+    year: 2026,
+    power: 541,
+    drive: "Полный",
+    bodyType: "Купе",
+    color: getSeedColor("red"),
+    transmission: "Робот",
+    fuelType: "Бензин",
+    price: 22_490_000,
+    status: { type: "success", label: "В наличии" },
+  },
+  {
     id: "lexus-gx-executive",
     slug: "lexus-gx-executive",
     brand: "Lexus",
@@ -215,6 +233,27 @@ const FEATURED_CARS: Car[] = [
 
 export function getCars(): Car[] {
   return CARS;
+}
+
+/**
+ * Машины для SEO-страницы-подборки по кузову: сначала нужного типа, при нехватке
+ * добираем любыми до `min` (у части кузовов нет своих фото — по ТЗ можно любые).
+ */
+export function getCarsForBody(bodyType: string, min = 8): Car[] {
+  const all = getCars();
+  const typed = all.filter((c) => c.bodyType === bodyType);
+  if (typed.length >= min) return typed;
+  const rest = all.filter((c) => c.bodyType !== bodyType);
+  return [...typed, ...rest].slice(0, min);
+}
+
+/** То же для SEO-подборки по бренду: сначала машины бренда, добор любыми до `min`. */
+export function getCarsForBrand(brand: string, min = 8): Car[] {
+  const all = getCars();
+  const typed = all.filter((c) => c.brand === brand);
+  if (typed.length >= min) return typed;
+  const rest = all.filter((c) => c.brand !== brand);
+  return [...typed, ...rest].slice(0, min);
 }
 
 /** Все автомобили, которые могут быть добавлены в избранное или сравнение. */

@@ -22,6 +22,7 @@ import {
   Comparison,
   BrandCard,
   BodyCard,
+  NewsCard,
   CarCard,
 } from "@/components";
 
@@ -227,8 +228,26 @@ export default function KitPage() {
                 Primary · CTA<code>.btn--primary-cta</code>
               </div>
               <div className="btn-group">
-                <Button variant="primary-cta" ctaIcon={<ArrowDiagonalIcon />}>
-                  Забронировать
+                <Button
+                  size="l"
+                  variant="primary-cta"
+                  ctaIcon={<ArrowDiagonalIcon />}
+                >
+                  Каталог
+                </Button>
+                <Button
+                  size="m"
+                  variant="primary-cta"
+                  ctaIcon={<ArrowDiagonalIcon />}
+                >
+                  Каталог
+                </Button>
+                <Button
+                  size="s"
+                  variant="primary-cta"
+                  ctaIcon={<ArrowDiagonalIcon />}
+                >
+                  Каталог
                 </Button>
               </div>
             </div>
@@ -448,9 +467,27 @@ export default function KitPage() {
         <div className="kit-wrap">
           <h2>Карточки</h2>
           <p className="section-lead">
-            Наведите курсор на плитки марок и типов кузова. Car Card собран из
-            компонентов кита.
+            Наведите курсор на плитки марок и типов кузова. News Card и Car Card
+            собраны из компонентов и токенов кита.
           </p>
+
+          <div className="kit-block">
+            <div className="kit-head">
+              <h3>News Card</h3>
+              <code>&lt;NewsCard&gt;</code>
+            </div>
+            <div className="news-card-stage">
+              <NewsCard
+                date="01.01.2026"
+                dateTime="2026-01-01"
+                title={"Bugatti Tourbillon прибыл\nв Imperium Motors"}
+                description="Новый этап гиперкаров: гибридная силовая установка, выразительная аэродинамика и интерьер, созданный как механическое произведение искусства."
+                image="/images/news/bugatti-tourbillon.png"
+                imageAlt="Bugatti Tourbillon с открытыми дверями"
+                href="#"
+              />
+            </div>
+          </div>
 
           <div className="kit-block">
             <div className="kit-head">

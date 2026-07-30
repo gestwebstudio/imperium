@@ -28,9 +28,20 @@ const emptySelection = () =>
 
 export type CatalogClientProps = {
   cars: Car[];
+  /** Заголовок H1 (по умолчанию — каталог). */
+  title?: string;
+  /** Подпись текущей хлебной крошки. */
+  crumbLabel?: string;
+  /** Фасеты, скрытые из сайдбара (для урезанных подборок: кузов/бренд). */
+  hiddenFacets?: FacetKey[];
 };
 
-export function CatalogClient({ cars }: CatalogClientProps) {
+export function CatalogClient({
+  cars,
+  title = "Автомобили в наличии",
+  crumbLabel = "Каталог",
+  hiddenFacets,
+}: CatalogClientProps) {
   const options = useMemo(() => getFacetOptions(cars), [cars]);
 
   const [selected, setSelected] =
@@ -122,13 +133,13 @@ export function CatalogClient({ cars }: CatalogClientProps) {
           Главная
         </Breadcrumbs.Item>
         <Breadcrumbs.Item className="cat-crumbs__item cat-crumbs__item--current">
-          Каталог
+          {crumbLabel}
         </Breadcrumbs.Item>
       </Breadcrumbs>
 
       <header className="catalog-head">
         <div className="catalog-head__title">
-          <h1>Автомобили в наличии</h1>
+          <h1>{title}</h1>
           <Badge color="info">{sorted.length}</Badge>
         </div>
         <div className="catalog-head__tools">
@@ -153,6 +164,7 @@ export function CatalogClient({ cars }: CatalogClientProps) {
         <FilterSidebar
           open={filtersOpen}
           onClose={() => setFiltersOpen(false)}
+          hiddenFacets={hiddenFacets}
           options={options}
           selected={selected}
           onToggleFacet={toggleFacet}
