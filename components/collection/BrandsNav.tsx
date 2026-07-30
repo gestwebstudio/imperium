@@ -7,12 +7,12 @@ import { BrandCard } from "@/components/cards/cards";
  * растягиваются на всю ширину контейнера.
  */
 const BRANDS = [
-  { name: "Mercedes-Benz", src: "/images/logo_brands/mercedes.webp", className: "brand-card--mercedes" },
-  { name: "BMW", src: "/images/logo_brands/bmw.webp", className: "brand-card--bmw" },
-  { name: "Lexus", src: "/images/logo_brands/lexus.webp", className: "brand-card--lexus" },
-  { name: "Ferrari", src: "/images/logo_brands/ferrari.webp", className: "brand-card--ferrari" },
-  { name: "Rolls-Royce", src: "/images/logo_brands/rollsroyce.webp", className: "brand-card--rollsroyce" },
-  { name: "Audi", src: "/images/logo_brands/audi.webp", className: "brand-card--audi" },
+  { name: "Mercedes-Benz", src: "/images/logo_brands/mercedes.webp" },
+  { name: "BMW", src: "/images/logo_brands/bmw.webp" },
+  { name: "Lexus", src: "/images/logo_brands/lexus.webp" },
+  { name: "Ferrari", src: "/images/logo_brands/ferrari.webp" },
+  { name: "Rolls-Royce", src: "/images/logo_brands/rollsroyce.webp" },
+  { name: "Audi", src: "/images/logo_brands/audi.webp" },
 ];
 
 export type BrandsNavProps = {
@@ -30,7 +30,7 @@ export function BrandsNav({ exclude }: BrandsNavProps) {
         style={{ "--cols": items.length } as CSSProperties}
       >
         {items.map((b) => (
-          <BrandCard key={b.name} src={b.src} alt={b.name} className={b.className} />
+          <BrandCard key={b.name} src={b.src} alt={b.name} />
         ))}
       </div>
     </section>

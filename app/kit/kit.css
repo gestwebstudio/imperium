@@ -55,6 +55,7 @@
 /* cards grids */
 .brand-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
 .car-stage { display: flex; flex-wrap: wrap; gap: 30px; background: var(--color-stone-beige-100); border-radius: 20px; padding: 36px; }
+.news-card-stage { padding: 40px; border-radius: 20px; background: var(--color-stone-beige-100); }
 
 /* buttons layout */
 .btn-card { background: #fff; border-radius: 18px; padding: 8px 28px 24px; box-shadow: 0 1px 2px rgba(27,30,29,.04), 0 8px 24px rgba(27,30,29,.03); }
@@ -76,5 +77,6 @@
 @media (max-width: 640px) {
   .btn-row { grid-template-columns: 1fr; gap: 10px; }
   .brand-grid { grid-template-columns: minmax(0, 1fr); }
+  .news-card-stage { padding: 20px; }
   .kit-card { padding: 20px; }
 }

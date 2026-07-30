@@ -13,32 +13,26 @@ const brands = [
   {
     name: "Mercedes-Benz",
     src: "/images/logo_brands/mercedes.webp",
-    className: "brand-card--mercedes",
   },
   {
     name: "BMW",
     src: "/images/logo_brands/bmw.webp",
-    className: "brand-card--bmw",
   },
   {
     name: "Lexus",
     src: "/images/logo_brands/lexus.webp",
-    className: "brand-card--lexus",
   },
   {
     name: "Ferrari",
     src: "/images/logo_brands/ferrari.webp",
-    className: "brand-card--ferrari",
   },
   {
     name: "Rolls-Royce",
     src: "/images/logo_brands/rollsroyce.webp",
-    className: "brand-card--rollsroyce",
   },
   {
     name: "Audi",
     src: "/images/logo_brands/audi.webp",
-    className: "brand-card--audi",
   },
 ];
 
@@ -59,7 +53,7 @@ export function BrandsRow() {
         />
         <div className="brands-row" ref={rowRef}>
           {INFINITE_CAROUSEL_COPIES.map((copy) =>
-            brands.map(({ name, src, className }, index) => {
+            brands.map(({ name, src }, index) => {
               const isMiddleCopy = copy === INFINITE_CAROUSEL_MIDDLE_COPY;
               return (
                 <div
@@ -69,7 +63,7 @@ export function BrandsRow() {
                   aria-hidden={isMiddleCopy ? undefined : true}
                   inert={isMiddleCopy ? undefined : true}
                 >
-                  <BrandCard src={src} alt={name} className={className} />
+                  <BrandCard src={src} alt={name} />
                 </div>
               );
             }),

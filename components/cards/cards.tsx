@@ -20,8 +20,10 @@ export type BrandCardProps = {
 export function BrandCard({ src, alt, className }: BrandCardProps) {
   return (
     <div className={cn("brand-card", className)}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={src} alt={alt} />
+      <div className="brand-card__image">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={src} alt={alt} />
+      </div>
     </div>
   );
 }
@@ -75,6 +77,58 @@ export function ServiceImageCard({
           />
         </div>
         <p className="image-service-card__text">{text}</p>
+      </div>
+    </article>
+  );
+}
+
+/* --- News Card --- */
+export type NewsCardProps = {
+  date: string;
+  dateTime?: string;
+  title: string;
+  description: string;
+  image: string;
+  imageAlt?: string;
+  href: string;
+  className?: string;
+};
+export function NewsCard({
+  date,
+  dateTime,
+  title,
+  description,
+  image,
+  imageAlt,
+  href,
+  className,
+}: NewsCardProps) {
+  return (
+    <article className={cn("news-card", className)}>
+      <div className="news-card__media">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={image} alt={imageAlt ?? title} />
+      </div>
+
+      <div className="news-card__content">
+        <time className="news-card__date" dateTime={dateTime}>
+          {date}
+        </time>
+        <div className="news-card__heading">
+          <h3 className="news-card__title">{title}</h3>
+          <div className="news-card__action-wrap">
+            <ButtonLink
+              href={href}
+              size="s"
+              variant="primary-outlined"
+              iconOnly
+              startIcon={<ArrowDiagonalIcon />}
+              className="news-card__action"
+              aria-label={`Читать новость: ${title}`}
+            />
+          </div>
+        </div>
+        <p className="news-card__description">{description}</p>
       </div>
     </article>
   );

@@ -48,6 +48,12 @@
 }
 .site-header__nav a:hover { color: var(--color-heritage-green-500, #294434); }
 .site-header__nav svg { width: 15px; height: 15px; }
+@media (min-width: 1201px) and (max-width: 1536px) {
+  .site-header__nav a {
+    font-size: var(--fs-18);
+    line-height: 1.3333;
+  }
+}
 .site-header__logo {
   position: absolute;
   left: 50%;
@@ -112,6 +118,76 @@
 }
 .header-call:hover {
   filter: brightness(0.97);
+}
+
+.header-copy-alert.alert {
+  position: absolute;
+  top: calc(18px + var(--site-header-height) + 10px);
+  right: max(60px, calc((100vw - 1880px) / 2 + 40px));
+  z-index: 2;
+  width: 340px;
+  min-height: 56px;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 10px 10px 16px;
+  border-radius: 20px;
+  background: var(--color-white, #FFFFFF);
+  box-shadow: 0 10px 30px rgb(27 30 29 / 14%);
+  color: var(--color-carbon-black-500, #1B1E1D);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition:
+    opacity 180ms ease,
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 180ms;
+}
+.header-copy-alert .alert__indicator {
+  flex: none;
+  padding: 0;
+  color: var(--color-heritage-green-400, #4E7B60);
+}
+.header-copy-alert .alert__indicator [data-slot="alert-default-icon"] {
+  width: 20px;
+  height: 20px;
+}
+.header-copy-alert .alert__content {
+  justify-content: center;
+}
+.header-copy-alert .alert__title {
+  color: var(--color-carbon-black-500, #1B1E1D);
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: var(--fs-14, 14px);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 20px;
+  white-space: nowrap;
+}
+.header-copy-alert .header-copy-alert__close.button {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  min-height: 28px;
+  flex: none;
+  margin-left: auto;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-stone-beige-100, #F3F0EE);
+  color: var(--color-warm-taupe-500, #6A6259);
+  cursor: pointer;
+}
+.header-copy-alert .header-copy-alert__close.button > svg {
+  width: 12px;
+  height: 12px;
+}
+.header-copy-alert.is-visible {
+  pointer-events: auto;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.header-copy-alert.is-error .alert__indicator {
+  color: var(--color-red-500, #BB4545);
 }
 
 @media (min-width: 1201px) {
@@ -198,6 +274,12 @@
   }
 }
 
+@media (max-width: 1199px) {
+  .header-copy-alert {
+    display: none;
+  }
+}
+
 @media (max-width: 960px) {
   .site-header {
     --site-header-height: 64px;
@@ -259,7 +341,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .header-call,
-  .header-call__number {
+  .header-call__number,
+  .header-copy-alert {
     transition-duration: .01ms;
   }
 }

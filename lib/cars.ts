@@ -112,6 +112,7 @@ export const CAR_COLORS: readonly CarColor[] = [
   { id: "silver", name: "Серебристый", swatch: "#C4C7C7" },
   { id: "blue", name: "Синий", swatch: "#315878" },
   { id: "green", name: "Зелёный", swatch: "#4E7B60" },
+  { id: "red", name: "Красный", swatch: "#A51C1C" },
 ];
 const TRANSMISSIONS = ["Автомат", "Робот"];
 const DRIVES = ["Полный", "Задний", "Передний"];
@@ -190,6 +191,23 @@ const FEATURED_CARS: Car[] = [
     transmission: "Робот",
     fuelType: "Бензин",
     price: 19_990_000,
+    status: { type: "success", label: "В наличии" },
+  },
+  {
+    id: "porsche-911-carrera-4-gts",
+    slug: "porsche-911-carrera-4-gts",
+    brand: "Porsche",
+    brandLogo: "/images/logo_cards/porsche.webp",
+    name: "911 Carrera 4 GTS",
+    photo: "/images/firstcars/2big.webp",
+    year: 2026,
+    power: 541,
+    drive: "Полный",
+    bodyType: "Купе",
+    color: getSeedColor("red"),
+    transmission: "Робот",
+    fuelType: "Бензин",
+    price: 22_490_000,
     status: { type: "success", label: "В наличии" },
   },
   {
