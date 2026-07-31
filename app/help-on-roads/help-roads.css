@@ -1,0 +1,104 @@
+/* ============================================================
+   Страница «Помощь на дорогах» — макет Figma 841:6808.
+   Общая разметка/стили с Trade-in (импортируем trade-in.css).
+   Здесь: hero без стат-плашки, блок #2 (два белых блока), вертикальный ритм.
+   ============================================================ */
+
+/* Hero без плашки-статов: вернуть нижний паддинг (trade-in зануляет его под наезд плашки) */
+@media (min-width: 961px) {
+  .help-roads .ti-hero {
+    display: block;
+    overflow: hidden;
+  }
+  .help-roads .ti-hero__inner {
+    padding-bottom: clamp(60px, 5.7vw, 110px);
+  }
+}
+
+/* Вертикальный ритм (макет: hero→блок 120, блок→баннер 120, баннер→контакты 180) */
+@media (min-width: 961px) {
+  .help-roads > .hr-section {
+    margin-top: clamp(72px, 6.25vw, 120px);
+  }
+  .help-roads > section:has(.ti-call) {
+    margin-top: clamp(72px, 6.25vw, 120px);
+  }
+  .help-roads > .contacts {
+    margin-top: clamp(112px, 9.375vw, 180px);
+  }
+}
+
+/* ---------- Блок #2: два белых блока ---------- */
+.hr-cards {
+  display: flex;
+  align-items: stretch;
+  gap: 20px;
+  padding: 10px;
+}
+.hr-card {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 553px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 40px;
+  border-radius: 40px;
+  background: var(--color-white, #ffffff);
+  overflow: hidden;
+}
+.hr-card__text {
+  margin: 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: var(--fs-18);
+  line-height: 1.333;
+  color: var(--color-carbon-black-500, #1b1e1d);
+}
+.hr-guarantees {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: var(--fs-18);
+  line-height: 1.333;
+  color: var(--color-carbon-black-500, #1b1e1d);
+}
+.hr-guarantees li + li {
+  margin-top: 4px;
+}
+.hr-title--right {
+  text-align: right;
+}
+
+/* callout карточки: контент-ширина, прижат вниз (margin-top:auto — от .ti-callout) */
+.help-roads .hr-card__callout {
+  align-self: flex-start;
+  width: max-content;
+  max-width: 100%;
+}
+.help-roads .hr-card__callout--right {
+  text-align: right;
+}
+/* иконка-кавычка 93×77 в левом-нижнем углу, за текстом callout */
+.help-roads .hr-card__callout::before {
+  top: -29px;
+  left: -24px;
+  width: 93px;
+  height: 77px;
+}
+
+/* ---------- Адаптив блока #2 ---------- */
+@media (max-width: 960px) {
+  .hr-cards {
+    flex-direction: column;
+  }
+  .hr-card {
+    min-height: 0;
+  }
+  .hr-title--right {
+    text-align: left;
+  }
+  .help-roads .hr-card__callout--right {
+    text-align: left;
+  }
+}

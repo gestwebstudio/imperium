@@ -33,7 +33,7 @@ const columns: { title: string; links: FooterLink[] }[] = [
       { label: "Авто под заказ", href: "/car-selection" },
       "Автоателье",
       { label: "Индивидуальный дизайн авто", w: 151 },
-      "Помощь на дороге",
+      { label: "Помощь на дороге", href: "/help-on-roads" },
     ],
   },
   {
