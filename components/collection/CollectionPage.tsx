@@ -3,7 +3,7 @@ import { CatalogClient } from "@/components/catalog/CatalogClient";
 import { TradeLeasing } from "@/components/catalog/TradeLeasing";
 import { Podbor } from "@/components/catalog/Podbor";
 import { BodyTypesNav } from "@/components/collection/BodyTypesNav";
-import { BrandsNav } from "@/components/collection/BrandsNav";
+import { BrandsRow } from "@/components/home/BrandsRow";
 import { CarsSection } from "@/components/home/CarsSection";
 import { Contacts } from "@/components/home/Contacts";
 
@@ -53,7 +53,7 @@ export function CollectionPage({
         showFilters={showFilters}
       />
       {excludeBrand !== undefined ? (
-        <BrandsNav exclude={excludeBrand} />
+        <BrandsRow exclude={excludeBrand} />
       ) : (
         <BodyTypesNav exclude={excludeBody} />
       )}

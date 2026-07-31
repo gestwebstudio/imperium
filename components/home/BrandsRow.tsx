@@ -3,14 +3,18 @@
 import { BrandCard } from "@/components/cards/cards";
 import { ArrowIcon } from "@/components/icons";
 import { Button } from "@/components/ui/Button";
-import { BRANDS_LOGOS as brands } from "@/lib/cars";
+import { BRANDS_LOGOS } from "@/lib/cars";
 import {
   INFINITE_CAROUSEL_COPIES,
   INFINITE_CAROUSEL_MIDDLE_COPY,
   useInfiniteCarousel,
 } from "@/components/ui/useInfiniteCarousel";
 
-export function BrandsRow() {
+/** `exclude` — имя бренда, который скрыть (для подборки по бренду: своего лого нет). */
+export function BrandsRow({ exclude }: { exclude?: string } = {}) {
+  const brands = exclude
+    ? BRANDS_LOGOS.filter((b) => b.name !== exclude)
+    : BRANDS_LOGOS;
   const { rowRef, scroll } = useInfiniteCarousel(brands.length);
 
   return (
