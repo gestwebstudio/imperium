@@ -204,11 +204,11 @@
 
 /* ---------- Сайдбар фильтров (прилипающий, со скроллом) ---------- */
 .cat-filters {
-  flex: 0 0 432px;
+  flex: 0 0 433px;
   align-self: flex-start;
   position: sticky;
   top: 34px;
-  height: 764px;
+  height: 688px;
   max-height: calc(100vh - 68px);
   overflow-y: auto;
   box-sizing: border-box;
@@ -220,23 +220,25 @@
   background: rgba(255, 255, 255, .6);
   overscroll-behavior: contain;
 }
-.cat-filters__block { display: flex; flex-direction: column; gap: 14px; }
-.cat-filters__block:first-child { gap: 12px; }
-.cat-filters__block:last-child { gap: 16px; }
+.cat-filters__block { display: flex; flex-direction: column; }
+.cat-filters__block--selected { gap: 12px; }
+.cat-filters__block--controls { gap: 8px; }
 .cat-filters__title {
   margin: 0;
   font-family: var(--font-text, "Onest", sans-serif);
   font-weight: var(--font-weight-medium, 500);
-  font-size: 24px;
-  line-height: 30px;
+  font-size: 20px;
+  line-height: 28px;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 .cat-filters__divider {
+  flex: 0 0 1px;
   height: 1px;
+  min-height: 1px;
   width: 100%;
   background: var(--color-warm-taupe-200, #D5CCC4);
 }
-.cat-filters__list { display: flex; flex-direction: column; gap: 30px; }
+.cat-filters__list { display: flex; flex-direction: column; gap: 16px; }
 
 /* Выбранные категории */
 .cat-selected__row {
@@ -293,7 +295,7 @@
 .cat-range { display: flex; flex-direction: column; gap: 10px; }
 .cat-range__label {
   font-family: var(--font-text, "Onest", sans-serif);
-  font-weight: var(--font-weight-semibold, 600);
+  font-weight: var(--font-weight-medium, 500);
   font-size: 16px;
   line-height: 20px;
   color: var(--color-warm-taupe-400, #8F8579);
@@ -331,10 +333,41 @@
   --accent: var(--color-heritage-green-400, #4E7B60);
   --accent-foreground: var(--color-white, #FFFFFF);
   --focus: var(--color-heritage-green-500, #294434);
+
+  display: block;
+  height: 20px;
+  gap: 0;
+}
+.cat-slider .slider__track {
+  height: 20px;
+  overflow: visible;
+}
+.cat-slider__marks {
+  position: absolute;
+  z-index: 1;
+  inset: 0 -12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+.cat-slider__mark {
+  width: 3px;
+  height: 3px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--color-warm-taupe-500, #6A6259);
+  opacity: .15;
+}
+.cat-slider .slider__fill {
+  z-index: 2;
+}
+.cat-slider .slider__thumb {
+  z-index: 3;
 }
 
 /* ---------- Аккордеоны фильтров (HeroUI Accordion) ---------- */
-.cat-acc { display: flex; flex-direction: column; gap: 6px; }
+.cat-acc { display: flex; flex-direction: column; gap: 0; }
 .cat-acc__item { border: none; }
 .cat-acc__item::after { display: none; }
 .cat-acc__heading { margin: 0; }
@@ -343,7 +376,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  width: 100%;
+  width: calc(100% + 24px);
+  margin-inline: -12px;
   padding: 8px 12px;
   border: none;
   border-radius: 8px;
@@ -359,7 +393,7 @@
 .cat-acc__label {
   flex: 1 1 0;
   font-family: var(--font-text, "Onest", sans-serif);
-  font-weight: var(--font-weight-semibold, 600);
+  font-weight: var(--font-weight-medium, 500);
   font-size: 16px;
   line-height: 20px;
   color: var(--color-warm-taupe-400, #8F8579);
@@ -445,73 +479,48 @@
   transform: translate(-50%, 0);
 }
 
-/* ---------- Чекбоксы (HeroUI Checkbox) ---------- */
-.cat-check {
-  --accent: var(--color-heritage-green-400, #4E7B60);
-  --accent-hover: var(--color-heritage-green-400, #4E7B60);
-  --accent-foreground: var(--color-white, #FFFFFF);
-  --focus: var(--color-heritage-green-400, #4E7B60);
-
-  display: block;
-  width: 100%;
-  cursor: pointer;
-}
-.cat-check__content {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  padding: 8px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  outline: none;
-  transition: background-color .15s ease;
-}
-.cat-check__content[data-hovered],
-.cat-check__content:hover { background: var(--color-warm-taupe-100, #F2EEEA); }
-.cat-check__box {
-  flex: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  box-sizing: border-box;
-  border: 1.5px solid var(--color-warm-taupe-300, #B2A79B);
-  border-radius: 6px;
-  background: var(--color-white, #FFFFFF);
-  transition: background-color .15s ease, border-color .15s ease;
-}
-.cat-check[data-selected="true"] .cat-check__box {
-  border-color: transparent;
-  background: var(--color-heritage-green-400, #4E7B60);
-}
-.cat-check__mark {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 13px;
-  height: 13px;
-  color: var(--color-white, #FFFFFF);
-}
-.cat-check__mark svg { width: 100%; height: 100%; }
-.cat-check__label {
-  flex: 1 1 0;
-  font-family: var(--font-text, "Onest", sans-serif);
-  font-weight: var(--font-weight-regular, 400);
-  font-size: 16px;
-  line-height: 20px;
-  color: var(--color-carbon-black-500, #1B1E1D);
-}
-
 /* ---------- Секции каталога ---------- */
 .catalog > .cars-section--available .car-card {
   height: 484px;
 }
 
 /* ---------- Адаптив ---------- */
-@media (max-width: 1440px) {
-  .catalog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+/* 1200-1536: геометрия плавно масштабируется между двумя ноутбучными
+   макетами. Так фильтр и три карточки всегда занимают сетку целиком. */
+@media (min-width: 1201px) and (max-width: 1536px) {
+  .catalog-page {
+    padding-inline: clamp(40px, calc(5.95238vw - 31.4286px), 60px);
+  }
+
+  .catalog-body {
+    gap: 16px;
+  }
+
+  .catalog-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(10px, calc(1.785714vw - 11.4286px), 16px);
+  }
+
+  .cat-filters {
+    flex-basis: clamp(278px, calc(19.04762vw + 49.4286px), 342px);
+    height: 704px;
+  }
+
+  .cat-selected__empty,
+  .cat-range__label,
+  .cat-acc__label {
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .cat-check {
+    --ui-checkbox-control-size: 16px;
+    --ui-checkbox-indicator-size: 10px;
+    --ui-checkbox-content-gap: 8px;
+    --ui-checkbox-font-size: 14px;
+    --ui-checkbox-line-height: 18px;
+    --ui-checkbox-radius: 5px;
+  }
 }
 
 /* ≤1200: сайдбар фильтров → правый drawer по кнопке «Фильтры» */
@@ -552,9 +561,9 @@
     bottom: 0;
     left: auto;
     z-index: 100;
-    width: min(92vw, 432px);
-    height: 100%;
-    max-height: none;
+    width: min(92vw, 433px);
+    height: 100dvh;
+    max-height: 100dvh;
     flex: none;
     border-radius: 0;
     background: var(--color-stone-beige-100, #F3F0EE);

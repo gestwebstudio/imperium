@@ -882,6 +882,17 @@
   .contacts__sub { margin-top: 24px; }
 }
 
+@media (min-width: 1200px) and (max-width: 1919px) {
+  .cars-row {
+    gap: 16px;
+  }
+
+  .cars-row > * {
+    flex-basis: calc((100% - 48px) / 4);
+    min-width: 0;
+  }
+}
+
 @media (max-width: 960px) {
   .home > .brands,
   .home > .cars-section--available,

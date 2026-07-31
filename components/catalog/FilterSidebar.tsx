@@ -1,6 +1,6 @@
 "use client";
 
-import { Accordion, Checkbox, ColorSwatch } from "@heroui/react";
+import { Accordion, ColorSwatch } from "@heroui/react";
 import { CloseIcon } from "@/components/icons";
 import {
   Button,
@@ -8,6 +8,7 @@ import {
   handleButtonRipplePointerDown,
 } from "@/components/ui/Button";
 import { Tooltip as KitTooltip } from "@/components/ui/primitives";
+import { Checkbox as KitCheckbox } from "@/components/ui/Checkbox";
 import { FACETS, type FacetKey, type FacetOption } from "@/lib/cars";
 import { RangeFilter, type RangeValue } from "./RangeFilter";
 
@@ -80,7 +81,7 @@ export function FilterSidebar({
       </div>
 
       {/* --- Выбранные категории --- */}
-      <div className="cat-filters__block">
+      <div className="cat-filters__block cat-filters__block--selected">
         <h2 className="cat-filters__title">Выбранные категории</h2>
         <div className="cat-selected__row">
           {hasSelection ? (
@@ -135,7 +136,7 @@ export function FilterSidebar({
       <div className="cat-filters__divider" />
 
       {/* --- Фильтры --- */}
-      <div className="cat-filters__block">
+      <div className="cat-filters__block cat-filters__block--controls">
         <h2 className="cat-filters__title">Фильтры</h2>
         <div className="cat-filters__list">
           <RangeFilter
@@ -197,23 +198,16 @@ export function FilterSidebar({
                         );
                       })
                     : options[f.key].map((option) => (
-                        <Checkbox.Root
+                        <KitCheckbox
                           key={option.value}
                           className="cat-check"
+                          size="m"
+                          label={option.label}
                           isSelected={selected[f.key].includes(option.value)}
                           onChange={() =>
                             onToggleFacet(f.key, option.value)
                           }
-                        >
-                          <Checkbox.Content className="cat-check__content">
-                            <Checkbox.Control className="cat-check__box">
-                              <Checkbox.Indicator className="cat-check__mark" />
-                            </Checkbox.Control>
-                            <span className="cat-check__label">
-                              {option.label}
-                            </span>
-                          </Checkbox.Content>
-                        </Checkbox.Root>
+                        />
                       ))}
                 </Accordion.Panel>
               </Accordion.Item>

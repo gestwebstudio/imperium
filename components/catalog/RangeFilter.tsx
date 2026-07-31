@@ -122,6 +122,11 @@ export function RangeFilter({
         onChange={(v) => onChange(v as RangeValue)}
       >
         <Slider.Track>
+          <Slider.Marks className="cat-slider__marks" aria-hidden="true">
+            {Array.from({ length: 14 }, (_, index) => (
+              <span key={index} className="cat-slider__mark" />
+            ))}
+          </Slider.Marks>
           <Slider.Fill />
           <Slider.Thumb
             index={0}

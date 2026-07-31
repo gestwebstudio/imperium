@@ -29,6 +29,16 @@
 .stage-label { width: 100%; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--color-warm-taupe-400); }
 .stage-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
 
+/* typography inventory */
+.type-list { overflow: hidden; border-radius: 18px; background: #fff; box-shadow: 0 1px 2px rgba(27,30,29,.04), 0 8px 24px rgba(27,30,29,.03); }
+.type-row { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 28px; align-items: center; min-height: 88px; padding: 20px 24px; border-top: 1px solid var(--color-stone-beige-200); }
+.type-row:first-child { border-top: 0; }
+.type-meta { align-self: start; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding-top: 4px; }
+.type-meta strong { font-family: var(--font-text); font-size: 13px; line-height: 18px; font-weight: 600; }
+.type-meta code { font-family: var(--font-display); font-size: 11px; line-height: 16px; color: var(--color-heritage-green-500); background: var(--color-stone-beige-100); padding: 2px 6px; border-radius: 5px; }
+.type-meta span { font-size: 11px; line-height: 16px; color: var(--color-warm-taupe-400); }
+.type-sample { min-width: 0; color: var(--color-carbon-black-500); overflow-wrap: anywhere; }
+
 /* bubble matrix (цвет × размер) */
 .bubble-demo { gap: 0; padding: 8px 24px; }
 .bubble-row { display: grid; grid-template-columns: 220px repeat(4, 1fr); align-items: center; border-top: 1px solid var(--color-stone-beige-200); }
@@ -55,6 +65,9 @@
 /* cards grids */
 .brand-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
 .car-stage { display: flex; flex-wrap: wrap; gap: 30px; background: var(--color-stone-beige-100); border-radius: 20px; padding: 36px; }
+.car-card-specimen { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+.car-card-specimen--l { width: 405px; }
+.car-card-specimen--m { width: 349.333px; }
 .news-card-stage { padding: 40px; border-radius: 20px; background: var(--color-stone-beige-100); }
 
 /* buttons layout */
@@ -79,4 +92,8 @@
   .brand-grid { grid-template-columns: minmax(0, 1fr); }
   .news-card-stage { padding: 20px; }
   .kit-card { padding: 20px; }
+  .type-row { grid-template-columns: 1fr; gap: 14px; padding: 18px; }
+  .car-card-specimen,
+  .car-card-specimen--l,
+  .car-card-specimen--m { width: 100%; }
 }
