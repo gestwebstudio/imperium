@@ -11,6 +11,7 @@
 .catalog > .podbor,
 .catalog > .body-types-nav,
 .catalog > .brands-nav,
+.catalog > .brands,
 .catalog > .cars-section--upcoming,
 .catalog > .cars-section--available {
   margin-top: clamp(96px, 8.333vw, 160px);
@@ -657,6 +658,7 @@
   .catalog > .podbor,
   .catalog > .body-types-nav,
   .catalog > .brands-nav,
+  .catalog > .brands,
   .catalog > .cars-section--upcoming,
   .catalog > .cars-section--available {
     margin-top: var(--section-space, 72px);
