@@ -22,7 +22,7 @@ export function BrandsNav({ exclude }: BrandsNavProps) {
         style={{ "--cols": items.length } as CSSProperties}
       >
         {items.map((b) => (
-          <BrandCard key={b.name} src={b.src} alt={b.name} />
+          <BrandCard key={b.name} src={b.src} alt={b.name} href={b.href} />
         ))}
       </div>
     </section>

@@ -40,6 +40,9 @@ export function CollectionPage({
   excludeBody,
   excludeBrand,
 }: CollectionPageProps) {
+  // Подборка по бренду: фильтр показываем только если машин 13+ (иначе грид шире).
+  const showFilters = excludeBrand === undefined || cars.length >= 13;
+
   return (
     <main className="catalog">
       <CatalogClient
@@ -47,6 +50,7 @@ export function CollectionPage({
         title={title}
         crumbLabel={crumbLabel}
         hiddenFacets={hiddenFacets}
+        showFilters={showFilters}
       />
       {excludeBrand !== undefined ? (
         <BrandsNav exclude={excludeBrand} />

@@ -27,7 +27,7 @@ export function BrandsRow() {
         />
         <div className="brands-row" ref={rowRef}>
           {INFINITE_CAROUSEL_COPIES.map((copy) =>
-            brands.map(({ name, src }, index) => {
+            brands.map(({ name, src, href }, index) => {
               const isMiddleCopy = copy === INFINITE_CAROUSEL_MIDDLE_COPY;
               return (
                 <div
@@ -37,7 +37,7 @@ export function BrandsRow() {
                   aria-hidden={isMiddleCopy ? undefined : true}
                   inert={isMiddleCopy ? undefined : true}
                 >
-                  <BrandCard src={src} alt={name} />
+                  <BrandCard src={src} alt={name} href={href} />
                 </div>
               );
             }),

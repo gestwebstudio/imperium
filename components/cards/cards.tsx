@@ -15,16 +15,22 @@ import { ArrowDiagonalIcon } from "@/components/icons";
 export type BrandCardProps = {
   src: string;
   alt: string;
+  href?: string;
   className?: string;
 };
-export function BrandCard({ src, alt, className }: BrandCardProps) {
-  return (
-    <div className={cn("brand-card", className)}>
-      <div className="brand-card__image">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={src} alt={alt} />
-      </div>
+export function BrandCard({ src, alt, href, className }: BrandCardProps) {
+  const image = (
+    <div className="brand-card__image">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={src} alt={alt} />
     </div>
+  );
+  return href ? (
+    <Link className={cn("brand-card", className)} href={href} aria-label={alt}>
+      {image}
+    </Link>
+  ) : (
+    <div className={cn("brand-card", className)}>{image}</div>
   );
 }
 

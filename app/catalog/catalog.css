@@ -182,6 +182,17 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(16px, 1.25vw, 24px);
 }
+/* Без фильтра (брендовая подборка ≤12 машин) — грид на колонку шире: 4→3→2→1 */
+.catalog-grid--wide { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 1440px) {
+  .catalog-grid--wide { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 1024px) {
+  .catalog-grid--wide { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 768px) {
+  .catalog-grid--wide { grid-template-columns: 1fr; }
+}
 .catalog-empty {
   margin: 0;
   padding: 48px 0;
