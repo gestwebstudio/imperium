@@ -104,6 +104,40 @@ const MODELS = [
   { slug: "sierra-1500-denali", name: "Sierra 1500 Denali", brand: "GMC", brandLogo: "/images/logo_cards/gmc.webp", photo: `${CARS_PHOTO}/mask.webp`, bodyType: "Пикап" },
 ] as const;
 
+/** Имя бренда → slug страницы-подборки (top-level, латиница; как /bmw, /mercedes). */
+const BRAND_SLUG: Record<string, string> = {
+  BMW: "bmw",
+  "Mercedes-Benz": "mercedes",
+  Lexus: "lexus",
+  "Land Rover": "land-rover",
+  Porsche: "porsche",
+  Ferrari: "ferrari",
+  Lamborghini: "lamborghini",
+  "Rolls-Royce": "rolls-royce",
+  Chevrolet: "chevrolet",
+  Honda: "honda",
+  Hyundai: "hyundai",
+  Toyota: "toyota",
+  Volvo: "volvo",
+  BYD: "byd",
+  GMC: "gmc",
+};
+
+export function brandSlug(brand: string): string {
+  return BRAND_SLUG[brand] ?? brand.toLowerCase().replace(/\s+/g, "-");
+}
+
+/** Уникальные бренды (в порядке MODELS) с логотипами и ссылкой на подборку — для карусели/блока брендов. */
+export const BRANDS_LOGOS: { name: string; src: string; href: string }[] =
+  Array.from(
+    new Map(
+      MODELS.map((m) => [
+        m.brand,
+        { name: m.brand, src: m.brandLogo, href: `/${brandSlug(m.brand)}` },
+      ]),
+    ).values(),
+  );
+
 /* Наборы значений для псевдослучайной генерации характеристик. */
 export const CAR_COLORS: readonly CarColor[] = [
   { id: "black", name: "Чёрный", swatch: "#1B1E1D" },
@@ -141,35 +175,63 @@ function getSeedColor(id: string): CarColor {
   return color;
 }
 
+/** FNV-1a хэш строки — для детерминированного «рандома» по имени бренда. */
+function hashStr(s: string): number {
+  let h = 2166136261;
+  for (let i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+
+/** Кол-во машин у бренда: BYD — 1, Ferrari — 2, остальные — детерминированный рандом 4..18. */
+export function brandCarCount(brand: string): number {
+  if (brand === "BYD") return 1;
+  if (brand === "Ferrari") return 2;
+  return 4 + Math.floor(mulberry32(hashStr(brand))() * 15);
+}
+
 function buildCatalog(): Car[] {
   const rand = mulberry32(20260727);
-  return MODELS.map((base) => {
-    // мощность 250–750 л.с., шаг 1
-    const power = 250 + Math.floor(rand() * 501);
-    // цена 6–48 млн ₽, округление до 10 000
-    const price = Math.round((6_000_000 + rand() * 42_000_000) / 10_000) * 10_000;
-    const color = pick(rand, CAR_COLORS);
-    const transmission = pick(rand, TRANSMISSIONS);
-    const drive = pick(rand, DRIVES);
-    const fuelType = pick(rand, FUELS);
-    return {
-      id: base.slug,
-      slug: base.slug,
-      brand: base.brand,
-      brandLogo: base.brandLogo,
-      name: base.name,
-      photo: base.photo,
-      year: YEAR,
-      power,
-      drive,
-      bodyType: base.bodyType,
-      color,
-      transmission,
-      fuelType,
-      price,
-      status: { type: "success", label: "В наличии" },
-    };
-  });
+  // модели, сгруппированные по бренду (порядок появления в MODELS сохраняется)
+  const byBrand = new Map<string, (typeof MODELS)[number][]>();
+  for (const m of MODELS) {
+    const list = byBrand.get(m.brand);
+    if (list) list.push(m);
+    else byBrand.set(m.brand, [m]);
+  }
+
+  const cars: Car[] = [];
+  for (const [brand, bases] of byBrand) {
+    const count = brandCarCount(brand);
+    for (let i = 0; i < count; i++) {
+      const base = bases[i % bases.length];
+      const copy = Math.floor(i / bases.length); // 0 — первый проход по моделям бренда
+      const slug = copy === 0 ? base.slug : `${base.slug}-${copy + 1}`;
+      // мощность 250–750 л.с.; цена 6–48 млн ₽, округление до 10 000
+      const power = 250 + Math.floor(rand() * 501);
+      const price = Math.round((6_000_000 + rand() * 42_000_000) / 10_000) * 10_000;
+      cars.push({
+        id: slug,
+        slug,
+        brand,
+        brandLogo: base.brandLogo,
+        name: base.name,
+        photo: base.photo,
+        year: YEAR,
+        power,
+        drive: pick(rand, DRIVES),
+        bodyType: base.bodyType,
+        color: pick(rand, CAR_COLORS),
+        transmission: pick(rand, TRANSMISSIONS),
+        fuelType: pick(rand, FUELS),
+        price,
+        status: { type: "success", label: "В наличии" },
+      });
+    }
+  }
+  return cars;
 }
 
 const CARS: Car[] = buildCatalog();
@@ -247,13 +309,9 @@ export function getCarsForBody(bodyType: string, min = 8): Car[] {
   return [...typed, ...rest].slice(0, min);
 }
 
-/** То же для SEO-подборки по бренду: сначала машины бренда, добор любыми до `min`. */
-export function getCarsForBrand(brand: string, min = 8): Car[] {
-  const all = getCars();
-  const typed = all.filter((c) => c.brand === brand);
-  if (typed.length >= min) return typed;
-  const rest = all.filter((c) => c.brand !== brand);
-  return [...typed, ...rest].slice(0, min);
+/** SEO-подборка по бренду: только машины этого бренда (кол-во задаётся brandCarCount). */
+export function getCarsForBrand(brand: string): Car[] {
+  return getCars().filter((c) => c.brand === brand);
 }
 
 /** Все автомобили, которые могут быть добавлены в избранное или сравнение. */

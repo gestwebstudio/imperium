@@ -15,16 +15,22 @@ import { ArrowDiagonalIcon } from "@/components/icons";
 export type BrandCardProps = {
   src: string;
   alt: string;
+  href?: string;
   className?: string;
 };
-export function BrandCard({ src, alt, className }: BrandCardProps) {
-  return (
-    <div className={cn("brand-card", className)}>
-      <div className="brand-card__image">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={src} alt={alt} />
-      </div>
+export function BrandCard({ src, alt, href, className }: BrandCardProps) {
+  const image = (
+    <div className="brand-card__image">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={src} alt={alt} />
     </div>
+  );
+  return href ? (
+    <Link className={cn("brand-card", className)} href={href} aria-label={alt}>
+      {image}
+    </Link>
+  ) : (
+    <div className={cn("brand-card", className)}>{image}</div>
   );
 }
 
@@ -136,6 +142,7 @@ export function NewsCard({
 
 /* --- Car Card (композиция компонентов кита) --- */
 export type CarCardProps = {
+  size?: "m" | "l";
   vehicleId?: string;
   brandLogo: string;
   brandName?: string;
@@ -150,10 +157,12 @@ export type CarCardProps = {
   price: ReactNode;
   priceLabel?: string;
   action: { label: string; variant: ButtonVariant };
+  comparisonEnabled?: boolean;
   href?: string;
   className?: string;
 };
 export function CarCard({
+  size = "l",
   vehicleId,
   brandLogo,
   brandName = "",
@@ -165,11 +174,12 @@ export function CarCard({
   price,
   priceLabel,
   action,
+  comparisonEnabled = true,
   href,
   className,
 }: CarCardProps) {
   return (
-    <div className={cn("car-card", className)}>
+    <div className={cn("car-card", `car-card--${size}`, className)}>
       {href && (
         <Link
           className="car-card__link"
@@ -187,16 +197,22 @@ export function CarCard({
             </div>
             <div className="car-card__actions">
               <Wishlist vehicleId={vehicleId} tip="В избранное" />
-              <Comparison vehicleId={vehicleId} tip="В сравнение" />
+              {comparisonEnabled && (
+                <Comparison vehicleId={vehicleId} tip="В сравнение" />
+              )}
             </div>
           </div>
 
           <div className="car-card__info">
             <div className="car-card__title">{title}</div>
-            <Indicator status={status.type}>{status.label}</Indicator>
+            <Indicator size={size} status={status.type}>
+              {status.label}
+            </Indicator>
             <div className="car-card__tags">
               {tags.map((t) => (
-                <Tag key={t}>{t}</Tag>
+                <Tag key={t} size={size}>
+                  {t}
+                </Tag>
               ))}
             </div>
           </div>
@@ -209,18 +225,24 @@ export function CarCard({
       </div>
 
       <div className="car-card__action">
-        <PriceBlock label={priceLabel} value={price} />
+        <PriceBlock size={size} label={priceLabel} value={price} />
         {href ? (
           <ButtonLink
             href={href}
-            size="m"
+            size={size === "m" ? "s" : "m"}
             variant={action.variant}
+            endIcon={<ArrowDiagonalIcon className="car-card__details-icon" />}
             className="car-card__details-link"
           >
             {action.label}
           </ButtonLink>
         ) : (
-          <Button variant={action.variant} size="m">
+          <Button
+            variant={action.variant}
+            size={size === "m" ? "s" : "m"}
+            endIcon={<ArrowDiagonalIcon className="car-card__details-icon" />}
+            className="car-card__details-link"
+          >
             {action.label}
           </Button>
         )}

@@ -1,20 +1,12 @@
 import type { CSSProperties } from "react";
 import { BrandCard } from "@/components/cards/cards";
+import { BRANDS_LOGOS as BRANDS } from "@/lib/cars";
 
 /**
  * Блок «бренды» для страниц-подборок по бренду — логотипы из ряда брендов
- * главной (второй блок). `exclude` убирает текущий бренд, остальные плитки
- * растягиваются на всю ширину контейнера.
+ * главной (те же 15 брендов из logo_cards). `exclude` убирает текущий бренд,
+ * остальные плитки растягиваются на всю ширину контейнера.
  */
-const BRANDS = [
-  { name: "Mercedes-Benz", src: "/images/logo_brands/mercedes.webp" },
-  { name: "BMW", src: "/images/logo_brands/bmw.webp" },
-  { name: "Lexus", src: "/images/logo_brands/lexus.webp" },
-  { name: "Ferrari", src: "/images/logo_brands/ferrari.webp" },
-  { name: "Rolls-Royce", src: "/images/logo_brands/rollsroyce.webp" },
-  { name: "Audi", src: "/images/logo_brands/audi.webp" },
-];
-
 export type BrandsNavProps = {
   /** Имя бренда, который нужно скрыть (текущий бренд подборки). */
   exclude?: string;
@@ -30,7 +22,7 @@ export function BrandsNav({ exclude }: BrandsNavProps) {
         style={{ "--cols": items.length } as CSSProperties}
       >
         {items.map((b) => (
-          <BrandCard key={b.name} src={b.src} alt={b.name} />
+          <BrandCard key={b.name} src={b.src} alt={b.name} href={b.href} />
         ))}
       </div>
     </section>

@@ -32,6 +32,89 @@
 .bubble--green-500 { background: var(--color-heritage-green-500, #294434); color: var(--color-white, #FFFFFF); }
 .bubble--taupe-400 { background: var(--color-warm-taupe-400, #8F8579);   color: var(--color-white, #FFFFFF); }
 
+/* ============================================================
+   Checkbox — HeroUI Checkbox в стилях кита
+   Размеры: .ui-checkbox--s | .ui-checkbox--m
+   ============================================================ */
+.ui-checkbox {
+  --accent: var(--color-heritage-green-400, #4E7B60);
+  --accent-hover: var(--color-heritage-green-400, #4E7B60);
+  --accent-foreground: var(--color-white, #FFFFFF);
+  --focus: var(--color-heritage-green-400, #4E7B60);
+
+  display: block;
+  width: 100%;
+  cursor: pointer;
+}
+.ui-checkbox--s {
+  --ui-checkbox-control-size: 16px;
+  --ui-checkbox-indicator-size: 10px;
+  --ui-checkbox-content-gap: 8px;
+  --ui-checkbox-content-padding-y: 8px;
+  --ui-checkbox-font-size: 14px;
+  --ui-checkbox-line-height: 18px;
+  --ui-checkbox-radius: 5px;
+}
+.ui-checkbox--m {
+  --ui-checkbox-control-size: 20px;
+  --ui-checkbox-indicator-size: 13px;
+  --ui-checkbox-content-gap: 12px;
+  --ui-checkbox-content-padding-y: 8px;
+  --ui-checkbox-font-size: 16px;
+  --ui-checkbox-line-height: 20px;
+  --ui-checkbox-radius: 6px;
+}
+.ui-checkbox__content {
+  display: flex;
+  align-items: center;
+  gap: var(--ui-checkbox-content-gap);
+  width: 100%;
+  padding: var(--ui-checkbox-content-padding-y) 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  outline: none;
+  transition: background-color .15s ease;
+}
+.ui-checkbox__content[data-hovered],
+.ui-checkbox__content:hover {
+  background: var(--color-warm-taupe-100, #F2EEEA);
+}
+.ui-checkbox__control {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--ui-checkbox-control-size);
+  height: var(--ui-checkbox-control-size);
+  box-sizing: border-box;
+  border: 1.5px solid var(--color-warm-taupe-300, #B2A79B);
+  border-radius: var(--ui-checkbox-radius);
+  background: var(--color-white, #FFFFFF);
+  transition: background-color .15s ease, border-color .15s ease;
+}
+.ui-checkbox[data-selected="true"] .ui-checkbox__control {
+  border-color: transparent;
+  background: var(--color-heritage-green-400, #4E7B60);
+}
+.ui-checkbox__indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--ui-checkbox-indicator-size);
+  height: var(--ui-checkbox-indicator-size);
+  color: var(--color-white, #FFFFFF);
+}
+.ui-checkbox__indicator svg { width: 100%; height: 100%; }
+.ui-checkbox__label {
+  flex: 1 1 0;
+  min-width: 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-regular, 400);
+  font-size: var(--ui-checkbox-font-size);
+  line-height: var(--ui-checkbox-line-height);
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+
 /* Floating saved-vehicle counters, vertically centered in the viewport. */
 .floating-vehicle-actions {
   position: fixed;
@@ -319,7 +402,7 @@
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  padding: 6px 10px;
+  padding: 5px 9px;
   border: 1px solid transparent;
   border-radius: 21px;
   font-family: var(--font-text, "Onest", sans-serif);
@@ -328,6 +411,8 @@
   line-height: 24px;
   white-space: nowrap;
 }
+.badge--l { padding: 5px 9px; font-size: 18px; line-height: 24px; }
+.badge--m { padding: 3px 7px; font-size: 16px; line-height: 20px; }
 /* --- Surface (заливка) --- */
 .badge--info    { background: var(--color-blue-100, #DCDFEF);   color: var(--color-blue-500, #5262C0); }
 .badge--error   { background: var(--color-red-100, #EFDCDD);    color: var(--color-red-500, #BB4545); }
@@ -364,6 +449,8 @@
 }
 /* --- Card --- */
 .tag--card { background: rgba(143,133,121,.2); color: var(--color-heritage-green-500, #294434); } /* warm-taupe-400 @20% */
+.tag--card.tag--l { padding: 4px 12px; font-size: 16px; line-height: 20px; }
+.tag--card.tag--m { padding: 3px 8px; font-size: 14px; line-height: 18px; }
 .tag--card:hover { background: rgba(143,133,121,.4); }
 /* --- Filter (удаляемый) --- */
 .tag--filter {
@@ -375,6 +462,7 @@
   line-height: 18px;
   cursor: pointer;
 }
+.tag--filter.tag--m { padding: 3px 8px; }
 .tag--filter:hover { background: rgba(144,138,134,.28); }
 .tag__close { flex: none; width: 10px; height: 10px; display: inline-flex; align-items: center; justify-content: center; color: currentColor; }
 .tag__close svg { display: block; width: 100%; height: 100%; }
@@ -395,6 +483,8 @@
   line-height: 20px;
   color: var(--color-warm-taupe-400, #8F8579);
 }
+.indicator--l { font-size: 16px; line-height: 20px; }
+.indicator--m { font-size: 14px; line-height: 18px; }
 .indicator__dot { flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--color-warm-taupe-400, #8F8579); }
 .indicator--success .indicator__dot { background: var(--color-green-500, #55AB4D); }
 .indicator--warning .indicator__dot { background: var(--color-yellow-500, #DDB103); }
@@ -450,10 +540,11 @@
 .wishlist.is-active .icon-stroke { opacity: 0; }
 .wishlist.is-active .icon-fill   { opacity: 1; }
 /* тултип */
-.wishlist__tip {
+.ui-button > .wishlist__tip {
   position: absolute;
   top: 28px;
-  right: -4px;
+  right: 0;
+  z-index: 10;
   padding: 4px 10px;
   border-radius: 6px;
   background: var(--color-white, #FFFFFF);
@@ -497,10 +588,11 @@
 .compare.is-active .icon-add   { opacity: 0; }
 .compare.is-active .icon-check { opacity: 1; }
 .compare.is-active:hover .icon-check { opacity: .6; }
-.compare__tip {
+.ui-button > .compare__tip {
   position: absolute;
   top: 28px;
-  right: -8px;
+  right: 0;
+  z-index: 10;
   padding: 4px 10px;
   border-radius: 6px;
   background: var(--color-white, #FFFFFF);
@@ -563,6 +655,12 @@
   line-height: 36px;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
+.price-block--l { gap: 4px; }
+.price-block--l .price-block__label { font-size: 14px; line-height: 18px; }
+.price-block--l .price-block__value { font-size: 28px; line-height: 36px; }
+.price-block--m { gap: 0; }
+.price-block--m .price-block__label { font-size: 12px; line-height: 16px; }
+.price-block--m .price-block__value { font-size: 24px; line-height: 30px; }
 
 
 /* ============================================================
@@ -902,6 +1000,8 @@
 .car-card__action { display: flex; gap: clamp(12px, 1.25vw, 24px); align-items: flex-end; }
 .car-card__action .price-block { flex: 1 0 0; min-width: 0; }
 .car-card__details-link { z-index: 2; }
+.car-card__details-link > .btn__icon:has(.car-card__details-icon) { display: none; }
+.car-card__details-icon { display: none; }
 
 /* Цена — всегда в одну строку: на 1920 полные 28px, на более узких
    карточках размер уменьшается под их ширину (container query). */
@@ -909,6 +1009,128 @@
 .car-card .price-block__value {
   white-space: nowrap;
   font-size: min(28px, 8cqi);
+}
+
+/* Size M from the Figma component set. The default L variant keeps the
+   existing fluid card behaviour used across product pages. */
+.car-card--m {
+  max-width: 342px;
+  gap: 24px;
+  padding: 20px;
+}
+.car-card--m .car-card__content { gap: 16px; }
+.car-card--m .car-card__brand,
+.car-card--m .car-card__brand img { height: 20px; }
+.car-card--m .car-card__actions { gap: 16px; }
+.car-card--m .wishlist,
+.car-card--m .compare,
+.car-card--m .ui-button.wishlist > svg,
+.car-card--m .ui-button.compare > svg {
+  width: 18px;
+  height: 18px;
+}
+.car-card--m .car-card__info { gap: 6px; }
+.car-card--m .car-card__title { font-size: 20px; line-height: 24px; }
+.car-card--m .car-card__photo { height: 149px; }
+.car-card--m .car-card__photo img { max-height: 149px; }
+.car-card--m .car-card__action { gap: 24px; }
+.car-card--m .price-block__value { font-size: min(24px, 8cqi); }
+
+/* Laptop 1200–1536: interpolate from the 1200 compact card (268.67 × 338)
+   to the M card at 1536 while the parent grid controls the actual width. */
+@media (min-width: 1200px) and (max-width: 1536px) {
+  .car-card--l {
+    max-width: clamp(268.667px, calc(268.667px + (100vw - 1200px) * .218253), 342px);
+    gap: 24px;
+    padding: 20px;
+    border-radius: 30px;
+  }
+
+  .car-card--l .car-card__content { gap: 16px; }
+  .car-card--l .car-card__brand,
+  .car-card--l .car-card__brand img { height: 20px; }
+  .car-card--l .car-card__actions { gap: 16px; }
+  .car-card--l .wishlist,
+  .car-card--l .compare,
+  .car-card--l .ui-button.wishlist > svg,
+  .car-card--l .ui-button.compare > svg {
+    width: 18px;
+    height: 18px;
+  }
+  .car-card--l .car-card__info { gap: 6px; }
+  .car-card--l .car-card__title {
+    font-size: clamp(18px, calc(18px + (100vw - 1200px) * .0059524), 20px);
+    line-height: clamp(22px, calc(22px + (100vw - 1200px) * .0059524), 24px);
+  }
+  .car-card--l .indicator--l { font-size: 14px; line-height: 18px; }
+  .car-card--l .car-card__tags { padding-top: 0; }
+  .car-card--l .tag--card.tag--l {
+    padding: 3px 8px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .car-card--l .car-card__photo {
+    height: clamp(110px, calc(110px + (100vw - 1200px) * .1160714), 149px);
+  }
+  .car-card--l .car-card__photo img {
+    max-height: clamp(110px, calc(110px + (100vw - 1200px) * .1160714), 149px);
+  }
+  .car-card--l .car-card__action {
+    gap: clamp(8px, calc(8px + (100vw - 1200px) * .047619), 24px);
+  }
+  .car-card--l .price-block--l { gap: 0; }
+  .car-card--l .price-block--l .price-block__label {
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .car-card--l .price-block--l .price-block__value {
+    font-size: min(clamp(20px, calc(20px + (100vw - 1200px) * .0119048), 24px), 8cqi);
+    line-height: clamp(26px, calc(26px + (100vw - 1200px) * .0119048), 30px);
+  }
+  .car-card--l .car-card__action .btn--m {
+    height: 28px;
+    padding: 0 12px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .car-card--l .car-card__action .btn--m .btn__icon {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+/* The 1200 layout uses the compact S action and collapses the third detail
+   into a +1 tag so the card keeps the 338px design height. */
+@media (min-width: 1200px) and (max-width: 1365px) {
+  .car-card--l .car-card__tags .tag:nth-child(n + 3) { display: none; }
+  .car-card--l .car-card__tags::after {
+    content: "+1";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 3px 8px;
+    border-radius: 26px;
+    background: rgba(143,133,121,.2);
+    color: var(--color-heritage-green-500, #294434);
+    font-family: var(--font-text, "Onest", sans-serif);
+    font-size: 14px;
+    line-height: 18px;
+    white-space: nowrap;
+  }
+  .car-card--l .car-card__details-link.btn--m {
+    flex: 0 0 28px;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+  }
+  .car-card--l .car-card__details-link > .btn__label { display: none; }
+  .car-card--l .car-card__details-link > .btn__icon:has(.car-card__details-icon) {
+    display: inline-flex;
+    width: 8px;
+    height: 8px;
+  }
+  .car-card--l .car-card__details-icon { display: block; }
 }
 
 @media (max-width: 768px) {

@@ -41,11 +41,12 @@ function useHideOnScroll() {
     let ticking = false;
 
     const TOLERANCE = 8; // порог, чтобы дрожание/отскок не переключали шапку
+    const HIDE_AFTER = 120; // у верха шапка стоит на месте; headroom — только дальше
     const update = () => {
       ticking = false;
       const y = Math.max(0, window.scrollY);
       if (Math.abs(y - lastY) < TOLERANCE) return; // игнор мелких движений
-      if (y <= 8) setHidden(false); // у верха — всегда видима
+      if (y <= HIDE_AFTER) setHidden(false); // у верха/начале скролла — всегда видима
       else if (y > lastY) setHidden(true); // вниз — прячем
       else setHidden(false); // вверх — показываем
       lastY = y;

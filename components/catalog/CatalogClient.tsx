@@ -34,6 +34,8 @@ export type CatalogClientProps = {
   crumbLabel?: string;
   /** Фасеты, скрытые из сайдбара (для урезанных подборок: кузов/бренд). */
   hiddenFacets?: FacetKey[];
+  /** Показывать ли фильтр. false → сайдбара нет, грид на колонку шире. */
+  showFilters?: boolean;
 };
 
 export function CatalogClient({
@@ -41,6 +43,7 @@ export function CatalogClient({
   title = "Автомобили в наличии",
   crumbLabel = "Каталог",
   hiddenFacets,
+  showFilters = true,
 }: CatalogClientProps) {
   const options = useMemo(() => getFacetOptions(cars), [cars]);
 
@@ -143,46 +146,52 @@ export function CatalogClient({
           <Badge color="info">{sorted.length}</Badge>
         </div>
         <div className="catalog-head__tools">
-          <button
-            type="button"
-            className="cat-filters-toggle"
-            aria-expanded={filtersOpen}
-            onClick={() => setFiltersOpen(true)}
-          >
-            Фильтры
-            {filterCount > 0 && <Badge color="info">{filterCount}</Badge>}
-          </button>
+          {showFilters && (
+            <button
+              type="button"
+              className="cat-filters-toggle"
+              aria-expanded={filtersOpen}
+              onClick={() => setFiltersOpen(true)}
+            >
+              Фильтры
+              {filterCount > 0 && <Badge color="info">{filterCount}</Badge>}
+            </button>
+          )}
           <SortDropdown value={sort} onChange={setSort} />
         </div>
       </header>
 
       <div className="catalog-body">
-        <div
-          className={`cat-filters-backdrop${filtersOpen ? " is-open" : ""}`}
-          onClick={() => setFiltersOpen(false)}
-        />
-        <FilterSidebar
-          open={filtersOpen}
-          onClose={() => setFiltersOpen(false)}
-          hiddenFacets={hiddenFacets}
-          options={options}
-          selected={selected}
-          onToggleFacet={toggleFacet}
-          onClearFacet={clearFacet}
-          onClearAll={clearAll}
-          price={price}
-          power={power}
-          onPriceChange={setPrice}
-          onPowerChange={setPower}
-          priceMin={PRICE_MIN}
-          priceMax={PRICE_MAX}
-          powerMin={POWER_MIN}
-          powerMax={POWER_MAX}
-        />
+        {showFilters && (
+          <>
+            <div
+              className={`cat-filters-backdrop${filtersOpen ? " is-open" : ""}`}
+              onClick={() => setFiltersOpen(false)}
+            />
+            <FilterSidebar
+              open={filtersOpen}
+              onClose={() => setFiltersOpen(false)}
+              hiddenFacets={hiddenFacets}
+              options={options}
+              selected={selected}
+              onToggleFacet={toggleFacet}
+              onClearFacet={clearFacet}
+              onClearAll={clearAll}
+              price={price}
+              power={power}
+              onPriceChange={setPrice}
+              onPowerChange={setPower}
+              priceMin={PRICE_MIN}
+              priceMax={PRICE_MAX}
+              powerMin={POWER_MIN}
+              powerMax={POWER_MAX}
+            />
+          </>
+        )}
 
         <div className="catalog-results">
           {sorted.length > 0 ? (
-            <div className="catalog-grid">
+            <div className={`catalog-grid${showFilters ? "" : " catalog-grid--wide"}`}>
               {displayedCars.map((car) => (
                 <CarCard
                   key={car.id}

@@ -3,40 +3,18 @@
 import { BrandCard } from "@/components/cards/cards";
 import { ArrowIcon } from "@/components/icons";
 import { Button } from "@/components/ui/Button";
+import { BRANDS_LOGOS } from "@/lib/cars";
 import {
   INFINITE_CAROUSEL_COPIES,
   INFINITE_CAROUSEL_MIDDLE_COPY,
   useInfiniteCarousel,
 } from "@/components/ui/useInfiniteCarousel";
 
-const brands = [
-  {
-    name: "Mercedes-Benz",
-    src: "/images/logo_brands/mercedes.webp",
-  },
-  {
-    name: "BMW",
-    src: "/images/logo_brands/bmw.webp",
-  },
-  {
-    name: "Lexus",
-    src: "/images/logo_brands/lexus.webp",
-  },
-  {
-    name: "Ferrari",
-    src: "/images/logo_brands/ferrari.webp",
-  },
-  {
-    name: "Rolls-Royce",
-    src: "/images/logo_brands/rollsroyce.webp",
-  },
-  {
-    name: "Audi",
-    src: "/images/logo_brands/audi.webp",
-  },
-];
-
-export function BrandsRow() {
+/** `exclude` — имя бренда, который скрыть (для подборки по бренду: своего лого нет). */
+export function BrandsRow({ exclude }: { exclude?: string } = {}) {
+  const brands = exclude
+    ? BRANDS_LOGOS.filter((b) => b.name !== exclude)
+    : BRANDS_LOGOS;
   const { rowRef, scroll } = useInfiniteCarousel(brands.length);
 
   return (
@@ -53,7 +31,7 @@ export function BrandsRow() {
         />
         <div className="brands-row" ref={rowRef}>
           {INFINITE_CAROUSEL_COPIES.map((copy) =>
-            brands.map(({ name, src }, index) => {
+            brands.map(({ name, src, href }, index) => {
               const isMiddleCopy = copy === INFINITE_CAROUSEL_MIDDLE_COPY;
               return (
                 <div
@@ -63,7 +41,7 @@ export function BrandsRow() {
                   aria-hidden={isMiddleCopy ? undefined : true}
                   inert={isMiddleCopy ? undefined : true}
                 >
-                  <BrandCard src={src} alt={name} />
+                  <BrandCard src={src} alt={name} href={href} />
                 </div>
               );
             }),

@@ -29,12 +29,14 @@ export function Bubble({
 
 /* --- Badge --- */
 export type BadgeProps = {
+  size?: "m" | "l";
   color?: "info" | "success" | "warning" | "error";
   variant?: "surface" | "outlined";
   className?: string;
   children: ReactNode;
 };
 export function Badge({
+  size = "l",
   color = "info",
   variant = "surface",
   className,
@@ -44,6 +46,7 @@ export function Badge({
     <span
       className={cn(
         "badge",
+        `badge--${size}`,
         `badge--${color}`,
         variant === "outlined" && "badge--outlined",
         className,
@@ -56,14 +59,15 @@ export function Badge({
 
 /* --- Tag --- */
 export type TagProps = {
+  size?: "m" | "l";
   variant?: "card" | "filter";
   className?: string;
   children: ReactNode;
 };
-export function Tag({ variant = "card", className, children }: TagProps) {
+export function Tag({ size = "l", variant = "card", className, children }: TagProps) {
   if (variant === "filter") {
     return (
-      <span className={cn("tag tag--filter", className)}>
+      <span className={cn("tag tag--filter", `tag--${size}`, className)}>
         {children}
         <span className="tag__close">
           <CloseIcon />
@@ -71,22 +75,35 @@ export function Tag({ variant = "card", className, children }: TagProps) {
       </span>
     );
   }
-  return <span className={cn("tag tag--card", className)}>{children}</span>;
+  return (
+    <span className={cn("tag tag--card", `tag--${size}`, className)}>
+      {children}
+    </span>
+  );
 }
 
 /* --- Indicator --- */
 export type IndicatorProps = {
+  size?: "m" | "l";
   status?: "success" | "warning" | "error" | "info";
   className?: string;
   children: ReactNode;
 };
 export function Indicator({
+  size = "l",
   status = "success",
   className,
   children,
 }: IndicatorProps) {
   return (
-    <span className={cn("indicator", `indicator--${status}`, className)}>
+    <span
+      className={cn(
+        "indicator",
+        `indicator--${size}`,
+        `indicator--${status}`,
+        className,
+      )}
+    >
       <span className="indicator__dot" />
       {children}
     </span>
@@ -124,17 +141,19 @@ export function Slider({ value = 0, className }: SliderProps) {
 
 /* --- Price Block --- */
 export type PriceBlockProps = {
+  size?: "m" | "l";
   label?: string;
   value: ReactNode;
   className?: string;
 };
 export function PriceBlock({
+  size = "l",
   label = "Стоимость автомобиля",
   value,
   className,
 }: PriceBlockProps) {
   return (
-    <div className={cn("price-block", className)}>
+    <div className={cn("price-block", `price-block--${size}`, className)}>
       <span className="price-block__label">{label}</span>
       <span className="price-block__value">{value}</span>
     </div>
