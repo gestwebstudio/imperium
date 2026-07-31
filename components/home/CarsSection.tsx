@@ -104,6 +104,7 @@ export function CarsSection({
                         ? "secondary-outlined"
                         : "primary-surface",
                     }}
+                    comparisonEnabled={!isUpcoming}
                   />
                 </div>
               );

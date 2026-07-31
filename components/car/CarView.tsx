@@ -8,13 +8,55 @@ import { type Car, formatPrice, getCarSpecs, getCars } from "@/lib/cars";
 import { CarsSection } from "@/components/home/CarsSection";
 import { Contacts } from "@/components/home/Contacts";
 import { Gallery } from "./Gallery";
+import type { GalleryPhoto } from "./GalleryModal";
 import { Specs } from "./Specs";
 import { Equipment } from "./Equipment";
 import { Assurance } from "./Assurance";
 import { Atelier } from "./Atelier";
 import { CarActionModals } from "./CarActionModals";
 
-const GALLERY_PHOTOS = ["/images/gallery/1.webp", "/images/gallery/2.webp"];
+const GALLERY_PHOTOS: GalleryPhoto[] = [
+  {
+    id: "exterior-side-1",
+    src: "/images/gallery/1.webp",
+    category: "exterior",
+  },
+  {
+    id: "exterior-front-1",
+    src: "/images/gallery/2.webp",
+    category: "exterior",
+  },
+  {
+    id: "exterior-side-2",
+    src: "/images/gallery/1.webp",
+    category: "exterior",
+  },
+  {
+    id: "exterior-front-2",
+    src: "/images/gallery/2.webp",
+    category: "exterior",
+  },
+  {
+    id: "interior-1",
+    src: "/images/gallery/1.webp",
+    category: "interior",
+  },
+  {
+    id: "interior-2",
+    src: "/images/gallery/2.webp",
+    category: "interior",
+  },
+  {
+    id: "multimedia-1",
+    src: "/images/gallery/1.webp",
+    category: "multimedia",
+  },
+  {
+    id: "multimedia-2",
+    src: "/images/gallery/2.webp",
+    category: "multimedia",
+  },
+];
 
 export type CarViewProps = {
   car: Car;

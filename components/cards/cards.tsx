@@ -156,6 +156,7 @@ export type CarCardProps = {
   price: ReactNode;
   priceLabel?: string;
   action: { label: string; variant: ButtonVariant };
+  comparisonEnabled?: boolean;
   href?: string;
   className?: string;
 };
@@ -171,6 +172,7 @@ export function CarCard({
   price,
   priceLabel,
   action,
+  comparisonEnabled = true,
   href,
   className,
 }: CarCardProps) {
@@ -193,7 +195,9 @@ export function CarCard({
             </div>
             <div className="car-card__actions">
               <Wishlist vehicleId={vehicleId} tip="В избранное" />
-              <Comparison vehicleId={vehicleId} tip="В сравнение" />
+              {comparisonEnabled && (
+                <Comparison vehicleId={vehicleId} tip="В сравнение" />
+              )}
             </div>
           </div>
 

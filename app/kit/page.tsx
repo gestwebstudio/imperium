@@ -410,9 +410,9 @@ export default function KitPage() {
             </div>
             <div className="kit-stage" style={{ gap: 44 }}>
               <Wishlist tip="Добавить в избранное" />
-              <Wishlist defaultActive tip="Убрать из избранного" />
+              <Wishlist defaultActive tip="Добавить в избранное" />
               <Comparison tip="Добавить в сравнение" />
-              <Comparison defaultActive tip="Убрать из сравнения" />
+              <Comparison defaultActive tip="Добавить в сравнение" />
             </div>
           </div>
 

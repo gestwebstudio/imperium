@@ -450,10 +450,11 @@
 .wishlist.is-active .icon-stroke { opacity: 0; }
 .wishlist.is-active .icon-fill   { opacity: 1; }
 /* тултип */
-.wishlist__tip {
+.ui-button > .wishlist__tip {
   position: absolute;
   top: 28px;
-  right: -4px;
+  right: 0;
+  z-index: 10;
   padding: 4px 10px;
   border-radius: 6px;
   background: var(--color-white, #FFFFFF);
@@ -497,10 +498,11 @@
 .compare.is-active .icon-add   { opacity: 0; }
 .compare.is-active .icon-check { opacity: 1; }
 .compare.is-active:hover .icon-check { opacity: .6; }
-.compare__tip {
+.ui-button > .compare__tip {
   position: absolute;
   top: 28px;
-  right: -8px;
+  right: 0;
+  z-index: 10;
   padding: 4px 10px;
   border-radius: 6px;
   background: var(--color-white, #FFFFFF);
