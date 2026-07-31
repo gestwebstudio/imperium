@@ -104,6 +104,11 @@ const MODELS = [
   { slug: "sierra-1500-denali", name: "Sierra 1500 Denali", brand: "GMC", brandLogo: "/images/logo_cards/gmc.webp", photo: `${CARS_PHOTO}/mask.webp`, bodyType: "Пикап" },
 ] as const;
 
+/** Уникальные бренды (в порядке MODELS) с логотипами из logo_cards — для блока брендов. */
+export const BRANDS_LOGOS: { name: string; src: string }[] = Array.from(
+  new Map(MODELS.map((m) => [m.brand, { name: m.brand, src: m.brandLogo }])).values(),
+);
+
 /* Наборы значений для псевдослучайной генерации характеристик. */
 export const CAR_COLORS: readonly CarColor[] = [
   { id: "black", name: "Чёрный", swatch: "#1B1E1D" },

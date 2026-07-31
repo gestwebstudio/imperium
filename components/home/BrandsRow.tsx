@@ -3,38 +3,12 @@
 import { BrandCard } from "@/components/cards/cards";
 import { ArrowIcon } from "@/components/icons";
 import { Button } from "@/components/ui/Button";
+import { BRANDS_LOGOS as brands } from "@/lib/cars";
 import {
   INFINITE_CAROUSEL_COPIES,
   INFINITE_CAROUSEL_MIDDLE_COPY,
   useInfiniteCarousel,
 } from "@/components/ui/useInfiniteCarousel";
-
-const brands = [
-  {
-    name: "Mercedes-Benz",
-    src: "/images/logo_brands/mercedes.webp",
-  },
-  {
-    name: "BMW",
-    src: "/images/logo_brands/bmw.webp",
-  },
-  {
-    name: "Lexus",
-    src: "/images/logo_brands/lexus.webp",
-  },
-  {
-    name: "Ferrari",
-    src: "/images/logo_brands/ferrari.webp",
-  },
-  {
-    name: "Rolls-Royce",
-    src: "/images/logo_brands/rollsroyce.webp",
-  },
-  {
-    name: "Audi",
-    src: "/images/logo_brands/audi.webp",
-  },
-];
 
 export function BrandsRow() {
   const { rowRef, scroll } = useInfiniteCarousel(brands.length);
