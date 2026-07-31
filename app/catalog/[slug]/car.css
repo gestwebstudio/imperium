@@ -1114,8 +1114,9 @@
 .car-equipment__tabs {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
-  height: 36px;
+  min-height: 36px;
 }
 .car-equipment__tabs .btn {
   flex: none;
