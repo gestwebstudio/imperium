@@ -14,8 +14,10 @@ export type WishlistProps = {
   /** Начальное значение в неуправляемом режиме. */
   defaultActive?: boolean;
   onChange?: (active: boolean) => void;
-  /** Текст тултипа на наведении. */
+  /** Текст тултипа в неактивном состоянии. */
   tip?: string;
+  /** Текст тултипа после добавления в избранное. */
+  activeTip?: string;
   className?: string;
 };
 
@@ -26,6 +28,7 @@ export function Wishlist({
   defaultActive = false,
   onChange,
   tip,
+  activeTip = "Убрать из избранного",
   className,
 }: WishlistProps) {
   const [internal, setInternal] = useState(defaultActive);
@@ -35,6 +38,10 @@ export function Wishlist({
       ? vehicleActions.isFavorite(vehicleId)
       : undefined;
   const isActive = active ?? globalActive ?? internal;
+  const resolvedTip = isActive
+    ? activeTip
+    : (tip ?? "В избранное");
+  const showTip = tip != null;
 
   function toggle() {
     const next = !isActive;
@@ -53,12 +60,12 @@ export function Wishlist({
       bare
       className={cn("wishlist", isActive && "is-active", className)}
       aria-pressed={isActive}
-      aria-label={tip ?? "В избранное"}
+      aria-label={resolvedTip}
       onClick={toggle}
     >
       <HeartStrokeIcon className="icon-stroke" />
       <HeartFillIcon className="icon-fill" />
-      {tip && <span className="wishlist__tip">{tip}</span>}
+      {showTip && <span className="wishlist__tip">{resolvedTip}</span>}
     </Button>
   );
 }

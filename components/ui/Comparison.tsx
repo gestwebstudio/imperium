@@ -11,7 +11,10 @@ export type ComparisonProps = {
   active?: boolean;
   defaultActive?: boolean;
   onChange?: (active: boolean) => void;
+  /** Текст тултипа в неактивном состоянии. */
   tip?: string;
+  /** Текст тултипа после добавления в сравнение. */
+  activeTip?: string;
   className?: string;
 };
 
@@ -22,6 +25,7 @@ export function Comparison({
   defaultActive = false,
   onChange,
   tip,
+  activeTip = "Убрать из сравнения",
   className,
 }: ComparisonProps) {
   const [internal, setInternal] = useState(defaultActive);
@@ -31,6 +35,10 @@ export function Comparison({
       ? vehicleActions.isCompared(vehicleId)
       : undefined;
   const isActive = active ?? globalActive ?? internal;
+  const resolvedTip = isActive
+    ? activeTip
+    : (tip ?? "В сравнение");
+  const showTip = tip != null;
 
   function toggle() {
     const next = !isActive;
@@ -49,12 +57,12 @@ export function Comparison({
       bare
       className={cn("compare", isActive && "is-active", className)}
       aria-pressed={isActive}
-      aria-label={tip ?? "В сравнение"}
+      aria-label={resolvedTip}
       onClick={toggle}
     >
       <ListAddIcon className="icon-add" />
       <ListCheckIcon className="icon-check" />
-      {tip && <span className="compare__tip">{tip}</span>}
+      {showTip && <span className="compare__tip">{resolvedTip}</span>}
     </Button>
   );
 }
