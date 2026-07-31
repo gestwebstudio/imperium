@@ -54,7 +54,13 @@ export function Contacts({
               <span className="value">11:00 – 21:00</span>
               <span className="note">(ежедневно)</span>
             </div>
-            <ButtonLink href="#" size="l" variant="primary-surface">
+            <ButtonLink
+              href="https://yandex.ru/maps/213/moscow/?ll=37.487361%2C55.731719&mode=routes&rtext=~55.731895%2C37.488312&rtt=auto&ruri=~ymapsbm1%3A%2F%2Forg%3Foid%3D28670517535&z=16.38"
+              target="_blank"
+              rel="noopener noreferrer"
+              size="l"
+              variant="primary-surface"
+            >
               Построить маршрут
             </ButtonLink>
           </div>
