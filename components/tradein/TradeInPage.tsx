@@ -3,6 +3,7 @@ import type { Car } from "@/lib/cars";
 import { Badge } from "@/components";
 import { Button } from "@/components/ui/Button";
 import { GlassSurface } from "@/components/ui/GlassSurface";
+import { Crumbs } from "@/components/ui/Crumbs";
 import { CarsSection } from "@/components/home/CarsSection";
 import { Contacts } from "@/components/home/Contacts";
 
@@ -59,6 +60,9 @@ export function TradeInPage({ cars }: { cars: Car[] }) {
       {/* ---------- Hero ---------- */}
       <section className="ti-hero">
         <div className="ti-hero__inner home-wrap">
+          <Crumbs
+            items={[{ label: "Главная", href: "/" }, { label: "Трейд-ин" }]}
+          />
           <div className="ti-hero__top">
             <h1 className="ti-hero__title">
               <span className="reg">TRADE-IN НА УСЛОВИЯХ,</span>

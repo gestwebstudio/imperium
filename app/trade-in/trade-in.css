@@ -32,6 +32,50 @@
   padding-top: var(--page-top, 155px);
   padding-bottom: clamp(32px, 3vw, 48px);
 }
+
+/* Хлебные крошки страниц услуг (макет 762:5242: h18, отступ до заголовка 10px) */
+.ti-crumbs,
+.ti-crumbs ol {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ti-crumbs {
+  min-height: 18px;
+  margin-bottom: 10px;
+}
+.ti-crumbs li {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 18px;
+}
+.ti-crumb {
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--color-warm-taupe-400, #8F8579);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+.ti-crumb[href]:hover {
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.ti-crumb--current {
+  color: var(--color-carbon-black-500, #1B1E1D);
+  cursor: default;
+}
+.ti-crumbs__sep {
+  width: 12px;
+  height: 12px;
+  flex: none;
+  color: var(--color-warm-taupe-300, #B2A79B);
+  transform: rotate(180deg);
+}
 .ti-hero__top {
   display: flex;
   align-items: flex-start;

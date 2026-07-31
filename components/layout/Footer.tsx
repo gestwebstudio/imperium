@@ -30,7 +30,7 @@ const columns: { title: string; links: FooterLink[] }[] = [
     links: [
       { label: "Трейд-ин", href: "/trade-in" },
       { label: "Лизинг", href: "/leasing" },
-      "Авто под заказ",
+      { label: "Авто под заказ", href: "/car-selection" },
       "Автоателье",
       { label: "Индивидуальный дизайн авто", w: 151 },
       "Помощь на дороге",
@@ -38,7 +38,11 @@ const columns: { title: string; links: FooterLink[] }[] = [
   },
   {
     title: "Imperium Motors",
-    links: ["О салоне", { label: "Контакты", href: "/contacts" }],
+    links: [
+      "О салоне",
+      { label: "Новости", href: "/news" },
+      { label: "Контакты", href: "/contacts" },
+    ],
   },
 ];
 
