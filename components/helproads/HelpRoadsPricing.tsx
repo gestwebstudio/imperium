@@ -6,11 +6,12 @@ import { Table } from "@heroui/react";
    (comparison-spec-table*, comparison.css импортируется на странице). */
 type Row = { label: string; price: string };
 type Sub = { title?: string; rows: Row[] };
-type Section = { title: string; subs: Sub[] };
+type Section = { title: string; subs: Sub[]; note?: string };
 
 const SECTIONS: Section[] = [
   {
     title: "Техническая помощь",
+    note: "Базовая техническая помощь включает в себя выезд механика на место, 1 час работы и одну из услуг: запуск двигателя (подзарядка АКБ), подкачка колес, замена колеса, подвоз топлива до 10 л. (стоимость топлива оплачивается отдельно), мелкий ремонт на месте при наличии запчастей.",
     subs: [
       {
         rows: [
@@ -156,13 +157,22 @@ export function HelpRoadsPricing() {
     <section className="home-wrap hr-pricing">
       {SECTIONS.map((section) => (
         <div className="hr-pricing__section" key={section.title}>
-          <h2 className="comparison-table-section__title">{section.title}</h2>
+          <h2 className="comparison-table-section__title">
+            {section.title}
+            {section.note && <sup className="hr-pricing__marker">1</sup>}
+          </h2>
           {section.subs.map((sub, i) => (
             <div className="hr-pricing__sub" key={sub.title ?? i}>
               {sub.title && <h3 className="hr-pricing__subtitle">{sub.title}</h3>}
               <PriceTable rows={sub.rows} ariaLabel={sub.title ?? section.title} />
             </div>
           ))}
+          {section.note && (
+            <p className="hr-pricing__footnote">
+              <sup className="hr-pricing__marker">1</sup>
+              {section.note}
+            </p>
+          )}
         </div>
       ))}
 

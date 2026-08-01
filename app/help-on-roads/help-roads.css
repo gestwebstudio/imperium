@@ -118,6 +118,22 @@
   line-height: 1.333;
   color: var(--color-warm-taupe-500, #6a6259);
 }
+.hr-pricing__marker {
+  font-size: 0.55em;
+  vertical-align: super;
+  line-height: 0;
+  color: var(--color-heritage-green-400, #4e7b60);
+}
+.hr-pricing__footnote {
+  margin: 4px 0 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: var(--fs-14);
+  line-height: 1.4;
+  color: var(--color-warm-taupe-500, #6a6259);
+}
+.hr-pricing__footnote .hr-pricing__marker {
+  margin-right: 4px;
+}
 /* Длинные названия услуг — строки растут по высоте, текст сверху */
 .hr-pricing .comparison-spec-table__cell {
   height: auto;
