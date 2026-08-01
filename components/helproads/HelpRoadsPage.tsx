@@ -1,6 +1,7 @@
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { PhoneIcon } from "@/components/icons";
 import { Crumbs } from "@/components/ui/Crumbs";
+import { HelpRoadsPricing } from "@/components/helproads/HelpRoadsPricing";
 import { Contacts } from "@/components/home/Contacts";
 
 /* Страница «Помощь на дорогах» — макет Figma 841:6808.
@@ -104,6 +105,9 @@ export function HelpRoadsPage() {
         </article>
         </div>
       </section>
+
+      {/* ---------- Тарифы (таблица со страницы сравнения) ---------- */}
+      <HelpRoadsPricing />
 
       {/* ---------- Позвоните нам (баннер, переиспользуем) ---------- */}
       <section className="home-wrap">
