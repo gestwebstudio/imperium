@@ -142,6 +142,7 @@ export function NewsCard({
 
 /* --- Car Card (композиция компонентов кита) --- */
 export type CarCardProps = {
+  size?: "m" | "l";
   vehicleId?: string;
   brandLogo: string;
   brandName?: string;
@@ -161,6 +162,7 @@ export type CarCardProps = {
   className?: string;
 };
 export function CarCard({
+  size = "l",
   vehicleId,
   brandLogo,
   brandName = "",
@@ -177,7 +179,7 @@ export function CarCard({
   className,
 }: CarCardProps) {
   return (
-    <div className={cn("car-card", className)}>
+    <div className={cn("car-card", `car-card--${size}`, className)}>
       {href && (
         <Link
           className="car-card__link"
@@ -203,10 +205,14 @@ export function CarCard({
 
           <div className="car-card__info">
             <div className="car-card__title">{title}</div>
-            <Indicator status={status.type}>{status.label}</Indicator>
+            <Indicator size={size} status={status.type}>
+              {status.label}
+            </Indicator>
             <div className="car-card__tags">
               {tags.map((t) => (
-                <Tag key={t}>{t}</Tag>
+                <Tag key={t} size={size}>
+                  {t}
+                </Tag>
               ))}
             </div>
           </div>
@@ -219,18 +225,24 @@ export function CarCard({
       </div>
 
       <div className="car-card__action">
-        <PriceBlock label={priceLabel} value={price} />
+        <PriceBlock size={size} label={priceLabel} value={price} />
         {href ? (
           <ButtonLink
             href={href}
-            size="m"
+            size={size === "m" ? "s" : "m"}
             variant={action.variant}
+            endIcon={<ArrowDiagonalIcon className="car-card__details-icon" />}
             className="car-card__details-link"
           >
             {action.label}
           </ButtonLink>
         ) : (
-          <Button variant={action.variant} size="m">
+          <Button
+            variant={action.variant}
+            size={size === "m" ? "s" : "m"}
+            endIcon={<ArrowDiagonalIcon className="car-card__details-icon" />}
+            className="car-card__details-link"
+          >
             {action.label}
           </Button>
         )}

@@ -18,6 +18,7 @@ import {
   Slider,
   PriceBlock,
   Button,
+  Checkbox,
   Wishlist,
   Comparison,
   BrandCard,
@@ -106,6 +107,102 @@ const bubbleColors = [
   ["Green 200", "green-200"],
   ["Green 500", "green-500"],
   ["Warm Taupe 400", "taupe-400"],
+] as const;
+
+type TypographySpec = {
+  name: string;
+  className: string;
+  meta: string;
+  sample: string;
+};
+
+const headingWeights = [
+  ["regular", "Regular", 400],
+  ["medium", "Medium", 500],
+  ["semibold", "Semibold", 600],
+  ["bold", "Bold", 700],
+  ["extrabold", "ExtraBold", 800],
+] as const;
+
+const headingLevels = [
+  ["h1", 88, 100],
+  ["h2", 66, 70],
+  ["h3", 50, 70],
+  ["h4", 48, 56],
+  ["h5", 40, 48],
+  ["h6", 36, 44],
+] as const;
+
+const headingStyles: TypographySpec[] = headingLevels.flatMap(
+  ([level, fontSize, lineHeight]) =>
+  headingWeights.map(([weight, label, value]) => ({
+    name: `Heading/${level.toUpperCase()} ${label}`,
+    className: `t-heading-${level}-${level}-${weight}`,
+    meta: `Wix Madefor Display · ${fontSize}/${lineHeight} · ${value}`,
+    sample: "Imperium Motors",
+  })),
+);
+
+const textScales = [
+  [36, 42, ["regular", "medium", "semibold", "bold"]],
+  [32, 44, ["regular", "medium", "semibold", "bold", "black"]],
+  [30, 40, ["regular", "medium", "semibold", "bold"]],
+  [24, 30, ["regular", "medium", "semibold", "bold"]],
+  [20, 28, ["regular", "medium", "semibold", "bold"]],
+  [18, 24, ["regular", "medium", "semibold", "bold"]],
+  [16, 20, ["regular", "medium", "semibold", "bold"]],
+  [14, 18, ["regular", "medium", "semibold", "bold"]],
+  [10, 10, ["regular", "medium", "semibold", "bold"]],
+] as const;
+
+const textWeightValues = {
+  regular: 400,
+  medium: 500,
+  semibold: 600,
+  bold: 700,
+  black: 900,
+} as const;
+
+const textStyles: TypographySpec[] = textScales.flatMap(
+  ([fontSize, lineHeight, weights]) =>
+  weights.map((weight) => {
+    const weightValue = textWeightValues[weight];
+    return {
+      name: `Text/${fontSize} ${weight[0].toUpperCase()}${weight.slice(1)}`,
+      className: `t-text-${fontSize}-${fontSize}-${weight}`,
+      meta: `Onest · ${fontSize}/${lineHeight} · ${weightValue}`,
+      sample: "Премиальные автомобили в Москве",
+    };
+  }),
+);
+
+const specialTypographyStyles: TypographySpec[] = [
+  ...(["regular", "medium", "semibold", "bold"] as const).map(
+    (weight, index) => ({
+      name: `Title card/24 ${weight[0].toUpperCase()}${weight.slice(1)}`,
+      className: `t-title-card-24-${weight}`,
+      meta: `Wix Madefor Display · 24/30 · ${[400, 500, 600, 700][index]}`,
+      sample: "Porsche 911 Turbo S",
+    }),
+  ),
+  {
+    name: "Numeric/Value",
+    className: "t-numeric-value",
+    meta: "Wix Madefor Display · 40/46 · 800",
+    sample: "375 л.с.",
+  },
+  {
+    name: "Price/Value",
+    className: "t-price-value",
+    meta: "Wix Madefor Display · 28/36 · 800",
+    sample: "19 990 000 ₽",
+  },
+];
+
+const typographyGroups = [
+  ["Heading", headingStyles],
+  ["Text", textStyles],
+  ["Card & values", specialTypographyStyles],
 ] as const;
 
 export default function KitPage() {
@@ -267,6 +364,40 @@ export default function KitPage() {
         </div>
       </section>
 
+      {/* ---------------- Типографика ---------------- */}
+      <section className="kit-section">
+        <div className="kit-wrap">
+          <h2>Типографика</h2>
+          <p className="section-lead">
+            Все 73 локальных текстовых стиля из Figma. Имена CSS-классов можно
+            использовать напрямую; размеры адаптируются через шкалу в{" "}
+            <code>styles/typography.css</code>.
+          </p>
+          {typographyGroups.map(([groupName, styles]) => (
+            <div className="kit-block" key={groupName}>
+              <div className="kit-head">
+                <h3>{groupName}</h3>
+                <code>{styles.length} styles</code>
+              </div>
+              <div className="type-list">
+                {styles.map((style) => (
+                  <article className="type-row" key={style.className}>
+                    <div className="type-meta">
+                      <strong>{style.name}</strong>
+                      <code>.{style.className}</code>
+                      <span>{style.meta}</span>
+                    </div>
+                    <div className={`type-sample ${style.className}`}>
+                      {style.sample}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* ---------------- Компоненты ---------------- */}
       <section className="kit-section">
         <div className="kit-wrap">
@@ -333,14 +464,21 @@ export default function KitPage() {
               <code>&lt;Badge&gt;</code>
             </div>
             <div className="kit-stage kit-stage--col">
-              <div className="stage-label">Surface</div>
+              <div className="stage-label">Surface · L</div>
               <div className="stage-row">
                 <Badge color="info">Badge</Badge>
                 <Badge color="success">В наличии</Badge>
                 <Badge color="warning">Ожидается</Badge>
                 <Badge color="error">Продан</Badge>
               </div>
-              <div className="stage-label">Outlined</div>
+              <div className="stage-label">Surface · M</div>
+              <div className="stage-row">
+                <Badge size="m" color="info">Badge</Badge>
+                <Badge size="m" color="success">В наличии</Badge>
+                <Badge size="m" color="warning">Ожидается</Badge>
+                <Badge size="m" color="error">Продан</Badge>
+              </div>
+              <div className="stage-label">Outlined · L / M</div>
               <div className="stage-row">
                 <Badge color="info" variant="outlined">
                   Badge
@@ -354,6 +492,9 @@ export default function KitPage() {
                 <Badge color="error" variant="outlined">
                   Продан
                 </Badge>
+                <Badge size="m" color="info" variant="outlined">
+                  Badge M
+                </Badge>
               </div>
             </div>
           </div>
@@ -364,11 +505,17 @@ export default function KitPage() {
               <code>&lt;Tag&gt;</code>
             </div>
             <div className="kit-stage kit-stage--col">
-              <div className="stage-label">Card</div>
+              <div className="stage-label">Card · L</div>
               <div className="stage-row">
                 <Tag>2026</Tag>
                 <Tag>Внедорожник</Tag>
                 <Tag>4.4 AT</Tag>
+              </div>
+              <div className="stage-label">Card · M</div>
+              <div className="stage-row">
+                <Tag size="m">2026</Tag>
+                <Tag size="m">Внедорожник</Tag>
+                <Tag size="m">4.4 AT</Tag>
               </div>
               <div className="stage-label">Filter</div>
               <div className="stage-row">
@@ -384,11 +531,21 @@ export default function KitPage() {
               <h3>Indicator</h3>
               <code>&lt;Indicator&gt;</code>
             </div>
-            <div className="kit-stage" style={{ gap: 32 }}>
-              <Indicator status="success">В наличии</Indicator>
-              <Indicator status="warning">В пути</Indicator>
-              <Indicator status="error">Продан</Indicator>
-              <Indicator status="info">Под заказ</Indicator>
+            <div className="kit-stage kit-stage--col">
+              <div className="stage-label">L</div>
+              <div className="stage-row" style={{ gap: 32 }}>
+                <Indicator status="success">В наличии</Indicator>
+                <Indicator status="warning">В пути</Indicator>
+                <Indicator status="error">Продан</Indicator>
+                <Indicator status="info">Под заказ</Indicator>
+              </div>
+              <div className="stage-label">M</div>
+              <div className="stage-row" style={{ gap: 32 }}>
+                <Indicator size="m" status="success">В наличии</Indicator>
+                <Indicator size="m" status="warning">В пути</Indicator>
+                <Indicator size="m" status="error">Продан</Indicator>
+                <Indicator size="m" status="info">Под заказ</Indicator>
+              </div>
             </div>
           </div>
 
@@ -400,6 +557,24 @@ export default function KitPage() {
             <div className="kit-stage kit-stage--beige" style={{ gap: 32 }}>
               <Tooltip size="s">Это подсказка.</Tooltip>
               <Tooltip size="l">Это подсказка.</Tooltip>
+            </div>
+          </div>
+
+          <div className="kit-block">
+            <div className="kit-head">
+              <h3>Checkbox</h3>
+              <code>&lt;Checkbox size=&quot;s | m&quot;&gt;</code>
+            </div>
+            <div className="kit-stage kit-stage--col">
+              <div className="stage-label">Размеры S / M</div>
+              <div className="stage-row">
+                <div style={{ width: 220 }}>
+                  <Checkbox size="s" label="Размер S" defaultSelected />
+                </div>
+                <div style={{ width: 220 }}>
+                  <Checkbox size="m" label="Размер M" defaultSelected />
+                </div>
+              </div>
             </div>
           </div>
 
@@ -434,8 +609,12 @@ export default function KitPage() {
               <h3>Price Block</h3>
               <code>&lt;PriceBlock&gt;</code>
             </div>
-            <div className="kit-stage">
-              <PriceBlock value="20 390 000 ₽" />
+            <div className="kit-stage kit-stage--col">
+              <div className="stage-label">L / M</div>
+              <div className="stage-row" style={{ gap: 48 }}>
+                <PriceBlock size="l" value="20 390 000 ₽" />
+                <PriceBlock size="m" value="20 390 000 ₽" />
+              </div>
             </div>
           </div>
         </div>
@@ -525,27 +704,35 @@ export default function KitPage() {
               <code>&lt;CarCard&gt;</code>
             </div>
             <div className="car-stage">
-              <CarCard
-                brandLogo="/images/logo_cards/bmw.webp"
-                brandName="BMW"
-                title="X3 xDrive20i"
-                status={{ type: "success", label: "В наличии" }}
-                tags={["2026", "Бензин", "Полный привод"]}
-                photo="/images/cars/x3-xdrive20i.webp"
-                price="28 990 000 ₽"
-                action={{ label: "Подробнее", variant: "primary-surface" }}
-              />
-              <CarCard
-                brandLogo="/images/logo_cards/bmw.webp"
-                brandName="BMW"
-                title="X3 xDrive20i"
-                status={{ type: "warning", label: "Ожидается" }}
-                tags={["2026", "Бензин", "Полный привод"]}
-                photo="/images/cars/mask.webp"
-                photoAlt="Автомобиль под тканью"
-                price="28 990 000 ₽"
-                action={{ label: "Забронировать", variant: "secondary-outlined" }}
-              />
+              <div className="car-card-specimen car-card-specimen--l">
+                <div className="stage-label">L · In stock</div>
+                <CarCard
+                  size="l"
+                  brandLogo="/images/logo_cards/bmw.webp"
+                  brandName="BMW"
+                  title="X3 xDrive20i"
+                  status={{ type: "success", label: "В наличии" }}
+                  tags={["2026", "Бензин", "Полный привод"]}
+                  photo="/images/cars/x3-xdrive20i.webp"
+                  price="28 990 000 ₽"
+                  action={{ label: "Подробнее", variant: "primary-surface" }}
+                />
+              </div>
+              <div className="car-card-specimen car-card-specimen--m">
+                <div className="stage-label">M · Waiting</div>
+                <CarCard
+                  size="m"
+                  brandLogo="/images/logo_cards/bmw.webp"
+                  brandName="BMW"
+                  title="X3 xDrive20i"
+                  status={{ type: "warning", label: "Ожидается" }}
+                  tags={["2026", "Бензин", "Полный привод"]}
+                  photo="/images/cars/mask.webp"
+                  photoAlt="Автомобиль под тканью"
+                  price="28 990 000 ₽"
+                  action={{ label: "Забронировать", variant: "secondary-outlined" }}
+                />
+              </div>
             </div>
           </div>
         </div>
