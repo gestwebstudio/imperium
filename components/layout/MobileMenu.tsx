@@ -5,6 +5,10 @@ import { createPortal } from "react-dom";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { CloseIcon, PhoneIcon } from "@/components/icons";
+import {
+  ButtonRippleLayer,
+  handleButtonRipplePointerDown,
+} from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
 
 const menuItems = [
@@ -266,14 +270,17 @@ export function MobileMenu() {
       <button
         ref={triggerRef}
         type="button"
-        className={cn("site-header__burger", open && "is-open")}
+        className={cn("ui-button site-header__burger", open && "is-open")}
         aria-label={open ? "Закрыть меню" : "Открыть меню"}
         aria-expanded={open}
         aria-controls="mobile-staggered-menu"
+        onPointerDown={handleButtonRipplePointerDown}
         onClick={open ? close : openMenu}
       >
-        <span />
-        <span />
+        <ButtonRippleLayer />
+        {/* Exact exported Figma asset, scaled by the responsive header styles. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/icons/Menu.svg" alt="" aria-hidden="true" />
       </button>
 
       {mounted &&
