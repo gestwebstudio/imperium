@@ -99,7 +99,7 @@ export function CarsSection({
                       isUpcoming ? "15 490 000 ₽" : formatPrice(car.price)
                     }
                     action={{
-                      label: "Подробнее",
+                      label: isUpcoming ? "Забронировать" : "Подробнее",
                       variant: isUpcoming
                         ? "secondary-outlined"
                         : "primary-surface",
