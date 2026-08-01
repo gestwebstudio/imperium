@@ -12,6 +12,8 @@ import {
 import { cn } from "@/lib/cn";
 
 const menuItems = [
+  { label: "Избранное", href: "/favorites" },
+  { label: "Сравнение", href: "/comparison" },
   { label: "Каталог", href: "/catalog" },
   { label: "Услуги", href: "#" },
   { label: "О салоне", href: "#" },
@@ -79,7 +81,7 @@ export function MobileMenu() {
     const motion = getMotionFactor();
 
     if (prefersReducedMotion()) {
-      gsap.set([panel, ...layers], { xPercent: -100 });
+      gsap.set([panel, ...layers], { xPercent: 100 });
       gsap.set(backdrop, { opacity: 0 });
       finishClose();
       return;
@@ -106,7 +108,7 @@ export function MobileMenu() {
       .to(
         panel,
         {
-          xPercent: -100,
+          xPercent: 100,
           duration: 0.36 * motion,
           ease: "power3.in",
         },
@@ -115,7 +117,7 @@ export function MobileMenu() {
       .to(
         [...layers].reverse(),
         {
-          xPercent: -100,
+          xPercent: 100,
           duration: 0.3 * motion,
           ease: "power3.in",
           stagger: 0.04 * motion,
@@ -151,7 +153,7 @@ export function MobileMenu() {
       const motion = getMotionFactor();
 
       gsap.set(backdrop, { opacity: 0 });
-      gsap.set([panel, ...layers], { xPercent: -100 });
+      gsap.set([panel, ...layers], { xPercent: 100 });
       gsap.set(labels, { yPercent: 130, rotate: 6 });
       gsap.set(panelHead, { y: 24, opacity: 0 });
 

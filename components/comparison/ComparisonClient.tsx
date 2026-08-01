@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, type CSSProperties } from "react";
-import { Breadcrumbs, Switch, Table } from "@heroui/react";
-import { ArrowIcon, ListAddIcon } from "@/components/icons";
+import { Switch, Table } from "@heroui/react";
+import { ListAddIcon } from "@/components/icons";
 import { CarCard } from "@/components/cards/cards";
 import { Button, ButtonLink } from "@/components/ui/Button";
+import { Crumbs } from "@/components/ui/Crumbs";
 import { Badge } from "@/components/ui/primitives";
 import { useVehicleActions } from "@/components/ui/VehicleActionsContext";
 import {
@@ -86,17 +87,10 @@ export function ComparisonClient({ cars }: { cars: Car[] }) {
 
   return (
     <main className="comparison-page">
-      <Breadcrumbs
+      <Crumbs
         className="comparison-crumbs"
-        separator={<ArrowIcon width={12} height={12} />}
-      >
-        <Breadcrumbs.Item href="/" className="comparison-crumbs__item">
-          Главная
-        </Breadcrumbs.Item>
-        <Breadcrumbs.Item className="comparison-crumbs__item comparison-crumbs__item--current">
-          Сравнение
-        </Breadcrumbs.Item>
-      </Breadcrumbs>
+        items={[{ label: "Главная", href: "/" }, { label: "Сравнение" }]}
+      />
 
       <header className="comparison-head">
         <div className="comparison-head__title">

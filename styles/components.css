@@ -137,6 +137,11 @@
     top: round(nearest, calc(50dvh - 48px), 1px);
   }
 }
+@media (max-width: 1200px) {
+  .floating-vehicle-actions {
+    display: none;
+  }
+}
 .floating-vehicle-actions__item {
   position: relative;
   display: block;
@@ -197,6 +202,8 @@
 .btn {
   overflow: hidden;
   display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
@@ -450,6 +457,9 @@
   padding: 0;
   list-style: none;
 }
+.ui-crumbs {
+  margin-bottom: 10px;
+}
 .ui-crumbs li {
   display: inline-flex;
   align-items: center;
@@ -489,18 +499,30 @@
   transform: rotate(180deg);
 }
 
+@media (max-width: 640px) {
+  .ui-crumbs {
+    margin-bottom: 6px;
+  }
+}
+
 @media (max-width: 390px) {
-  .ui-crumbs--compact-mobile,
-  .ui-crumbs--compact-mobile ol,
-  .ui-crumbs--compact-mobile li {
+  .ui-crumbs,
+  .ui-crumbs ol,
+  .ui-crumbs li {
     gap: 2px;
-    height: 10px;
+    height: 14px;
   }
-  .ui-crumbs--compact-mobile .ui-crumbs__item {
+  .ui-crumbs {
+    margin-bottom: 2px;
+  }
+  .ui-crumbs.ui-crumbs--compact-mobile {
+    margin-bottom: 2px;
+  }
+  .ui-crumbs .ui-crumbs__item {
     font-size: 10px;
-    line-height: 10px;
+    line-height: 14px;
   }
-  .ui-crumbs--compact-mobile .breadcrumbs__separator {
+  .ui-crumbs .breadcrumbs__separator {
     width: 8px;
     height: 8px;
   }
@@ -1228,14 +1250,6 @@
 }
 
 @media (max-width: 768px) {
-  .floating-vehicle-actions {
-    top: calc(50% - 44px);
-    width: 48px;
-    height: 88px;
-    padding: 12px;
-    border-radius: 14px 0 0 14px;
-  }
-
   .body-card:hover .body-card__img {
     transform: none;
   }
@@ -1339,25 +1353,6 @@
   .wishlist__tip,
   .compare__tip {
     display: none;
-  }
-
-  .floating-vehicle-actions {
-    top: calc(50% - 40px);
-    width: 44px;
-    height: 80px;
-    padding: 12px;
-    gap: 12px;
-  }
-
-  .floating-vehicle-actions__item,
-  .floating-vehicle-actions__item > svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  .floating-vehicle-actions__bubble {
-    top: -6px;
-    right: -7px;
   }
 
   .price-block__value,

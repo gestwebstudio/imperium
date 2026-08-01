@@ -114,8 +114,4 @@
   .news-detail__body {
     gap: 18px;
   }
-
-  .news-detail__content .btn {
-    width: 100%;
-  }
 }

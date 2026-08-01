@@ -113,6 +113,9 @@
   flex-direction: column;
   gap: 12px;
 }
+.hr-pricing__sub + .hr-pricing__sub {
+  margin-top: 12px;
+}
 .hr-pricing__subtitle {
   margin: 0;
   font-family: var(--font-text, "Onest", sans-serif);
@@ -250,10 +253,6 @@
   .help-roads .ti-hero__inner {
     padding-bottom: 32px;
   }
-  .help-roads .hr-hero__phone {
-    width: 100%;
-    justify-content: center;
-  }
   .help-roads > .hr-section,
   .help-roads > .hr-pricing {
     margin-top: 48px;
@@ -274,10 +273,13 @@
     gap: 40px;
   }
   .hr-pricing__section {
-    gap: 12px;
+    gap: 16px;
   }
   .hr-pricing__sub {
-    gap: 8px;
+    gap: 12px;
+  }
+  .hr-pricing__sub + .hr-pricing__sub {
+    margin-top: 16px;
   }
   .help-roads .comparison-table-section__title {
     font-size: var(--fs-20);

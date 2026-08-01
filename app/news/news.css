@@ -9,10 +9,6 @@
     clamp(96px, 8.333vw, 160px);
 }
 
-.news-page__crumbs {
-  margin-bottom: 10px;
-}
-
 .news-page__head {
   display: flex;
   align-items: center;
@@ -73,9 +69,5 @@
   .news-page__grid {
     grid-template-columns: minmax(0, 1fr);
     gap: 16px;
-  }
-
-  .news-page__more {
-    width: 100%;
   }
 }
