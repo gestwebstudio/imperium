@@ -33,22 +33,27 @@ function copyWithFallback(value: string) {
  * при скролле вверх — возвращается и остаётся зафиксированной.
  * У самого верха страницы всегда видима.
  */
-function useHideOnScroll() {
-  const [hidden, setHidden] = useState(false);
+function useHeaderScroll() {
+  // pinned=false у самого верха: шапка в обычном потоке и уезжает вместе со
+  // страницей (без анимации). Ниже — pinned=true: headroom (fixed), прячется вниз
+  // и появляется при скролле вверх, как раньше.
+  const [state, setState] = useState({ pinned: false, hidden: false });
 
   useEffect(() => {
     let lastY = window.scrollY;
     let ticking = false;
 
     const TOLERANCE = 8; // порог, чтобы дрожание/отскок не переключали шапку
-    const HIDE_AFTER = 120; // у верха шапка стоит на месте; headroom — только дальше
+    const ZONE = 120; // высота шапки + запас: в этой зоне сверху шапка не фиксируется
     const update = () => {
       ticking = false;
       const y = Math.max(0, window.scrollY);
       if (Math.abs(y - lastY) < TOLERANCE) return; // игнор мелких движений
-      if (y <= HIDE_AFTER) setHidden(false); // у верха/начале скролла — всегда видима
-      else if (y > lastY) setHidden(true); // вниз — прячем
-      else setHidden(false); // вверх — показываем
+      if (y <= ZONE)
+        setState({ pinned: false, hidden: false }); // верх — уезжает со страницей
+      else if (y > lastY)
+        setState({ pinned: true, hidden: true }); // вниз — фикс + прячем
+      else setState({ pinned: true, hidden: false }); // вверх — фикс + показываем
       lastY = y;
     };
 
@@ -63,7 +68,7 @@ function useHideOnScroll() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  return hidden;
+  return state;
 }
 
 function ChevronDown() {
@@ -81,7 +86,7 @@ function ChevronDown() {
 }
 
 export function Header() {
-  const hidden = useHideOnScroll();
+  const { pinned, hidden } = useHeaderScroll();
   const [copyStatus, setCopyStatus] = useState<"idle" | "success" | "error">(
     "idle",
   );
@@ -139,7 +144,9 @@ export function Header() {
   }
 
   return (
-    <header className={`site-header${hidden ? " is-hidden" : ""}`}>
+    <header
+      className={`site-header${pinned ? " is-pinned" : ""}${hidden ? " is-hidden" : ""}`}
+    >
       <GlassSurface
         className="site-header__bar"
         height="var(--site-header-height)"
