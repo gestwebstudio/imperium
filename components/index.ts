@@ -17,4 +17,5 @@ export {
   type CheckboxProps,
   type CheckboxSize,
 } from "./ui/Checkbox";
+export { SheetPortal, type SheetPortalProps } from "./ui/SheetPortal";
 export * from "./cards/cards";

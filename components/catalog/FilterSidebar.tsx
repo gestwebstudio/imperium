@@ -29,7 +29,7 @@ export type FilterSidebarProps = {
   powerMin: number;
   powerMax: number;
 
-  /** Открыт ли сайдбар как drawer (мобилка ≤1200). */
+  /** Открыт ли сайдбар как drawer (экраны уже 1200px). */
   open?: boolean;
   /** Закрыть мобильный drawer. */
   onClose?: () => void;

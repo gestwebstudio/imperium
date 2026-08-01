@@ -44,6 +44,10 @@
   --color-green-100: #DCEFDC;
   --color-green-500: #55AB4D;
 
+  /* ---------- Colors: Semantic foreground ---------- */
+  --color-foreground-muted: #71717A;
+  --color-foreground-link: #18181B;
+
   /* ---------- Colors: Effects ---------- */
   --color-shadow-fin: #B4AAA3;
 
@@ -69,6 +73,12 @@
   --radius-page: clamp(28px, 2.604vw, 50px);
   --radius-card: clamp(22px, 1.563vw, 30px);
   --radius-media: clamp(22px, 1.875vw, 36px);
+
+  /* ---------- Layering ---------- */
+  --z-header: 50;
+  --z-overlay: 100;
+  --z-sheet: 1000;
+  --z-modal: 1200;
 
   /* Готовые текстовые стили (73 шт.) — в styles/typography.css (классы .t-*) */
 }

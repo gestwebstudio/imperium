@@ -58,6 +58,20 @@ export const ArrowDiagonalIcon = (p: IconProps) => (
   </Svg>
 );
 
+export const FiltersIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path
+      d="M1 2.25H11M3.25 6H11M1 9.75H11M1 6H1.75M1 9.75H3.25"
+      stroke="currentColor"
+      strokeWidth="1.25"
+      strokeLinecap="round"
+    />
+    <circle cx="2.25" cy="2.25" r="1" fill="currentColor" />
+    <circle cx="4.5" cy="6" r="1" fill="currentColor" />
+    <circle cx="4.5" cy="9.75" r="1" fill="currentColor" />
+  </Svg>
+);
+
 export const CloseIcon = (p: IconProps) => (
   <Svg {...p}>
     <path d="M10.0762 1.07619C10.3105 0.841877 10.6895 0.841886 10.9238 1.07619C11.1581 1.3105 11.1581 1.68953 10.9238 1.92384L6.84764 6.00002L10.9238 10.0762C11.1581 10.3105 11.1581 10.6895 10.9238 10.9238C10.6895 11.1582 10.3105 11.1581 10.0762 10.9238L5.99999 6.84767L1.92381 10.9238C1.6895 11.1582 1.31047 11.1582 1.07616 10.9238C0.841855 10.6895 0.841847 10.3105 1.07616 10.0762L5.15233 6.00002L1.07616 1.92384C0.841842 1.68953 0.841842 1.3105 1.07616 1.07619C1.31047 0.841873 1.6895 0.841873 1.92381 1.07619L5.99999 5.15236L10.0762 1.07619Z" fill="currentColor" />

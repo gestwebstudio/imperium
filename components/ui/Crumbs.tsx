@@ -1,25 +1,52 @@
+"use client";
+
 import { Breadcrumbs } from "@heroui/react";
 import { ArrowIcon } from "@/components/icons";
+import { cn } from "@/lib/cn";
 
 export type Crumb = { label: string; href?: string };
+export type CrumbsProps = {
+  items: Crumb[];
+  className?: string;
+  /** Compact 10px variant is used by the 390px layouts. */
+  compactOnMobile?: boolean;
+};
 
-/**
- * Хлебные крошки для страниц услуг — те же, что в каталоге (классы .cat-crumbs*).
- * Стили .cat-crumbs* продублированы в trade-in.css (каталожный CSS сюда не тянем).
- */
-export function Crumbs({ items }: { items: Crumb[] }) {
+/** Canonical project breadcrumbs built on top of HeroUI. */
+export function Crumbs({
+  items,
+  className,
+  compactOnMobile = false,
+}: CrumbsProps) {
   return (
     <Breadcrumbs
-      className="cat-crumbs"
-      separator={<ArrowIcon className="cat-crumbs__sep" width={12} height={12} />}
+      aria-label="Хлебные крошки"
+      className={cn(
+        "ui-crumbs",
+        compactOnMobile && "ui-crumbs--compact-mobile",
+        className,
+      )}
+      separator={<ArrowIcon className="ui-crumbs__sep" width={12} height={12} />}
     >
       {items.map((it, i) => {
         const isLast = i === items.length - 1;
+
+        if (isLast || !it.href) {
+          return (
+            <Breadcrumbs.Item
+              key={it.label}
+              className="ui-crumbs__item ui-crumbs__item--current"
+            >
+              {() => <span>{it.label}</span>}
+            </Breadcrumbs.Item>
+          );
+        }
+
         return (
           <Breadcrumbs.Item
             key={it.label}
-            href={isLast ? undefined : it.href}
-            className={`cat-crumbs__item${isLast ? " cat-crumbs__item--current" : ""}`}
+            href={it.href}
+            className="ui-crumbs__item"
           >
             {it.label}
           </Breadcrumbs.Item>

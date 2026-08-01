@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Breadcrumbs } from "@heroui/react";
-import { ArrowIcon } from "@/components/icons";
 import { ButtonLink } from "@/components/ui/Button";
+import { Crumbs } from "@/components/ui/Crumbs";
 import {
   getNewsArticle,
   getNewsSlugs,
@@ -75,20 +74,10 @@ export default async function NewsArticlePage({
 
   return (
     <main className="news-detail">
-      <Breadcrumbs
+      <Crumbs
         className="news-detail__crumbs"
-        separator={<ArrowIcon width={12} height={12} />}
-      >
-        <Breadcrumbs.Item href="/" className="news-detail__crumb">
-          Главная
-        </Breadcrumbs.Item>
-        <Breadcrumbs.Item
-          href="/news"
-          className="news-detail__crumb news-detail__crumb--current"
-        >
-          Новости
-        </Breadcrumbs.Item>
-      </Breadcrumbs>
+        items={[{ label: "Главная", href: "/" }, { label: "Новости" }]}
+      />
 
       <NewsArticleContent article={article} />
     </main>
