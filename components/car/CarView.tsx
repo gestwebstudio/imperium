@@ -84,6 +84,9 @@ export function CarView({ car }: CarViewProps) {
           <Breadcrumbs.Item href="/catalog" className="cat-crumbs__item">
             Каталог
           </Breadcrumbs.Item>
+          <Breadcrumbs.Item className="cat-crumbs__item cat-crumbs__item--current">
+            {title}
+          </Breadcrumbs.Item>
         </Breadcrumbs>
       </div>
 
