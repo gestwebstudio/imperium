@@ -1,7 +1,5 @@
-import { ServiceImageCard } from "@/components/cards/cards";
 import { Contacts } from "@/components/home/Contacts";
 import { Testimonials } from "@/components/home/Testimonials";
-import { ServiceCards } from "@/components/ServiceCards";
 import { ButtonLink } from "@/components/ui/Button";
 import { Crumbs } from "@/components/ui/Crumbs";
 import { Badge } from "@/components/ui/primitives";
@@ -80,18 +78,11 @@ export function AboutSalonPage() {
       <section className="home-wrap about-salon__story">
         <div className="about-salon__story-intro">
           <div>
-            <p className="about-salon__eyebrow">Наш подход</p>
             <h2 className="about-salon__section-title">
               Не просто продаём автомобили
             </h2>
           </div>
           <div className="about-salon__story-copy">
-            <p>
-              Мы создаём прозрачный путь к автомобилю, который соответствует
-              вашему образу жизни, характеру и ожиданиям. Команда берёт на себя
-              сложные этапы — от поиска и проверки до оформления и подготовки к
-              выдаче.
-            </p>
             <p>
               В салоне можно спокойно познакомиться с автомобилями, сравнить
               варианты и обсудить решение без давления и спешки.
@@ -117,39 +108,18 @@ export function AboutSalonPage() {
         </div>
       </section>
 
-      <section className="home-wrap about-salon__services" aria-labelledby="about-services-title">
-        <div className="about-salon__section-head">
-          <div>
-            <p className="about-salon__eyebrow">Возможности</p>
-            <h2 className="about-salon__section-title" id="about-services-title">
-              Всё вокруг вашего автомобиля
-            </h2>
-          </div>
-          <p className="about-salon__section-description">
-            От финансовых программ и подбора до персонализации — одна команда
-            сопровождает автомобиль на каждом этапе.
-          </p>
-        </div>
-
-        <ServiceCards />
-
-        <div className="about-salon__service-grid">
-          <ServiceImageCard
-            title="Ателье персонализации"
-            image="/images/services/atelie.webp"
-            text="Защита кузова, смена цвета, мультимедиа и подбор деталей — индивидуальная доработка автомобиля в одном месте."
-          />
-          <ServiceImageCard
-            title="Индивидуальный подбор"
-            image="/images/services/podbor.webp"
-            text="Находим редкие комплектации и организуем поставку автомобиля под конкретный запрос."
-            href="/car-selection"
-          />
-          <ServiceImageCard
-            title="Авторский дизайн"
-            image="/images/services/veles.webp"
-            text="Создаём цельную концепцию экстерьера, которая делает автомобиль продолжением своего владельца."
-          />
+      {/* Заглушка под видео о салоне — заменить на <video>/iframe. */}
+      <section
+        className="home-wrap about-salon__video-section"
+        aria-label="Видео о салоне Imperium Motors"
+      >
+        <div className="about-salon__video" role="img" aria-label="Здесь будет видео о салоне Imperium Motors">
+          <span className="about-salon__video-play" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 5.5v13l11-6.5-11-6.5Z" fill="currentColor" />
+            </svg>
+          </span>
+          <span className="about-salon__video-note">Видео о салоне</span>
         </div>
       </section>
 

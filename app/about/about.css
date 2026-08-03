@@ -93,6 +93,7 @@
 
 .about-salon__story,
 .about-salon__services,
+.about-salon__video-section,
 .about-salon__reviews,
 .about-salon > .contacts {
   margin-top: var(--section-space, 160px);
@@ -195,6 +196,40 @@
   font-family: var(--font-text, "Onest", sans-serif);
   font-size: var(--fs-18);
   line-height: 1.45;
+  color: var(--color-warm-taupe-500, #6A6259);
+}
+
+/* Заглушка под видео о салоне (заменить на <video>/iframe) */
+.about-salon__video {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  border-radius: var(--radius-card, 30px);
+  border: 1px dashed var(--color-warm-taupe-300, #B2A79B);
+  background:
+    radial-gradient(120% 120% at 50% 0%, rgba(255, 255, 255, .5), transparent 60%),
+    var(--color-stone-beige-200, #E4DFDB);
+}
+.about-salon__video-play {
+  width: 84px;
+  height: 84px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--color-heritage-green-500, #294434);
+  color: var(--color-white, #FFFFFF);
+  box-shadow: 0 12px 30px rgba(41, 68, 52, .25);
+}
+.about-salon__video-play svg { width: 34px; height: 34px; margin-left: 4px; }
+.about-salon__video-note {
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: var(--fs-18);
+  line-height: 1.4;
   color: var(--color-warm-taupe-500, #6A6259);
 }
 
