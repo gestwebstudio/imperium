@@ -1,11 +1,11 @@
 "use client";
 
-import { Breadcrumbs } from "@heroui/react";
 import type { Car } from "@/lib/cars";
 import { carTags, formatPrice } from "@/lib/cars";
-import { ArrowIcon, HeartStrokeIcon } from "@/components/icons";
+import { HeartStrokeIcon } from "@/components/icons";
 import { Badge } from "@/components/ui/primitives";
 import { ButtonLink } from "@/components/ui/Button";
+import { Crumbs } from "@/components/ui/Crumbs";
 import { CarCard } from "@/components/cards/cards";
 import { useVehicleActions } from "@/components/ui/VehicleActionsContext";
 
@@ -19,19 +19,10 @@ export function FavoritesClient({ cars }: { cars: Car[] }) {
 
   return (
     <main className="favorites-page">
-      <Breadcrumbs
+      <Crumbs
         className="favorites-crumbs"
-        separator={
-          <ArrowIcon width={12} height={12} />
-        }
-      >
-        <Breadcrumbs.Item href="/" className="favorites-crumbs__item">
-          Главная
-        </Breadcrumbs.Item>
-        <Breadcrumbs.Item className="favorites-crumbs__item favorites-crumbs__item--current">
-          Избранное
-        </Breadcrumbs.Item>
-      </Breadcrumbs>
+        items={[{ label: "Главная", href: "/" }, { label: "Избранное" }]}
+      />
 
       <header className="favorites-head">
         <h1>Избранное</h1>

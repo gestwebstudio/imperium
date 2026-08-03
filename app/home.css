@@ -923,15 +923,30 @@
     flex: 0 0 min(82vw, 320px);
     min-width: 0;
   }
-  .contacts__gallery {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
+  .contacts__left {
+    min-width: 0;
   }
+  .contacts__gallery {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    gap: 16px;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .contacts__gallery::-webkit-scrollbar { display: none; }
+  .contacts__gallery img,
   .contacts__gallery .tall {
-    grid-column: 1;
-    grid-row: auto;
-    height: auto;
-    aspect-ratio: 4 / 5;
+    flex: 0 0 300px;
+    width: 300px;
+    height: 230px;
+    aspect-ratio: auto;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
   .contacts__info { min-height: 700px; padding: 28px; }
   .contacts__row .value { font-size: var(--fs-24); line-height: 1.33; }
@@ -1110,8 +1125,5 @@
   }
   .service-card__content {
     padding-right: 34px;
-  }
-  .contacts__gallery .tall {
-    aspect-ratio: 1 / 1;
   }
 }

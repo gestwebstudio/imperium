@@ -5,9 +5,15 @@ import { createPortal } from "react-dom";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { CloseIcon, PhoneIcon } from "@/components/icons";
+import {
+  ButtonRippleLayer,
+  handleButtonRipplePointerDown,
+} from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
 
 const menuItems = [
+  { label: "Избранное", href: "/favorites" },
+  { label: "Сравнение", href: "/comparison" },
   { label: "Каталог", href: "/catalog" },
   { label: "Услуги", href: "#" },
   { label: "О салоне", href: "#" },
@@ -75,7 +81,7 @@ export function MobileMenu() {
     const motion = getMotionFactor();
 
     if (prefersReducedMotion()) {
-      gsap.set([panel, ...layers], { xPercent: -100 });
+      gsap.set([panel, ...layers], { xPercent: 100 });
       gsap.set(backdrop, { opacity: 0 });
       finishClose();
       return;
@@ -102,7 +108,7 @@ export function MobileMenu() {
       .to(
         panel,
         {
-          xPercent: -100,
+          xPercent: 100,
           duration: 0.36 * motion,
           ease: "power3.in",
         },
@@ -111,7 +117,7 @@ export function MobileMenu() {
       .to(
         [...layers].reverse(),
         {
-          xPercent: -100,
+          xPercent: 100,
           duration: 0.3 * motion,
           ease: "power3.in",
           stagger: 0.04 * motion,
@@ -147,7 +153,7 @@ export function MobileMenu() {
       const motion = getMotionFactor();
 
       gsap.set(backdrop, { opacity: 0 });
-      gsap.set([panel, ...layers], { xPercent: -100 });
+      gsap.set([panel, ...layers], { xPercent: 100 });
       gsap.set(labels, { yPercent: 130, rotate: 6 });
       gsap.set(panelHead, { y: 24, opacity: 0 });
 
@@ -266,14 +272,17 @@ export function MobileMenu() {
       <button
         ref={triggerRef}
         type="button"
-        className={cn("site-header__burger", open && "is-open")}
+        className={cn("ui-button site-header__burger", open && "is-open")}
         aria-label={open ? "Закрыть меню" : "Открыть меню"}
         aria-expanded={open}
         aria-controls="mobile-staggered-menu"
+        onPointerDown={handleButtonRipplePointerDown}
         onClick={open ? close : openMenu}
       >
-        <span />
-        <span />
+        <ButtonRippleLayer />
+        {/* Exact exported Figma asset, scaled by the responsive header styles. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/icons/Menu.svg" alt="" aria-hidden="true" />
       </button>
 
       {mounted &&

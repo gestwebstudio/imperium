@@ -1000,7 +1000,6 @@
     flex-direction: column-reverse;
     padding: 24px;
   }
-  .car-action-modal__footer .btn { width: 100%; }
   .car-action-modal__success {
     min-height: 440px;
     padding: 48px 24px;
@@ -1534,9 +1533,6 @@
   }
   .car-price__buttons {
     flex-direction: column;
-  }
-  .car-price__buttons .btn {
-    width: 100%;
   }
   .car-action-modal__header {
     padding: 26px 62px 0 20px;

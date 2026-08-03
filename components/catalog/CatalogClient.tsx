@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Breadcrumbs } from "@heroui/react";
 import { Badge, CarCard } from "@/components";
-import { ArrowIcon } from "@/components/icons";
+import { FiltersIcon } from "@/components/icons";
+import { Button } from "@/components/ui/Button";
+import { Crumbs } from "@/components/ui/Crumbs";
+import { SheetPortal } from "@/components/ui/SheetPortal";
 import {
   type Car,
   type FacetKey,
@@ -53,6 +55,7 @@ export function CatalogClient({
   const [power, setPower] = useState<RangeValue>([POWER_MIN, POWER_MAX]);
   const [sort, setSort] = useState<SortKey>("popular");
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [filtersUseSheet, setFiltersUseSheet] = useState(false);
 
   // Кол-во активных фильтров — для бейджа на кнопке «Фильтры»
   const filterCount =
@@ -60,7 +63,7 @@ export function CatalogClient({
     (price[0] !== PRICE_MIN || price[1] !== PRICE_MAX ? 1 : 0) +
     (power[0] !== POWER_MIN || power[1] !== POWER_MAX ? 1 : 0);
 
-  // Мобильный drawer фильтров: блокировка скролла, Escape, авто-закрытие >1200
+  // Мобильный drawer фильтров: блокировка скролла, Escape, авто-закрытие >=1200
   useEffect(() => {
     document.body.style.overflow = filtersOpen ? "hidden" : "";
     return () => {
@@ -78,12 +81,15 @@ export function CatalogClient({
   }, [filtersOpen]);
 
   useEffect(() => {
-    const mq = window.matchMedia("(min-width: 1201px)");
-    const onChange = (e: MediaQueryListEvent) => {
-      if (e.matches) setFiltersOpen(false);
+    const mq = window.matchMedia("(max-width: 1199px)");
+    const syncSheetMode = () => {
+      setFiltersUseSheet(mq.matches);
+      if (!mq.matches) setFiltersOpen(false);
     };
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
+
+    syncSheetMode();
+    mq.addEventListener("change", syncSheetMode);
+    return () => mq.removeEventListener("change", syncSheetMode);
   }, []);
 
   const toggleFacet = (key: FacetKey, value: string) =>
@@ -124,70 +130,67 @@ export function CatalogClient({
   }, [filtered, sort]);
   const displayedCars = sorted;
 
+  const filterLayer = showFilters ? (
+    <>
+      <div
+        className={`cat-filters-backdrop${filtersOpen ? " is-open" : ""}`}
+        onClick={() => setFiltersOpen(false)}
+      />
+      <FilterSidebar
+        open={filtersOpen}
+        onClose={() => setFiltersOpen(false)}
+        hiddenFacets={hiddenFacets}
+        options={options}
+        selected={selected}
+        onToggleFacet={toggleFacet}
+        onClearFacet={clearFacet}
+        onClearAll={clearAll}
+        price={price}
+        power={power}
+        onPriceChange={setPrice}
+        onPowerChange={setPower}
+        priceMin={PRICE_MIN}
+        priceMax={PRICE_MAX}
+        powerMin={POWER_MIN}
+        powerMax={POWER_MAX}
+      />
+    </>
+  ) : null;
+
   return (
     <div className="catalog-page">
-      <Breadcrumbs
+      <Crumbs
         className="cat-crumbs"
-        separator={
-          <ArrowIcon className="cat-crumbs__sep" width={12} height={12} />
-        }
-      >
-        <Breadcrumbs.Item href="/" className="cat-crumbs__item">
-          Главная
-        </Breadcrumbs.Item>
-        <Breadcrumbs.Item className="cat-crumbs__item cat-crumbs__item--current">
-          {crumbLabel}
-        </Breadcrumbs.Item>
-      </Breadcrumbs>
+        compactOnMobile
+        items={[{ label: "Главная", href: "/" }, { label: crumbLabel }]}
+      />
 
       <header className="catalog-head">
         <div className="catalog-head__title">
           <h1>{title}</h1>
-          <Badge color="info">{sorted.length}</Badge>
+          <Badge size="m" responsive color="info">
+            {sorted.length}
+          </Badge>
         </div>
         <div className="catalog-head__tools">
           {showFilters && (
-            <button
-              type="button"
+            <Button
+              bare
               className="cat-filters-toggle"
               aria-expanded={filtersOpen}
               onClick={() => setFiltersOpen(true)}
             >
-              Фильтры
+              <FiltersIcon className="cat-filters-toggle__icon" />
+              <span>Фильтры</span>
               {filterCount > 0 && <Badge color="info">{filterCount}</Badge>}
-            </button>
+            </Button>
           )}
           <SortDropdown value={sort} onChange={setSort} />
         </div>
       </header>
 
       <div className="catalog-body">
-        {showFilters && (
-          <>
-            <div
-              className={`cat-filters-backdrop${filtersOpen ? " is-open" : ""}`}
-              onClick={() => setFiltersOpen(false)}
-            />
-            <FilterSidebar
-              open={filtersOpen}
-              onClose={() => setFiltersOpen(false)}
-              hiddenFacets={hiddenFacets}
-              options={options}
-              selected={selected}
-              onToggleFacet={toggleFacet}
-              onClearFacet={clearFacet}
-              onClearAll={clearAll}
-              price={price}
-              power={power}
-              onPriceChange={setPrice}
-              onPowerChange={setPower}
-              priceMin={PRICE_MIN}
-              priceMax={PRICE_MAX}
-              powerMin={POWER_MIN}
-              powerMax={POWER_MAX}
-            />
-          </>
-        )}
+        {filtersUseSheet ? <SheetPortal>{filterLayer}</SheetPortal> : filterLayer}
 
         <div className="catalog-results">
           {sorted.length > 0 ? (

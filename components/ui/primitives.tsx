@@ -29,7 +29,9 @@ export function Bubble({
 
 /* --- Badge --- */
 export type BadgeProps = {
-  size?: "m" | "l";
+  size?: "xs" | "s" | "m" | "l";
+  /** M -> S at 768px -> XS at 390px, according to the responsive kit. */
+  responsive?: boolean;
   color?: "info" | "success" | "warning" | "error";
   variant?: "surface" | "outlined";
   className?: string;
@@ -37,6 +39,7 @@ export type BadgeProps = {
 };
 export function Badge({
   size = "l",
+  responsive = false,
   color = "info",
   variant = "surface",
   className,
@@ -47,6 +50,7 @@ export function Badge({
       className={cn(
         "badge",
         `badge--${size}`,
+        responsive && "badge--responsive",
         `badge--${color}`,
         variant === "outlined" && "badge--outlined",
         className,

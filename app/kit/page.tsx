@@ -478,7 +478,14 @@ export default function KitPage() {
                 <Badge size="m" color="warning">Ожидается</Badge>
                 <Badge size="m" color="error">Продан</Badge>
               </div>
-              <div className="stage-label">Outlined · L / M</div>
+              <div className="stage-label">Surface · S / XS</div>
+              <div className="stage-row">
+                <Badge size="s" color="info">Badge S</Badge>
+                <Badge size="s" color="success">В наличии</Badge>
+                <Badge size="xs" color="warning">XS</Badge>
+                <Badge size="xs" color="error">XS</Badge>
+              </div>
+              <div className="stage-label">Outlined · L / M / S / XS</div>
               <div className="stage-row">
                 <Badge color="info" variant="outlined">
                   Badge
@@ -494,6 +501,12 @@ export default function KitPage() {
                 </Badge>
                 <Badge size="m" color="info" variant="outlined">
                   Badge M
+                </Badge>
+                <Badge size="s" color="success" variant="outlined">
+                  Badge S
+                </Badge>
+                <Badge size="xs" color="error" variant="outlined">
+                  XS
                 </Badge>
               </div>
             </div>
