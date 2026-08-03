@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { FloatingVehicleActions } from "@/components/ui/FloatingVehicleActions";
+import { SiteChrome } from "@/components/layout/SiteChrome";
 import { VehicleActionsProvider } from "@/components/ui/VehicleActionsContext";
 
 export const metadata: Metadata = {
@@ -32,10 +30,7 @@ export default function RootLayout({
       </head>
       <body>
         <VehicleActionsProvider>
-          <Header />
-          {children}
-          <FloatingVehicleActions />
-          <Footer />
+          <SiteChrome>{children}</SiteChrome>
         </VehicleActionsProvider>
       </body>
     </html>
