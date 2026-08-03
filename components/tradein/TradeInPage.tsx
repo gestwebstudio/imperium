@@ -129,7 +129,7 @@ export function TradeInPage({ cars }: { cars: Car[] }) {
       <section className="home-wrap ti-factors">
         <div className="ti-factors__media">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/services/podbor.webp" alt="Оценка автомобиля" />
+          <img src="/images/services/tradein1.webp" alt="Оценка автомобиля" />
         </div>
         <div className="ti-block__body ti-factors__body">
           <h2 className="ti-block__title">
@@ -178,7 +178,7 @@ export function TradeInPage({ cars }: { cars: Car[] }) {
         <div className="ti-accept__media">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/services/podbor.webp"
+            src="/images/services/tradein2.webp"
             alt="Приём автомобиля в trade-in"
           />
         </div>
@@ -188,14 +188,16 @@ export function TradeInPage({ cars }: { cars: Car[] }) {
       <section className="home-wrap">
         <div className="ti-call">
           <div className="ti-call__text">
-            <h2 className="ti-call__title">Позвоните нам</h2>
+            <h2 className="ti-call__title">
+              Рассчитайте ваше предложение по trade-in
+            </h2>
             <p className="ti-call__sub">
-              Круглосуточная поддержка для клиентов автосалона: эвакуация, замена
-              колеса, доставка топлива и выезд механика.
+              Оставьте заявку на предварительную оценку. Менеджер свяжется с
+              вами, уточнит детали и рассчитает возможную стоимость trade-in.
             </p>
           </div>
           <Button variant="primary-surface" inverse size="m">
-            Подробнее
+            Получить оценку
           </Button>
         </div>
       </section>
