@@ -94,6 +94,8 @@ export function CarsSection({
                           triggerEndIcon={
                             <ArrowDiagonalIcon className="car-card__details-icon" />
                           }
+                          cardOverlay
+                          overlayAriaLabel="Забронировать автомобиль"
                         />
                       ) : undefined
                     }
