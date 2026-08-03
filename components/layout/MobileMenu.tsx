@@ -16,7 +16,7 @@ const menuItems = [
   { label: "Сравнение", href: "/comparison" },
   { label: "Каталог", href: "/catalog" },
   { label: "Услуги", href: "#" },
-  { label: "О салоне", href: "#" },
+  { label: "О салоне", href: "/about" },
   { label: "Контакты", href: "/contacts" },
 ] as const;
 
