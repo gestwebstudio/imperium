@@ -79,7 +79,7 @@ export function VelesPage() {
         <div className="veles-cta">
           <div className="veles-cta__media">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/services/veles.webp" alt="Александр Велес" />
+            <img src="/images/services/veles1.webp" alt="Александр Велес" />
           </div>
           <div className="veles-cta__body">
             <h2 className="veles-cta__title">Александр Велес</h2>
@@ -113,19 +113,19 @@ export function VelesPage() {
           <ServiceImageCard
             className="svc-card--atelier"
             title="Индивидуальный дизайн-код"
-            image="/images/services/atelie.webp"
+            image="/images/services/veles2.webp"
             text="Художник разрабатывает уникальную графическую концепцию именно для вашего автомобиля. Повтор исключён."
           />
           <ServiceImageCard
             className="svc-card--selection"
             title="Авторская графика"
-            image="/images/services/podbor.webp"
+            image="/images/services/veles3.webp"
             text="Рисунок любой сложности — от лаконичной линии на кузове до полноценной художественной росписи."
           />
           <ServiceImageCard
             className="svc-card--veles"
             title="Брендирование и ливреи"
-            image="/images/services/veles.webp"
+            image="/images/services/veles4.webp"
             text="Гоночные схемы окраски, фирменный стиль для вашего бизнеса или личного бренда."
           />
         </div>
