@@ -136,7 +136,7 @@ export function LeasingPage({ cars }: { cars: Car[] }) {
       <section className="home-wrap ti-factors">
         <div className="ti-factors__media">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/services/podbor.webp" alt="Условия лизинга" />
+          <img src="/images/services/leasing.png" alt="Условия лизинга" />
         </div>
         <div className="ti-block__body ti-factors__body">
           <h2 className="ti-block__title">

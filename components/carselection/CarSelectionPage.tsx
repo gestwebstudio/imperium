@@ -169,7 +169,7 @@ export function CarSelectionPage() {
       <section className="home-wrap ti-factors ti-cs-2">
         <div className="ti-factors__media">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/services/podbor.webp" alt="Условия заказа" />
+          <img src="/images/services/podbor2.png" alt="Условия заказа" />
         </div>
         <div className="ti-block__body ti-factors__body">
           <h2 className="ti-block__title">
