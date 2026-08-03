@@ -1,7 +1,6 @@
 import { ButtonLink } from "@/components/ui/Button";
 import { PhoneIcon } from "@/components/icons";
 import { Crumbs } from "@/components/ui/Crumbs";
-import { LeadModal } from "@/components/ui/LeadModal";
 import { HelpRoadsPricing } from "@/components/helproads/HelpRoadsPricing";
 import { Contacts } from "@/components/home/Contacts";
 
@@ -86,8 +85,8 @@ export function HelpRoadsPage() {
           </p>
         </article>
 
-        <article className="hr-card hr-card--right">
-          <h2 className="ti-block__title hr-title--right">
+        <article className="hr-card">
+          <h2 className="ti-block__title">
             <span className="reg">Многолетний опыт</span>
             <span className="bold">позволяет нам гарантировать:</span>
           </h2>
@@ -99,7 +98,7 @@ export function HelpRoadsPage() {
               </li>
             ))}
           </ul>
-          <p className="ti-callout hr-card__callout hr-card__callout--right">
+          <p className="ti-callout hr-card__callout">
             <span className="reg">Ваша уверенность за рулём</span>
             <span className="bold">в любой точке маршрута</span>
           </p>
@@ -120,17 +119,15 @@ export function HelpRoadsPage() {
               колеса, доставка топлива и выезд механика.
             </p>
           </div>
-          <LeadModal
-            triggerLabel="Обратный звонок"
-            triggerVariant="primary-surface"
-            triggerInverse
-            triggerSize="m"
-            title="Заказать обратный звонок"
-            description="Оставьте номер — дежурный оператор перезвонит и поможет с эвакуацией или выездом механика."
-            submitLabel="Жду звонка"
-            successTitle="Заявка принята"
-            successText="Оператор поддержки Imperium Motors перезвонит вам в ближайшее время."
-          />
+          <ButtonLink
+            href="tel:88002507262"
+            variant="primary-surface"
+            inverse
+            size="m"
+            endIcon={<PhoneIcon width={16} height={16} />}
+          >
+            8-800-250-72-62
+          </ButtonLink>
         </div>
       </section>
 
