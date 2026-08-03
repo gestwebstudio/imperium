@@ -1,6 +1,6 @@
 import { cn } from "@/lib/cn";
 import { ArrowDiagonalIcon } from "@/components/icons";
-import { ButtonLink } from "@/components/ui/Button";
+import { LeadModal } from "@/components/ui/LeadModal";
 
 type BodyType = {
   title: string;
@@ -86,9 +86,18 @@ export function BodyTypes() {
             Поможем подобрать автомобиль, который соответствует вашим задачам,
             образу жизни и ожиданиям от комфорта
           </p>
-          <ButtonLink href="#" size="l" variant="secondary-outlined">
-            Консультация
-          </ButtonLink>
+          <LeadModal
+            triggerLabel="Консультация"
+            triggerVariant="secondary-outlined"
+            title="Консультация по подбору"
+            description="Оставьте контакты — специалист поможет определиться с форматом автомобиля под ваши задачи и подберёт подходящие варианты."
+            submitLabel="Отправить заявку"
+            successTitle="Заявка принята"
+            successText="Специалист Imperium Motors свяжется с вами и поможет с выбором автомобиля."
+            comment
+            commentLabel="Что для вас важно"
+            commentPlaceholder="Задачи, образ жизни, бюджет, пожелания"
+          />
         </div>
       </div>
 
