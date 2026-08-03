@@ -392,6 +392,14 @@
   text-decoration: none;
 }
 .footer-legal a:hover { opacity: 0.7; }
+.footer-legal .footer-disclaimer {
+  max-width: 365px;
+  margin-left: auto;
+  font-size: 10px;
+  line-height: 14px;
+  color: var(--color-white, #FFFFFF);
+  opacity: 0.3;
+}
 
 .footer-tagline { margin: clamp(64px, 9.271vw, 178px) 0 0; font-size: var(--fs-20); line-height: 1.4; color: var(--color-white, #FFFFFF); opacity: 0.3; max-width: 474px; }
 .footer-logo { margin-top: 1px; }
