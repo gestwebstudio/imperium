@@ -14,3 +14,7 @@ next-env.d.ts
 .env.*
 !.env.example
 npm-debug.log*
+
+# database (Prisma SQLite)
+/prisma/*.db
+/prisma/*.db-journal
