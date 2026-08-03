@@ -1,8 +1,10 @@
 import { ServiceImageCard } from "@/components/cards/cards";
 import { ServiceCards } from "@/components/ServiceCards";
 import { Testimonials } from "@/components/home/Testimonials";
+import { getReviews } from "@/lib/reviews";
 
-export function About() {
+export async function About() {
+  const reviews = await getReviews();
   return (
     <section className="home-wrap about">
       <ServiceCards />
@@ -41,7 +43,7 @@ export function About() {
         />
       </div>
 
-      <Testimonials />
+      <Testimonials reviews={reviews} />
     </section>
   );
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { NewsGrid } from "@/components/news/NewsGrid";
 import { Crumbs } from "@/components/ui/Crumbs";
-import { newsItems } from "@/lib/news";
+import { getNewsList } from "@/lib/news";
 import "./news.css";
 
 export const metadata: Metadata = {
@@ -10,7 +10,8 @@ export const metadata: Metadata = {
     "Новости Imperium Motors: премьеры автомобилей, новые поступления и события автосалона.",
 };
 
-export default function NewsPage() {
+export default async function NewsPage() {
+  const items = await getNewsList();
   return (
     <main className="news-page">
       <Crumbs
@@ -18,7 +19,7 @@ export default function NewsPage() {
         items={[{ label: "Главная", href: "/" }, { label: "Новости" }]}
       />
 
-      <NewsGrid items={newsItems} />
+      <NewsGrid items={items} />
     </main>
   );
 }

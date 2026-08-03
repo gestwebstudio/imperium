@@ -1,3 +1,6 @@
+import "server-only";
+import { prisma } from "@/lib/db";
+
 export type NewsItem = {
   id: string;
   date: string;
@@ -20,41 +23,55 @@ export type NewsArticle = {
   imageAlt: string;
 };
 
-const bugattiArticle: NewsArticle = {
-  slug: "bugatti-tourbillon",
-  date: "01.01.2026",
-  dateTime: "2026-01-01",
-  title: "Bugatti Tourbillon прибыл в Imperium Motors",
-  excerpt:
-    "Новый этап гиперкаров: гибридная силовая установка, выразительная аэродинамика и интерьер, созданный как механическое произведение искусства.",
-  body: [
-    "Imperium Motors подберет и привезет конкретную модель, редкую комплектацию, нужный цвет или определенный набор опций.",
-    "Полное сопровождение сделки: подбор подходящего варианта, согласование условий, организацию поставки, оформление документов и подготовку автомобиля к выдаче.",
-    "К моменту передачи автомобиль будет полностью растаможен, иметь действующий ЭПТС и будет готов к постановке на учет.",
-  ],
-  image: "/images/news/bugatti-tourbillon.png",
-  imageAlt: "Bugatti Tourbillon с открытыми дверями",
-};
-
-export const newsArticles: NewsArticle[] = [bugattiArticle];
-
-export function getNewsArticle(slug: string): NewsArticle | undefined {
-  return newsArticles.find((article) => article.slug === slug);
+function fmt(date: Date) {
+  const iso = date.toISOString().slice(0, 10); // YYYY-MM-DD
+  const [y, m, d] = iso.split("-");
+  return { dateTime: iso, date: `${d}.${m}.${y}` };
 }
 
-export function getNewsSlugs(): string[] {
-  return newsArticles.map((article) => article.slug);
+/** Карточки для списка новостей (только опубликованные, новые сверху). */
+export async function getNewsList(): Promise<NewsItem[]> {
+  const rows = await prisma.news.findMany({
+    where: { published: true },
+    orderBy: { date: "desc" },
+  });
+  return rows.map((n) => {
+    const { date, dateTime } = fmt(n.date);
+    return {
+      id: n.id,
+      date,
+      dateTime,
+      title: n.title,
+      description: n.excerpt,
+      image: n.image,
+      imageAlt: n.imageAlt,
+      href: `/news/${n.slug}`,
+    };
+  });
 }
 
-// Temporary content source: the API or CMS can replace this array without
-// changing the page or the UI Kit card.
-export const newsItems: NewsItem[] = Array.from({ length: 16 }, (_, index) => ({
-  id: `bugatti-tourbillon-${index + 1}`,
-  date: bugattiArticle.date,
-  dateTime: bugattiArticle.dateTime,
-  title: "Bugatti Tourbillon прибыл\nв Imperium Motors",
-  description: bugattiArticle.excerpt,
-  image: bugattiArticle.image,
-  imageAlt: bugattiArticle.imageAlt,
-  href: `/news/${bugattiArticle.slug}`,
-}));
+export async function getNewsArticle(
+  slug: string,
+): Promise<NewsArticle | null> {
+  const n = await prisma.news.findUnique({ where: { slug } });
+  if (!n || !n.published) return null;
+  const { date, dateTime } = fmt(n.date);
+  return {
+    slug: n.slug,
+    date,
+    dateTime,
+    title: n.title,
+    excerpt: n.excerpt,
+    body: n.body.split("\n\n").filter(Boolean),
+    image: n.image,
+    imageAlt: n.imageAlt,
+  };
+}
+
+export async function getNewsSlugs(): Promise<string[]> {
+  const rows = await prisma.news.findMany({
+    where: { published: true },
+    select: { slug: true },
+  });
+  return rows.map((r) => r.slug);
+}

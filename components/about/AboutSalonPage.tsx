@@ -3,6 +3,7 @@ import { Testimonials } from "@/components/home/Testimonials";
 import { ButtonLink } from "@/components/ui/Button";
 import { Crumbs } from "@/components/ui/Crumbs";
 import { Badge } from "@/components/ui/primitives";
+import { getReviews } from "@/lib/reviews";
 
 const PRINCIPLES = [
   {
@@ -22,7 +23,8 @@ const PRINCIPLES = [
   },
 ] as const;
 
-export function AboutSalonPage() {
+export async function AboutSalonPage() {
+  const reviews = await getReviews();
   return (
     <main className="about-salon">
       <section className="about-salon__hero">
@@ -124,7 +126,7 @@ export function AboutSalonPage() {
       </section>
 
       <section className="home-wrap about-salon__reviews" aria-label="Отзывы клиентов">
-        <Testimonials />
+        <Testimonials reviews={reviews} />
       </section>
 
       <Contacts />

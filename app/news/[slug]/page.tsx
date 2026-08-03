@@ -11,8 +11,8 @@ import "./news-detail.css";
 
 type Params = { slug: string };
 
-export function generateStaticParams(): Params[] {
-  return getNewsSlugs().map((slug) => ({ slug }));
+export async function generateStaticParams(): Promise<Params[]> {
+  return (await getNewsSlugs()).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -21,7 +21,7 @@ export async function generateMetadata({
   params: Promise<Params>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const article = getNewsArticle(slug);
+  const article = await getNewsArticle(slug);
 
   if (!article) {
     return { title: "Новость не найдена — Imperium Motors" };
@@ -68,7 +68,7 @@ export default async function NewsArticlePage({
   params: Promise<Params>;
 }) {
   const { slug } = await params;
-  const article = getNewsArticle(slug);
+  const article = await getNewsArticle(slug);
 
   if (!article) notFound();
 
