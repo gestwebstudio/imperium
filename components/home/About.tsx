@@ -22,12 +22,14 @@ export function About() {
           className="svc-card--atelier"
           title="Ателье персонализации"
           image="/images/services/atelie.webp"
+          href="/atelier"
           text="Защита бронепленкой, смена цвета автомобиля, апгрейд мультимедиа, подбор дисков — всё в одном месте."
         />
         <ServiceImageCard
           className="svc-card--selection"
           title="Индивидуальный подбор"
           image="/images/services/podbor.webp"
+          href="/car-selection"
           text="Мы находим редкие комплектации и привозим автомобили под заказ со всего мира."
         />
         <ServiceImageCard
