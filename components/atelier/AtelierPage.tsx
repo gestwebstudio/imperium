@@ -64,19 +64,19 @@ export function AtelierPage() {
           <ServiceImageCard
             className="svc-card--atelier"
             title="Электроника и мультимедиа"
-            image="/images/services/atelie.webp"
+            image="/images/services/atelie1.webp"
             text="Современный автомобиль — это мощный цифровой центр. Мы адаптируем его под вас: язык, функции, интерфейсы."
           />
           <ServiceImageCard
             className="svc-card--selection"
             title="Диски и обвесы"
-            image="/images/services/podbor.webp"
+            image="/images/services/atelie2.webp"
             text="Посадка и силуэт решают всё. Подбираем колёса и аэродинамические элементы."
           />
           <ServiceImageCard
             className="svc-card--veles"
             title="Защита кузова и смена цвета"
-            image="/images/services/veles.webp"
+            image="/images/services/atelie3.webp"
             text="Сохраняем безупречный вид автомобиля или меняем его образ без покраски"
           />
         </div>
