@@ -46,8 +46,9 @@
   justify-self: end;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-end;
   gap: 24px;
+  text-align: right;
 }
 
 .about-salon__hero-aside p {
@@ -142,8 +143,9 @@
 .about-salon__story-copy {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-end;
   gap: 20px;
+  text-align: right;
 }
 
 .about-salon__story-copy p,
