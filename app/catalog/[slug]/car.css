@@ -635,7 +635,8 @@
   max-width: 600px;
   max-height: min(820px, calc(100dvh - 32px));
   padding: 0;
-  overflow: auto;
+  overflow: hidden auto;
+  overscroll-behavior: contain;
   border: 1px solid rgba(178, 167, 155, .32);
   border-radius: var(--radius-card, 30px);
   background: var(--color-white, #FFFFFF);
@@ -775,6 +776,20 @@
   outline: 0;
   box-shadow: 0 0 0 3px rgba(78, 123, 96, .14);
 }
+.car-action-modal__input--date {
+  box-sizing: border-box;
+  cursor: pointer;
+  color-scheme: light;
+}
+.car-action-modal__input--date::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: .55;
+  transition: opacity 180ms ease;
+}
+.car-action-modal__input--date:hover::-webkit-calendar-picker-indicator {
+  opacity: .85;
+}
+.car-action-modal__body { overflow-x: hidden; }
 .car-action-modal__select {
   width: 100%;
 }

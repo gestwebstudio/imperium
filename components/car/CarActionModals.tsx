@@ -14,7 +14,7 @@ import {
 import { ArrowIcon } from "@/components/icons";
 import { Button, type ButtonVariant } from "@/components/ui/Button";
 
-const CALL_TIME_OPTIONS = [
+const VISIT_TIME_OPTIONS = [
   { id: "as-soon-as-possible", label: "Как можно скорее" },
   { id: "09-12", label: "09:00–12:00" },
   { id: "12-15", label: "12:00–15:00" },
@@ -28,6 +28,9 @@ const MESSENGERS = [
   { id: "vk", label: "ВК" },
 ];
 
+/** Доп. поля сверх обязательных «Имя» + «Телефон». */
+type FieldKey = "visit" | "messengers";
+
 type CarActionModalProps = {
   carTitle: string;
   price: string;
@@ -38,6 +41,8 @@ type CarActionModalProps = {
   submitLabel: string;
   successTitle: string;
   successText: string;
+  /** Какие доп. поля показывать (по умолчанию — только имя и телефон). */
+  fields?: FieldKey[];
 };
 
 function CarActionModal({
@@ -50,6 +55,7 @@ function CarActionModal({
   submitLabel,
   successTitle,
   successText,
+  fields = [],
 }: CarActionModalProps) {
   const [submitted, setSubmitted] = useState(false);
   const state = useOverlayState({
@@ -62,6 +68,9 @@ function CarActionModal({
     event.preventDefault();
     setSubmitted(true);
   }
+
+  const showVisit = fields.includes("visit");
+  const showMessengers = fields.includes("messengers");
 
   return (
     <>
@@ -162,75 +171,97 @@ function CarActionModal({
                         />
                       </TextField>
 
-                      <Select.Root
-                        className="car-action-modal__field car-action-modal__field--full car-action-modal__select"
-                        name="callTime"
-                        placeholder="Выберите удобное время"
-                        isRequired
-                      >
-                        <Label className="car-action-modal__label">
-                          Время для звонка
-                        </Label>
-                        <Select.Trigger className="car-action-modal__select-trigger">
-                          <Select.Value className="car-action-modal__select-value" />
-                          <ArrowIcon
-                            className="car-action-modal__select-chevron"
-                            width={12}
-                            height={12}
-                          />
-                        </Select.Trigger>
-                        <Select.Popover
-                          className="car-action-modal__select-popover"
-                          placement="bottom"
-                        >
-                          <ListBox
-                            className="car-action-modal__select-list"
-                            aria-label="Время для звонка"
-                          >
-                            {CALL_TIME_OPTIONS.map((option) => (
-                              <ListBox.Item
-                                key={option.id}
-                                id={option.id}
-                                textValue={option.label}
-                                className="car-action-modal__select-option"
-                              >
-                                <span>{option.label}</span>
-                                <ListBox.ItemIndicator className="car-action-modal__select-option-mark">
-                                  ✓
-                                </ListBox.ItemIndicator>
-                              </ListBox.Item>
-                            ))}
-                          </ListBox>
-                        </Select.Popover>
-                      </Select.Root>
-
-                      <fieldset className="car-action-modal__field car-action-modal__field--full car-action-modal__messengers">
-                        <legend className="car-action-modal__label">
-                          Мессенджеры
-                        </legend>
-                        <span className="car-action-modal__hint">
-                          Можно выбрать несколько
-                        </span>
-                        <div className="car-action-modal__messenger-list">
-                          {MESSENGERS.map((messenger) => (
-                            <Checkbox.Root
-                              key={messenger.id}
-                              className="car-action-modal__messenger"
-                              name="messengers"
-                              value={messenger.id}
+                      {showVisit && (
+                        <>
+                          <div className="car-action-modal__field">
+                            <label
+                              className="car-action-modal__label"
+                              htmlFor="visitDate"
                             >
-                              <Checkbox.Content className="car-action-modal__messenger-content">
-                                <Checkbox.Control className="car-action-modal__messenger-box">
-                                  <Checkbox.Indicator className="car-action-modal__messenger-mark" />
-                                </Checkbox.Control>
-                                <span className="car-action-modal__messenger-label">
-                                  {messenger.label}
-                                </span>
-                              </Checkbox.Content>
-                            </Checkbox.Root>
-                          ))}
-                        </div>
-                      </fieldset>
+                              Дата визита
+                            </label>
+                            <input
+                              id="visitDate"
+                              className="car-action-modal__input car-action-modal__input--date"
+                              name="visitDate"
+                              type="date"
+                              required
+                            />
+                          </div>
+
+                          <Select.Root
+                            className="car-action-modal__field car-action-modal__select"
+                            name="visitTime"
+                            placeholder="Выберите время"
+                            isRequired
+                          >
+                            <Label className="car-action-modal__label">
+                              Время визита
+                            </Label>
+                            <Select.Trigger className="car-action-modal__select-trigger">
+                              <Select.Value className="car-action-modal__select-value" />
+                              <ArrowIcon
+                                className="car-action-modal__select-chevron"
+                                width={12}
+                                height={12}
+                              />
+                            </Select.Trigger>
+                            <Select.Popover
+                              className="car-action-modal__select-popover"
+                              placement="bottom"
+                            >
+                              <ListBox
+                                className="car-action-modal__select-list"
+                                aria-label="Время визита"
+                              >
+                                {VISIT_TIME_OPTIONS.map((option) => (
+                                  <ListBox.Item
+                                    key={option.id}
+                                    id={option.id}
+                                    textValue={option.label}
+                                    className="car-action-modal__select-option"
+                                  >
+                                    <span>{option.label}</span>
+                                    <ListBox.ItemIndicator className="car-action-modal__select-option-mark">
+                                      ✓
+                                    </ListBox.ItemIndicator>
+                                  </ListBox.Item>
+                                ))}
+                              </ListBox>
+                            </Select.Popover>
+                          </Select.Root>
+                        </>
+                      )}
+
+                      {showMessengers && (
+                        <fieldset className="car-action-modal__field car-action-modal__field--full car-action-modal__messengers">
+                          <legend className="car-action-modal__label">
+                            Мессенджеры
+                          </legend>
+                          <span className="car-action-modal__hint">
+                            Можно выбрать несколько
+                          </span>
+                          <div className="car-action-modal__messenger-list">
+                            {MESSENGERS.map((messenger) => (
+                              <Checkbox.Root
+                                key={messenger.id}
+                                className="car-action-modal__messenger"
+                                name="messengers"
+                                value={messenger.id}
+                              >
+                                <Checkbox.Content className="car-action-modal__messenger-content">
+                                  <Checkbox.Control className="car-action-modal__messenger-box">
+                                    <Checkbox.Indicator className="car-action-modal__messenger-mark" />
+                                  </Checkbox.Control>
+                                  <span className="car-action-modal__messenger-label">
+                                    {messenger.label}
+                                  </span>
+                                </Checkbox.Content>
+                              </Checkbox.Root>
+                            ))}
+                          </div>
+                        </fieldset>
+                      )}
                     </div>
 
                     <p className="car-action-modal__legal">
@@ -280,8 +311,8 @@ export function CarActionModals({
         triggerLabel="Забронировать"
         triggerVariant="primary-surface"
         title="Забронировать автомобиль"
-        description="Оставьте контакты — менеджер подтвердит наличие автомобиля и свяжется с вами для согласования деталей."
-        submitLabel="Отправить заявку"
+        description="Оставьте имя и телефон — менеджер подтвердит наличие и забронирует автомобиль за вами."
+        submitLabel="Забронировать"
         successTitle="Автомобиль забронирован"
         successText="Заявка принята. Менеджер Imperium Motors свяжется с вами в ближайшее время."
       />
@@ -295,6 +326,7 @@ export function CarActionModals({
         submitLabel="Записаться"
         successTitle="Онлайн-показ запланирован"
         successText="Заявка принята. Менеджер свяжется с вами и согласует удобное время и формат звонка."
+        fields={["visit", "messengers"]}
       />
     </>
   );
