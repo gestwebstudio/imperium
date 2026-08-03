@@ -4,8 +4,19 @@ import type { Car } from "@/lib/cars";
 import { carTags, formatPrice } from "@/lib/cars";
 import { CarCard } from "@/components/cards/cards";
 import { Button, ButtonLink } from "@/components/ui/Button";
-import { ArrowIcon } from "@/components/icons";
+import { LeadModal } from "@/components/ui/LeadModal";
+import { ArrowIcon, ArrowDiagonalIcon } from "@/components/icons";
 import { cn } from "@/lib/cn";
+
+const UPCOMING_MODAL = {
+  title: "Забронировать автомобиль",
+  description:
+    "Оставьте контакты — забронируем автомобиль и сообщим о поступлении, как только он появится в наличии.",
+  submitLabel: "Забронировать",
+  successTitle: "Заявка принята",
+  successText:
+    "Менеджер Imperium Motors свяжется с вами и сообщит о поступлении автомобиля.",
+} as const;
 import {
   INFINITE_CAROUSEL_COPIES,
   INFINITE_CAROUSEL_MIDDLE_COPY,
@@ -71,10 +82,20 @@ export function CarsSection({
                 >
                   <CarCard
                     vehicleId={isUpcoming ? "lexus-gx-executive" : car.id}
-                    href={
-                      isUpcoming
-                        ? "/catalog/lexus-gx-executive"
-                        : `/catalog/${car.slug}`
+                    href={isUpcoming ? undefined : `/catalog/${car.slug}`}
+                    actionSlot={
+                      isUpcoming ? (
+                        <LeadModal
+                          {...UPCOMING_MODAL}
+                          triggerLabel="Забронировать"
+                          triggerVariant="secondary-outlined"
+                          triggerSize="m"
+                          triggerClassName="car-card__details-link"
+                          triggerEndIcon={
+                            <ArrowDiagonalIcon className="car-card__details-icon" />
+                          }
+                        />
+                      ) : undefined
                     }
                     brandLogo={
                       isUpcoming

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, type FormEvent, type ReactNode } from "react";
 import {
   Input,
   Label,
@@ -26,6 +26,7 @@ export type LeadModalProps = {
   triggerSize?: "s" | "m" | "l";
   triggerClassName?: string;
   triggerInverse?: boolean;
+  triggerEndIcon?: ReactNode;
 };
 
 /**
@@ -47,6 +48,7 @@ export function LeadModal({
   triggerSize = "l",
   triggerClassName,
   triggerInverse,
+  triggerEndIcon,
 }: LeadModalProps) {
   const [submitted, setSubmitted] = useState(false);
   const state = useOverlayState({
@@ -67,6 +69,7 @@ export function LeadModal({
         variant={triggerVariant}
         inverse={triggerInverse}
         className={triggerClassName}
+        endIcon={triggerEndIcon}
         onClick={state.open}
       >
         {triggerLabel}
