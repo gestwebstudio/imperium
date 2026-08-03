@@ -1,8 +1,21 @@
 import { ServiceImageCard } from "@/components/cards/cards";
-import { Button } from "@/components/ui/Button";
 import { Crumbs } from "@/components/ui/Crumbs";
+import { LeadModal } from "@/components/ui/LeadModal";
 import { Contacts } from "@/components/home/Contacts";
 import { ProjectsRow } from "@/components/atelier/ProjectsRow";
+
+const ATELIER_MODAL = {
+  title: "Обсудить работу",
+  description:
+    "Оставьте контакты — специалист ателье свяжется с вами, чтобы обсудить проект и детали.",
+  submitLabel: "Отправить заявку",
+  successTitle: "Заявка принята",
+  successText:
+    "Специалист Imperium Motors свяжется с вами, чтобы обсудить ваш проект.",
+  comment: true,
+  commentLabel: "Опишите задачу",
+  commentPlaceholder: "Что хотите сделать с автомобилем",
+} as const;
 
 export function AtelierPage() {
   return (
@@ -21,9 +34,11 @@ export function AtelierPage() {
             Стандартная комплектация — это только начало. Мы помогаем раскрыть
             индивидуальность вашего автомобиля.
           </p>
-          <Button variant="primary-surface" size="l" className="atelier-hero__cta">
-            Обсудить работу
-          </Button>
+          <LeadModal
+            {...ATELIER_MODAL}
+            triggerLabel="Обсудить работу"
+            triggerClassName="atelier-hero__cta"
+          />
           <div className="atelier-hero__media">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/images/services/atelie.webp" alt="Автомобиль под ваш характер" />
@@ -90,12 +105,16 @@ export function AtelierPage() {
               </p>
             </div>
             <div className="atelier-cta__actions">
-              <Button variant="primary-surface" size="l">
-                Обсудить работу
-              </Button>
-              <Button variant="secondary-outlined" size="l">
-                Обсудить работу
-              </Button>
+              <LeadModal
+                {...ATELIER_MODAL}
+                triggerLabel="Обсудить работу"
+                triggerVariant="primary-surface"
+              />
+              <LeadModal
+                {...ATELIER_MODAL}
+                triggerLabel="Обсудить работу"
+                triggerVariant="secondary-outlined"
+              />
             </div>
           </div>
         </div>

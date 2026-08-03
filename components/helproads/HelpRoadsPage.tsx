@@ -1,6 +1,7 @@
-import { Button, ButtonLink } from "@/components/ui/Button";
+import { ButtonLink } from "@/components/ui/Button";
 import { PhoneIcon } from "@/components/icons";
 import { Crumbs } from "@/components/ui/Crumbs";
+import { LeadModal } from "@/components/ui/LeadModal";
 import { HelpRoadsPricing } from "@/components/helproads/HelpRoadsPricing";
 import { Contacts } from "@/components/home/Contacts";
 
@@ -119,9 +120,17 @@ export function HelpRoadsPage() {
               колеса, доставка топлива и выезд механика.
             </p>
           </div>
-          <Button variant="primary-surface" inverse size="m">
-            Подробнее
-          </Button>
+          <LeadModal
+            triggerLabel="Обратный звонок"
+            triggerVariant="primary-surface"
+            triggerInverse
+            triggerSize="m"
+            title="Заказать обратный звонок"
+            description="Оставьте номер — дежурный оператор перезвонит и поможет с эвакуацией или выездом механика."
+            submitLabel="Жду звонка"
+            successTitle="Заявка принята"
+            successText="Оператор поддержки Imperium Motors перезвонит вам в ближайшее время."
+          />
         </div>
       </section>
 

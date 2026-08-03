@@ -1,9 +1,22 @@
 import type { Car } from "@/lib/cars";
 import { Badge } from "@/components";
-import { Button } from "@/components/ui/Button";
 import { GlassSurface } from "@/components/ui/GlassSurface";
 import { Crumbs } from "@/components/ui/Crumbs";
+import { LeadModal } from "@/components/ui/LeadModal";
 import { Contacts } from "@/components/home/Contacts";
+
+const ORDER_MODAL = {
+  title: "Заказ автомобиля",
+  description:
+    "Оставьте контакты и опишите желаемый автомобиль — менеджер подберёт варианты и рассчитает стоимость с доставкой и оформлением.",
+  submitLabel: "Отправить заявку",
+  successTitle: "Заявка принята",
+  successText:
+    "Менеджер свяжется с вами, уточнит параметры и предложит варианты под ваш запрос.",
+  comment: true,
+  commentLabel: "Какой автомобиль ищете",
+  commentPlaceholder: "Марка, модель, комплектация, бюджет",
+} as const;
 
 /* Страница «Авто под заказ» — макет Figma 821:212. Блоки переиспользованы с Trade-in. */
 const HERO_STATS = [
@@ -75,9 +88,11 @@ export function CarSelectionPage() {
                 Востока — с понятными условиями, прозрачной стоимостью и
                 сопровождением на каждом этапе.
               </p>
-              <Button variant="primary-surface" size="l" className="ti-hero__cta">
-                Заказать автомобиль
-              </Button>
+              <LeadModal
+                {...ORDER_MODAL}
+                triggerLabel="Заказать автомобиль"
+                triggerClassName="ti-hero__cta"
+              />
             </div>
           </div>
         </div>
@@ -190,9 +205,13 @@ export function CarSelectionPage() {
               оформлением.
             </p>
           </div>
-          <Button variant="primary-surface" inverse size="m">
-            Подобрать авто
-          </Button>
+          <LeadModal
+            {...ORDER_MODAL}
+            triggerLabel="Подобрать авто"
+            triggerVariant="primary-surface"
+            triggerInverse
+            triggerSize="m"
+          />
         </div>
       </section>
 

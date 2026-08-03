@@ -1,11 +1,24 @@
 import { Fragment } from "react";
 import type { Car } from "@/lib/cars";
 import { Badge } from "@/components";
-import { Button } from "@/components/ui/Button";
 import { GlassSurface } from "@/components/ui/GlassSurface";
 import { Crumbs } from "@/components/ui/Crumbs";
+import { LeadModal } from "@/components/ui/LeadModal";
 import { CarsSection } from "@/components/home/CarsSection";
 import { Contacts } from "@/components/home/Contacts";
+
+const EVAL_MODAL = {
+  title: "Экспресс-оценка автомобиля",
+  description:
+    "Оставьте контакты — эксперт оценит ваш автомобиль по фото, видео и VIN и назовёт сумму зачёта.",
+  submitLabel: "Отправить заявку",
+  successTitle: "Заявка принята",
+  successText:
+    "Эксперт Imperium Motors свяжется с вами, чтобы уточнить детали и провести оценку.",
+  comment: true,
+  commentLabel: "Ваш автомобиль",
+  commentPlaceholder: "Марка, модель, год, пробег",
+} as const;
 
 /* Данные страницы Trade-in (тексты и стили — из макета 775:4922). */
 const HERO_STATS = [
@@ -74,9 +87,11 @@ export function TradeInPage({ cars }: { cars: Car[] }) {
                 Motors. Финальная цена формируется прозрачно — вы заранее знаете
                 итоговую сумму и проходите все этапы без суеты
               </p>
-              <Button variant="primary-surface" size="l" className="ti-hero__cta">
-                Экспресс-оценка
-              </Button>
+              <LeadModal
+                {...EVAL_MODAL}
+                triggerLabel="Экспресс-оценка"
+                triggerClassName="ti-hero__cta"
+              />
             </div>
           </div>
 
@@ -196,9 +211,13 @@ export function TradeInPage({ cars }: { cars: Car[] }) {
               вами, уточнит детали и рассчитает возможную стоимость trade-in.
             </p>
           </div>
-          <Button variant="primary-surface" inverse size="m">
-            Получить оценку
-          </Button>
+          <LeadModal
+            {...EVAL_MODAL}
+            triggerLabel="Получить оценку"
+            triggerVariant="primary-surface"
+            triggerInverse
+            triggerSize="m"
+          />
         </div>
       </section>
 

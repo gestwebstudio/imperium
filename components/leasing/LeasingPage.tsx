@@ -1,10 +1,20 @@
 import type { Car } from "@/lib/cars";
 import { Badge } from "@/components";
-import { Button } from "@/components/ui/Button";
 import { GlassSurface } from "@/components/ui/GlassSurface";
 import { Crumbs } from "@/components/ui/Crumbs";
+import { LeadModal } from "@/components/ui/LeadModal";
 import { CarsSection } from "@/components/home/CarsSection";
 import { Contacts } from "@/components/home/Contacts";
+
+const LEASING_MODAL = {
+  title: "Расчёт лизинга",
+  description:
+    "Оставьте контакты — менеджер подберёт программу под ваш бюджет и рассчитает ежемесячный платёж.",
+  submitLabel: "Отправить заявку",
+  successTitle: "Заявка принята",
+  successText:
+    "Менеджер Imperium Motors свяжется с вами и подготовит индивидуальный расчёт лизинга.",
+} as const;
 
 /* Данные страницы Лизинг (тексты и стили — из макета 812:8593). Разметка/кит — как у Trade-in. */
 const HERO_STATS = [
@@ -71,9 +81,11 @@ export function LeasingPage({ cars }: { cars: Car[] }) {
                 Подберём программу для физических лиц, ИП и бизнеса. Гибкие
                 условия, прозрачные расчёты и полное сопровождение сделки.
               </p>
-              <Button variant="primary-surface" size="l" className="ti-hero__cta">
-                Получить предложение
-              </Button>
+              <LeadModal
+                {...LEASING_MODAL}
+                triggerLabel="Получить предложение"
+                triggerClassName="ti-hero__cta"
+              />
             </div>
           </div>
         </div>
@@ -187,9 +199,13 @@ export function LeasingPage({ cars }: { cars: Car[] }) {
               бюджет, рассчитает ежемесячный платёж и график погашения.
             </p>
           </div>
-          <Button variant="primary-surface" inverse size="m">
-            Рассчитать лизинг
-          </Button>
+          <LeadModal
+            {...LEASING_MODAL}
+            triggerLabel="Рассчитать лизинг"
+            triggerVariant="primary-surface"
+            triggerInverse
+            triggerSize="m"
+          />
         </div>
       </section>
 
