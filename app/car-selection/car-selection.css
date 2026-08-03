@@ -5,18 +5,8 @@
    Здесь только дельта: вертикальный ритм секций (порядок иной, чем на trade-in).
    ============================================================ */
 
-/* Списки в image-блоках — с буллетами (макет 821:339/455: list-disc, ms 27px,
-   без зазора между пунктами; на trade-in списки без буллетов) */
-.car-selection .ti-list {
-  list-style: disc;
-  padding-left: 27px;
-}
-.car-selection .ti-list li {
-  list-style: disc;
-}
-.car-selection .ti-list li + li {
-  margin-top: 0;
-}
+/* Списки image-блоков с буллетами теперь общие — в trade-in.css (.ti-list: list-disc,
+   pl 27px, без зазора). Единый вид на всех страницах услуг. */
 
 /* Note под выделением — ширина как в макете, чтобы текст был в 2 строки */
 .car-selection .ti-accept__note {

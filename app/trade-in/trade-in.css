@@ -231,7 +231,7 @@
   border-radius: var(--radius-media, 36px);
   display: block;
 }
-.ti-accept__media { order: 1; }
+.ti-accept__media { order: -1; }
 
 .ti-block__body {
   min-width: 0;
@@ -240,7 +240,7 @@
   align-items: flex-start;
   gap: 20px;
 }
-.ti-accept__body { align-items: flex-end; text-align: right; }
+.ti-accept__body { align-items: flex-start; text-align: left; }
 
 .ti-block__title {
   margin: 0;
@@ -257,15 +257,17 @@
 .ti-list {
   margin: 0;
   padding: 0;
-  list-style: none;
+  padding-left: 27px;
+  list-style: disc;
 }
 .ti-list li {
+  list-style: disc;
   font-family: var(--font-text, "Onest", sans-serif);
   font-size: var(--fs-18);
   line-height: 1.333;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
-.ti-list li + li { margin-top: 4px; }
+.ti-list li + li { margin-top: 0; }
 
 /* Выделение (зелёное, 30px) — прижато к низу колонки, с декоративной кавычкой */
 .ti-callout {
@@ -296,9 +298,8 @@
   z-index: -1;
   pointer-events: none;
 }
-.ti-factors .ti-callout::before { left: -25px; }
-/* accept: кавычка на верхнем правом крае выделения (правый край +30px за колонку), зеркальная */
-.ti-accept .ti-callout::before { right: -30px; left: auto; transform: scaleX(-1); }
+.ti-factors .ti-callout::before,
+.ti-accept .ti-callout::before { left: -25px; }
 
 .ti-accept__note {
   margin: 0;
