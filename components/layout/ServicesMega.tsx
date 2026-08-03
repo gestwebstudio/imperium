@@ -14,7 +14,7 @@ type MegaGroup = { title: string; bg: string; links: MegaLink[] };
  */
 const GROUPS: MegaGroup[] = [
   {
-    title: "Финуслуги",
+    title: "Финансовые услуги",
     bg: "var(--color-heritage-green-500, #294434)",
     links: [
       { label: "Трейд-ин", href: "/trade-in" },
