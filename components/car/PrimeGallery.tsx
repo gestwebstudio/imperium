@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal, useOverlayState } from "@heroui/react";
 import { Galleria } from "primereact/galleria";
 import { ArrowIcon } from "@/components/icons";
@@ -19,6 +19,63 @@ export function PrimeGallery({ photos, alt }: PrimeGalleryProps) {
     setActiveIndex(index);
     lightboxState.open();
   };
+
+  // Перетаскивание полосы миниатюр мышью (скроллбар скрыт в CSS).
+  // Скролл конечный: у краёв просто останавливается — видно, что фото ограничены.
+  useEffect(() => {
+    if (!lightboxState.isOpen) return;
+    const cleanups: Array<() => void> = [];
+    const raf = requestAnimationFrame(() => {
+      const viewports = document.querySelectorAll<HTMLElement>(
+        ".car-photo-viewer__thumbnail-viewport",
+      );
+      viewports.forEach((el) => {
+        let down = false;
+        let moved = false;
+        let startX = 0;
+        let startScroll = 0;
+        const onDown = (e: PointerEvent) => {
+          down = true;
+          moved = false;
+          startX = e.clientX;
+          startScroll = el.scrollLeft;
+          el.classList.add("is-grabbing");
+        };
+        const onMove = (e: PointerEvent) => {
+          if (!down) return;
+          const dx = e.clientX - startX;
+          if (Math.abs(dx) > 4) moved = true;
+          el.scrollLeft = startScroll - dx;
+        };
+        const onUp = () => {
+          down = false;
+          el.classList.remove("is-grabbing");
+        };
+        // Гасим клик по миниатюре, если это было перетаскивание
+        const onClickCapture = (e: MouseEvent) => {
+          if (moved) {
+            e.preventDefault();
+            e.stopPropagation();
+            moved = false;
+          }
+        };
+        el.addEventListener("pointerdown", onDown);
+        window.addEventListener("pointermove", onMove);
+        window.addEventListener("pointerup", onUp);
+        el.addEventListener("click", onClickCapture, true);
+        cleanups.push(() => {
+          el.removeEventListener("pointerdown", onDown);
+          window.removeEventListener("pointermove", onMove);
+          window.removeEventListener("pointerup", onUp);
+          el.removeEventListener("click", onClickCapture, true);
+        });
+      });
+    });
+    return () => {
+      cancelAnimationFrame(raf);
+      cleanups.forEach((fn) => fn());
+    };
+  }, [lightboxState.isOpen]);
 
   const itemTemplate = (photo: GalleryPhoto) => (
     <figure className="car-photo-viewer__media">

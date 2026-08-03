@@ -460,6 +460,20 @@
   width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
+  cursor: grab;
+  scrollbar-width: none; /* Firefox — прячем полосу прокрутки */
+  -ms-overflow-style: none;
+}
+.car-photo-viewer__thumbnail-viewport::-webkit-scrollbar {
+  display: none; /* WebKit — прячем полосу прокрутки */
+}
+.car-photo-viewer__thumbnail-viewport.is-grabbing {
+  cursor: grabbing;
+  user-select: none;
+}
+.car-photo-viewer__thumbnail-viewport.is-grabbing
+  .car-photo-viewer__thumbnail {
+  pointer-events: none; /* без ложных ховеров во время перетаскивания */
 }
 .car-photo-viewer__thumbnail-track {
   display: flex;

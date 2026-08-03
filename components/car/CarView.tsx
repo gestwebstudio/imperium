@@ -56,6 +56,12 @@ const GALLERY_PHOTOS: GalleryPhoto[] = [
     src: "/images/gallery/2.webp",
     category: "multimedia",
   },
+  // Доп. фото (моки), чтобы был виден горизонтальный скролл миниатюр
+  ...Array.from({ length: 24 }, (_, i) => ({
+    id: `exterior-extra-${i + 1}`,
+    src: `/images/gallery/${(i % 2) + 1}.webp`,
+    category: "exterior" as const,
+  })),
 ];
 
 export type CarViewProps = {
