@@ -148,6 +148,12 @@ export function NewsCard({
 }: NewsCardProps) {
   return (
     <article className={cn("news-card", className)}>
+      <Link
+        href={href}
+        className="news-card__overlay"
+        aria-hidden="true"
+        tabIndex={-1}
+      />
       <div className="news-card__media">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={image} alt={imageAlt ?? title} />
