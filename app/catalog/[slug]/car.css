@@ -458,14 +458,20 @@
 }
 .car-photo-viewer__thumbnail-viewport {
   width: 100%;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 .car-photo-viewer__thumbnail-track {
   display: flex;
+  justify-content: flex-start; /* прижаты влево, пустота справа если фото мало */
+  gap: 8px; /* одинаковый фиксированный отступ у всех */
 }
 .car-photo-viewer__thumbnail {
   box-sizing: border-box;
+  /* !important — перебиваем flex:1 0 % от PrimeReact (его стили грузятся позже) */
+  flex: 0 0 auto !important;
   display: flex;
+  width: 76px !important; /* квадрат: ширина = высота */
   height: 76px;
   padding: 3px;
   align-items: center;
@@ -1424,6 +1430,7 @@
     padding: 8px;
   }
   .car-photo-viewer__thumbnail {
+    width: 58px;
     height: 58px;
     padding: 2px;
   }

@@ -11,11 +11,6 @@ type PrimeGalleryProps = {
   alt: string;
 };
 
-const RESPONSIVE_OPTIONS = [
-  { breakpoint: "960px", numVisible: 5 },
-  { breakpoint: "640px", numVisible: 3 },
-];
-
 export function PrimeGallery({ photos, alt }: PrimeGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const lightboxState = useOverlayState();
@@ -80,8 +75,7 @@ export function PrimeGallery({ photos, alt }: PrimeGalleryProps) {
                 onItemChange={({ index }) => setActiveIndex(index)}
                 item={itemTemplate}
                 thumbnail={thumbnailTemplate}
-                numVisible={Math.min(6, photos.length)}
-                responsiveOptions={RESPONSIVE_OPTIONS}
+                numVisible={photos.length}
                 showItemNavigators={photos.length > 1}
                 showThumbnailNavigators={false}
                 showThumbnails={photos.length > 1}
