@@ -36,6 +36,7 @@ export function About() {
           className="svc-card--veles"
           title="Дизайн с Александром Велесом"
           image="/images/services/veles.webp"
+          href="/veles"
           text="Авторская концепция экстерьера вашего автомобиля: уникальный дизайн, который делает автомобиль продолжением вас."
         />
       </div>

@@ -67,20 +67,24 @@ export function ServiceImageCard({
 }: ServiceImageCardProps) {
   return (
     <article className={cn("image-service-card", className)}>
+      <Link
+        className="image-service-card__link"
+        href={href}
+        aria-label={`Подробнее: ${title}`}
+      />
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img className="image-service-card__img" src={image} alt={title} />
       <div className="image-service-card__body">
         <div className="image-service-card__head">
           <h3 className="image-service-card__title">{title}</h3>
-          <ButtonLink
-            href={href}
-            size="l"
-            variant="primary-outlined"
-            iconOnly
-            startIcon={<ArrowDiagonalIcon />}
-            className="image-service-card__arrow"
-            aria-label={`Подробнее: ${title}`}
-          />
+          <span
+            className="image-service-card__arrow btn btn--l btn--icon btn--primary-outlined"
+            aria-hidden="true"
+          >
+            <span className="btn__icon">
+              <ArrowDiagonalIcon />
+            </span>
+          </span>
         </div>
         <p className="image-service-card__text">{text}</p>
       </div>
@@ -157,6 +161,8 @@ export type CarCardProps = {
   price: ReactNode;
   priceLabel?: string;
   action: { label: string; variant: ButtonVariant };
+  /** Заменяет кнопку действия (например, окно-заявка для авто без страницы). */
+  actionSlot?: ReactNode;
   comparisonEnabled?: boolean;
   href?: string;
   className?: string;
@@ -174,6 +180,7 @@ export function CarCard({
   price,
   priceLabel,
   action,
+  actionSlot,
   comparisonEnabled = true,
   href,
   className,
@@ -226,7 +233,9 @@ export function CarCard({
 
       <div className="car-card__action">
         <PriceBlock size={size} label={priceLabel} value={price} />
-        {href ? (
+        {actionSlot ? (
+          actionSlot
+        ) : href ? (
           <ButtonLink
             href={href}
             size={size === "m" ? "s" : "m"}
