@@ -8,42 +8,7 @@
   /* контент-контейнер как у главной */
 }
 
-/* ---------------- Хлебные крошки (как в trade-in.css) ---------------- */
-.cat-crumbs,
-.cat-crumbs ol {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.cat-crumbs { height: 18px; margin-bottom: 10px; }
-.cat-crumbs li {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  height: 18px;
-}
-.cat-crumbs__item {
-  font-family: var(--font-text, "Onest", sans-serif);
-  font-weight: var(--font-weight-regular, 400);
-  font-size: 14px;
-  line-height: 18px;
-  color: var(--color-warm-taupe-400, #8F8579);
-  text-decoration: none;
-  cursor: pointer;
-  transition: color .15s ease;
-}
-.cat-crumbs__item[href]:hover { color: var(--color-carbon-black-500, #1B1E1D); }
-.cat-crumbs__item--current { color: var(--color-carbon-black-500, #1B1E1D); cursor: default; }
-.cat-crumbs .breadcrumbs__separator {
-  flex: none;
-  width: 12px;
-  height: 12px;
-  color: var(--color-warm-taupe-300, #B2A79B);
-  transform: rotate(180deg);
-}
+/* Крошки — канонический компонент .ui-crumbs (стили глобальные, из кита). */
 
 /* ---------------- Hero (945:2839) ---------------- */
 .atelier-hero {
