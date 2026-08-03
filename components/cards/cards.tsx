@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/Button";
 import { Wishlist } from "@/components/ui/Wishlist";
 import { Comparison } from "@/components/ui/Comparison";
+import { LeadModal } from "@/components/ui/LeadModal";
 import { ArrowDiagonalIcon } from "@/components/icons";
 
 /* --- Brand Logo Card --- */
@@ -51,12 +52,23 @@ export function BodyCard({ label, src, className }: BodyCardProps) {
 }
 
 /* --- Service Card with Image --- */
+export type ServiceCardModal = {
+  description: string;
+  submitLabel?: string;
+  successTitle?: string;
+  successText?: string;
+  comment?: boolean;
+  commentLabel?: string;
+  commentPlaceholder?: string;
+};
 export type ServiceImageCardProps = {
   title: string;
   image: string;
   text: string;
   href?: string;
   className?: string;
+  /** Если задано — вся карточка открывает окно-заявку (заголовок окна = заголовок карточки). */
+  modal?: ServiceCardModal;
 };
 export function ServiceImageCard({
   title,
@@ -64,14 +76,35 @@ export function ServiceImageCard({
   text,
   href = "#contacts",
   className,
+  modal,
 }: ServiceImageCardProps) {
   return (
     <article className={cn("image-service-card", className)}>
-      <Link
-        className="image-service-card__link"
-        href={href}
-        aria-label={`Подробнее: ${title}`}
-      />
+      {modal ? (
+        <LeadModal
+          overlayOnly
+          overlayClassName="image-service-card__overlay-btn"
+          overlayAriaLabel={title}
+          triggerLabel={title}
+          title={title}
+          description={modal.description}
+          submitLabel={modal.submitLabel ?? "Отправить заявку"}
+          successTitle={modal.successTitle ?? "Заявка принята"}
+          successText={
+            modal.successText ??
+            "Менеджер Imperium Motors свяжется с вами в ближайшее время."
+          }
+          comment={modal.comment}
+          commentLabel={modal.commentLabel}
+          commentPlaceholder={modal.commentPlaceholder}
+        />
+      ) : (
+        <Link
+          className="image-service-card__link"
+          href={href}
+          aria-label={`Подробнее: ${title}`}
+        />
+      )}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img className="image-service-card__img" src={image} alt={title} />
       <div className="image-service-card__body">

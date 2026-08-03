@@ -115,18 +115,39 @@ export function VelesPage() {
             title="Индивидуальный дизайн-код"
             image="/images/services/veles2.webp"
             text="Художник разрабатывает уникальную графическую концепцию именно для вашего автомобиля. Повтор исключён."
+            modal={{
+              description:
+                "Оставьте контакты — обсудим уникальную графическую концепцию для вашего автомобиля.",
+              comment: true,
+              commentLabel: "Идея проекта",
+              commentPlaceholder: "Автомобиль, пожелания, референсы",
+            }}
           />
           <ServiceImageCard
             className="svc-card--selection"
             title="Авторская графика"
             image="/images/services/veles3.webp"
             text="Рисунок любой сложности — от лаконичной линии на кузове до полноценной художественной росписи."
+            modal={{
+              description:
+                "Оставьте контакты — обсудим рисунок и художественную роспись для вашего автомобиля.",
+              comment: true,
+              commentLabel: "Идея проекта",
+              commentPlaceholder: "Автомобиль, пожелания, референсы",
+            }}
           />
           <ServiceImageCard
             className="svc-card--veles"
             title="Брендирование и ливреи"
             image="/images/services/veles4.webp"
             text="Гоночные схемы окраски, фирменный стиль для вашего бизнеса или личного бренда."
+            modal={{
+              description:
+                "Оставьте контакты — обсудим ливрею или фирменный стиль для вашего автомобиля.",
+              comment: true,
+              commentLabel: "Идея проекта",
+              commentPlaceholder: "Автомобиль, пожелания, референсы",
+            }}
           />
         </div>
       </section>

@@ -30,6 +30,10 @@ export type LeadModalProps = {
   /** Доп. невидимая кнопка-оверлей на всю карточку (для авто без страницы). */
   cardOverlay?: boolean;
   overlayAriaLabel?: string;
+  /** Только кнопка-оверлей, без видимой кнопки-триггера (для карточек-ссылок). */
+  overlayOnly?: boolean;
+  /** Класс кнопки-оверлея (по умолчанию — как у карточки авто). */
+  overlayClassName?: string;
 };
 
 /**
@@ -54,6 +58,8 @@ export function LeadModal({
   triggerEndIcon,
   cardOverlay = false,
   overlayAriaLabel,
+  overlayOnly = false,
+  overlayClassName,
 }: LeadModalProps) {
   const [submitted, setSubmitted] = useState(false);
   const state = useOverlayState({
@@ -69,24 +75,26 @@ export function LeadModal({
 
   return (
     <>
-      {cardOverlay && (
+      {(cardOverlay || overlayOnly) && (
         <button
           type="button"
-          className="car-card__overlay-btn"
+          className={overlayClassName ?? "car-card__overlay-btn"}
           aria-label={overlayAriaLabel ?? triggerLabel}
           onClick={state.open}
         />
       )}
-      <Button
-        size={triggerSize}
-        variant={triggerVariant}
-        inverse={triggerInverse}
-        className={triggerClassName}
-        endIcon={triggerEndIcon}
-        onClick={state.open}
-      >
-        {triggerLabel}
-      </Button>
+      {!overlayOnly && (
+        <Button
+          size={triggerSize}
+          variant={triggerVariant}
+          inverse={triggerInverse}
+          className={triggerClassName}
+          endIcon={triggerEndIcon}
+          onClick={state.open}
+        >
+          {triggerLabel}
+        </Button>
+      )}
 
       <Modal state={state}>
         <Modal.Backdrop variant="blur" className="lead-modal__backdrop">

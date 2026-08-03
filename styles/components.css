@@ -884,6 +884,22 @@
   z-index: 1;
   border-radius: inherit;
 }
+/* Оверлей-кнопка на всю карточку (открывает окно-заявку). */
+.image-service-card__overlay-btn {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  cursor: pointer;
+}
+.image-service-card__overlay-btn:focus-visible {
+  outline: 2px solid var(--color-heritage-green-500, #294434);
+  outline-offset: 3px;
+}
 .image-service-card:is(:hover, :focus-within) {
   background: var(--color-white, #FFFFFF);
 }
