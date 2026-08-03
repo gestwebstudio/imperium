@@ -8,6 +8,7 @@ import { PhoneIcon, ArrowDiagonalIcon, CloseIcon } from "@/components/icons";
 import { ButtonLink } from "@/components/ui/Button";
 import { GlassSurface } from "@/components/ui/GlassSurface";
 import { MobileMenu } from "./MobileMenu";
+import { ServicesMega } from "./ServicesMega";
 
 const PHONE_NUMBER = "+7 499 704-14-44";
 
@@ -85,6 +86,9 @@ export function Header() {
     "idle",
   );
   const copyStatusTimer = useRef<number | null>(null);
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const servicesRef = useRef<HTMLDivElement | null>(null);
+  const servicesTriggerRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     return () => {
@@ -93,6 +97,34 @@ export function Header() {
       }
     };
   }, []);
+
+  // Закрытие выпадайки услуг: клик вне, Escape, скролл.
+  useEffect(() => {
+    if (!servicesOpen) return;
+
+    const onPointer = (e: PointerEvent) => {
+      const t = e.target as Node;
+      if (
+        !servicesRef.current?.contains(t) &&
+        !servicesTriggerRef.current?.contains(t)
+      ) {
+        setServicesOpen(false);
+      }
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setServicesOpen(false);
+    };
+    const onScroll = () => setServicesOpen(false);
+
+    document.addEventListener("pointerdown", onPointer);
+    document.addEventListener("keydown", onKey);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      document.removeEventListener("pointerdown", onPointer);
+      document.removeEventListener("keydown", onKey);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [servicesOpen]);
 
   function showCopyStatus(status: "success" | "error") {
     setCopyStatus(status);
@@ -154,10 +186,17 @@ export function Header() {
         <MobileMenu />
 
         <nav className="site-header__nav">
-          <a href="#">
+          <button
+            type="button"
+            ref={servicesTriggerRef}
+            className={`site-header__nav-trigger${servicesOpen ? " is-open" : ""}`}
+            aria-expanded={servicesOpen}
+            aria-controls="services-mega-panel"
+            onClick={() => setServicesOpen((v) => !v)}
+          >
             Услуги
             <ChevronDown />
-          </a>
+          </button>
           <Link href="/about">О салоне</Link>
           <Link href="/contacts">Контакты</Link>
         </nav>
@@ -190,6 +229,13 @@ export function Header() {
           </ButtonLink>
         </div>
       </GlassSurface>
+      <div ref={servicesRef}>
+        <ServicesMega
+          open={servicesOpen}
+          onClose={() => setServicesOpen(false)}
+          id="services-mega-panel"
+        />
+      </div>
       <Alert
         status={copyStatus === "error" ? "danger" : "success"}
         className={`header-copy-alert${

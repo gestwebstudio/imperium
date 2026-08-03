@@ -6,6 +6,7 @@
   --site-header-logo-height: 32px;
   --site-header-control-size: 46px;
   --site-header-icon-size: 24px;
+  --header-gutter: 20px; /* внешний отступ бара; синхронно с padding-inline */
   position: fixed;
   top: 0;
   left: 0;
@@ -218,6 +219,7 @@
 @media (min-width: 1201px) and (max-width: 1799px) {
   .site-header {
     padding-inline: 60px;
+    --header-gutter: 60px;
   }
 }
 
@@ -737,5 +739,133 @@
 @media (prefers-reduced-motion: reduce) {
   .site-header__burger span {
     transition-duration: .01ms;
+  }
+}
+
+/* ============================================================
+   Услуги — мега-выпадайка (по мотивам React Bits «Card Nav»)
+   Показывается только на десктоп-навигации (> 1200px, до бургера)
+   ============================================================ */
+.site-header__nav-trigger {
+  appearance: none;
+  background: none;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-medium, 500);
+  font-size: 20px;
+  line-height: 28px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+.site-header__nav-trigger:hover,
+.site-header__nav-trigger.is-open {
+  color: var(--color-heritage-green-500, #294434);
+}
+.site-header__nav-trigger svg {
+  width: 15px;
+  height: 15px;
+  transition: transform 0.25s ease;
+}
+.site-header__nav-trigger.is-open svg {
+  transform: rotate(180deg);
+}
+@media (min-width: 1201px) and (max-width: 1536px) {
+  .site-header__nav-trigger {
+    font-size: 18px;
+    line-height: 24px;
+  }
+}
+
+.services-mega {
+  position: absolute;
+  top: calc(18px + var(--site-header-height) + 10px);
+  left: 0;
+  right: 0;
+  z-index: 49;
+  pointer-events: none;
+  /* абс.-позиционирование игнорирует padding самой шапки, поэтому
+     повторяем внешний отступ бара здесь */
+  padding-inline: var(--header-gutter, 20px);
+}
+.services-mega.is-open {
+  pointer-events: auto;
+}
+.services-mega__inner {
+  /* повторяем центрирование бара (max-width + auto) и его внутренний
+     паддинг (40px), чтобы панель встала точно под пунктом «Услуги» */
+  max-width: 1880px;
+  margin: 0 auto;
+  padding-inline: 40px;
+}
+.services-mega__panel {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(190px, 230px));
+  gap: 12px;
+  width: max-content;
+  max-width: 100%;
+  padding: 12px;
+  background: rgb(255 255 255 / 65%);
+  border: 0.5px solid rgb(228 223 219 / 60%);
+  border-radius: 20px;
+  box-shadow: 0 20px 44px -18px rgb(27 30 29 / 32%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  visibility: hidden; /* дальше управляет GSAP (autoAlpha) */
+}
+.services-mega__card {
+  display: flex;
+  flex-direction: column;
+  min-height: 172px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  color: var(--color-white, #fff);
+}
+.services-mega__card-title {
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-weight: var(--font-weight-medium, 500);
+  font-size: 20px;
+  line-height: 26px;
+  letter-spacing: -0.3px;
+}
+.services-mega__card-links {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.services-mega__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 16px;
+  line-height: 22px;
+  color: rgb(255 255 255 / 82%);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.services-mega__link:hover {
+  color: var(--color-white, #fff);
+}
+.services-mega__link-icon {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  transition: transform 0.2s ease;
+}
+.services-mega__link:hover .services-mega__link-icon {
+  transform: translate(2px, -2px);
+}
+/* На бургер-режиме (<= 1200px) навигации нет — прячем и панель */
+@media (max-width: 1200px) {
+  .services-mega {
+    display: none;
   }
 }
