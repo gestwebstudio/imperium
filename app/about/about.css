@@ -1,0 +1,388 @@
+.about-salon {
+  padding-bottom: 0;
+}
+
+.about-salon__hero {
+  overflow: hidden;
+  border-radius: 0 0 var(--radius-page, 50px) var(--radius-page, 50px);
+  background: var(--color-stone-beige-200, #E4DFDB);
+}
+
+.about-salon__hero-inner {
+  padding-top: var(--page-top, 155px);
+  padding-bottom: clamp(48px, 5vw, 96px);
+}
+
+.about-salon__hero-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(320px, .55fr);
+  align-items: end;
+  gap: clamp(40px, 6vw, 116px);
+}
+
+.about-salon__title {
+  min-width: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-size: clamp(48px, 4.584vw, 88px);
+  line-height: 1.06;
+  letter-spacing: -.02em;
+  text-transform: uppercase;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+
+.about-salon__title span {
+  font-weight: var(--font-weight-regular, 400);
+}
+
+.about-salon__title strong {
+  font-weight: var(--font-weight-extrabold, 800);
+}
+
+.about-salon__hero-aside {
+  width: min(100%, 520px);
+  justify-self: end;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.about-salon__hero-aside p {
+  margin: 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: var(--fs-18);
+  line-height: 1.45;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+
+.about-salon__gallery {
+  height: clamp(520px, 39vw, 748px);
+  margin-top: clamp(40px, 4.167vw, 80px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.42fr) minmax(300px, .58fr);
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.about-salon__gallery figure {
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--radius-media, 36px);
+  background: var(--color-stone-beige-300, #CAC2BB);
+}
+
+.about-salon__gallery-main {
+  grid-row: 1 / -1;
+}
+
+.about-salon__gallery img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.about-salon__gallery-main img {
+  object-position: center;
+}
+
+.about-salon__story,
+.about-salon__services,
+.about-salon__reviews,
+.about-salon > .contacts {
+  margin-top: var(--section-space, 160px);
+}
+
+.about-salon > .contacts {
+  margin-bottom: 0;
+}
+
+.about-salon__story-intro,
+.about-salon__section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, .72fr);
+  align-items: start;
+  gap: clamp(40px, 6vw, 116px);
+}
+
+.about-salon__eyebrow {
+  margin: 0 0 14px;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-medium, 500);
+  font-size: var(--fs-14);
+  line-height: 1.4;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--color-heritage-green-400, #4E7B60);
+}
+
+.about-salon__section-title {
+  max-width: 900px;
+  margin: 0;
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: clamp(40px, 3.438vw, 66px);
+  line-height: 1.08;
+  letter-spacing: -.02em;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+
+.about-salon__story-copy,
+.about-salon__section-description {
+  width: min(100%, 690px);
+  justify-self: end;
+}
+
+.about-salon__story-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.about-salon__story-copy p,
+.about-salon__section-description {
+  margin: 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: var(--fs-18);
+  line-height: 1.5;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+
+.about-salon__story-copy .btn {
+  margin-top: 8px;
+}
+
+.about-salon__principles {
+  margin-top: clamp(48px, 4.167vw, 80px);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.about-salon__principle {
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+  padding: var(--surface-padding, 40px);
+  border-radius: var(--radius-card, 30px);
+  background: rgba(255, 255, 255, .62);
+}
+
+.about-salon__principle > .badge {
+  justify-self: start;
+}
+
+.about-salon__principle h3 {
+  margin: 0;
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: var(--fs-30);
+  line-height: 1.2;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+
+.about-salon__principle p {
+  margin: 14px 0 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: var(--fs-18);
+  line-height: 1.45;
+  color: var(--color-warm-taupe-500, #6A6259);
+}
+
+.about-salon__section-head {
+  margin-bottom: clamp(40px, 3.125vw, 60px);
+  align-items: end;
+}
+
+.about-salon__service-grid {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.about-salon__service-grid .image-service-card {
+  min-height: 0;
+}
+
+.about-salon__service-grid .image-service-card__img {
+  height: auto;
+  flex-basis: auto;
+  aspect-ratio: 1 / .78;
+}
+
+.about-salon__service-grid .image-service-card__title {
+  font-size: clamp(26px, 2vw, 36px);
+}
+
+.about-salon__reviews .about__testimonial {
+  margin-top: 0;
+}
+
+@media (max-width: 1200px) {
+  .about-salon__hero-head,
+  .about-salon__story-intro,
+  .about-salon__section-head {
+    grid-template-columns: minmax(0, 1.2fr) minmax(300px, .8fr);
+    gap: 48px;
+  }
+
+  .about-salon__title {
+    font-size: var(--fs-66);
+  }
+
+  .about-salon__principle {
+    min-height: 250px;
+  }
+
+  .about-salon__principle h3 {
+    font-size: var(--fs-28);
+  }
+}
+
+@media (max-width: 960px) {
+  .about-salon__hero-head,
+  .about-salon__story-intro,
+  .about-salon__section-head {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+
+  .about-salon__hero-aside,
+  .about-salon__story-copy,
+  .about-salon__section-description {
+    width: min(100%, 760px);
+    justify-self: start;
+  }
+
+  .about-salon__gallery {
+    height: clamp(440px, 62vw, 600px);
+    grid-template-columns: minmax(0, 1.25fr) minmax(220px, .75fr);
+    gap: 16px;
+  }
+
+  .about-salon__principles {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .about-salon__principle {
+    min-height: 0;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    justify-content: initial;
+    gap: 28px;
+  }
+
+  .about-salon__service-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .about-salon__hero-inner {
+    padding-bottom: 32px;
+  }
+
+  .about-salon__title {
+    font-size: clamp(36px, 10.256vw, 48px);
+    line-height: 1.08;
+  }
+
+  .about-salon__hero-aside {
+    gap: 20px;
+  }
+
+  .about-salon__hero-aside p,
+  .about-salon__story-copy p,
+  .about-salon__section-description,
+  .about-salon__principle p {
+    font-size: var(--fs-16);
+  }
+
+  .about-salon__gallery {
+    height: auto;
+    margin-top: 32px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto;
+    gap: 10px;
+  }
+
+  .about-salon__gallery figure {
+    border-radius: 20px;
+    aspect-ratio: 1 / 1;
+  }
+
+  .about-salon__gallery-main {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    aspect-ratio: 16 / 10 !important;
+  }
+
+  .about-salon__story,
+  .about-salon__services,
+  .about-salon__reviews,
+  .about-salon > .contacts {
+    margin-top: var(--section-space, 72px);
+  }
+
+  .about-salon__section-title {
+    font-size: clamp(34px, 9.231vw, 44px);
+    line-height: 1.12;
+  }
+
+  .about-salon__story-copy {
+    gap: 16px;
+  }
+
+  .about-salon__principles {
+    margin-top: 40px;
+  }
+
+  .about-salon__principle {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    padding: 24px;
+  }
+
+  .about-salon__principle h3 {
+    font-size: var(--fs-24);
+  }
+
+  .about-salon__principle p {
+    margin-top: 10px;
+  }
+
+  .about-salon__section-head {
+    margin-bottom: 32px;
+  }
+
+  .about-salon__service-grid {
+    margin-top: 32px;
+    gap: 40px;
+  }
+
+  .about-salon__service-grid .image-service-card__img {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+@media (max-width: 390px) {
+  .about-salon__title {
+    font-size: 36px;
+  }
+
+  .about-salon__section-title {
+    font-size: 34px;
+  }
+}

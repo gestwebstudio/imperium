@@ -39,7 +39,7 @@ const columns: { title: string; links: FooterLink[] }[] = [
   {
     title: "Imperium Motors",
     links: [
-      "О салоне",
+      { label: "О салоне", href: "/about" },
       { label: "Новости", href: "/news" },
       { label: "Контакты", href: "/contacts" },
     ],

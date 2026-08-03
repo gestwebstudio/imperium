@@ -158,7 +158,7 @@ export function Header() {
             Услуги
             <ChevronDown />
           </a>
-          <a href="#">О салоне</a>
+          <Link href="/about">О салоне</Link>
           <Link href="/contacts">Контакты</Link>
         </nav>
 
