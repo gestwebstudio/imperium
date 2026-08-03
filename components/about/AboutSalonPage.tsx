@@ -1,9 +1,31 @@
+import { AboutGallery } from "@/components/about/AboutGallery";
 import { Contacts } from "@/components/home/Contacts";
 import { Testimonials } from "@/components/home/Testimonials";
 import { ButtonLink } from "@/components/ui/Button";
 import { Crumbs } from "@/components/ui/Crumbs";
 import { Badge } from "@/components/ui/primitives";
+import type { LightboxPhoto } from "@/components/car/PhotoLightbox";
 import { getReviews } from "@/lib/reviews";
+
+// Фото салона. В блоке видно первые 3, остальные — только в открытой галерее
+// (позже сюда добавятся ещё кадры от заказчика).
+const SALON_PHOTOS: LightboxPhoto[] = [
+  {
+    id: "salon-2",
+    src: "/images/contacts/2.webp",
+    alt: "Экспозиция автомобилей в салоне Imperium Motors",
+  },
+  {
+    id: "salon-1",
+    src: "/images/contacts/1.webp",
+    alt: "Зона приёма гостей Imperium Motors",
+  },
+  {
+    id: "salon-3",
+    src: "/images/contacts/3.webp",
+    alt: "Автомобиль в экспозиции Imperium Motors",
+  },
+];
 
 const PRINCIPLES = [
   {
@@ -51,29 +73,11 @@ export async function AboutSalonPage() {
             </div>
           </div>
 
-          <div className="about-salon__gallery" aria-label="Интерьер салона Imperium Motors">
-            <figure className="about-salon__gallery-main">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/images/contacts/2.webp"
-                alt="Экспозиция автомобилей в салоне Imperium Motors"
-              />
-            </figure>
-            <figure>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/images/contacts/1.webp"
-                alt="Зона приёма гостей Imperium Motors"
-              />
-            </figure>
-            <figure>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/images/contacts/3.webp"
-                alt="Автомобиль в экспозиции Imperium Motors"
-              />
-            </figure>
-          </div>
+          <AboutGallery
+            photos={SALON_PHOTOS}
+            visibleCount={3}
+            ariaLabel="Интерьер салона Imperium Motors"
+          />
         </div>
       </section>
 

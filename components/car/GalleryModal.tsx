@@ -1,5 +1,6 @@
 "use client";
 
+import { forwardRef, useImperativeHandle } from "react";
 import { Modal, Tabs, useOverlayState } from "@heroui/react";
 import { Button } from "@/components/ui/Button";
 import { PrimeGallery } from "./PrimeGallery";
@@ -25,8 +26,13 @@ export type GalleryModalProps = {
   alt: string;
 };
 
-export function GalleryModal({ photos, alt }: GalleryModalProps) {
+export type GalleryModalHandle = { open: () => void };
+
+export const GalleryModal = forwardRef<GalleryModalHandle, GalleryModalProps>(
+  function GalleryModal({ photos, alt }, ref) {
   const state = useOverlayState();
+
+  useImperativeHandle(ref, () => ({ open: () => state.open() }), [state]);
 
   return (
     <>
@@ -105,6 +111,6 @@ export function GalleryModal({ photos, alt }: GalleryModalProps) {
       </Modal>
     </>
   );
-}
+});
 
 export default GalleryModal;
