@@ -179,14 +179,16 @@ export function LeasingPage({ cars }: { cars: Car[] }) {
       <section className="home-wrap">
         <div className="ti-call">
           <div className="ti-call__text">
-            <h2 className="ti-call__title">Позвоните нам</h2>
+            <h2 className="ti-call__title">
+              Рассчитайте выгодные условия лизинга
+            </h2>
             <p className="ti-call__sub">
-              Круглосуточная поддержка для клиентов автосалона: эвакуация, замена
-              колеса, доставка топлива и выезд механика.
+              Оставьте заявку на расчёт. Менеджер подберёт программу под ваш
+              бюджет, рассчитает ежемесячный платёж и график погашения.
             </p>
           </div>
           <Button variant="primary-surface" inverse size="m">
-            Подробнее
+            Рассчитать лизинг
           </Button>
         </div>
       </section>

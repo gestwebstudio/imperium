@@ -181,14 +181,17 @@ export function CarSelectionPage() {
       <section className="home-wrap">
         <div className="ti-call">
           <div className="ti-call__text">
-            <h2 className="ti-call__title">Позвоните нам</h2>
+            <h2 className="ti-call__title">
+              Подберём автомобиль под ваш запрос
+            </h2>
             <p className="ti-call__sub">
-              Круглосуточная поддержка для клиентов автосалона: эвакуация, замена
-              колеса, доставка топлива и выезд механика.
+              Оставьте заявку на подбор. Менеджер уточнит параметры, найдёт
+              подходящие варианты и рассчитает стоимость с доставкой и
+              оформлением.
             </p>
           </div>
           <Button variant="primary-surface" inverse size="m">
-            Подробнее
+            Подобрать авто
           </Button>
         </div>
       </section>
