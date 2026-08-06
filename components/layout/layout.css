@@ -52,12 +52,6 @@
 }
 .site-header__nav a:hover { color: var(--color-heritage-green-500, #294434); }
 .site-header__nav svg { width: 15px; height: 15px; }
-@media (min-width: 1201px) and (max-width: 1536px) {
-  .site-header__nav a {
-    font-size: 18px;
-    line-height: 24px;
-  }
-}
 .site-header__logo {
   position: absolute;
   left: 50%;
@@ -194,7 +188,7 @@
   color: var(--color-red-500, #BB4545);
 }
 
-@media (min-width: 1201px) {
+@media (min-width: 1200px) {
   .header-call:focus-visible {
     width: 222px;
   }
@@ -205,7 +199,7 @@
   }
 }
 
-@media (min-width: 1201px) and (hover: hover) and (pointer: fine) {
+@media (min-width: 1200px) and (hover: hover) and (pointer: fine) {
   .header-call:hover {
     width: 222px;
   }
@@ -216,14 +210,49 @@
   }
 }
 
-@media (min-width: 1201px) and (max-width: 1799px) {
+@media (min-width: 1200px) and (max-width: 1799px) {
   .site-header {
     padding-inline: 60px;
     --header-gutter: 60px;
   }
 }
 
-@media (max-width: 1200px) {
+/* ===== Десктоп-навигация: тиры по макету (1200 / 1536 / 1920) =====
+   База (.site-header) = тир 1920: высота 78, лого 32, контрол 46, навигация 20/28. */
+
+/* Тир 1536 (1536–1919): высота 66, лого 26, контрол 40, навигация 16/20. */
+@media (max-width: 1919px) {
+  .site-header {
+    --site-header-height: 66px;
+    --site-header-logo-height: 26px;
+    --site-header-control-size: 40px;
+  }
+  .site-header__nav a,
+  .site-header__nav-trigger {
+    font-size: 16px;
+    line-height: 20px;
+  }
+  .site-header__cta.btn--primary-cta {
+    --cta-control-size: 40px;
+    --cta-pressed-size: 128px;
+    height: 40px;
+  }
+}
+
+/* Тир 1200 (1200–1535): высота 66 и контрол 40 наследуются; лого 20, навигация 14/18. */
+@media (max-width: 1535px) {
+  .site-header {
+    --site-header-logo-height: 20px;
+  }
+  .site-header__nav a,
+  .site-header__nav-trigger {
+    font-size: 14px;
+    line-height: 18px;
+  }
+}
+
+/* Бургер-режим (до 1200): навигация/действия скрыты, по центру логотип. */
+@media (max-width: 1199px) {
   .site-header {
     --site-header-height: 66px;
     --site-header-logo-height: 26px;
@@ -275,7 +304,7 @@
   }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1199px) {
   .header-copy-alert {
     display: none;
   }
@@ -775,12 +804,6 @@
 }
 .site-header__nav-trigger.is-open svg {
   transform: rotate(180deg);
-}
-@media (min-width: 1201px) and (max-width: 1536px) {
-  .site-header__nav-trigger {
-    font-size: 18px;
-    line-height: 24px;
-  }
 }
 
 .services-mega {
