@@ -46,7 +46,6 @@
 .car-gallery {
   --gal-w: min(1222px, 66vw);
   --gal-h: calc(var(--gal-w) * 722 / 1222);
-  margin-top: 20px;
 }
 .car-gallery__viewport {
   position: relative;
@@ -1184,7 +1183,6 @@
   }
   .car-gallery {
     --gal-w: calc(100vw - (var(--page-gutter, 16px) * 2));
-    margin-top: 16px;
   }
   .car-gallery__track {
     gap: 12px;
