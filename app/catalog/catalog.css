@@ -44,7 +44,7 @@
 }
 
 /* ---------- Хлебные крошки (китовый Crumbs поверх HeroUI) ---------- */
-.cat-crumbs { margin-bottom: 10px; }
+.cat-crumbs { margin-bottom: var(--crumbs-gap-bottom); }
 
 /* ---------- Шапка: заголовок + бейдж + сортировка ---------- */
 .catalog-head {
@@ -695,7 +695,7 @@
     gap: 12px;
   }
   .cat-crumbs {
-    margin-bottom: 14px;
+    margin-bottom: var(--crumbs-gap-bottom);
   }
   .cat-filters {
     width: 100%;
@@ -722,7 +722,6 @@
 
 @media (min-width: 1200px) and (max-width: 1536px) {
   .catalog-page {
-    padding-top: clamp(134px, calc(134px + (100vw - 1200px) * .065476), 156px);
     padding-inline: clamp(40px, calc(40px + (100vw - 1200px) * .059524), 60px);
   }
 
@@ -780,11 +779,11 @@
    occupies the same row as sorting. */
 @media (max-width: 1199px) {
   .catalog-page {
-    padding: 134px 40px 0;
+    padding-inline: 40px;
   }
 
   .cat-crumbs {
-    margin-bottom: 10px;
+    margin-bottom: var(--crumbs-gap-bottom);
   }
 
   .catalog-head {
@@ -1088,12 +1087,11 @@
 
 @media (max-width: 640px) {
   .catalog-page {
-    padding-top: 134px;
     padding-inline: 30px;
   }
 
   .cat-crumbs {
-    margin-bottom: 6px;
+    margin-bottom: var(--crumbs-gap-bottom);
   }
 
   .catalog-head h1 {
@@ -1108,7 +1106,7 @@
 
 @media (max-width: 480px) {
   .catalog-page {
-    padding: 106px 20px 0;
+    padding-inline: 20px;
   }
 
   .catalog-head {

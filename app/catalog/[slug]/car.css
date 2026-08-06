@@ -5,7 +5,7 @@
 
 .car { padding-bottom: 0; }
 .car-wrap { max-width: var(--layout-max, 1920px); margin: 0 auto; padding: 0 var(--page-gutter, 60px); }
-.car-wrap--top { padding-top: var(--page-top, 155px); padding-bottom: 0; }
+.car-wrap--top { padding-top: var(--page-top, 155px); padding-bottom: var(--crumbs-gap-bottom); }
 .car > .cars-section { height: 574px; margin-top: 126px; }
 .car > .contacts { margin-top: 200px; }
 
@@ -1095,7 +1095,7 @@
 }
 /* ---------- Адаптив ---------- */
 @media (max-width: 1200px) {
-  .car-wrap--top { padding-bottom: 20px; }
+  .car-wrap--top { padding-bottom: var(--crumbs-gap-bottom); }
   .cat-crumbs,
   .cat-crumbs ol,
   .cat-crumbs li { height: auto; }
@@ -1143,7 +1143,7 @@
 
 @media (max-width: 640px) {
   .car-wrap--top {
-    padding-bottom: 8px;
+    padding-bottom: var(--crumbs-gap-bottom);
   }
   .car-gallery-modal__container,
   .car-gallery-modal__dialog {

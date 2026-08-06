@@ -35,7 +35,7 @@
 
 /* Крупным многострочным заголовкам нужен одинаковый зазор на всех ширинах. */
 .trade-in .ui-crumbs {
-  margin-bottom: 10px;
+  margin-bottom: var(--crumbs-gap-bottom);
 }
 
 /* Хлебные крошки страниц услуг — те же, что в каталоге (catalog.css) */
@@ -48,7 +48,7 @@
   margin: 0;
   padding: 0;
 }
-.cat-crumbs { height: 18px; margin-bottom: 10px; }
+.cat-crumbs { height: 18px; margin-bottom: var(--crumbs-gap-bottom); }
 .cat-crumbs li {
   display: inline-flex;
   align-items: center;

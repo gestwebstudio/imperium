@@ -66,7 +66,14 @@
   /* ---------- Responsive layout ---------- */
   --layout-max: 1920px;
   --page-gutter: clamp(16px, 3.125vw, 60px);
-  --page-top: clamp(104px, 8.073vw, 155px);
+  /* Высота фикс. шапки. Меняешь шапку — меняешь ТОЛЬКО это (в т.ч. в медиа ниже). */
+  --header-h: 76px;
+  /* Зазор «шапка → хлебные крошки». */
+  --crumbs-gap-top: 40px;
+  /* Зазор «крошки → ближайший элемент снизу». */
+  --crumbs-gap-bottom: 20px;
+  /* Верхний отступ страницы = высота шапки + зазор. Один источник для всех страниц. */
+  --page-top: calc(var(--header-h) + var(--crumbs-gap-top));
   --section-space: clamp(72px, 8.333vw, 160px);
   --section-space-lg: clamp(88px, 10.416vw, 200px);
   --surface-padding: clamp(20px, 2.083vw, 40px);
@@ -81,4 +88,19 @@
   --z-modal: 1200;
 
   /* Готовые текстовые стили (73 шт.) — в styles/typography.css (классы .t-*) */
+}
+
+/* Высота фикс. шапки по брейкам (реальная: 76/84/96). Меняешь шапку — только тут. */
+@media (min-width: 640px)  { :root { --header-h: 84px; } }
+@media (min-width: 1201px) { :root { --header-h: 96px; } }
+/* Зазор «шапка → крошки»: 40 (≤768) / 50 (960–1536) / 60 (1920). */
+@media (min-width: 960px)  { :root { --crumbs-gap-top: 50px; } }
+@media (min-width: 1920px) { :root { --crumbs-gap-top: 60px; } }
+/* --page-top пересчитается сам (calc в :root выше). */
+
+/* Нижний зазор крошек «крошки → ближайший элемент снизу» — одинаково на всех
+   страницах. Верхний зазор задаёт --page-top (padding контейнера). */
+.ui-crumbs,
+.cat-crumbs {
+  margin-bottom: var(--crumbs-gap-bottom);
 }
