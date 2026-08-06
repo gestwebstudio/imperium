@@ -75,7 +75,7 @@ const SERVICES: ServiceRow[] = [
 
 export function HelpOnRoadServices() {
   return (
-    <section className="home-wrap hr-pricing">
+    <section className="home-wrap hr-pricing hor-services">
       <h2 className="comparison-table-section__title">
         Что входит в бесплатный перечень услуг по программе
       </h2>

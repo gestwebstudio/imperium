@@ -9,7 +9,6 @@ import { HelpOnRoadServices } from "@/components/helproads/HelpOnRoadServices";
    третий блок — картинка + маркированный список (из переданного файла). */
 
 const PROGRAM_POINTS = [
-  "Европейский уровень сервиса!",
   "Широкий спектр услуг",
   "Собственная служба техпомощи в Москве и Санкт-Петербурге. Автомобили технической помощи оборудованы по стандартам немецкого клуба ADAC.",
   "Территория покрытия: более 400 городов России и 48 стран Европы.",
@@ -66,11 +65,37 @@ export function HelpOnRoadPage() {
           />
         </div>
         <div className="ti-block__body ti-factors__body">
+          <h2 className="ti-block__title">
+            <span className="reg">Европейский</span>
+            <span className="bold">уровень сервиса</span>
+          </h2>
           <ul className="ti-list">
             {PROGRAM_POINTS.map((point) => (
               <li key={point}>{point}</li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      {/* ---------- Позвоните нам (зелёный баннер, из оригинальной страницы) ---------- */}
+      <section className="home-wrap">
+        <div className="ti-call">
+          <div className="ti-call__text">
+            <h2 className="ti-call__title">Позвоните нам</h2>
+            <p className="ti-call__sub">
+              Круглосуточная поддержка для клиентов автосалона: эвакуация, замена
+              колеса, доставка топлива и выезд механика.
+            </p>
+          </div>
+          <ButtonLink
+            href="tel:88002507262"
+            variant="primary-surface"
+            inverse
+            size="m"
+            endIcon={<PhoneIcon width={16} height={16} />}
+          >
+            8-800-250-72-62
+          </ButtonLink>
         </div>
       </section>
     </main>

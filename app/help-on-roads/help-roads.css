@@ -321,3 +321,8 @@
   font-size: var(--fs-14);
   color: var(--color-stone-gray-500, #6A6259);
 }
+
+/* Колонка «Событие» — заголовок по левому краю (перебиваем hr-pricing right) */
+.hr-pricing.hor-services .comparison-spec-table__column--price {
+  text-align: left;
+}
