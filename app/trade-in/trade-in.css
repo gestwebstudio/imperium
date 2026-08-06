@@ -30,7 +30,7 @@
 }
 .ti-hero__inner {
   padding-top: var(--page-top, 155px);
-  padding-bottom: clamp(32px, 3vw, 48px);
+  padding-bottom: 128px; /* беж под контентом; ряд преимуществ наезжает сверху */
 }
 
 /* Крупным многострочным заголовкам нужен одинаковый зазор на всех ширинах. */
@@ -78,7 +78,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: clamp(32px, 5vw, 96px);
+  gap: clamp(40px, 5vw, 96px);
 }
 .ti-hero__title {
   margin: 0;
@@ -90,8 +90,9 @@
   text-transform: uppercase;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
-.ti-hero__title .reg { font-weight: var(--font-weight-regular, 400); font-size: var(--fs-66); line-height: 1.06; }
-.ti-hero__title .bold { font-weight: var(--font-weight-extrabold, 800); font-size: var(--fs-66); line-height: 1.06; }
+/* Заголовок — дискретные размеры по адаптациям (базовый тир = 1920: H2 66/70). */
+.ti-hero__title .reg { font-weight: var(--font-weight-regular, 400); font-size: 66px; line-height: 70px; }
+.ti-hero__title .bold { font-weight: var(--font-weight-extrabold, 800); font-size: 66px; line-height: 70px; }
 .ti-hero__aside {
   flex: 0 1 730px;
   display: flex;
@@ -99,20 +100,22 @@
   align-items: flex-end;
   text-align: right;
   gap: 24px;
-  padding-top: 12px;
 }
 .ti-hero__sub {
   margin: 0;
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: var(--fs-18);
-  line-height: 1.333;
+  font-size: 18px;
+  line-height: 24px;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 .ti-hero__cta { align-self: flex-end; }
 
-/* Преимущества hero: 4 отдельные стеклянные карточки 1398px по центру */
+/* Преимущества hero: ряд карточек 1398px по центру — сиблинг ПОСЛЕ hero,
+   наезжает верхней половиной первой карточки на нижнюю кромку hero. */
 .ti-hero__stats-wrap {
-  margin-top: clamp(40px, 4vw, 56px);
+  position: relative;
+  z-index: 3;
+  margin-top: -58px; /* половина карточки h116 (тиры 1920/1536) */
 }
 .ti-hero__stats {
   width: 100%;
@@ -133,36 +136,80 @@
   align-items: center;
   justify-content: center;
   gap: 2px;
-  padding: clamp(18px, 1.458vw, 28px) clamp(14px, 1.146vw, 22px);
+  padding: 28px 22px;
   text-align: center;
 }
 .ti-stat__value {
   font-family: var(--font-text, "Onest", sans-serif);
   font-weight: var(--font-weight-semibold, 600);
-  font-size: var(--fs-24);
-  line-height: 1.25;
+  font-size: 24px;
+  line-height: 30px;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 .ti-stat__label {
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: var(--fs-20);
-  line-height: 1.4;
+  font-size: 20px;
+  line-height: 28px;
   color: var(--color-warm-taupe-400, #8F8579);
 }
 
-/* Десктоп: плашка стекла наезжает нижней половиной за кромку hero */
-@media (min-width: 961px) {
-  /* flow-root — свой BFC: отрицательный margin плашки укорачивает hero,
-     а не схлопывается в его собственный margin */
-  .ti-hero { display: flow-root; overflow: visible; }
-  .ti-hero__inner { padding-bottom: 0; }
-  .ti-hero__stats-wrap {
-    margin-top: clamp(40px, 4vw, 57px);
-    margin-bottom: -58px;
-    position: relative;
-    z-index: 3;
+/* ===== Адаптации первого блока (артборды Figma: 1920/1536/1200/960/768/640/480/390).
+   Desktop-first: база = тир 1920. ===== */
+
+/* 1536–1919: заголовок 50/70 (остальное — как 1920). */
+@media (max-width: 1919px) {
+  .ti-hero__title .reg,
+  .ti-hero__title .bold { font-size: 50px; line-height: 70px; }
+}
+
+/* 1200–1535: заголовок 40/48; подзаг 16/20; преимущества 18/24 · 16/20 (карточка h102). */
+@media (max-width: 1535px) {
+  .ti-hero__title .reg,
+  .ti-hero__title .bold { font-size: 40px; line-height: 48px; }
+  .ti-hero__sub { font-size: 16px; line-height: 20px; }
+  .ti-hero__inner { padding-bottom: 118px; }
+  .ti-hero__stats-wrap { margin-top: -51px; } /* половина карточки h102 */
+  .ti-stat__value { font-size: 18px; line-height: 24px; }
+  .ti-stat__label { font-size: 16px; line-height: 20px; }
+}
+
+/* ≤1199: заголовок на всю ширину, aside под ним слева; CTA size M (36/16). Шапка = бургер. */
+@media (max-width: 1199px) {
+  .ti-hero__top { flex-direction: column; gap: 24px; }
+  .ti-hero__title { flex-basis: auto; } /* в колонке 883px не должно уходить в высоту */
+  .ti-hero__aside {
+    flex-basis: auto;
+    align-self: stretch;
+    align-items: flex-start;
+    text-align: left;
   }
-  .trade-in > .ti-steps { margin-top: 178px; }
+  .ti-hero__cta { align-self: flex-start; }
+  .ti-hero__cta.btn { height: 36px; padding: 0 14px; font-size: 16px; line-height: 20px; }
+}
+
+/* 960–1199: в ряду только 3 карточки (4-я «Зачёт стоимости» скрыта — по макету). */
+@media (min-width: 960px) and (max-width: 1199px) {
+  .ti-stat:nth-child(4) { display: none; }
+}
+
+/* ≤959: преимущества сеткой 2×2 (CTA остаётся M). */
+@media (max-width: 959px) {
+  .ti-hero__stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 17px;
+  }
+}
+
+/* ≤639: одна колонка; CTA h34/14. */
+@media (max-width: 639px) {
+  .ti-hero__stats { grid-template-columns: minmax(0, 1fr); }
+  .ti-hero__cta.btn { height: 34px; padding: 0 14px; font-size: 14px; line-height: 18px; }
+}
+
+/* ≤479 (тир 390): reg-строка заголовка ужата до 36/44, bold остаётся 40/48. */
+@media (max-width: 479px) {
+  .ti-hero__title .reg { font-size: 36px; line-height: 44px; }
 }
 
 /* Общий заголовок секции (H4 SemiBold 48/56) */
@@ -346,12 +393,6 @@
 
 /* ---------------- Адаптив ---------------- */
 @media (max-width: 960px) {
-  .ti-hero__top { flex-direction: column; gap: 24px; }
-  .ti-hero__aside { flex-basis: auto; align-self: stretch; padding-top: 0; }
-  .ti-hero__cta { align-self: flex-start; }
-  .ti-hero__stats { flex-wrap: wrap; }
-  .ti-stat { flex: 1 1 40%; min-width: 180px; }
-
   .ti-factors,
   .ti-accept { grid-template-columns: minmax(0, 1fr); }
   .ti-factors__media,
@@ -363,29 +404,11 @@
 
 @media (max-width: 768px) {
   .ti-steps__grid { grid-template-columns: minmax(0, 1fr); }
-  .ti-hero__stats { display: grid; grid-template-columns: 1fr 1fr; }
-  .ti-stat { min-width: 0; }
   /* Кавычка мельче на узких экранах */
   .ti-callout::before { width: 72px; height: 60px; top: -32px; }
 }
 
 @media (max-width: 640px) {
-  .ti-hero__inner {
-    padding-bottom: 28px;
-  }
-  .ti-hero__top {
-    gap: 20px;
-  }
-  .ti-hero__aside {
-    gap: 20px;
-  }
-  .ti-hero__stats {
-    margin-top: 32px;
-    gap: 10px;
-  }
-  .ti-stat .liquid-glass__content {
-    padding: 16px 10px;
-  }
   .ti-steps__grid {
     gap: 18px;
   }
@@ -405,13 +428,6 @@
 }
 
 @media (max-width: 480px) {
-  .ti-hero__stats {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .ti-stat .liquid-glass__content {
-    align-items: flex-start;
-    text-align: left;
-  }
   .ti-step__badge {
     left: 22px;
   }

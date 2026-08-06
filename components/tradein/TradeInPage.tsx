@@ -96,33 +96,33 @@ export function TradeInPage({ cars }: { cars: Car[] }) {
           </div>
 
         </div>
-
-        {/* Преимущества — 4 отдельные стеклянные карточки (стекло как у шапки),
-            ряд наезжает наполовину на кромку hero */}
-        <div className="ti-hero__stats-wrap home-wrap">
-          <div className="ti-hero__stats">
-            {HERO_STATS.map((s) => (
-              <GlassSurface
-                key={s.value}
-                className="ti-stat"
-                borderRadius={30}
-                height="auto"
-                backgroundOpacity={0.06}
-                saturation={1.02}
-                lightAngle={-45}
-                lightIntensity={35}
-                refraction={100}
-                depth={75}
-                frost={3}
-                splay={70}
-              >
-                <span className="ti-stat__value">{s.value}</span>
-                <span className="ti-stat__label">{s.label}</span>
-              </GlassSurface>
-            ))}
-          </div>
-        </div>
       </section>
+
+      {/* Преимущества — 4 отдельные стеклянные карточки (стекло как у шапки),
+          ряд наезжает наполовину на нижнюю кромку hero */}
+      <div className="ti-hero__stats-wrap home-wrap">
+        <div className="ti-hero__stats">
+          {HERO_STATS.map((s) => (
+            <GlassSurface
+              key={s.value}
+              className="ti-stat"
+              borderRadius={30}
+              height="auto"
+              backgroundOpacity={0.06}
+              saturation={1.02}
+              lightAngle={-45}
+              lightIntensity={35}
+              refraction={100}
+              depth={75}
+              frost={3}
+              splay={70}
+            >
+              <span className="ti-stat__value">{s.value}</span>
+              <span className="ti-stat__label">{s.label}</span>
+            </GlassSurface>
+          ))}
+        </div>
+      </div>
 
       {/* ---------- Как проходит trade-in ---------- */}
       <section className="home-wrap ti-steps">
