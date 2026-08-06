@@ -301,3 +301,23 @@
     line-height: 1.4;
   }
 }
+
+/* ---------- Ячейка «Техническая помощь» с вложенным списком (стр. help-on-road) ---------- */
+.hor-serv__lead {
+  display: block;
+  font-weight: 600;
+}
+.hor-serv__list {
+  margin: 6px 0 0;
+  padding-left: 18px;
+  list-style: disc;
+}
+.hor-serv__list li {
+  margin-top: 2px;
+}
+.hor-serv__note {
+  display: block;
+  margin-top: 6px;
+  font-size: var(--fs-14);
+  color: var(--color-stone-gray-500, #6A6259);
+}
