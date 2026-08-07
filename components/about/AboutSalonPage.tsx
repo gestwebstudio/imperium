@@ -73,18 +73,16 @@ export async function AboutSalonPage() {
             </div>
           </div>
 
-          {/* Видео о салоне — в первом блоке на серой подложке (заменить на <video>/iframe). */}
-          <div
-            className="about-salon__video"
-            role="img"
-            aria-label="Здесь будет видео о салоне Imperium Motors"
-          >
-            <span className="about-salon__video-play" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8 5.5v13l11-6.5-11-6.5Z" fill="currentColor" />
-              </svg>
-            </span>
-            <span className="about-salon__video-note">Видео о салоне</span>
+          {/* Видео о салоне — VK Video, в первом блоке на серой подложке. */}
+          <div className="about-salon__video">
+            <iframe
+              className="about-salon__video-frame"
+              src="https://vk.com/video_ext.php?oid=-240680187&id=456239017&hd=2"
+              title="Видео о салоне Imperium Motors"
+              allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+              frameBorder="0"
+              allowFullScreen
+            />
           </div>
         </div>
       </section>

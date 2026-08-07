@@ -223,39 +223,22 @@
 }
 
 /* Заглушка под видео о салоне (заменить на <video>/iframe) */
-/* Видео — в первом блоке на серой подложке, габариты как у галереи. */
+/* Видео о салоне (VK Video) — в первом блоке на серой подложке, габариты как у галереи. */
 .about-salon__video {
   position: relative;
   margin-top: clamp(40px, 4.167vw, 80px);
   height: clamp(520px, 39vw, 748px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 18px;
+  overflow: hidden;
   border-radius: var(--radius-media, 36px);
-  border: 1px dashed var(--color-warm-taupe-300, #B2A79B);
-  background:
-    radial-gradient(120% 120% at 50% 0%, rgba(255, 255, 255, .5), transparent 60%),
-    var(--color-stone-beige-300, #CAC2BB);
+  background: var(--color-carbon-black-500, #1B1E1D);
 }
-.about-salon__video-play {
-  width: 84px;
-  height: 84px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background: var(--color-heritage-green-500, #294434);
-  color: var(--color-white, #FFFFFF);
-  box-shadow: 0 12px 30px rgba(41, 68, 52, .25);
-}
-.about-salon__video-play svg { width: 34px; height: 34px; margin-left: 4px; }
-.about-salon__video-note {
-  font-family: var(--font-text, "Onest", sans-serif);
-  font-size: var(--fs-18);
-  line-height: 1.4;
-  color: var(--color-warm-taupe-500, #6A6259);
+.about-salon__video-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
 }
 
 .about-salon__section-head {
