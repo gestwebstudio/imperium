@@ -6,13 +6,13 @@
   --site-header-logo-height: 32px;
   --site-header-control-size: 46px;
   --site-header-icon-size: 24px;
-  --header-gutter: 20px; /* внешний отступ бара; синхронно с padding-inline */
+  --header-gutter: var(--page-gutter, 20px); /* край шапки = край контента (та же переменная) */
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: var(--z-header, 50);
-  padding: 18px 20px 0;
+  padding: 18px var(--page-gutter, 20px) 0;
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }
@@ -210,13 +210,6 @@
   }
 }
 
-@media (min-width: 1200px) and (max-width: 1799px) {
-  .site-header {
-    padding-inline: 60px;
-    --header-gutter: 60px;
-  }
-}
-
 /* ===== Десктоп-навигация: тиры по макету (1200 / 1536 / 1920) =====
    База (.site-header) = тир 1920: высота 78, лого 32, контрол 46, навигация 20/28. */
 
@@ -257,7 +250,6 @@
     --site-header-height: 66px;
     --site-header-logo-height: 26px;
     --site-header-control-size: 44px;
-    padding: 18px 40px 0;
   }
   .site-header__nav { display: none; }
   .site-header__actions { display: none; }
@@ -310,30 +302,11 @@
   }
 }
 
-@media (max-width: 960px) {
-  .site-header {
-    padding-inline: 40px;
-  }
-}
-
-@media (max-width: 768px) {
-  .site-header {
-    padding-inline: 40px;
-  }
-}
-
-@media (max-width: 640px) {
-  .site-header {
-    padding-inline: 30px;
-  }
-}
-
 @media (max-width: 480px) {
   .site-header {
     --site-header-height: 58px;
     --site-header-logo-height: 20px;
     --site-header-control-size: 36px;
-    padding: 18px 20px 0;
   }
   .site-header__logo,
   .site-header__logo img {
