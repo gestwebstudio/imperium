@@ -21,6 +21,7 @@
   flex-wrap: wrap;
   height: 18px;
 }
+.cat-crumbs { margin-bottom: 0; }
 .cat-crumbs li { display: inline-flex; align-items: center; gap: 4px; height: 18px; }
 .cat-crumbs__item {
   font-family: var(--font-text, "Onest", sans-serif);
@@ -44,7 +45,7 @@
 
 /* ---------- Галерея (бесконечная карусель) ---------- */
 .car-gallery {
-  --gal-w: min(1222px, 66vw);
+  --gal-w: min(1222px, 79.5573vw);
   --gal-h: calc(var(--gal-w) * 722 / 1222);
 }
 .car-gallery__viewport {
@@ -297,14 +298,16 @@
 /* ---------- Основной блок: заголовок + характеристики / цена ---------- */
 .car-main {
   display: grid;
-  grid-template-columns: minmax(0, 1360px) 397px;
+  grid-template-columns:
+    minmax(0, 1fr)
+    clamp(297px, calc(26.0417vw - 103px), 397px);
   grid-template-areas:
     "title price"
     "details price";
   align-items: flex-start;
-  column-gap: 43px;
+  column-gap: clamp(40px, calc(.78125vw + 28px), 43px);
   row-gap: 40px;
-  margin-top: clamp(48px, 5vw, 80px);
+  margin-top: 80px;
 }
 .car-details {
   grid-area: details;
@@ -333,57 +336,42 @@
   margin: 0;
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
   font-weight: var(--font-weight-semibold, 600);
-  font-size: var(--fs-48);
-  line-height: 1.167;
+  font-size: 48px;
+  line-height: 56px;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
-.car-title__badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 10px;
-  border-radius: 21px;
-  background: rgba(85, 171, 77, .15);
-  color: var(--color-green-500, #55AB4D);
-  font-family: var(--font-text, "Onest", sans-serif);
-  font-size: 16px;
-  line-height: 20px;
-  white-space: nowrap;
-}
+.car-title__badge { flex: none; white-space: nowrap; }
 .car-title__actions { flex: none; display: flex; align-items: center; gap: 16px; padding-top: 16px; }
 
 /* Карточка цены */
 .car-price {
   grid-area: price;
   box-sizing: border-box;
-  width: 397px;
-  min-height: 440px;
+  width: 100%;
+  min-height: 422px;
   display: flex;
   flex-direction: column;
   gap: 30px;
-  padding: clamp(20px, 1.563vw, 30px);
+  padding: 30px;
   border-radius: var(--radius-card, 30px);
   background: var(--color-white, #FFFFFF);
   box-shadow: 4px 4px 10px 0 rgba(106, 98, 89, .1);
   position: sticky;
   top: 116px;
 }
-.car-price__section { display: flex; flex-direction: column; gap: 20px; }
-.car-price__value { display: flex; flex-direction: column; gap: 4px; }
-.car-price__label {
-  font-family: var(--font-text, "Onest", sans-serif);
+.car-price__section { display: flex; flex-direction: column; gap: 10px; }
+.car-price__value { min-height: 70px; }
+.car-price__value .price-block__label {
   font-size: 14px;
   line-height: 18px;
-  color: var(--color-carbon-black-300, #898785);
 }
-.car-price__amount {
-  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
-  font-weight: var(--font-weight-extrabold, 800);
-  font-size: var(--fs-28);
+.car-price__value .price-block__value {
+  font-size: 28px;
   line-height: 36px;
-  color: var(--color-carbon-black-500, #1B1E1D);
 }
-.car-price__buttons { display: flex; gap: 8px; }
+.car-price__buttons { display: flex; flex-direction: column; gap: 8px; }
 .car-price__buttons .btn { flex: 0 1 auto; }
+.car-price__offers { display: flex; flex-direction: column; gap: 20px; }
 .car-price__row { display: flex; flex-direction: column; gap: 4px; }
 .car-price__row-head {
   display: flex;
@@ -391,8 +379,8 @@
   gap: 6px;
   font-family: var(--font-text, "Onest", sans-serif);
   font-weight: var(--font-weight-semibold, 600);
-  font-size: var(--fs-18);
-  line-height: 24px;
+  font-size: 16px;
+  line-height: 20px;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 .car-price__dot {
@@ -406,8 +394,8 @@
   margin: 0;
   padding-left: 15px;
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: var(--fs-18);
-  line-height: 24px;
+  font-size: 16px;
+  line-height: 20px;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 
@@ -820,7 +808,7 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
-  padding: clamp(20px, 1.563vw, 30px);
+  padding: 30px;
   border-radius: var(--radius-card, 30px);
   background: rgba(228, 223, 219, .5);
 }
@@ -838,33 +826,42 @@
   gap: 36px;
 }
 .car-specs__column {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 9px;
+}
+.car-specs__column + .car-specs__column::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -18px;
+  width: 1px;
+  background: var(--color-stone-beige-300, #CAC2BB);
 }
 .car-specs__row {
   box-sizing: border-box;
-  height: 40px;
+  height: 36px;
   display: flex;
   align-items: baseline;
   gap: 4px;
-  padding: 7px 0 8px;
-  border-bottom: 1px solid var(--color-stone-beige-300, #CAC2BB);
+  padding: 8px 0;
 }
 .car-specs__label {
   flex: 1 1 auto;
   min-width: 0;
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: var(--fs-16);
-  line-height: 20px;
+  font-size: 14px;
+  line-height: 18px;
   color: var(--color-carbon-black-300, #898785);
 }
 .car-specs__value {
   flex: none;
   font-family: var(--font-text, "Onest", sans-serif);
   font-weight: var(--font-weight-semibold, 600);
-  font-size: var(--fs-18);
-  line-height: 24px;
+  font-size: 16px;
+  line-height: 20px;
   color: var(--color-carbon-black-500, #1B1E1D);
   text-align: right;
 }
@@ -896,8 +893,8 @@
 /* ---------- Комплектация ---------- */
 .car-equipment {
   box-sizing: border-box;
-  min-height: 422px;
-  padding: clamp(20px, 1.563vw, 30px);
+  min-height: 482px;
+  padding: 30px;
   border-radius: var(--radius-card, 30px);
   background: rgba(228, 223, 219, .5);
   display: flex;
@@ -932,7 +929,7 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 36px;
-  min-height: 232px;
+  min-height: 248px;
 }
 .car-equipment__column {
   position: relative;
@@ -963,9 +960,9 @@
 .car-equipment__value {
   overflow-wrap: break-word;
   font-family: var(--font-text, "Onest", sans-serif);
-  font-weight: var(--font-weight-semibold, 600);
-  font-size: var(--fs-18);
-  line-height: 24px;
+  font-weight: var(--font-weight-regular, 400);
+  font-size: 16px;
+  line-height: 20px;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 
@@ -976,8 +973,8 @@
   flex: 1 1 0;
   min-width: 0;
   box-sizing: border-box;
-  min-height: 167px;
-  padding: clamp(22px, 1.563vw, 30px) clamp(22px, 2.083vw, 40px);
+  min-height: 150px;
+  padding: 30px;
   border-radius: var(--radius-card, 30px);
   background: var(--color-white, #FFFFFF);
   display: flex;
@@ -988,16 +985,16 @@
   margin: 0;
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
   font-weight: var(--font-weight-semibold, 600);
-  font-size: clamp(26px, 2.6vw, 36px);
-  line-height: 1.22;
+  font-size: 30px;
+  line-height: 38px;
   color: var(--color-heritage-green-500, #294434);
 }
 .car-assur__text {
   margin: 0;
   max-width: 562px;
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: var(--fs-18);
-  line-height: 24px;
+  font-size: 16px;
+  line-height: 20px;
   color: #61584E;
   opacity: .7;
 }
@@ -1006,7 +1003,7 @@
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
-  min-height: 216px;
+  min-height: 210px;
   padding: 30px;
   border-radius: var(--radius-card, 30px);
   background: var(--color-heritage-green-500, #294434);
@@ -1050,8 +1047,8 @@
   margin: 0;
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
   font-weight: var(--font-weight-semibold, 600);
-  font-size: clamp(26px, 2.6vw, 36px);
-  line-height: 1.22;
+  font-size: 30px;
+  line-height: 38px;
   color: var(--color-white, #FFFFFF);
 }
 .car-help__desc {
@@ -1083,14 +1080,36 @@
   gap: 24px;
   align-items: stretch;
 }
+.car-atelier .image-service-card {
+  width: 100%;
+  min-height: 656px;
+  padding: 20px;
+  gap: 30px;
+  border-radius: 30px;
+}
+.car-atelier .image-service-card:first-child { min-height: 680px; }
+.car-atelier .image-service-card__img {
+  height: 438px;
+  flex-basis: 438px;
+  aspect-ratio: auto;
+  border-radius: 30px;
+}
+.car-atelier .image-service-card__title {
+  font-size: 30px;
+  line-height: 38px;
+}
+.car-atelier .image-service-card__text {
+  font-size: 16px;
+  line-height: 20px;
+}
 
 /* ---------- Рекомендации и закреплённые действия ---------- */
 .car > .cars-section .car-card {
-  height: 482px;
+  height: 387px;
 }
 .car > .cars-section .car-card__brand,
 .car > .cars-section .car-card__brand img {
-  height: 39px;
+  height: 20px;
 }
 /* ---------- Адаптив ---------- */
 @media (max-width: 1200px) {
@@ -1328,5 +1347,2249 @@
   }
   .car-help__img {
     object-position: 68% center;
+  }
+}
+
+/* ============================================================
+   Карточка автомобиля — контрольные раскладки из Figma
+   ============================================================ */
+
+@media (max-width: 1200px) {
+  .car-wrap {
+    padding-inline: 40px;
+  }
+  .car-wrap--top {
+    padding-top: 134px;
+    padding-bottom: 0;
+  }
+  .car-gallery {
+    --gal-w: calc(70vw + 33px);
+    margin-top: 20px;
+  }
+  .car-main {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "title"
+      "technical"
+      "price"
+      "assurance"
+      "atelier";
+    column-gap: 0;
+    row-gap: 0;
+    margin-top: 60px;
+  }
+  .car-title {
+    grid-area: title;
+    flex-direction: row;
+  }
+  .car-title__name {
+    font-size: 48px;
+    line-height: 56px;
+  }
+  .car-details {
+    display: contents;
+  }
+  .car-details__technical {
+    grid-area: technical;
+    gap: 24px;
+    margin-top: 30px;
+  }
+  .car-specs__list,
+  .car-equipment__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .car-specs__column {
+    gap: 0;
+  }
+  .car-equipment__grid {
+    height: auto;
+    min-height: 138px;
+  }
+  .car-equipment {
+    min-height: 372px;
+  }
+  .car-price {
+    grid-area: price;
+    position: static;
+    width: 100%;
+    height: 160px;
+    min-height: 160px;
+    margin-top: 24px;
+    padding: 20px 30px;
+    gap: 10px;
+    border-radius: 30px;
+  }
+  .car-price__section {
+    height: 70px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .car-price__buttons {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+  .car-price__offers {
+    height: 40px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    overflow: hidden;
+    border-radius: 20px;
+    background: rgba(228, 223, 219, .5);
+  }
+  .car-price__row {
+    height: 40px;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+  }
+  .car-price__row + .car-price__row {
+    border-left: 1px solid var(--color-stone-beige-300, #CAC2BB);
+  }
+  .car-price__note {
+    padding-left: 0;
+    white-space: nowrap;
+  }
+  .car-assur {
+    grid-area: assurance;
+    margin-top: 80px;
+  }
+  .car-atelier {
+    grid-area: atelier;
+    margin-top: 80px;
+  }
+  .car-assur__cards {
+    flex-direction: row;
+  }
+  .car-assur__card {
+    min-height: 164px;
+  }
+  .car-help {
+    min-height: 216px;
+  }
+  .car-atelier {
+    gap: 24px;
+  }
+  .car > .cars-section {
+    height: 416px;
+    margin-top: 120px;
+  }
+  .car > .cars-section .car-card {
+    height: 338px;
+  }
+  .car > .contacts {
+    margin-top: 160px;
+  }
+}
+
+@media (max-width: 960px) {
+  .car-gallery {
+    --gal-w: calc(84.375vw - 105px);
+  }
+  .car-gallery__arrow {
+    width: 28px;
+    height: 28px;
+  }
+  .car-gallery__arrow--prev {
+    left: 20px;
+  }
+  .car-gallery__arrow--next {
+    right: 20px;
+  }
+  .car-gallery__all {
+    top: 10px;
+    right: 10px;
+    min-height: 28px;
+    padding: 5px 12px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .car-title__name {
+    font-size: 48px;
+    line-height: 56px;
+  }
+  .car-details__technical {
+    margin-top: 20px;
+  }
+  .car-specs__title,
+  .car-equipment__title {
+    font-size: 24px;
+    line-height: 30px;
+  }
+  .car-assur__card {
+    min-height: 118px;
+    padding: 20px;
+    gap: 8px;
+  }
+  .car-assur__title,
+  .car-help__title {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .car-assur__text,
+  .car-help__desc {
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .car-help {
+    min-height: 170px;
+    padding: 20px;
+  }
+  .car-atelier {
+    gap: 20px;
+  }
+  .car-equipment {
+    min-height: 462px;
+  }
+  .car-equipment__grid {
+    min-height: 238px;
+  }
+  .car-specs__column {
+    gap: 5px;
+  }
+  .car-atelier .image-service-card,
+  .car-atelier .image-service-card:first-child {
+    min-height: 446px;
+  }
+  .car-atelier .image-service-card__img {
+    height: 244px;
+    flex-basis: 244px;
+  }
+  .car-atelier .image-service-card__title {
+    font-size: 20px;
+    line-height: 26px;
+  }
+  .car-atelier .image-service-card__text {
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .car > .cars-section {
+    height: 412px;
+    margin-top: 100px;
+  }
+  .car > .contacts {
+    margin-top: 140px;
+  }
+}
+
+@media (max-width: 768px) {
+  .car-wrap {
+    padding-inline: clamp(30px, 5.2083vw, 40px);
+  }
+  .car-gallery {
+    --gal-w: calc(56.25vw + 111px);
+  }
+  .car-gallery__arrow--prev {
+    left: 16px;
+  }
+  .car-gallery__arrow--next {
+    right: 16px;
+  }
+  .car-title {
+    flex-direction: row;
+    gap: 20px;
+  }
+  .car-title__name {
+    font-size: 32px;
+    line-height: 40px;
+  }
+  .car-title__actions {
+    padding-top: 10px;
+  }
+  .car-title__actions .wishlist,
+  .car-title__actions .compare,
+  .car-title__actions .ui-button.wishlist > svg,
+  .car-title__actions .ui-button.compare > svg {
+    width: 20px;
+    height: 20px;
+  }
+  .car-details__technical {
+    gap: 24px;
+  }
+  .car-specs,
+  .car-equipment {
+    padding: 24px;
+    border-radius: 24px;
+  }
+  .car-specs {
+    gap: 20px;
+  }
+  .car-specs__title,
+  .car-equipment__title {
+    font-size: 20px;
+    line-height: 28px;
+  }
+  .car-specs__list,
+  .car-equipment__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 36px;
+  }
+  .car-specs__column {
+    gap: 5px;
+  }
+  .car-specs__column + .car-specs__column::before {
+    left: -18px;
+  }
+  .car-specs__row {
+    min-height: 36px;
+    height: 36px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    padding: 2px 0;
+  }
+  .car-specs__label,
+  .car-equipment__label {
+    flex: none;
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .car-specs__value {
+    max-width: none;
+    font-size: 14px;
+    line-height: 18px;
+    text-align: left;
+  }
+  .car-equipment {
+    gap: 20px;
+    min-height: 458px;
+  }
+  .car-equipment__body {
+    gap: 24px;
+  }
+  .car-equipment__grid {
+    column-gap: 36px;
+    row-gap: 0;
+    min-height: 258px;
+  }
+  .car-equipment__column + .car-equipment__column::before {
+    display: block;
+    left: -18px;
+  }
+  .car-equipment__value {
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .car-price {
+    height: 180px;
+    min-height: 180px;
+    padding: 20px 24px;
+  }
+  .car-price__offers {
+    height: 60px;
+  }
+  .car-price__row {
+    height: 60px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2px;
+    padding: 10px 20px;
+  }
+  .car-assur {
+    margin-top: 70px;
+  }
+  .car-assur__cards {
+    flex-direction: row;
+    gap: 24px;
+  }
+  .car-assur__card {
+    min-height: 132px;
+  }
+  .car-help {
+    min-height: 166px;
+  }
+  .car-atelier {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 70px;
+  }
+  .car-atelier .image-service-card,
+  .car-atelier .image-service-card:first-child {
+    min-height: 432px;
+  }
+  .car > .cars-section,
+  .car > .contacts {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .car-wrap {
+    padding-inline: 30px;
+  }
+  .car-wrap--top {
+    padding-bottom: 0;
+  }
+  .car-gallery {
+    --gal-w: 471px;
+    margin-top: 20px;
+  }
+  .car-gallery__track {
+    gap: 26px;
+  }
+  .car-gallery__slot {
+    border-radius: 24px;
+  }
+  .car-gallery__arrow {
+    width: 28px;
+    height: 28px;
+  }
+  .car-gallery__all {
+    top: 10px;
+    right: 10px;
+    min-height: 28px;
+    padding: 5px 12px;
+  }
+  .car-main {
+    margin-top: 50px;
+  }
+  .car-title {
+    gap: 16px;
+  }
+  .car-title__name {
+    font-size: 28px;
+    line-height: 34px;
+  }
+  .car-title {
+    min-height: 40px;
+  }
+  .car-title__head {
+    gap: 10px;
+  }
+  .car-title__actions {
+    width: auto;
+    padding-top: 10px;
+  }
+  .car-title__actions .wishlist,
+  .car-title__actions .compare,
+  .car-title__actions .ui-button.wishlist > svg,
+  .car-title__actions .ui-button.compare > svg {
+    width: 16px;
+    height: 16px;
+  }
+  .car-details__technical {
+    margin-top: 20px;
+  }
+  .car-specs,
+  .car-equipment {
+    padding: 20px;
+    border-radius: 20px;
+  }
+  .car-specs__title,
+  .car-equipment__title {
+    font-size: 18px;
+    line-height: 24px;
+  }
+  .car-specs__list {
+    column-gap: 32px;
+  }
+  .car-specs__column {
+    gap: 8px;
+  }
+  .car-specs__row {
+    min-height: 40px;
+    height: 40px;
+  }
+  .car-specs__column + .car-specs__column::before {
+    left: -16px;
+  }
+  .car-equipment__grid {
+    column-gap: 40px;
+    min-height: 238px;
+  }
+  .car-equipment {
+    min-height: 446px;
+  }
+  .car-equipment__column + .car-equipment__column::before {
+    left: -20px;
+  }
+  .car-price {
+    height: 180px;
+    min-height: 180px;
+    padding: 20px;
+    gap: 10px;
+  }
+  .car-assur__cards {
+    gap: 18px;
+  }
+  .car-assur {
+    gap: 18px;
+  }
+  .car-assur__card {
+    min-height: 138px;
+  }
+  .car-help {
+    min-height: 158px;
+    padding: 20px;
+  }
+  .car-atelier .image-service-card,
+  .car-atelier .image-service-card:first-child {
+    min-height: 327px;
+    padding: 16px;
+    gap: 20px;
+    border-radius: 24px;
+  }
+  .car-atelier .image-service-card__img {
+    height: 161px;
+    flex-basis: 161px;
+    border-radius: 20px;
+  }
+  .car-atelier .image-service-card__title {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .car-atelier .image-service-card__text {
+    font-size: 12px;
+    line-height: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .car-wrap {
+    padding-inline: clamp(16px, 4.1667vw, 20px);
+  }
+  .car-gallery {
+    --gal-w: min(471px, calc(100vw - 8px));
+  }
+  .car-title {
+    align-items: flex-start;
+    min-height: 72px;
+  }
+  .car-title__head {
+    width: calc(100% - 64px);
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .car-title__badge {
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .car-specs,
+  .car-equipment {
+    padding: 16px;
+  }
+  .car-equipment {
+    min-height: 564px;
+  }
+  .car-equipment__grid {
+    min-height: 328px;
+  }
+  .car-specs__column {
+    gap: 12px;
+  }
+  .car-price {
+    height: 204px;
+    min-height: 204px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 20px 16px;
+    gap: 10px;
+  }
+  .car-price__section {
+    height: 164px;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+  .car-price__buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .car-price__offers {
+    height: 164px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    padding: 10px 20px;
+  }
+  .car-price__row {
+    width: 100%;
+    height: 40px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2px;
+    padding: 0;
+  }
+  .car-price__row + .car-price__row {
+    border-left: 0;
+  }
+  .car-price__note {
+    white-space: normal;
+  }
+  .car-assur {
+    margin-top: 50px;
+    gap: 10px;
+  }
+  .car-assur__cards {
+    gap: 10px;
+  }
+  .car-assur__card {
+    min-height: 176px;
+    padding: 20px;
+  }
+  .car-help {
+    min-height: 158px;
+  }
+  .car-atelier {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    margin-top: 50px;
+  }
+  .car-atelier .image-service-card,
+  .car-atelier .image-service-card:first-child {
+    min-height: 310px;
+  }
+  .car-atelier .image-service-card__img {
+    height: 186px;
+    flex-basis: 186px;
+  }
+}
+
+@media (max-width: 390px) {
+  .car-specs__list {
+    column-gap: 20px;
+  }
+  .car-specs__column + .car-specs__column::before {
+    left: -10px;
+  }
+  .car-equipment__grid {
+    column-gap: 16px;
+  }
+  .car-equipment__column + .car-equipment__column::before {
+    left: -8px;
+  }
+  .car-specs__value,
+  .car-equipment__value {
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .car-equipment__value {
+    overflow-wrap: normal;
+  }
+  .car-price__value .price-block__value {
+    font-size: 24px;
+    line-height: 30px;
+    white-space: nowrap;
+  }
+  .car-price {
+    gap: 8px;
+  }
+  .car-price__offers {
+    padding-inline: 16px;
+  }
+  .car-assur__card {
+    padding: 16px;
+  }
+}
+
+/* ============================================================
+   Полный аудит нижних блоков по макетам карточки автомобиля
+   ============================================================ */
+
+/* Рекомендации: отдельная геометрия карточек автомобиля, без
+   вмешательства в общий CarsSection на остальных страницах. */
+@media (min-width: 769px) and (max-width: 1536px) {
+  .car > .cars-section {
+    padding-inline: clamp(
+      40px,
+      calc(40px + (100vw - 1200px) * .0595238),
+      60px
+    );
+  }
+  .car > .cars-section .cars-section__head {
+    height: 44px;
+    min-height: 44px;
+    margin-bottom: 34px;
+  }
+  .car > .cars-section .cars-section__title {
+    font-size: 36px;
+    line-height: 44px;
+  }
+  .car > .cars-section .cars-section__head > .ui-button {
+    height: 36px;
+    padding-inline: 13px;
+    font-size: 16px;
+    line-height: 20px;
+  }
+  .car > .cars-section .cars-row {
+    gap: 10px;
+  }
+  .car > .cars-section .cars-section__nav {
+    display: none;
+  }
+  .car > .cars-section .cars-row > * {
+    min-width: 0;
+    max-width: none;
+  }
+  .car > .cars-section .car-card {
+    border-radius: clamp(
+      20px,
+      calc(20px + (100vw - 1200px) * .0297619),
+      30px
+    );
+  }
+}
+
+@media (min-width: 1201px) and (max-width: 1536px) {
+  .car > .cars-section {
+    height: clamp(
+      416px,
+      calc(416px + (100vw - 1200px) * .1458333),
+      465px
+    );
+  }
+  .car > .cars-section .cars-row > * {
+    flex: 0 0 calc((100% - 30px) / 4);
+  }
+  .car > .cars-section .car-card {
+    height: clamp(
+      338px,
+      calc(338px + (100vw - 1200px) * .1458333),
+      387px
+    );
+  }
+  .car > .cars-section .car-card__title {
+    font-size: clamp(
+      18px,
+      calc(18px + (100vw - 1200px) * .0059524),
+      20px
+    );
+    line-height: clamp(
+      22px,
+      calc(22px + (100vw - 1200px) * .0119048),
+      26px
+    );
+  }
+}
+
+@media (min-width: 961px) and (max-width: 1200px) {
+  .car > .cars-section {
+    padding-inline: 40px;
+  }
+  .car > .cars-section .cars-row > * {
+    flex: 0 0 calc((100% - 30px) / 4);
+  }
+  .car > .cars-section .car-card {
+    height: 338px;
+    padding: 20px;
+    gap: 24px;
+    border-radius: 20px;
+  }
+  .car > .cars-section .car-card__title {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .car > .cars-section .car-card__photo,
+  .car > .cars-section .car-card__photo img {
+    height: 110px;
+    max-height: 110px;
+  }
+  .car > .cars-section .price-block__value {
+    font-size: 20px;
+    line-height: 26px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 960px) {
+  .car > .cars-section {
+    padding-inline: 40px;
+  }
+  .car > .cars-section .cars-row > * {
+    flex: 0 0 calc((100% - 20px) / 3);
+  }
+  .car > .cars-section .car-card {
+    height: 338px;
+    padding: 20px;
+    gap: 24px;
+    border-radius: 20px;
+  }
+  .car > .cars-section .car-card__title {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .car > .cars-section .car-card__photo,
+  .car > .cars-section .car-card__photo img {
+    height: 110px;
+    max-height: 110px;
+  }
+  .car > .cars-section .price-block__value {
+    font-size: 20px;
+    line-height: 26px;
+  }
+}
+
+/* На 960 px и промежуточных ширинах карточка использует ту же
+   компактную внутреннюю композицию, что и вариант 1200 px. */
+@media (min-width: 769px) and (max-width: 1199px) {
+  .car > .cars-section .car-card__content {
+    gap: 16px;
+  }
+  .car > .cars-section .car-card__brand,
+  .car > .cars-section .car-card__brand img {
+    height: 20px;
+  }
+  .car > .cars-section .car-card__actions {
+    gap: 16px;
+  }
+  .car > .cars-section .wishlist,
+  .car > .cars-section .compare,
+  .car > .cars-section .ui-button.wishlist > svg,
+  .car > .cars-section .ui-button.compare > svg {
+    width: 18px;
+    height: 18px;
+  }
+  .car > .cars-section .car-card__info {
+    gap: 6px;
+  }
+  .car > .cars-section .indicator--l {
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .car > .cars-section .car-card__tags {
+    padding-top: 0;
+  }
+  .car > .cars-section .tag--card.tag--l {
+    padding: 3px 8px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .car > .cars-section .car-card__tags .tag:nth-child(n + 3) {
+    display: none;
+  }
+  .car > .cars-section .car-card__tags::after {
+    content: "+1";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 3px 8px;
+    border-radius: 26px;
+    background: rgba(143, 133, 121, .2);
+    color: var(--color-heritage-green-500, #294434);
+    font-family: var(--font-text, "Onest", sans-serif);
+    font-size: 14px;
+    line-height: 18px;
+    white-space: nowrap;
+  }
+  .car > .cars-section .car-card__action {
+    gap: 8px;
+  }
+  .car > .cars-section .price-block--l {
+    gap: 0;
+  }
+  .car > .cars-section .price-block--l .price-block__label {
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .car > .cars-section .price-block--l .price-block__value {
+    font-size: min(20px, 8cqi);
+    line-height: 26px;
+  }
+  .car > .cars-section .car-card__details-link.btn--m {
+    flex: 0 0 28px;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+  }
+  .car > .cars-section .car-card__details-link > .btn__label {
+    display: none;
+  }
+  .car > .cars-section .car-card__details-link > .btn__icon:has(.car-card__details-icon) {
+    display: inline-flex;
+    width: 8px;
+    height: 8px;
+  }
+  .car > .cars-section .car-card__details-icon {
+    display: block;
+  }
+}
+
+/* Ателье и Veles: размеры изображений, карточек и типографика
+   отличаются в каждом экспортированном фрейме Figma. */
+@media (min-width: 1201px) and (max-width: 1536px) {
+  .car-atelier {
+    height: clamp(
+      591px,
+      calc(596px - (100vw - 1200px) * .014881),
+      596px
+    );
+    gap: 0;
+  }
+  .car-atelier .image-service-card,
+  .car-atelier .image-service-card:first-child {
+    height: 100%;
+    min-height: 0;
+    padding: 20px;
+    gap: 30px;
+    border-radius: 30px;
+    background: transparent;
+  }
+  .car-atelier .image-service-card__img {
+    height: clamp(
+      354px,
+      calc(354px + (100vw - 1200px) * .0565476),
+      373px
+    );
+    flex-basis: clamp(
+      354px,
+      calc(354px + (100vw - 1200px) * .0565476),
+      373px
+    );
+    border-radius: 30px;
+  }
+  .car-atelier .image-service-card__title {
+    font-size: clamp(
+      30px,
+      calc(36px - (100vw - 1200px) * .0178571),
+      36px
+    );
+    line-height: clamp(
+      38px,
+      calc(44px - (100vw - 1200px) * .0178571),
+      44px
+    );
+  }
+  .car-atelier .image-service-card__text {
+    font-size: clamp(
+      16px,
+      calc(18px - (100vw - 1200px) * .0059524),
+      18px
+    );
+    line-height: clamp(
+      20px,
+      calc(24px - (100vw - 1200px) * .0119048),
+      24px
+    );
+  }
+}
+
+@media (min-width: 961px) and (max-width: 1200px) {
+  .car-atelier {
+    height: 596px;
+    gap: 0;
+  }
+  .car-atelier .image-service-card,
+  .car-atelier .image-service-card:first-child {
+    height: 596px;
+    min-height: 596px;
+    padding: 20px;
+    gap: 30px;
+    border-radius: 30px;
+    background: transparent;
+  }
+  .car-atelier .image-service-card__img {
+    height: 354px;
+    flex-basis: 354px;
+    border-radius: 30px;
+  }
+  .car-atelier .image-service-card__title {
+    font-size: 36px;
+    line-height: 44px;
+  }
+  .car-atelier .image-service-card__text {
+    font-size: 18px;
+    line-height: 24px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 960px) {
+  .car-atelier {
+    height: 446px;
+    gap: 20px;
+  }
+  .car-atelier .image-service-card,
+  .car-atelier .image-service-card:first-child {
+    height: 446px;
+    min-height: 446px;
+    padding: 20px;
+    gap: 30px;
+    border-radius: 30px;
+    background: var(--color-white, #FFFFFF);
+  }
+  .car-atelier .image-service-card__img {
+    height: 244px;
+    flex-basis: 244px;
+    border-radius: 30px;
+  }
+  .car-atelier .image-service-card__title {
+    font-size: 24px;
+    line-height: 30px;
+  }
+  .car-atelier .image-service-card__text {
+    font-size: 16px;
+    line-height: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .car-atelier {
+    height: 432px;
+    gap: 20px;
+  }
+  .car-atelier .image-service-card,
+  .car-atelier .image-service-card:first-child {
+    height: 432px;
+    min-height: 432px;
+    background: var(--color-white, #FFFFFF);
+  }
+}
+
+@media (max-width: 640px) {
+  .car-atelier {
+    height: 327px;
+  }
+  .car-atelier .image-service-card,
+  .car-atelier .image-service-card:first-child {
+    height: 327px;
+    min-height: 327px;
+    gap: 30px;
+    border-radius: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .car-atelier {
+    height: 630px;
+    gap: 10px;
+  }
+  .car-atelier .image-service-card,
+  .car-atelier .image-service-card:first-child {
+    height: 310px;
+    min-height: 310px;
+    gap: 20px;
+  }
+  .car-atelier .image-service-card__img {
+    border-radius: 14px;
+  }
+}
+
+@media (max-width: 390px) {
+  .car-atelier {
+    height: auto;
+  }
+  .car-atelier .image-service-card,
+  .car-atelier .image-service-card:first-child {
+    height: auto;
+    min-height: 310px;
+  }
+}
+
+/* Контакты: в макетах карточки автомобиля это три разные
+   композиции — 1536/1200 и горизонтальная версия 960. */
+@media (min-width: 961px) and (max-width: 1536px) {
+  .car > .contacts {
+    padding-inline: clamp(
+      40px,
+      calc(40px + (100vw - 1200px) * .0595238),
+      60px
+    );
+  }
+  .car > .contacts .contacts__grid {
+    grid-template-columns:
+      minmax(0, 1fr)
+      clamp(
+        499px,
+        calc(499px + (100vw - 1200px) * .2470238),
+        582px
+      );
+    gap: clamp(
+      38px,
+      calc(40px - (100vw - 1200px) * .0059524),
+      40px
+    );
+  }
+  .car > .contacts .contacts__title {
+    gap: 0;
+  }
+  .car > .contacts .contacts__title .l1,
+  .car > .contacts .contacts__title .l2 {
+    font-size: clamp(
+      50px,
+      calc(50px + (100vw - 1200px) * .047619),
+      66px
+    );
+    line-height: 70px;
+    text-transform: none;
+  }
+  .car > .contacts .contacts__title .l2 {
+    margin-top: clamp(
+      -3px,
+      calc(-3px + (100vw - 1200px) * .0446429),
+      12px
+    );
+  }
+  .car > .contacts .contacts__sub {
+    width: clamp(
+      598px,
+      calc(598px + (100vw - 1200px) * .5892857),
+      796px
+    );
+    max-width: none;
+    margin-top: clamp(
+      13px,
+      calc(13px + (100vw - 1200px) * .0565476),
+      32px
+    );
+    font-size: 18px;
+    line-height: 24px;
+  }
+  .car > .contacts .contacts__head {
+    margin-bottom: clamp(
+      47px,
+      calc(57px - (100vw - 1200px) * .0297619),
+      57px
+    );
+  }
+  .car > .contacts .contacts__gallery {
+    width: clamp(
+      585px,
+      calc(585px + (100vw - 1200px) * .6279762),
+      796px
+    );
+    grid-template-columns:
+      clamp(
+        298px,
+        calc(298px + (100vw - 1200px) * .3214286),
+        406px
+      )
+      minmax(0, 1fr);
+    grid-template-rows:
+      clamp(
+        256px,
+        calc(256px + (100vw - 1200px) * .2767857),
+        349px
+      )
+      clamp(
+        254px,
+        calc(254px + (100vw - 1200px) * .2708333),
+        345px
+      );
+    column-gap: clamp(
+      14px,
+      calc(14px + (100vw - 1200px) * .014881),
+      19px
+    );
+    row-gap: clamp(
+      21px,
+      calc(21px + (100vw - 1200px) * .0208333),
+      28px
+    );
+  }
+  .car > .contacts .contacts__gallery img {
+    height: 100%;
+    aspect-ratio: auto;
+    border-radius: clamp(
+      24px,
+      calc(24px + (100vw - 1200px) * .0238095),
+      32px
+    );
+  }
+  .car > .contacts .contacts__info {
+    height: clamp(
+      810px,
+      calc(810px + (100vw - 1200px) * .5684524),
+      1001px
+    );
+    min-height: 0;
+    margin-top: 0;
+    padding: clamp(
+      30px,
+      calc(30px + (100vw - 1200px) * .0297619),
+      40px
+    );
+    gap: clamp(
+      40px,
+      calc(40px + (100vw - 1200px) * .047619),
+      56px
+    );
+  }
+  .car > .contacts .contacts__row .label {
+    font-size: 18px;
+    line-height: 24px;
+  }
+  .car > .contacts .contacts__row .value {
+    font-size: 24px;
+    line-height: 30px;
+  }
+  .car > .contacts .contacts__row .note {
+    margin-top: 4px;
+    font-size: 18px;
+    line-height: 24px;
+  }
+  .car > .contacts .contacts__rows > .ui-button {
+    height: clamp(
+      36px,
+      calc(36px + (100vw - 1200px) * .0238095),
+      44px
+    );
+    padding-inline: clamp(
+      14px,
+      calc(14px + (100vw - 1200px) * .0119048),
+      18px
+    );
+    font-size: clamp(
+      16px,
+      calc(16px + (100vw - 1200px) * .0059524),
+      18px
+    );
+    line-height: clamp(
+      20px,
+      calc(20px + (100vw - 1200px) * .0119048),
+      24px
+    );
+  }
+}
+
+@media (min-width: 769px) and (max-width: 960px) {
+  .car > .contacts {
+    padding-inline: 40px;
+  }
+  .car > .contacts .contacts__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+  .car > .contacts .contacts__title {
+    gap: 0;
+  }
+  .car > .contacts .contacts__title .l1,
+  .car > .contacts .contacts__title .l2 {
+    font-size: 50px;
+    line-height: 70px;
+    text-transform: none;
+  }
+  .car > .contacts .contacts__title .l2 {
+    margin-top: -3px;
+  }
+  .car > .contacts .contacts__sub {
+    width: 100%;
+    max-width: none;
+    margin-top: 13px;
+    font-size: 18px;
+    line-height: 24px;
+  }
+  .car > .contacts .contacts__head {
+    margin-bottom: 40px;
+  }
+  .car > .contacts .contacts__gallery {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: 186px;
+    gap: 14px;
+  }
+  .car > .contacts .contacts__gallery img,
+  .car > .contacts .contacts__gallery .tall {
+    width: 100%;
+    height: 186px;
+    aspect-ratio: auto;
+    grid-column: auto;
+    grid-row: auto;
+    border-radius: 24px;
+  }
+  .car > .contacts .contacts__info {
+    height: 372px;
+    min-height: 372px;
+    margin-top: 0;
+    padding: 30px;
+    flex-direction: row;
+    gap: 40px;
+    border-radius: 22px;
+  }
+  .car > .contacts .contacts__rows {
+    flex: 0 0 390px;
+    gap: 24px;
+  }
+  .car > .contacts .contacts__row .label {
+    font-size: 16px;
+    line-height: 20px;
+  }
+  .car > .contacts .contacts__row .value {
+    font-size: 20px;
+    line-height: 28px;
+  }
+  .car > .contacts .contacts__row .note {
+    margin-top: 4px;
+    font-size: 16px;
+    line-height: 20px;
+  }
+  .car > .contacts .contacts__rows > .ui-button {
+    height: 36px;
+    padding-inline: 14px;
+    font-size: 16px;
+    line-height: 20px;
+  }
+  .car > .contacts .contacts__map {
+    height: 312px;
+    min-height: 0;
+    border-radius: 26px;
+  }
+}
+
+/* На широком экране без отдельного фрейма сохраняем исходную
+   крупную версию кита вместо растягивания 1536-макета. */
+@media (min-width: 1537px) {
+  .car > .cars-section {
+    height: 574px;
+    margin-top: 126px;
+  }
+  .car > .cars-section .car-card {
+    height: 482px;
+  }
+  .car > .cars-section .car-card__brand,
+  .car > .cars-section .car-card__brand img {
+    height: 39px;
+  }
+  .car-atelier .image-service-card__title {
+    font-size: 36px;
+    line-height: 44px;
+  }
+  .car-atelier .image-service-card__text {
+    font-size: 18px;
+    line-height: 24px;
+  }
+}
+
+/* Точная типографика и радиусы карточек по вариантам Figma.
+   Общие fluid-токены здесь не подходят: в карточке автомобиля
+   шкала меняется дискретно между 1536 / 1200 / 960 / 768 / 640. */
+@media (min-width: 1201px) and (max-width: 1536px) {
+  .car-specs,
+  .car-equipment,
+  .car-price,
+  .car-assur__card,
+  .car-help {
+    border-radius: 30px;
+  }
+  .car-specs {
+    padding: 30px 30px 24px;
+  }
+  .car-specs__title,
+  .car-equipment__title {
+    font-size: clamp(
+      24px,
+      calc(24px + (100vw - 1200px) * .0178571),
+      30px
+    );
+    line-height: clamp(
+      30px,
+      calc(30px + (100vw - 1200px) * .0297619),
+      40px
+    );
+  }
+  .car-specs__column {
+    gap: 12px;
+  }
+  .car-specs__row {
+    height: clamp(
+      34px,
+      calc(34px + (100vw - 1200px) * .0059524),
+      36px
+    );
+  }
+  .car-specs__value {
+    font-size: clamp(
+      14px,
+      calc(14px + (100vw - 1200px) * .0059524),
+      16px
+    );
+    line-height: clamp(
+      18px,
+      calc(18px + (100vw - 1200px) * .0059524),
+      20px
+    );
+  }
+  .car-specs__toggle {
+    height: clamp(
+      18px,
+      calc(18px + (100vw - 1200px) * .0059524),
+      20px
+    );
+    font-size: clamp(
+      14px,
+      calc(14px + (100vw - 1200px) * .0059524),
+      16px
+    );
+    line-height: clamp(
+      18px,
+      calc(18px + (100vw - 1200px) * .0059524),
+      20px
+    );
+  }
+  .car-assur__title,
+  .car-help__title {
+    font-size: clamp(
+      30px,
+      calc(36px - (100vw - 1200px) * .0178571),
+      36px
+    );
+    line-height: clamp(
+      38px,
+      calc(44px - (100vw - 1200px) * .0178571),
+      44px
+    );
+  }
+  .car-assur__text {
+    font-size: clamp(
+      16px,
+      calc(18px - (100vw - 1200px) * .0059524),
+      18px
+    );
+    line-height: clamp(
+      20px,
+      calc(24px - (100vw - 1200px) * .0119048),
+      24px
+    );
+  }
+}
+
+@media (min-width: 961px) and (max-width: 1200px) {
+  .car-specs,
+  .car-equipment,
+  .car-price {
+    border-radius: 30px;
+  }
+  .car-specs {
+    height: 276px;
+    padding: 30px 30px 24px;
+  }
+  .car-specs__title,
+  .car-equipment__title {
+    font-size: 24px;
+    line-height: 30px;
+  }
+  .car-specs__column {
+    gap: 12px;
+  }
+  .car-specs__row {
+    height: 34px;
+  }
+  .car-specs__value {
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .car-specs__toggle {
+    height: 18px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .car-equipment {
+    height: clamp(
+      372px,
+      calc(462px - (100vw - 960px) * .375),
+      462px
+    );
+  }
+  .car-equipment__tabs .ui-button {
+    height: 28px;
+    min-height: 28px;
+    gap: 4px;
+    padding-inline: 10px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .car-equipment__tabs {
+    min-height: 28px;
+  }
+  .car-equipment__tabs .bubble {
+    min-width: 16px;
+    height: 16px;
+    padding-inline: 6px;
+    font-size: 10px;
+    line-height: 14px;
+  }
+  .car-equipment__label,
+  .car-equipment__value {
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .car-equipment__feature {
+    gap: 2px;
+  }
+  .car-assur__card,
+  .car-help {
+    border-radius: clamp(
+      20px,
+      calc(20px + (100vw - 960px) * .0416667),
+      30px
+    );
+  }
+  .car-assur__title,
+  .car-help__title {
+    font-size: clamp(
+      24px,
+      calc(24px + (100vw - 960px) * .05),
+      36px
+    );
+    line-height: clamp(
+      30px,
+      calc(30px + (100vw - 960px) * .0583333),
+      44px
+    );
+  }
+  .car-assur__text {
+    font-size: clamp(
+      14px,
+      calc(14px + (100vw - 960px) * .0166667),
+      18px
+    );
+    line-height: clamp(
+      18px,
+      calc(18px + (100vw - 960px) * .025),
+      24px
+    );
+  }
+  .car-help__desc {
+    font-size: clamp(
+      14px,
+      calc(14px + (100vw - 960px) * .0083333),
+      16px
+    );
+    line-height: clamp(
+      18px,
+      calc(18px + (100vw - 960px) * .0083333),
+      20px
+    );
+  }
+}
+
+@media (min-width: 769px) and (max-width: 960px) {
+  .car-specs,
+  .car-equipment,
+  .car-price {
+    border-radius: 30px;
+  }
+  .car-specs {
+    height: 276px;
+    padding: 30px 30px 24px;
+  }
+  .car-specs__title,
+  .car-equipment__title {
+    font-size: 24px;
+    line-height: 30px;
+  }
+  .car-specs__column {
+    gap: 12px;
+  }
+  .car-specs__row {
+    height: 34px;
+  }
+  .car-specs__value {
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .car-specs__toggle {
+    height: 18px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .car-equipment__tabs .ui-button {
+    height: 28px;
+    min-height: 28px;
+    gap: 4px;
+    padding-inline: 10px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .car-equipment__tabs {
+    min-height: 28px;
+  }
+  .car-equipment__tabs .bubble {
+    min-width: 16px;
+    height: 16px;
+    padding-inline: 6px;
+    font-size: 10px;
+    line-height: 14px;
+  }
+  .car-equipment__label,
+  .car-equipment__value {
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .car-equipment__feature {
+    gap: 2px;
+  }
+  .car-equipment__grid {
+    min-height: 254px;
+  }
+  .car-assur__card,
+  .car-help {
+    border-radius: 20px;
+  }
+  .car-assur__title,
+  .car-help__title {
+    font-size: 24px;
+    line-height: 30px;
+  }
+  .car-assur__text,
+  .car-help__desc {
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .car-help__btn {
+    height: 28px;
+    padding: 5px 12px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .car > .cars-section .cars-section__head {
+    height: 40px;
+    min-height: 40px;
+  }
+  .car > .cars-section .cars-section__title {
+    font-size: 32px;
+    line-height: 40px;
+  }
+  .car > .cars-section .car-card {
+    border-radius: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .car-price__row-head,
+  .car-price__note {
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .car-specs,
+  .car-equipment,
+  .car-price {
+    border-radius: 30px;
+  }
+  .car-specs {
+    height: 254px;
+    padding: 24px 24px 20px;
+    gap: 20px;
+  }
+  .car-specs__title,
+  .car-equipment__title {
+    font-size: 20px;
+    line-height: 28px;
+  }
+  .car-specs__list,
+  .car-equipment__grid {
+    column-gap: 40px;
+  }
+  .car-specs__column {
+    gap: 12px;
+  }
+  .car-specs__row {
+    height: 34px;
+    min-height: 34px;
+    padding-block: 8px;
+  }
+  .car-specs__label,
+  .car-equipment__label {
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .car-specs__value,
+  .car-equipment__value {
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .car-specs__toggle {
+    height: 16px;
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .car-equipment {
+    height: 458px;
+    min-height: 458px;
+    padding: 24px;
+    gap: 12px;
+  }
+  .car-equipment__body {
+    gap: 24px;
+  }
+  .car-equipment__tabs .ui-button {
+    height: 28px;
+    min-height: 28px;
+    gap: 4px;
+    padding-inline: 10px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .car-equipment__tabs {
+    min-height: 28px;
+  }
+  .car-equipment__tabs .bubble {
+    min-width: 16px;
+    height: 16px;
+    padding-inline: 6px;
+    font-size: 10px;
+    line-height: 14px;
+  }
+  .car-equipment__feature {
+    gap: 2px;
+  }
+  .car-equipment__grid {
+    min-height: 282px;
+  }
+  .car-assur__card,
+  .car-help {
+    border-radius: 20px;
+  }
+  .car-assur__title,
+  .car-help__title {
+    font-size: 20px;
+    line-height: 26px;
+  }
+  .car-assur__text,
+  .car-help__desc {
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .car-help__btn {
+    height: 28px;
+    padding: 5px 12px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+}
+
+@media (max-width: 640px) {
+  .car-price__value .price-block__label {
+    font-size: 10px;
+    line-height: 14px;
+  }
+  .car-specs,
+  .car-equipment,
+  .car-price,
+  .car-assur__card,
+  .car-help {
+    border-radius: 20px;
+  }
+  .car-specs {
+    height: 260px;
+    padding: 20px 20px 16px;
+  }
+  .car-specs__title,
+  .car-equipment__title {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 24px;
+  }
+  .car-specs__column {
+    gap: 6px;
+  }
+  .car-specs__row {
+    height: 44px;
+    min-height: 44px;
+    padding-block: 4px;
+  }
+  .car-specs__toggle {
+    height: 16px;
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .car-equipment {
+    height: 446px;
+    min-height: 446px;
+    padding: 20px;
+  }
+  .car-equipment__grid {
+    min-height: 282px;
+  }
+  .car-equipment__feature {
+    gap: 2px;
+  }
+  .car-assur__title,
+  .car-help__title {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .car-assur__text,
+  .car-help__desc {
+    font-size: 12px;
+    line-height: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .car-specs {
+    padding-inline: 16px;
+  }
+  .car-equipment {
+    height: 564px;
+    min-height: 564px;
+    padding: 20px 16px;
+  }
+  .car-equipment__grid {
+    min-height: 364px;
+  }
+}
+
+@media (max-width: 390px) {
+  .car-equipment {
+    height: 580px;
+    min-height: 580px;
+  }
+}
+
+/* Цена, 960–1200: в Figma предложения собраны в одну свободную
+   строку без разделителей, а не в три равные ячейки. */
+@media (min-width: 769px) and (max-width: 1200px) {
+  .car-price__offers {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+  }
+  .car-price__row {
+    width: auto;
+    height: 20px;
+    min-width: 0;
+    padding: 0;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+  .car-price__row + .car-price__row {
+    border-left: 0;
+  }
+  .car-price__row-head,
+  .car-price__note {
+    flex: none;
+    white-space: nowrap;
+  }
+  .car-price__row:nth-child(2) {
+    flex: 1 1 0;
+  }
+  .car-price__row:last-child {
+    flex: 0 0 auto;
+  }
+}
+
+@media (min-width: 961px) and (max-width: 1200px) {
+  .car-price__offers {
+    padding: 10px 20px;
+  }
+  .car-price__row:first-child,
+  .car-price__row:nth-child(2) {
+    flex: 1 1 0;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 960px) {
+  .car-price__offers {
+    padding: 10px 30px;
+  }
+  .car-price__row:first-child {
+    flex: 0 0 289px;
+  }
+}
+
+/* ============================================================
+   Типографика карточки автомобиля — только фиксированные стили
+   из UI Kit, соответствующие отдельным фреймам Figma.
+   ============================================================ */
+.car-title__name {
+  font-size: var(--type-display-48-font-size);
+  line-height: var(--type-display-48-line-height);
+}
+.car-title {
+  min-height: 56px;
+}
+.car-title__head {
+  gap: 12px;
+}
+.car-title__badge,
+.car-price__buttons .ui-button,
+.car-price__row-head,
+.car-price__note,
+.car-help__btn {
+  font-size: var(--type-text-16-font-size);
+  line-height: var(--type-text-16-line-height);
+}
+.car-specs__title,
+.car-equipment__title {
+  font-size: var(--type-text-30-font-size);
+  line-height: var(--type-text-30-line-height);
+}
+.car-specs__label,
+.car-equipment__label,
+.car-price__value .price-block__label {
+  font-size: var(--type-text-14-font-size);
+  line-height: var(--type-text-14-line-height);
+}
+.car-specs__value,
+.car-equipment__value,
+.car-specs__toggle,
+.car-equipment__tabs .ui-button {
+  font-size: var(--type-text-16-font-size);
+  line-height: var(--type-text-16-line-height);
+}
+.car-price__value .price-block__value {
+  font-size: var(--type-price-28-font-size);
+  line-height: var(--type-price-28-line-height);
+}
+.car-assur__title,
+.car-help__title,
+.car-atelier .image-service-card__title {
+  font-size: var(--type-display-30-font-size);
+  line-height: var(--type-display-30-line-height);
+}
+.car-assur__text,
+.car-help__desc,
+.car-atelier .image-service-card__text {
+  font-size: var(--type-text-16-font-size);
+  line-height: var(--type-text-16-line-height);
+}
+.car > .cars-section .cars-section__title {
+  font-size: var(--type-display-36-font-size);
+  line-height: var(--type-display-36-line-height);
+}
+.car > .cars-section .car-card__title {
+  font-size: var(--type-display-20-font-size);
+  line-height: var(--type-display-20-line-height);
+}
+.car > .cars-section .indicator,
+.car > .cars-section .tag {
+  font-size: var(--type-text-14-font-size);
+  line-height: var(--type-text-14-line-height);
+}
+.car > .cars-section .price-block__label {
+  font-size: var(--type-text-12-font-size);
+  line-height: var(--type-text-12-line-height);
+}
+.car > .cars-section .price-block__value {
+  font-size: var(--type-price-24-font-size);
+  line-height: var(--type-price-24-line-height);
+}
+.car > .contacts .contacts__title .l1,
+.car > .contacts .contacts__title .l2 {
+  font-size: var(--type-display-66-font-size);
+  line-height: var(--type-display-66-line-height);
+}
+.car > .contacts .contacts__sub,
+.car > .contacts .contacts__row .label,
+.car > .contacts .contacts__row .note,
+.car > .contacts .contacts__rows > .ui-button {
+  font-size: var(--type-text-18-font-size);
+  line-height: var(--type-text-18-line-height);
+}
+.car > .contacts .contacts__row .label {
+  font-weight: var(--font-weight-regular);
+}
+.car > .contacts .contacts__row .value {
+  font-size: var(--type-text-24-font-size);
+  line-height: var(--type-text-24-line-height);
+}
+
+@media (max-width: 1200px) {
+  .car-title__head {
+    gap: 10px;
+  }
+  .car-title__name {
+    font-size: var(--type-display-40-font-size);
+    line-height: var(--type-display-40-line-height);
+    margin-top: 4px;
+  }
+  .car-specs__title,
+  .car-equipment__title {
+    font-size: var(--type-text-24-font-size);
+    line-height: var(--type-text-24-line-height);
+  }
+  .car-specs__label,
+  .car-specs__value,
+  .car-specs__toggle,
+  .car-equipment__label,
+  .car-equipment__value,
+  .car-equipment__tabs .ui-button {
+    font-size: var(--type-text-14-font-size);
+    line-height: var(--type-text-14-line-height);
+  }
+  .car-assur__title,
+  .car-help__title,
+  .car-atelier .image-service-card__title {
+    font-size: var(--type-display-36-font-size);
+    line-height: var(--type-display-36-line-height);
+  }
+  .car-assur__text,
+  .car-atelier .image-service-card__text {
+    font-size: var(--type-text-18-font-size);
+    line-height: var(--type-text-18-line-height);
+  }
+  .car-help__desc,
+  .car-help__btn {
+    font-size: var(--type-text-16-font-size);
+    line-height: var(--type-text-16-line-height);
+  }
+  .car > .cars-section .car-card__title {
+    font-size: var(--type-display-18-font-size);
+    line-height: var(--type-display-18-line-height);
+  }
+  .car > .cars-section .price-block__value {
+    font-size: var(--type-price-20-font-size);
+    line-height: var(--type-price-20-line-height);
+  }
+  .car > .contacts .contacts__title .l1,
+  .car > .contacts .contacts__title .l2 {
+    font-size: var(--type-display-50-font-size);
+    line-height: var(--type-display-50-line-height);
+  }
+  .car > .contacts .contacts__sub,
+  .car > .contacts .contacts__row .label,
+  .car > .contacts .contacts__row .note {
+    font-size: var(--type-text-18-font-size);
+    line-height: var(--type-text-18-line-height);
+  }
+  .car > .contacts .contacts__row .value {
+    font-size: var(--type-text-24-font-size);
+    line-height: var(--type-text-24-line-height);
+  }
+  .car > .contacts .contacts__rows > .ui-button {
+    font-size: var(--type-text-16-font-size);
+    line-height: var(--type-text-16-line-height);
+  }
+}
+
+@media (max-width: 960px) {
+  .car-title__name {
+    font-size: var(--type-display-36-font-size);
+    line-height: var(--type-display-36-line-height);
+    margin-top: 0;
+  }
+  .car-assur__title,
+  .car-help__title,
+  .car-atelier .image-service-card__title {
+    font-size: var(--type-display-24-font-size);
+    line-height: var(--type-display-24-line-height);
+  }
+  .car-assur__text,
+  .car-help__desc,
+  .car-help__btn {
+    font-size: var(--type-text-14-font-size);
+    line-height: var(--type-text-14-line-height);
+  }
+  .car-atelier .image-service-card__text {
+    font-size: var(--type-text-16-font-size);
+    line-height: var(--type-text-16-line-height);
+  }
+  .car > .cars-section .cars-section__title {
+    font-size: var(--type-display-32-font-size);
+    line-height: var(--type-display-32-line-height);
+  }
+  .car > .contacts .contacts__sub {
+    font-size: var(--type-text-18-font-size);
+    line-height: var(--type-text-18-line-height);
+  }
+  .car > .contacts .contacts__row .label,
+  .car > .contacts .contacts__row .note,
+  .car > .contacts .contacts__rows > .ui-button {
+    font-size: var(--type-text-16-font-size);
+    line-height: var(--type-text-16-line-height);
+  }
+  .car > .contacts .contacts__row .value {
+    font-size: var(--type-text-20-font-size);
+    line-height: var(--type-text-20-line-height);
+  }
+}
+
+@media (max-width: 768px) {
+  .car-title {
+    min-height: 40px;
+  }
+  .car-title__head {
+    gap: 8px;
+  }
+  .car-title__name {
+    font-size: var(--type-display-32-font-size);
+    line-height: var(--type-display-32-line-height);
+  }
+  .car-specs__title,
+  .car-equipment__title {
+    font-size: var(--type-text-20-font-size);
+    line-height: var(--type-text-20-line-height);
+  }
+  .car-specs__label,
+  .car-specs__toggle,
+  .car-equipment__label {
+    font-size: var(--type-text-12-font-size);
+    line-height: var(--type-text-12-line-height);
+  }
+  .car-specs__value,
+  .car-equipment__value,
+  .car-equipment__tabs .ui-button,
+  .car-price__row-head,
+  .car-price__note {
+    font-size: var(--type-text-14-font-size);
+    line-height: var(--type-text-14-line-height);
+  }
+  .car-assur__title,
+  .car-help__title,
+  .car-atelier .image-service-card__title {
+    font-size: var(--type-display-20-font-size);
+    line-height: var(--type-display-20-line-height);
+  }
+  .car-assur__text,
+  .car-help__desc,
+  .car-atelier .image-service-card__text,
+  .car-help__btn {
+    font-size: var(--type-text-14-font-size);
+    line-height: var(--type-text-14-line-height);
+  }
+}
+
+@media (max-width: 640px) {
+  .car-title__head {
+    gap: 10px;
+  }
+  .car-title__name {
+    font-size: var(--type-display-28-font-size);
+    line-height: var(--type-display-28-line-height);
+  }
+  .car-specs__title,
+  .car-equipment__title {
+    font-size: var(--type-text-18-font-size);
+    line-height: var(--type-text-18-line-height);
+  }
+  .car-price__value .price-block__label {
+    font-size: var(--type-text-10-font-size);
+    line-height: var(--type-text-10-line-height);
+  }
+  .car-price__buttons .ui-button,
+  .car-price__row-head,
+  .car-price__note {
+    font-size: var(--type-text-14-font-size);
+    line-height: var(--type-text-14-line-height);
+  }
+  .car-assur__title,
+  .car-help__title,
+  .car-atelier .image-service-card__title {
+    font-size: var(--type-display-18-font-size);
+    line-height: var(--type-display-18-line-height);
+  }
+  .car-assur__text,
+  .car-help__desc,
+  .car-atelier .image-service-card__text {
+    font-size: var(--type-text-12-font-size);
+    line-height: var(--type-text-12-line-height);
+  }
+}
+
+@media (max-width: 480px) {
+  .car-title {
+    min-height: 72px;
+  }
+}
+
+@media (max-width: 390px) {
+  .car-price__value .price-block__value {
+    font-size: var(--type-price-24-font-size);
+    line-height: var(--type-price-24-line-height);
+  }
+}
+
+/* ============================================================
+   Регрессионные исправления после проверки интерактивных состояний.
+   Закрытая карточка сохраняет геометрию Figma, раскрытая растёт по
+   контенту и больше не перекрывает следующий блок.
+   ============================================================ */
+.car-specs__row {
+  min-width: 0;
+  border-bottom: 1px solid var(--color-stone-beige-300, #CAC2BB);
+}
+
+.car-specs.is-open {
+  height: auto;
+}
+
+.car-specs.is-open .car-specs__row {
+  height: auto;
+}
+
+.car-specs.is-open .car-specs__value {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 641px) {
+  .car-specs__row {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .car-specs__label {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .car-specs__value {
+    flex: none;
+    max-width: 55%;
+    white-space: nowrap;
+    text-align: right;
+  }
+}
+
+@media (max-width: 640px) {
+  .car-specs {
+    height: auto;
+    min-height: 260px;
+  }
+
+  .car-specs__row {
+    height: 44px;
+    min-height: 44px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    padding-block: 4px;
+    border-bottom: 0;
+  }
+
+  .car-specs__label,
+  .car-specs__value,
+  .car-equipment__column,
+  .car-equipment__feature,
+  .car-equipment__label,
+  .car-equipment__value {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .car-specs__value {
+    white-space: normal;
+    text-align: left;
+  }
+
+  .car-equipment__label,
+  .car-equipment__value {
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (max-width: 390px) {
+  .car-specs__label {
+    font-size: var(--type-text-10-font-size);
+    line-height: var(--type-text-10-line-height);
+  }
+
+  .car-specs__list,
+  .car-equipment__grid {
+    column-gap: 12px;
+  }
+
+  .car-specs__column + .car-specs__column::before,
+  .car-equipment__column + .car-equipment__column::before {
+    left: -6px;
+  }
+
+  .car-equipment {
+    height: auto;
+    min-height: 580px;
+  }
+
+  .car-equipment__grid {
+    height: auto;
+    min-height: 364px;
   }
 }

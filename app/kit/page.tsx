@@ -143,6 +143,20 @@ const headingStyles: TypographySpec[] = headingLevels.flatMap(
   })),
 );
 
+const responsiveDisplayStyles: TypographySpec[] = [
+  [32, 40],
+  [30, 38],
+  [28, 34],
+  [24, 30],
+  [20, 26],
+  [18, 22],
+].map(([fontSize, lineHeight]) => ({
+  name: `Display/${fontSize} Semibold`,
+  className: `t-display-${fontSize}-${fontSize}-semibold`,
+  meta: `Wix Madefor Display · ${fontSize}/${lineHeight} · 600`,
+  sample: "Mercedes-Benz CLE 200",
+}));
+
 const textScales = [
   [36, 42, ["regular", "medium", "semibold", "bold"]],
   [32, 44, ["regular", "medium", "semibold", "bold", "black"]],
@@ -176,6 +190,18 @@ const textStyles: TypographySpec[] = textScales.flatMap(
   }),
 );
 
+const compactTextStyles: TypographySpec[] = [
+  [12, 16],
+  [10, 14],
+].flatMap(([fontSize, lineHeight]) =>
+  (["regular", "medium", "semibold", "bold"] as const).map((weight) => ({
+    name: `Text/${fontSize} ${weight[0].toUpperCase()}${weight.slice(1)}`,
+    className: `t-text-${fontSize}-${lineHeight}-${weight}`,
+    meta: `Onest · ${fontSize}/${lineHeight} · ${textWeightValues[weight]}`,
+    sample: "Премиальные автомобили в Москве",
+  })),
+);
+
 const specialTypographyStyles: TypographySpec[] = [
   ...(["regular", "medium", "semibold", "bold"] as const).map(
     (weight, index) => ({
@@ -197,11 +223,25 @@ const specialTypographyStyles: TypographySpec[] = [
     meta: "Wix Madefor Display · 28/36 · 800",
     sample: "19 990 000 ₽",
   },
+  {
+    name: "Price/Value M",
+    className: "t-price-value-m",
+    meta: "Wix Madefor Display · 24/30 · 800",
+    sample: "19 990 000 ₽",
+  },
+  {
+    name: "Price/Value S",
+    className: "t-price-value-s",
+    meta: "Wix Madefor Display · 20/26 · 800",
+    sample: "19 990 000 ₽",
+  },
 ];
 
 const typographyGroups = [
   ["Heading", headingStyles],
+  ["Responsive display", responsiveDisplayStyles],
   ["Text", textStyles],
+  ["Compact text", compactTextStyles],
   ["Card & values", specialTypographyStyles],
 ] as const;
 

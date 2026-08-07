@@ -1,5 +1,5 @@
 /* Imperium Motors — Typography Text Styles */
-/* Автогенерация из Figma text styles (REST API). Всего: 73 стилей */
+/* Базовый экспорт из Figma: 73 стиля; ниже добавлены проектные fixed styles. */
 
 :root {
   --font-display: "Wix Madefor Display", sans-serif;
@@ -471,6 +471,93 @@
 .t-price-value {
   font-family: "Wix Madefor Display", sans-serif;
   font-weight: 800;
-  font-size: var(--fs-28);
-  line-height: 1.2857;
+  font-size: var(--type-price-28-font-size);
+  line-height: var(--type-price-28-line-height);
+}
+
+/* ---- Fixed responsive display styles from the car-card frames ---- */
+.t-display-32-32-semibold,
+.t-display-30-30-semibold,
+.t-display-28-28-semibold,
+.t-display-24-24-semibold,
+.t-display-20-20-semibold,
+.t-display-18-18-semibold {
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-semibold);
+}
+
+.t-display-32-32-semibold {
+  font-size: var(--type-display-32-font-size);
+  line-height: var(--type-display-32-line-height);
+}
+.t-display-30-30-semibold {
+  font-size: var(--type-display-30-font-size);
+  line-height: var(--type-display-30-line-height);
+}
+.t-display-28-28-semibold {
+  font-size: var(--type-display-28-font-size);
+  line-height: var(--type-display-28-line-height);
+}
+.t-display-24-24-semibold {
+  font-size: var(--type-display-24-font-size);
+  line-height: var(--type-display-24-line-height);
+}
+.t-display-20-20-semibold {
+  font-size: var(--type-display-20-font-size);
+  line-height: var(--type-display-20-line-height);
+}
+.t-display-18-18-semibold {
+  font-size: var(--type-display-18-font-size);
+  line-height: var(--type-display-18-line-height);
+}
+
+/* ---- Compact text styles missing from the original export ---- */
+.t-text-12-16-regular,
+.t-text-12-16-medium,
+.t-text-12-16-semibold,
+.t-text-12-16-bold,
+.t-text-10-14-regular,
+.t-text-10-14-medium,
+.t-text-10-14-semibold,
+.t-text-10-14-bold {
+  font-family: var(--font-text);
+}
+
+.t-text-12-16-regular,
+.t-text-10-14-regular { font-weight: var(--font-weight-regular); }
+.t-text-12-16-medium,
+.t-text-10-14-medium { font-weight: var(--font-weight-medium); }
+.t-text-12-16-semibold,
+.t-text-10-14-semibold { font-weight: var(--font-weight-semibold); }
+.t-text-12-16-bold,
+.t-text-10-14-bold { font-weight: var(--font-weight-bold); }
+
+.t-text-12-16-regular,
+.t-text-12-16-medium,
+.t-text-12-16-semibold,
+.t-text-12-16-bold {
+  font-size: var(--type-text-12-font-size);
+  line-height: var(--type-text-12-line-height);
+}
+
+.t-text-10-14-regular,
+.t-text-10-14-medium,
+.t-text-10-14-semibold,
+.t-text-10-14-bold {
+  font-size: var(--type-text-10-font-size);
+  line-height: var(--type-text-10-line-height);
+}
+
+.t-price-value-m,
+.t-price-value-s {
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-extrabold);
+}
+.t-price-value-m {
+  font-size: var(--type-price-24-font-size);
+  line-height: var(--type-price-24-line-height);
+}
+.t-price-value-s {
+  font-size: var(--type-price-20-font-size);
+  line-height: var(--type-price-20-line-height);
 }

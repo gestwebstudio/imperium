@@ -74,7 +74,7 @@ function CarActionModal({
 
   return (
     <>
-      <Button size="l" variant={triggerVariant} onClick={state.open}>
+      <Button size="m" variant={triggerVariant} onClick={state.open}>
         {triggerLabel}
       </Button>
 

@@ -1,9 +1,9 @@
 "use client";
 
-import { Breadcrumbs } from "@heroui/react";
-import { ArrowIcon } from "@/components/icons";
 import { Wishlist } from "@/components/ui/Wishlist";
 import { Comparison } from "@/components/ui/Comparison";
+import { Crumbs } from "@/components/ui/Crumbs";
+import { Badge, PriceBlock } from "@/components/ui/primitives";
 import { type Car, formatPrice, getCarSpecs, getCars } from "@/lib/cars";
 import { CarsSection } from "@/components/home/CarsSection";
 import { Contacts } from "@/components/home/Contacts";
@@ -78,22 +78,11 @@ export function CarView({ car }: CarViewProps) {
   return (
     <main className="car">
       <div className="car-wrap car-wrap--top">
-        <Breadcrumbs
+        <Crumbs
           className="cat-crumbs"
-          separator={
-            <ArrowIcon className="cat-crumbs__sep" width={12} height={12} />
-          }
-        >
-          <Breadcrumbs.Item href="/" className="cat-crumbs__item">
-            Главная
-          </Breadcrumbs.Item>
-          <Breadcrumbs.Item href="/catalog" className="cat-crumbs__item">
-            Каталог
-          </Breadcrumbs.Item>
-          <Breadcrumbs.Item className="cat-crumbs__item cat-crumbs__item--current">
-            {title}
-          </Breadcrumbs.Item>
-        </Breadcrumbs>
+          compactOnMobile
+          items={[{ label: "Главная", href: "/" }, { label: title }]}
+        />
       </div>
 
       <Gallery photos={GALLERY_PHOTOS} alt={title} />
@@ -103,7 +92,14 @@ export function CarView({ car }: CarViewProps) {
           <header className="car-title">
             <div className="car-title__head">
               <h1 className="car-title__name">{title}</h1>
-              <span className="car-title__badge">{car.status.label}</span>
+              <Badge
+                size="m"
+                responsive
+                color="success"
+                className="car-title__badge"
+              >
+                {car.status.label}
+              </Badge>
             </div>
             <div className="car-title__actions">
               <Wishlist vehicleId={car.id} tip="В избранное" />
@@ -124,10 +120,11 @@ export function CarView({ car }: CarViewProps) {
 
           <aside className="car-price">
             <div className="car-price__section">
-              <div className="car-price__value">
-                <span className="car-price__label">Стоимость автомобиля</span>
-                <span className="car-price__amount">{formatPrice(car.price)}</span>
-              </div>
+              <PriceBlock
+                size="l"
+                className="car-price__value"
+                value={formatPrice(car.price)}
+              />
               <div className="car-price__buttons">
                 <CarActionModals
                   carTitle={title}
@@ -136,24 +133,30 @@ export function CarView({ car }: CarViewProps) {
               </div>
             </div>
 
-            {[
-              { title: "Трейд-ин", note: "Ваше авто в зачёт" },
-              { title: "Лизинг", note: "Ставка от 5%" },
-              { title: "Кредит", note: "Ставка от 9%" },
-            ].map((row) => (
-              <div className="car-price__row" key={row.title}>
-                <div className="car-price__row-head">
-                  <span className="car-price__dot" />
-                  {row.title}
+            <div className="car-price__offers">
+              {[
+                { title: "Трейд-ин", note: "Ваше авто в зачёт" },
+                { title: "Лизинг", note: "Ставка от 5%" },
+                { title: "Кредит", note: "Ставка от 9%" },
+              ].map((row) => (
+                <div className="car-price__row" key={row.title}>
+                  <div className="car-price__row-head">
+                    <span className="car-price__dot" />
+                    {row.title}
+                  </div>
+                  <p className="car-price__note">{row.note}</p>
                 </div>
-                <p className="car-price__note">{row.note}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </aside>
         </div>
       </div>
 
-      <CarsSection title="Рекомендованные автомобили" cars={recommended} />
+      <CarsSection
+        title="Рекомендованные автомобили"
+        viewAll="Все автомобили"
+        cars={recommended}
+      />
 
       <Contacts />
     </main>

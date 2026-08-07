@@ -63,6 +63,54 @@
   --font-weight-extrabold: 800;
   --font-weight-black: 900;
 
+  /* ---------- Typography: Fixed Figma scales ---------- */
+  --type-display-66-font-size: 66px;
+  --type-display-66-line-height: 70px;
+  --type-display-50-font-size: 50px;
+  --type-display-50-line-height: 70px;
+  --type-display-48-font-size: 48px;
+  --type-display-48-line-height: 56px;
+  --type-display-40-font-size: 40px;
+  --type-display-40-line-height: 48px;
+  --type-display-36-font-size: 36px;
+  --type-display-36-line-height: 44px;
+  --type-display-32-font-size: 32px;
+  --type-display-32-line-height: 40px;
+  --type-display-30-font-size: 30px;
+  --type-display-30-line-height: 38px;
+  --type-display-28-font-size: 28px;
+  --type-display-28-line-height: 34px;
+  --type-display-24-font-size: 24px;
+  --type-display-24-line-height: 30px;
+  --type-display-20-font-size: 20px;
+  --type-display-20-line-height: 26px;
+  --type-display-18-font-size: 18px;
+  --type-display-18-line-height: 22px;
+
+  --type-text-30-font-size: 30px;
+  --type-text-30-line-height: 40px;
+  --type-text-24-font-size: 24px;
+  --type-text-24-line-height: 30px;
+  --type-text-20-font-size: 20px;
+  --type-text-20-line-height: 28px;
+  --type-text-18-font-size: 18px;
+  --type-text-18-line-height: 24px;
+  --type-text-16-font-size: 16px;
+  --type-text-16-line-height: 20px;
+  --type-text-14-font-size: 14px;
+  --type-text-14-line-height: 18px;
+  --type-text-12-font-size: 12px;
+  --type-text-12-line-height: 16px;
+  --type-text-10-font-size: 10px;
+  --type-text-10-line-height: 14px;
+
+  --type-price-28-font-size: 28px;
+  --type-price-28-line-height: 36px;
+  --type-price-24-font-size: 24px;
+  --type-price-24-line-height: 30px;
+  --type-price-20-font-size: 20px;
+  --type-price-20-line-height: 26px;
+
   /* ---------- Responsive layout ---------- */
   --layout-max: 1920px;
   --page-gutter: clamp(16px, 3.125vw, 60px);
@@ -87,7 +135,7 @@
   --z-sheet: 1000;
   --z-modal: 1200;
 
-  /* Готовые текстовые стили (73 шт.) — в styles/typography.css (классы .t-*) */
+  /* Готовые текстовые стили и адаптивные расширения — в styles/typography.css. */
 }
 
 /* Высота фикс. шапки по брейкам (реальная: 76/84/96). Меняешь шапку — только тут. */
