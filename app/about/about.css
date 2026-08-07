@@ -61,7 +61,6 @@
 
 .about-salon__gallery {
   height: clamp(520px, 39vw, 748px);
-  margin-top: clamp(40px, 4.167vw, 80px);
   display: grid;
   grid-template-columns: minmax(0, 1.42fr) minmax(300px, .58fr);
   grid-template-rows: repeat(2, minmax(0, 1fr));
@@ -116,7 +115,7 @@
 
 .about-salon__story,
 .about-salon__services,
-.about-salon__video-section,
+.about-salon__gallery-section,
 .about-salon__reviews,
 .about-salon > .contacts {
   margin-top: var(--section-space, 160px);
@@ -224,19 +223,21 @@
 }
 
 /* Заглушка под видео о салоне (заменить на <video>/iframe) */
+/* Видео — в первом блоке на серой подложке, габариты как у галереи. */
 .about-salon__video {
   position: relative;
-  aspect-ratio: 16 / 9;
+  margin-top: clamp(40px, 4.167vw, 80px);
+  height: clamp(520px, 39vw, 748px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 18px;
-  border-radius: var(--radius-card, 30px);
+  border-radius: var(--radius-media, 36px);
   border: 1px dashed var(--color-warm-taupe-300, #B2A79B);
   background:
     radial-gradient(120% 120% at 50% 0%, rgba(255, 255, 255, .5), transparent 60%),
-    var(--color-stone-beige-200, #E4DFDB);
+    var(--color-stone-beige-300, #CAC2BB);
 }
 .about-salon__video-play {
   width: 84px;
@@ -329,6 +330,10 @@
     gap: 16px;
   }
 
+  .about-salon__video {
+    height: clamp(440px, 62vw, 600px);
+  }
+
   .about-salon__principles {
     grid-template-columns: minmax(0, 1fr);
     gap: 16px;
@@ -371,10 +376,15 @@
 
   .about-salon__gallery {
     height: auto;
-    margin-top: 32px;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-rows: auto;
     gap: 10px;
+  }
+
+  .about-salon__video {
+    height: auto;
+    aspect-ratio: 16 / 9;
+    margin-top: 32px;
   }
 
   .about-salon__gallery figure {
@@ -390,6 +400,7 @@
 
   .about-salon__story,
   .about-salon__services,
+  .about-salon__gallery-section,
   .about-salon__reviews,
   .about-salon > .contacts {
     margin-top: var(--section-space, 72px);

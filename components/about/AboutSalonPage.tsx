@@ -73,11 +73,19 @@ export async function AboutSalonPage() {
             </div>
           </div>
 
-          <AboutGallery
-            photos={SALON_PHOTOS}
-            visibleCount={3}
-            ariaLabel="Интерьер салона Imperium Motors"
-          />
+          {/* Видео о салоне — в первом блоке на серой подложке (заменить на <video>/iframe). */}
+          <div
+            className="about-salon__video"
+            role="img"
+            aria-label="Здесь будет видео о салоне Imperium Motors"
+          >
+            <span className="about-salon__video-play" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 5.5v13l11-6.5-11-6.5Z" fill="currentColor" />
+              </svg>
+            </span>
+            <span className="about-salon__video-note">Видео о салоне</span>
+          </div>
         </div>
       </section>
 
@@ -114,19 +122,16 @@ export async function AboutSalonPage() {
         </div>
       </section>
 
-      {/* Заглушка под видео о салоне — заменить на <video>/iframe. */}
+      {/* Галерея интерьера салона — на месте бывшего видео. */}
       <section
-        className="home-wrap about-salon__video-section"
-        aria-label="Видео о салоне Imperium Motors"
+        className="home-wrap about-salon__gallery-section"
+        aria-label="Интерьер салона Imperium Motors"
       >
-        <div className="about-salon__video" role="img" aria-label="Здесь будет видео о салоне Imperium Motors">
-          <span className="about-salon__video-play" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8 5.5v13l11-6.5-11-6.5Z" fill="currentColor" />
-            </svg>
-          </span>
-          <span className="about-salon__video-note">Видео о салоне</span>
-        </div>
+        <AboutGallery
+          photos={SALON_PHOTOS}
+          visibleCount={3}
+          ariaLabel="Интерьер салона Imperium Motors"
+        />
       </section>
 
       <section className="home-wrap about-salon__reviews" aria-label="Отзывы клиентов">
