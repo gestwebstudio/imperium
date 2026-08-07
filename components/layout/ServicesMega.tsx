@@ -34,7 +34,7 @@ const GROUPS: MegaGroup[] = [
     bg: "var(--color-carbon-black-500, #1B1E1D)",
     links: [
       { label: "Авто под заказ", href: "/car-selection" },
-      { label: "Помощь на дороге", href: "/help-on-roads" },
+      { label: "Помощь на дорогах", href: "/help-on-roads" },
     ],
   },
 ];

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import "./layout.css";
-import { CopyIcon } from "@/components/icons";
 import { ButtonLink } from "@/components/ui/Button";
+import { FooterPhone } from "@/components/layout/FooterPhone";
 
 type FooterLink = string | { label: string; w?: number; href?: string };
 const columns: { title: string; links: FooterLink[] }[] = [
@@ -33,7 +33,7 @@ const columns: { title: string; links: FooterLink[] }[] = [
       { label: "Авто под заказ", href: "/car-selection" },
       { label: "Автоателье", href: "/atelier" },
       { label: "Индивидуальный дизайн авто", href: "/veles", w: 151 },
-      { label: "Помощь на дороге", href: "/help-on-roads" },
+      { label: "Помощь на дорогах", href: "/help-on-roads" },
     ],
   },
   {
@@ -86,12 +86,7 @@ export function Footer() {
           <div className="footer-contacts">
             <div>
               <div className="footer-phone__label">Телефон</div>
-              <a href="tel:+74997041444" className="footer-phone__value">
-                +7 499 704-14-44
-                <span className="copy">
-                  <CopyIcon width={24} height={24} />
-                </span>
-              </a>
+              <FooterPhone />
             </div>
             <div className="footer-socials">
               {SOCIALS.map((s) => (
