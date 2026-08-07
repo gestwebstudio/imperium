@@ -137,6 +137,7 @@
   justify-content: center;
   gap: 2px;
   padding: 28px 22px;
+  min-height: 116px; /* единая высота карточки (1920/1536); значение центрируется */
   text-align: center;
 }
 .ti-stat__value {
@@ -169,6 +170,7 @@
   .ti-hero__sub { font-size: 16px; line-height: 20px; }
   .ti-hero__inner { padding-bottom: 118px; }
   .ti-hero__stats-wrap { margin-top: -51px; } /* половина карточки h102 */
+  .ti-stat .liquid-glass__content { min-height: 102px; }
   .ti-stat__value { font-size: 18px; line-height: 24px; }
   .ti-stat__label { font-size: 16px; line-height: 20px; }
 }

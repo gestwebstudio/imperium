@@ -96,31 +96,31 @@ export function CarSelectionPage() {
             </div>
           </div>
         </div>
-
-        {/* Преимущества — 4 стеклянные карточки (только заголовок, 2 строки → 116px как trade-in) */}
-        <div className="ti-hero__stats-wrap home-wrap">
-          <div className="ti-hero__stats">
-            {HERO_STATS.map((s) => (
-              <GlassSurface
-                key={s}
-                className="ti-stat"
-                borderRadius={30}
-                height="auto"
-                backgroundOpacity={0.06}
-                saturation={1.02}
-                lightAngle={-45}
-                lightIntensity={35}
-                refraction={100}
-                depth={75}
-                frost={3}
-                splay={70}
-              >
-                <span className="ti-stat__value">{s}</span>
-              </GlassSurface>
-            ))}
-          </div>
-        </div>
       </section>
+
+      {/* Преимущества — 4 стеклянные карточки; ряд-сиблинг наезжает половиной на кромку hero */}
+      <div className="ti-hero__stats-wrap home-wrap">
+        <div className="ti-hero__stats">
+          {HERO_STATS.map((s) => (
+            <GlassSurface
+              key={s}
+              className="ti-stat"
+              borderRadius={30}
+              height="auto"
+              backgroundOpacity={0.06}
+              saturation={1.02}
+              lightAngle={-45}
+              lightIntensity={35}
+              refraction={100}
+              depth={75}
+              frost={3}
+              splay={70}
+            >
+              <span className="ti-stat__value">{s}</span>
+            </GlassSurface>
+          ))}
+        </div>
+      </div>
 
       {/* ---------- Что входит в стоимость (фото слева) ---------- */}
       <section className="home-wrap ti-factors">
