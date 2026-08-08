@@ -801,15 +801,13 @@
 .contacts__title .l2 { font-weight: 800; }
 .contacts__sub { margin-top: 31px; max-width: 973px; font-family: var(--font-text, "Onest", sans-serif); font-size: var(--fs-18); line-height: 1.33; color: var(--color-carbon-black-500, #1B1E1D); }
 
-.contacts__grid { display: grid; grid-template-columns: 973fr 734fr; gap: 93px; align-items: start; }
+.contacts__grid { display: grid; grid-template-columns: 973fr 734fr; gap: 93px; align-items: stretch; }
 .contacts__left { display: flex; flex-direction: column; }
 .contacts__gallery { display: grid; grid-template-columns: 496fr 454fr; grid-template-rows: 349px 345px; column-gap: 24px; row-gap: 28px; }
 .contacts__gallery img { width: 100%; height: 100%; border-radius: 32px; object-fit: cover; display: block; }
 .contacts__gallery .tall { grid-column: 1; grid-row: 1 / span 2; }
 
 .contacts__info {
-  height: 1034px;
-  margin-top: 25px;
   background: rgba(228, 223, 219, 0.4);
   border-radius: 22px;
   padding: 40px;
@@ -824,14 +822,34 @@
 .contacts__map { flex: 1; min-height: 0; border-radius: 32px; overflow: hidden; background: var(--color-stone-beige-200, #E4DFDB); }
 .contacts__map iframe { width: 100%; height: 100%; border: 0; display: block; }
 
+/* ===== Адаптации контактов по макетам Figma 1107:* (1536 / 1200 / 960).
+   Раскладка мозаики (галерея слева + карточка-инфо справа) держится до 960,
+   на 960 — рефлоу: заголовок/подзаг, ряд из 3 фото, инфо+карта в 2 колонки. ===== */
+
+/* ≤1536: единые размеры шрифтов по макетам (заголовок 66/70 — регистр как в базе). */
+@media (max-width: 1536px) {
+  .contacts__title .l1,
+  .contacts__title .l2 { font-size: 66px; line-height: 70px; }
+  .contacts__sub { font-size: 18px; line-height: 24px; }
+  /* карточка-инфо 582 (макет 1536), галерея занимает остаток */
+  .contacts__grid { grid-template-columns: minmax(0, 1fr) 582px; gap: 40px; }
+  .contacts__row .label { font-size: 18px; line-height: 24px; }
+  .contacts__row .value { font-size: 24px; line-height: 30px; }
+  .contacts__row .note { font-size: 18px; line-height: 24px; }
+}
+
+/* 961–1200: мозаика сохраняется (НЕ схлопывать); кнопка size M (36). */
 @media (max-width: 1200px) {
   .contacts__title { gap: 0; }
   .contacts__sub { margin-top: 20px; }
-  .contacts__grid { grid-template-columns: 1fr; gap: 32px; }
-  .contacts__gallery { grid-template-rows: auto auto; row-gap: 24px; }
-  .contacts__gallery img { height: auto; aspect-ratio: 454 / 349; }
-  .contacts__gallery .tall { height: 100%; aspect-ratio: auto; }
-  .contacts__info { height: auto; min-height: 760px; margin-top: 0; gap: 40px; }
+  /* карточка-инфо 499 (макет 1200) */
+  .contacts__grid { grid-template-columns: minmax(0, 1fr) 499px; }
+  .contacts__rows .btn {
+    height: 36px;
+    padding-inline: 14px;
+    font-size: 16px;
+    line-height: 20px;
+  }
 }
 
 @media (min-width: 961px) and (max-width: 1536px) {
@@ -913,6 +931,23 @@
     max-width: none;
   }
   .about__testimonial { margin-top: 80px; }
+
+  /* Контакты 960: рефлоу в секции — заголовок/подзаг, ряд из 3 фото, инфо+карта. */
+  .contacts__grid { grid-template-columns: 1fr; gap: 40px; align-items: stretch; }
+  .contacts__gallery {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: auto;
+    column-gap: 14px;
+    row-gap: 0;
+  }
+  .contacts__gallery img { height: auto; aspect-ratio: 284 / 186; }
+  .contacts__gallery .tall { grid-column: auto; grid-row: auto; }
+  .contacts__info { flex-direction: row; gap: 40px; padding: 30px; }
+  .contacts__rows { flex: 1 1 0; }
+  .contacts__map { flex: 1 1 0; min-height: 312px; }
+  .contacts__row .label { font-size: 16px; line-height: 20px; }
+  .contacts__row .value { font-size: 20px; line-height: 28px; }
+  .contacts__row .note { font-size: 16px; line-height: 20px; }
 }
 
 @media (max-width: 768px) {
@@ -948,7 +983,7 @@
     scroll-snap-align: start;
     scroll-snap-stop: always;
   }
-  .contacts__info { min-height: 700px; padding: 28px; }
+  .contacts__info { flex-direction: column; min-height: 700px; padding: 28px; }
   .contacts__row .value { font-size: var(--fs-24); line-height: 1.33; }
 
   .body-type-card__arrow,
