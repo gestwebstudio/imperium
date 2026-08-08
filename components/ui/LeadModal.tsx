@@ -20,6 +20,10 @@ export type LeadModalProps = {
   comment?: boolean;
   commentLabel?: string;
   commentPlaceholder?: string;
+  /** Показать необязательное поле загрузки фото. */
+  photo?: boolean;
+  photoLabel?: string;
+  photoHint?: string;
   /** Кнопка-триггер (оформление как у обычной кнопки страницы). */
   triggerLabel: string;
   triggerVariant?: ButtonVariant;
@@ -50,6 +54,9 @@ export function LeadModal({
   comment = false,
   commentLabel = "Комментарий",
   commentPlaceholder = "Коротко опишите запрос",
+  photo = false,
+  photoLabel = "Фото автомобиля",
+  photoHint = "Можно прикрепить несколько фото — необязательно",
   triggerLabel,
   triggerVariant = "primary-surface",
   triggerSize = "l",
@@ -62,9 +69,13 @@ export function LeadModal({
   overlayClassName,
 }: LeadModalProps) {
   const [submitted, setSubmitted] = useState(false);
+  const [photoNames, setPhotoNames] = useState<string[]>([]);
   const state = useOverlayState({
     onOpenChange(isOpen) {
-      if (!isOpen) setSubmitted(false);
+      if (!isOpen) {
+        setSubmitted(false);
+        setPhotoNames([]);
+      }
     },
   });
 
@@ -172,6 +183,35 @@ export function LeadModal({
                             rows={3}
                             placeholder={commentPlaceholder}
                           />
+                        </div>
+                      )}
+
+                      {photo && (
+                        <div className="lead-modal__field lead-modal__field--full">
+                          <span className="lead-modal__label">{photoLabel}</span>
+                          <label className="lead-modal__file">
+                            <input
+                              type="file"
+                              name="photos"
+                              accept="image/*"
+                              multiple
+                              onChange={(e) =>
+                                setPhotoNames(
+                                  Array.from(e.target.files ?? []).map(
+                                    (f) => f.name,
+                                  ),
+                                )
+                              }
+                            />
+                            <span className="lead-modal__file-btn">
+                              Прикрепить фото
+                            </span>
+                            <span className="lead-modal__file-info">
+                              {photoNames.length
+                                ? photoNames.join(", ")
+                                : photoHint}
+                            </span>
+                          </label>
                         </div>
                       )}
                     </div>

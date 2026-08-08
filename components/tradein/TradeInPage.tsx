@@ -18,6 +18,9 @@ const EVAL_MODAL = {
   comment: true,
   commentLabel: "Ваш автомобиль",
   commentPlaceholder: "Марка, модель, год, пробег",
+  photo: true,
+  photoLabel: "Фото автомобиля",
+  photoHint: "Можно прикрепить несколько фото — необязательно",
 } as const;
 
 /* Данные страницы Trade-in (тексты и стили — из макета 775:4922). */
