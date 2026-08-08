@@ -47,10 +47,18 @@ const columns: { title: string; links: FooterLink[] }[] = [
 ];
 
 const SOCIALS = [
-  { label: "Telegram", icon: "/icons/tg.svg" },
-  { label: "WhatsApp", icon: "/icons/wa.svg" },
+  {
+    label: "Telegram",
+    icon: "/icons/tg.svg",
+    href: "https://telegram.me/Vladislav_imperium_motors",
+  },
+  {
+    label: "WhatsApp",
+    icon: "/icons/wa.svg",
+    href: "https://wa.me/79250158725",
+  },
   { label: "MAX", icon: "/icons/max.svg" },
-];
+] as const;
 
 export function Footer() {
   return (
@@ -89,10 +97,15 @@ export function Footer() {
               <FooterPhone />
             </div>
             <div className="footer-socials">
-              {SOCIALS.map((s) => (
+              {SOCIALS.map((s) => {
+                const href = "href" in s ? s.href : undefined;
+                return (
                 <ButtonLink
                   key={s.label}
-                  href="#"
+                  href={href ?? "#"}
+                  {...(href
+                    ? { target: "_blank", rel: "nofollow noopener noreferrer" }
+                    : {})}
                   bare
                   className="footer-social"
                   aria-label={s.label}
@@ -100,7 +113,8 @@ export function Footer() {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={s.icon} alt={s.label} width={42} height={42} />
                 </ButtonLink>
-              ))}
+                );
+              })}
             </div>
           </div>
 
