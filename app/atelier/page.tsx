@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "../home.css";
+import "../trade-in/trade-in.css";
+import "../about/about.css";
 import "./atelier.css";
 import { AtelierPage } from "@/components/atelier/AtelierPage";
 

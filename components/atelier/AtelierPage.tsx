@@ -20,28 +20,39 @@ const ATELIER_MODAL = {
 export function AtelierPage() {
   return (
     <main className="atelier">
-      {/* ---------- Hero (макет 945:2839) ---------- */}
-      <section className="atelier-hero">
-        <div className="atelier-hero__inner home-wrap">
+      {/* ---------- Hero — блок «О салоне» (.ti-hero* + медиа-подложка),
+          тексты Ателье, вместо видео — фото. ---------- */}
+      <section className="ti-hero about-salon__hero">
+        <div className="ti-hero__inner home-wrap">
           <Crumbs
             items={[{ label: "Главная", href: "/" }, { label: "Автоателье" }]}
           />
-          <h1 className="atelier-hero__title">
-            <span className="reg">АВТОМОБИЛЬ,</span>
-            <span className="bold">С ВАШИМ ХАРАКТЕРОМ</span>
-          </h1>
-          <p className="atelier-hero__sub">
-            Стандартная комплектация — это только начало. Мы помогаем раскрыть
-            индивидуальность вашего автомобиля.
-          </p>
-          <LeadModal
-            {...ATELIER_MODAL}
-            triggerLabel="Обсудить работу"
-            triggerClassName="atelier-hero__cta"
-          />
-          <div className="atelier-hero__media">
+          <div className="ti-hero__top">
+            <h1 className="ti-hero__title">
+              <span className="reg">АВТОМОБИЛЬ,</span>
+              <span className="bold">С ВАШИМ ХАРАКТЕРОМ</span>
+            </h1>
+            <div className="ti-hero__aside">
+              <p className="ti-hero__sub">
+                Стандартная комплектация — это только начало. Мы помогаем
+                раскрыть индивидуальность вашего автомобиля.
+              </p>
+              <LeadModal
+                {...ATELIER_MODAL}
+                triggerLabel="Обсудить работу"
+                triggerClassName="ti-hero__cta"
+              />
+            </div>
+          </div>
+
+          {/* Фото — на месте видео из блока «О салоне». */}
+          <div className="about-salon__video">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/services/atelie.webp" alt="Автомобиль под ваш характер" />
+            <img
+              className="about-salon__video-frame"
+              src="/images/services/atelie.webp"
+              alt="Автомобиль под ваш характер"
+            />
           </div>
         </div>
       </section>
