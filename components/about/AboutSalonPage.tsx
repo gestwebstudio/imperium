@@ -25,6 +25,17 @@ const SALON_PHOTOS: LightboxPhoto[] = [
     src: "/images/contacts/3.webp",
     alt: "Автомобиль в экспозиции Imperium Motors",
   },
+  // Показываются только в лайтбоксе (в блоке видно первые visibleCount=3).
+  {
+    id: "salon-5",
+    src: "/images/contacts/5.webp",
+    alt: "Интерьер салона Imperium Motors",
+  },
+  {
+    id: "salon-6",
+    src: "/images/contacts/6.webp",
+    alt: "Экспозиция салона Imperium Motors",
+  },
 ];
 
 const PRINCIPLES = [
