@@ -151,7 +151,7 @@ export function CarSelectionPage() {
 
       {/* ---------- Как проходит заказ автомобиля ---------- */}
       <section className="home-wrap ti-steps">
-        <h2 className="ti-section-title">Как проходит заказ автомобиля</h2>
+        <h2 className="ti-section-title t-page-title">Как проходит заказ автомобиля</h2>
         <div className="ti-steps__grid">
           {STEPS.map((s) => (
             <article className="ti-step" key={s.stage}>

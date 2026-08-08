@@ -25,7 +25,7 @@ export function FavoritesClient({ cars }: { cars: Car[] }) {
       />
 
       <header className="favorites-head">
-        <h1>Избранное</h1>
+        <h1 className="t-page-title">Избранное</h1>
         {storageReady && <Badge color="info">{favoriteCars.length}</Badge>}
       </header>
 

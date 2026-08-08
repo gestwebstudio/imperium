@@ -1,5 +1,6 @@
 import { cn } from "@/lib/cn";
 import { ArrowDiagonalIcon } from "@/components/icons";
+import { ButtonLink } from "@/components/ui/Button";
 import { LeadModal } from "@/components/ui/LeadModal";
 
 type BodyType = {
@@ -9,6 +10,7 @@ type BodyType = {
   largeImage: string;
   desktopImage: string;
   tabletImage: string;
+  mobileImage: string;
   href: string;
   className?: string;
 };
@@ -21,6 +23,7 @@ const grid: BodyType[] = [
     largeImage: "/images/typeofcar/adaptive/coupe.webp",
     desktopImage: "/images/typeofcar/adaptive/coupe.webp",
     tabletImage: "/images/typeofcar/adaptive/coupe.webp",
+    mobileImage: "/images/typeofcar/adaptive/coupe.webp",
     href: "/coupe",
     className: "bento__a",
   },
@@ -31,6 +34,7 @@ const grid: BodyType[] = [
     largeImage: "/images/typeofcar/adaptive/cabriolet-1536.webp",
     desktopImage: "/images/typeofcar/adaptive/cabriolet-1200.webp",
     tabletImage: "/images/typeofcar/adaptive/cabriolet-tablet.webp",
+    mobileImage: "/images/typeofcar/adaptive/cabriolet-1536.webp",
     href: "/cabriolet",
     className: "bento__b",
   },
@@ -41,6 +45,7 @@ const grid: BodyType[] = [
     largeImage: "/images/typeofcar/adaptive/off-road-1536.webp",
     desktopImage: "/images/typeofcar/adaptive/off-road-1200.webp",
     tabletImage: "/images/typeofcar/adaptive/off-road-tablet.webp",
+    mobileImage: "/images/typeofcar/adaptive/off-road-tablet.webp",
     href: "/off-road",
     className: "bento__c",
   },
@@ -51,6 +56,7 @@ const grid: BodyType[] = [
     largeImage: "/images/typeofcar/adaptive/minivan.webp",
     desktopImage: "/images/typeofcar/adaptive/minivan.webp",
     tabletImage: "/images/typeofcar/adaptive/minivan.webp",
+    mobileImage: "/images/typeofcar/adaptive/minivan.webp",
     href: "/minivan",
     className: "bento__d",
   },
@@ -61,6 +67,7 @@ const grid: BodyType[] = [
     largeImage: "/images/typeofcar/adaptive/crossover.webp",
     desktopImage: "/images/typeofcar/adaptive/crossover.webp",
     tabletImage: "/images/typeofcar/adaptive/crossover.webp",
+    mobileImage: "/images/typeofcar/adaptive/crossover.webp",
     href: "/crossover",
     className: "bento__e",
   },
@@ -73,6 +80,7 @@ const sedan: BodyType = {
   largeImage: "/images/typeofcar/adaptive/sedan-desktop.webp",
   desktopImage: "/images/typeofcar/adaptive/sedan-desktop.webp",
   tabletImage: "/images/typeofcar/adaptive/sedan-tablet.webp",
+  mobileImage: "/images/typeofcar/adaptive/sedan-tablet.webp",
   href: "/sedan",
   className: "body-type-card--wide",
 };
@@ -84,12 +92,14 @@ function BodyTypeCard({
   largeImage,
   desktopImage,
   tabletImage,
+  mobileImage,
   href,
   className,
 }: BodyType) {
   return (
-    <a href={href} className={cn("body-type-card", className)}>
+    <ButtonLink href={href} bare className={cn("body-type-card", className)}>
       <picture>
+        <source media="(max-width: 640px)" srcSet={mobileImage} />
         <source
           media="(min-width: 1367px) and (max-width: 1536px)"
           srcSet={largeImage}
@@ -113,7 +123,7 @@ function BodyTypeCard({
       <span className="body-type-card__arrow">
         <ArrowDiagonalIcon />
       </span>
-    </a>
+    </ButtonLink>
   );
 }
 

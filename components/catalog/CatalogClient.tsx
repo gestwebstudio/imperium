@@ -167,7 +167,7 @@ export function CatalogClient({
 
       <header className="catalog-head">
         <div className="catalog-head__title">
-          <h1>{title}</h1>
+          <h1 className="t-page-title">{title}</h1>
           <Badge size="m" responsive color="info">
             {sorted.length}
           </Badge>

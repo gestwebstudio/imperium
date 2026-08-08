@@ -122,10 +122,6 @@
 }
 .projects__title {
   margin: 0;
-  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
-  font-weight: var(--font-weight-semibold, 600);
-  font-size: var(--fs-48);
-  line-height: 1.17;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 .projects-carousel { position: relative; width: 100%; }

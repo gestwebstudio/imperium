@@ -129,7 +129,7 @@ export function TradeInPage({ cars }: { cars: Car[] }) {
 
       {/* ---------- Как проходит trade-in ---------- */}
       <section className="home-wrap ti-steps">
-        <h2 className="ti-section-title">Как проходит trade-in</h2>
+        <h2 className="ti-section-title t-page-title">Как проходит trade-in</h2>
         <div className="ti-steps__grid">
           {STEPS.map((s) => (
             <article className="ti-step" key={s.stage}>

@@ -20,17 +20,49 @@
 }
 .comparison-head h1 {
   margin: 0;
-  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
-  font-weight: var(--font-weight-semibold, 600);
-  font-size: var(--fs-48);
-  line-height: 1.16;
   letter-spacing: -.01em;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 .comparison-head__tools {
   display: flex;
   align-items: center;
-  gap: 18px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+.comparison-head__action.ui-button--bare {
+  appearance: none;
+  min-width: 0;
+  min-height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--color-carbon-black-500, #1B1E1D);
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-regular, 400);
+  font-size: 16px;
+  line-height: 20px;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.comparison-head__action-icon {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-warm-taupe-300, #B2A79B);
+}
+.comparison-head__action-icon svg {
+  display: block;
 }
 
 .comparison-switch {
@@ -108,6 +140,10 @@
   padding-bottom: 12px;
   border-radius: 30px;
   outline: none;
+  overscroll-behavior-inline: contain;
+  scroll-padding-inline: 4px;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
   scrollbar-color:
     var(--color-warm-taupe-300, #B2A79B)
     var(--color-stone-beige-200, #E4DFDB);
@@ -119,58 +155,195 @@
 }
 
 .comparison-data {
-  --comparison-label-width: 240px;
+  --comparison-column-gap: 4px;
+  --comparison-column-min: 300px;
 
   width: 100%;
+  min-width: var(--comparison-min-width);
 }
 
 .comparison-products {
   display: grid;
-  grid-template-columns:
-    var(--comparison-label-width)
-    repeat(var(--comparison-columns), minmax(300px, 1fr));
-  gap: 4px;
+  grid-template-columns: repeat(
+    var(--comparison-columns),
+    minmax(var(--comparison-column-min), 1fr)
+  );
+  gap: var(--comparison-column-gap);
   padding: 4px;
   margin-bottom: 36px;
   overflow: visible;
   border-radius: 30px;
   background: rgba(228, 223, 219, .7);
 }
-.comparison-products__corner,
 .comparison-products__card {
   border-radius: 26px;
   background: rgba(255, 255, 255, .54);
-}
-.comparison-products__corner {
-  position: sticky;
-  z-index: 5;
-  left: 0;
-  display: flex;
-  align-items: flex-start;
-  padding: 24px;
-  background: var(--color-stone-beige-100, #F3F0EE);
-  font-family: var(--font-text, "Onest", sans-serif);
-  font-weight: var(--font-weight-semibold, 600);
-  font-size: 18px;
-  line-height: 24px;
-  color: var(--color-warm-taupe-500, #6A6259);
-}
-.comparison-products__card {
   display: flex;
   justify-content: center;
   padding: 20px;
+  scroll-snap-align: start;
 }
 .comparison-products__card > .car-card {
   width: 100%;
-  max-width: 432px;
+  max-width: none;
   min-height: 484px;
   background: var(--color-white, #FFFFFF);
+}
+
+.comparison-sticky {
+  position: fixed;
+  z-index: calc(var(--z-header, 50) - 1);
+  top: calc(var(--header-h, 76px) + 18px);
+  left: 50%;
+  width: calc(100% - var(--page-gutter, 20px) - var(--page-gutter, 20px));
+  max-width: calc(var(--layout-max, 1920px) - var(--page-gutter, 20px) - var(--page-gutter, 20px));
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 24px;
+  background: rgba(243, 240, 238, .94);
+  box-shadow:
+    inset 0 0 0 1px rgba(201, 192, 184, .72),
+    0 18px 44px rgba(27, 30, 29, .14);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -12px);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+}
+.comparison-sticky.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+}
+.comparison-sticky__scroll {
+  overflow-x: auto;
+  scroll-padding-inline: 4px;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+.comparison-sticky__scroll::-webkit-scrollbar {
+  display: none;
+}
+.comparison-sticky__grid {
+  display: grid;
+  grid-template-columns: repeat(
+    var(--comparison-columns),
+    minmax(var(--comparison-column-min), 1fr)
+  );
+  gap: var(--comparison-column-gap);
+  padding: 4px;
+}
+.comparison-sticky-card {
+  min-height: 112px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, .82);
+  position: relative;
+  display: grid;
+  grid-template-columns: 104px minmax(0, 1fr) 36px;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  scroll-snap-align: start;
+}
+.comparison-sticky-card__link {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  border-radius: inherit;
+}
+.comparison-sticky-card__media {
+  height: 84px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--color-stone-beige-100, #F3F0EE);
+}
+.comparison-sticky-card__media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+.comparison-sticky-card__content {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: var(--font-text, "Onest", sans-serif);
+}
+.comparison-sticky-card__content strong {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 15px;
+  line-height: 20px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.comparison-sticky-card__content span {
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: 15px;
+  line-height: 20px;
+  color: var(--color-heritage-green-500, #294434);
+}
+.comparison-sticky-card__remove.ui-button--bare {
+  position: relative;
+  z-index: 2;
+  width: 36px;
+  min-width: 36px;
+  height: 36px;
+  cursor: pointer;
+}
+.comparison-sticky-card__remove svg {
+  width: 14px;
+  height: 14px;
+  opacity: 1;
+  transition: opacity 160ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .comparison-sticky-card__remove:hover svg {
+    opacity: .4;
+  }
 }
 
 .comparison-table-stack {
   display: flex;
   flex-direction: column;
   gap: 32px;
+}
+.comparison-table-section__toggle {
+  position: sticky;
+  z-index: 4;
+  left: 0;
+  width: 100%;
+  max-width: calc(100vw - var(--page-gutter, 20px) - var(--page-gutter, 20px));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 52px;
+  margin-bottom: 14px;
+  padding: 0 4px;
+  overflow: hidden;
+  border-radius: 14px;
+  text-align: left;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.comparison-page .comparison-table-section__toggle .comparison-table-section__title {
+  margin: 0;
+}
+.comparison-table-section__chevron {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  transform: rotate(90deg);
+  transition: transform 180ms ease;
+}
+.comparison-table-section__toggle[aria-expanded="false"] .comparison-table-section__chevron {
+  transform: rotate(-90deg);
 }
 .comparison-table-section__title {
   margin: 0 0 14px;
@@ -181,12 +354,74 @@
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 
+.comparison-characteristics {
+  padding: 4px;
+  overflow: hidden;
+  border-radius: 26px;
+  background: rgba(228, 223, 219, .72);
+}
+.comparison-characteristic {
+  overflow: hidden;
+  padding-top: 12px;
+  border-bottom: 1px solid var(--color-stone-beige-200, #E4DFDB);
+  background: var(--color-white, #FFFFFF);
+  transition: background-color 150ms ease;
+}
+.comparison-characteristic:first-child {
+  border-radius: 22px 22px 0 0;
+}
+.comparison-characteristic:last-child {
+  border-bottom: 0;
+  border-radius: 0 0 22px 22px;
+}
+.comparison-characteristic:only-child {
+  border-radius: 22px;
+}
+.comparison-characteristic__label {
+  display: block;
+  padding: 0 20px;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-medium, 500);
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--color-warm-taupe-400, #8F8579);
+}
+.comparison-characteristic__values {
+  display: grid;
+  grid-template-columns: repeat(
+    var(--comparison-columns),
+    minmax(var(--comparison-column-min), 1fr)
+  );
+  gap: var(--comparison-column-gap);
+  margin-top: 6px;
+}
+.comparison-characteristic__value {
+  min-width: 0;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  padding: 8px 20px 14px;
+  background: transparent;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 16px;
+  line-height: 22px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+@media (hover: hover) {
+  .comparison-characteristic:hover {
+    background: var(--color-warm-taupe-100, #F2EEEA);
+  }
+}
+
 .comparison-spec-table {
   width: 100%;
   padding: 4px;
   overflow: hidden;
   border-radius: 26px;
   background: rgba(228, 223, 219, .72);
+}
+.comparison-page .comparison-spec-table {
+  overflow: visible;
 }
 .comparison-spec-table__content {
   width: 100%;
@@ -216,6 +451,12 @@
 .comparison-spec-table__column--label {
   width: var(--comparison-label-width);
 }
+.comparison-page .comparison-spec-table__column--label {
+  position: sticky;
+  z-index: 2;
+  left: 0;
+  background: var(--color-stone-beige-200, #E4DFDB);
+}
 .comparison-spec-table__cell {
   height: 64px;
   padding: 16px 20px;
@@ -231,6 +472,11 @@
   width: var(--comparison-label-width);
   font-weight: var(--font-weight-medium, 500);
   color: var(--color-warm-taupe-500, #6A6259);
+}
+.comparison-page .comparison-spec-table__cell--label {
+  position: sticky;
+  z-index: 1;
+  left: 0;
 }
 .comparison-spec-table__cell--value {
   gap: 10px;
@@ -248,6 +494,16 @@
 .comparison-spec-table__row[data-focus-visible="true"] .comparison-spec-table__cell {
   box-shadow: inset 0 0 0 2px var(--color-heritage-green-400, #4E7B60);
 }
+.comparison-page .comparison-spec-table__row.is-different .comparison-spec-table__cell--label::before {
+  width: 6px;
+  height: 6px;
+  display: inline-block;
+  margin-right: 9px;
+  border-radius: 50%;
+  background: var(--color-heritage-green-400, #4E7B60);
+  content: "";
+  vertical-align: 2px;
+}
 .comparison-spec-table__swatch {
   width: 20px;
   height: 20px;
@@ -257,6 +513,16 @@
   vertical-align: -4px;
   border: 1px solid rgba(27, 30, 29, .16);
   border-radius: 5px;
+}
+
+.comparison-no-differences {
+  padding: 32px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, .6);
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 17px;
+  line-height: 24px;
+  color: var(--color-warm-taupe-500, #6A6259);
 }
 
 .comparison-empty {
@@ -295,19 +561,113 @@
   color: var(--color-warm-taupe-500, #6A6259);
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1200px) {
   .comparison-head {
     align-items: flex-start;
     flex-direction: column;
   }
-  .comparison-products__corner,
+}
+
+@media (max-width: 1199px) {
   .comparison-products__card {
-    padding: 18px;
+    padding: 14px;
   }
-  .comparison-products {
-    grid-template-columns:
-      var(--comparison-label-width)
-      repeat(var(--comparison-columns), minmax(280px, 1fr));
+  .comparison-products__card > .car-card {
+    min-height: 420px;
+    gap: 20px;
+    padding: 18px;
+    border-radius: 22px;
+  }
+  .comparison-products .car-card__content {
+    gap: 14px;
+  }
+  .comparison-products .car-card__brand,
+  .comparison-products .car-card__brand img {
+    height: 20px;
+  }
+  .comparison-products .car-card__actions {
+    gap: 12px;
+  }
+  .comparison-products .car-card__info {
+    gap: 7px;
+  }
+  .comparison-products .car-card__title {
+    font-size: 22px;
+    line-height: 27px;
+  }
+  .comparison-products .car-card__photo {
+    height: 148px;
+  }
+  .comparison-products .car-card__photo img {
+    max-height: 148px;
+  }
+  .comparison-products .car-card__action {
+    gap: 8px;
+  }
+  .comparison-products .car-card .price-block__value {
+    font-size: 22px;
+    line-height: 27px;
+  }
+  .comparison-products .car-card__details-link.btn--m {
+    width: 28px;
+    height: 28px;
+    flex: 0 0 28px;
+    padding: 0;
+  }
+  .comparison-products .car-card__details-link > .btn__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .comparison-products .car-card__details-link > .btn__icon:has(.car-card__details-icon) {
+    width: 8px;
+    height: 8px;
+    display: inline-flex;
+  }
+  .comparison-products .car-card__details-icon {
+    display: block;
+  }
+}
+
+@media (max-width: 960px) {
+  .comparison-products__card {
+    padding: 10px;
+  }
+  .comparison-products__card > .car-card {
+    min-height: 380px;
+    gap: 16px;
+    padding: 16px;
+    border-radius: 20px;
+  }
+  .comparison-products .car-card__content {
+    gap: 12px;
+  }
+  .comparison-products .car-card__title {
+    font-size: 20px;
+    line-height: 24px;
+  }
+  .comparison-products .car-card__photo {
+    height: 126px;
+  }
+  .comparison-products .car-card__photo img {
+    max-height: 126px;
+  }
+  .comparison-products .car-card .price-block__value {
+    font-size: 21px;
+    line-height: 26px;
+  }
+  .comparison-data {
+    --comparison-column-min: 280px;
+
+    min-width: var(--comparison-min-width-tablet);
+  }
+  .comparison-sticky-card {
+    grid-template-columns: 88px minmax(0, 1fr) 36px;
   }
 }
 
@@ -323,21 +683,34 @@
   }
   .comparison-head__tools {
     width: 100%;
-    justify-content: space-between;
+    justify-content: flex-start;
   }
   .comparison-hint {
     align-items: flex-start;
     flex-direction: column;
   }
-  .comparison-data {
-    --comparison-label-width: 160px;
-  }
   .comparison-products {
     border-radius: 24px;
   }
-  .comparison-products__corner,
   .comparison-products__card {
     border-radius: 20px;
+  }
+  .comparison-sticky {
+    top: calc(var(--header-h, 76px) + 10px);
+    border-radius: 20px;
+  }
+  .comparison-sticky-card {
+    min-height: 104px;
+    border-radius: 16px;
+  }
+  .comparison-sticky-card {
+    grid-template-columns: 78px minmax(0, 1fr) 36px;
+    gap: 10px;
+    padding: 10px;
+  }
+  .comparison-sticky-card__media {
+    height: 72px;
+    border-radius: 12px;
   }
   .comparison-spec-table {
     border-radius: 22px;
@@ -346,6 +719,9 @@
   .comparison-spec-table__cell {
     padding-right: 16px;
     padding-left: 16px;
+  }
+  .comparison-characteristics {
+    border-radius: 22px;
   }
   .comparison-empty {
     min-height: 360px;
@@ -377,20 +753,54 @@
     line-height: 1.4;
   }
   .comparison-data {
-    --comparison-label-width: 144px;
+    --comparison-column-min: 250px;
+
+    min-width: var(--comparison-min-width-mobile);
   }
   .comparison-products {
-    grid-template-columns:
-      var(--comparison-label-width)
-      repeat(var(--comparison-columns), minmax(250px, 1fr));
     margin-bottom: 28px;
   }
-  .comparison-products__corner,
   .comparison-products__card {
-    padding: 12px;
+    padding: 8px;
   }
   .comparison-products__card > .car-card {
-    min-height: 0;
+    min-height: 344px;
+    gap: 12px;
+    padding: 14px;
+    border-radius: 18px;
+  }
+  .comparison-products .car-card__content {
+    gap: 10px;
+  }
+  .comparison-products .car-card__brand,
+  .comparison-products .car-card__brand img {
+    height: 18px;
+  }
+  .comparison-products .car-card__actions {
+    gap: 10px;
+  }
+  .comparison-products .car-card__title {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .comparison-products .car-card__photo {
+    height: 108px;
+  }
+  .comparison-products .car-card__photo img {
+    max-height: 108px;
+  }
+  .comparison-products .car-card .price-block__label {
+    font-size: 10px;
+    line-height: 13px;
+  }
+  .comparison-products .car-card .price-block__value {
+    font-size: 20px;
+    line-height: 24px;
+  }
+  .comparison-sticky-card__content strong,
+  .comparison-sticky-card__content span {
+    font-size: var(--fs-14);
+    line-height: 1.35;
   }
   .comparison-table-stack {
     gap: 24px;
@@ -398,6 +808,17 @@
   .comparison-table-section__title {
     font-size: var(--fs-20);
     line-height: 1.3;
+  }
+  .comparison-characteristic__label {
+    padding-inline: 12px;
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .comparison-characteristic__value {
+    min-height: 46px;
+    padding: 6px 12px 12px;
+    font-size: var(--fs-14);
+    line-height: 1.4;
   }
   .comparison-spec-table__column {
     height: 48px;
@@ -412,9 +833,1088 @@
   }
 }
 
+/* Comparison carousel from the 1536 comparison layout.
+   Only the visible car window is rendered, so neither cards nor specs can
+   leave the viewport. Both areas share --comparison-columns. */
+.comparison-page {
+  overflow-x: clip;
+  padding-right: clamp(16px, 3.90625vw, 60px);
+  padding-left: clamp(16px, 3.90625vw, 60px);
+}
+.comparison-scroll {
+  overflow: visible;
+  padding-bottom: 0;
+  border-radius: 0;
+  scroll-snap-type: none;
+  scrollbar-width: none;
+}
+.comparison-scroll::-webkit-scrollbar {
+  display: none;
+}
+.comparison-data {
+  --comparison-column-gap: 10px;
+
+  min-width: 0;
+}
+.comparison-products-shell {
+  position: relative;
+  width: 100%;
+}
+.comparison-products {
+  grid-template-columns: repeat(
+    var(--comparison-columns),
+    minmax(0, 1fr)
+  );
+  gap: var(--comparison-column-gap);
+  margin-bottom: 0;
+  padding: 10px;
+  overflow: hidden;
+  border-radius: 40px;
+  background: var(--color-stone-beige-200, #E4DFDB);
+}
+.comparison-products__card {
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 30px;
+  background: transparent;
+  scroll-snap-align: none;
+}
+.comparison-products__card > .car-card {
+  width: 100%;
+  max-width: none;
+  min-height: 0;
+  gap: 24px;
+  padding: 20px;
+  border-radius: 30px;
+  background: var(--color-white, #FFFFFF);
+}
+.comparison-products .car-card__content {
+  gap: 16px;
+}
+.comparison-products .car-card__brand,
+.comparison-products .car-card__brand img {
+  height: 20px;
+}
+.comparison-products .car-card__actions {
+  gap: 16px;
+}
+.comparison-products .car-card__info {
+  gap: 6px;
+}
+.comparison-products .car-card__title {
+  font-size: 20px;
+  line-height: 24px;
+}
+.comparison-products .car-card__photo {
+  height: 149px;
+}
+.comparison-products .car-card__photo img {
+  max-height: 149px;
+}
+.comparison-products .car-card__action {
+  gap: 12px;
+}
+.comparison-products .car-card .price-block__label {
+  font-size: 12px;
+  line-height: 16px;
+}
+.comparison-products .car-card .price-block__value {
+  font-size: min(24px, 8cqi);
+  line-height: 30px;
+}
+.comparison-products .car-card__details-link > .btn__label {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: nowrap;
+}
+.comparison-products .car-card__details-link > .btn__icon:has(.car-card__details-icon),
+.comparison-products .car-card__details-icon {
+  display: none;
+}
+.comparison-products__nav {
+  position: absolute;
+  z-index: 6;
+  top: 50%;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-stone-beige-200, #E4DFDB);
+  color: var(--color-carbon-black-500, #1B1E1D);
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition:
+    background-color 160ms ease,
+    opacity 160ms ease;
+}
+.comparison-products__nav--previous {
+  left: -18px;
+}
+.comparison-products__nav--next {
+  right: -18px;
+}
+.comparison-products__nav svg {
+  width: 16px;
+  height: 16px;
+}
+.comparison-products__nav--next svg {
+  transform: rotate(180deg);
+}
+.comparison-products__nav:disabled {
+  opacity: .42;
+  cursor: default;
+}
+@media (hover: hover) {
+  .comparison-products__nav:not(:disabled):hover {
+    background: var(--color-stone-beige-300, #C9C0B8);
+  }
+}
+
+.comparison-specifications {
+  margin-top: clamp(48px, 5.208vw, 80px);
+}
+.comparison-specifications__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 16px;
+}
+.comparison-specifications__title {
+  margin: 0;
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: 32px;
+  line-height: 40px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.comparison-specifications .comparison-switch__label {
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-regular, 400);
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0;
+}
+.comparison-specifications .comparison-switch__control {
+  width: 40px;
+  height: 20px;
+}
+.comparison-specifications .comparison-switch__thumb {
+  width: 16px;
+  height: 16px;
+}
+.comparison-specifications .comparison-switch[data-selected="true"] .comparison-switch__thumb {
+  transform: translateX(20px);
+}
+.comparison-characteristics {
+  width: 100%;
+  padding: 4px;
+}
+.comparison-characteristic__values {
+  grid-template-columns: repeat(
+    var(--comparison-columns),
+    minmax(0, 1fr)
+  );
+  gap: var(--comparison-column-gap);
+}
+
+@media (max-width: 960px) {
+  .comparison-specifications__title {
+    font-size: 28px;
+    line-height: 36px;
+  }
+}
+
+@media (max-width: 640px) {
+  .comparison-products {
+    border-radius: 30px;
+  }
+  .comparison-products__nav {
+    width: 40px;
+    height: 40px;
+  }
+  .comparison-products__nav--previous {
+    left: 4px;
+  }
+  .comparison-products__nav--next {
+    right: 4px;
+  }
+  .comparison-specifications {
+    margin-top: 40px;
+  }
+  .comparison-specifications__head {
+    gap: 12px;
+  }
+  .comparison-specifications__title {
+    font-size: 24px;
+    line-height: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .comparison-products__card > .car-card {
+    padding: 18px;
+  }
+  .comparison-specifications__head {
+    gap: 8px;
+  }
+  .comparison-specifications__title {
+    font-size: 22px;
+    line-height: 28px;
+  }
+  .comparison-specifications .comparison-switch__content {
+    gap: 8px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .comparison-switch__control,
-  .comparison-switch__thumb {
+  .comparison-switch__thumb,
+  .comparison-sticky,
+  .comparison-table-section__chevron {
     transition-duration: .01ms;
+  }
+}
+
+/* Figma comparison adaptations: 1536 / 1200 / 960 / 768 / 640.
+   The rendered car window and every specification row share one column count,
+   so carousel navigation never breaks the vertical car/value relationship. */
+.comparison-page {
+  padding-right: clamp(40px, calc(40px + (100vw - 1200px) * .059524), 60px);
+  padding-left: clamp(40px, calc(40px + (100vw - 1200px) * .059524), 60px);
+}
+
+@media (min-width: 1201px) {
+  .comparison-page {
+    padding-top: clamp(124px, calc(124px + (100vw - 1536px) * .083333), 156px);
+  }
+}
+
+.comparison-head {
+  align-items: flex-end;
+  flex-direction: row;
+  margin-bottom: 30px;
+}
+
+.comparison-head__title,
+.comparison-head__tools {
+  min-width: 0;
+}
+
+.comparison-head__title {
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.comparison-head__title .badge {
+  margin-top: 1px;
+}
+
+.comparison-head__tools {
+  position: relative;
+  bottom: 4px;
+}
+
+.comparison-products__column {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.comparison-products__card {
+  flex: 1 1 auto;
+  display: flex;
+}
+
+.comparison-products__card > .car-card {
+  height: 100%;
+}
+
+.comparison-products__pager {
+  display: none;
+}
+
+.comparison-specifications {
+  margin-top: 72px;
+}
+
+@media (max-width: 1200px) {
+  .comparison-page {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+
+  .comparison-head {
+    align-items: flex-end;
+    flex-direction: row;
+  }
+
+  .comparison-products {
+    border-radius: 30px;
+  }
+
+  .comparison-products__card,
+  .comparison-products__card > .car-card {
+    border-radius: 20px;
+  }
+
+  .comparison-products__card > .car-card {
+    gap: 24px;
+    padding: 20px;
+  }
+
+  .comparison-products .car-card__content {
+    gap: 16px;
+  }
+
+  .comparison-products .car-card__brand,
+  .comparison-products .car-card__brand img {
+    height: 20px;
+  }
+
+  .comparison-products .car-card__actions {
+    gap: 16px;
+  }
+
+  .comparison-products .car-card__info {
+    gap: 6px;
+  }
+
+  .comparison-products .car-card__title {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .comparison-products .car-card__tags .tag:nth-child(n + 3) {
+    display: none;
+  }
+
+  .comparison-products .car-card__tags::after {
+    content: "+1";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 3px 8px;
+    border-radius: 26px;
+    background: rgba(143, 133, 121, .2);
+    color: var(--color-heritage-green-500, #294434);
+    font-family: var(--font-text, "Onest", sans-serif);
+    font-size: 14px;
+    line-height: 18px;
+    white-space: nowrap;
+  }
+
+  .comparison-products .car-card__photo,
+  .comparison-products .car-card__photo img {
+    height: 110px;
+    max-height: 110px;
+  }
+
+  .comparison-products .car-card .price-block__label {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .comparison-products .car-card .price-block__value {
+    font-size: min(20px, 8cqi);
+    line-height: 26px;
+  }
+
+  .comparison-products .car-card__details-link.btn {
+    width: 28px;
+    min-width: 28px;
+    height: 28px;
+    flex: 0 0 28px;
+    padding: 0;
+  }
+
+  .comparison-products .car-card__details-link > .btn__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .comparison-products .car-card__details-link > .btn__icon:has(.car-card__details-icon) {
+    width: 8px;
+    height: 8px;
+    display: inline-flex;
+  }
+
+  .comparison-products .car-card__details-icon {
+    display: block;
+  }
+
+  .comparison-products__nav--previous {
+    left: -22px;
+  }
+
+  .comparison-products__nav--next {
+    right: -22px;
+  }
+}
+
+@media (min-width: 961px) and (max-width: 1200px) {
+  .comparison-specifications {
+    margin-top: 68px;
+  }
+
+  .comparison-specifications__head {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 960px) {
+  .comparison-head__title {
+    gap: 17px;
+  }
+
+  .comparison-products {
+    border-radius: 26px;
+  }
+
+  .comparison-products__card,
+  .comparison-products__card > .car-card {
+    border-radius: 16px;
+  }
+
+  .comparison-products__nav {
+    width: 36px;
+    height: 36px;
+  }
+
+  .comparison-products__nav--previous {
+    left: -13px;
+  }
+
+  .comparison-products__nav--next {
+    right: -13px;
+  }
+
+  .comparison-products__nav svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  .comparison-specifications__title {
+    font-size: 28px;
+    line-height: 34px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 960px) {
+  .comparison-specifications {
+    margin-top: 72px;
+  }
+}
+
+@media (max-width: 768px) {
+  .comparison-page {
+    padding-top: calc(var(--page-top, 124px) + 10px);
+  }
+
+  .comparison-head {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 34px;
+    margin-bottom: 20px;
+  }
+
+  .comparison-head__tools {
+    position: static;
+    width: 100%;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+
+  .comparison-products {
+    align-items: stretch;
+    border-radius: 20px;
+  }
+
+  .comparison-products__nav {
+    display: none;
+  }
+
+  .comparison-products .car-card__photo,
+  .comparison-products .car-card__photo img {
+    height: 130px;
+    max-height: 130px;
+  }
+
+  .comparison-products__pager {
+    min-height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px;
+    overflow: hidden;
+    border-radius: 12px;
+    background: var(--color-white, #FFFFFF);
+  }
+
+  .comparison-products__pager-button.ui-button--bare {
+    width: 28px;
+    min-width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid var(--color-warm-taupe-300, #B2A79B);
+    border-radius: 50%;
+    color: var(--color-carbon-black-500, #1B1E1D);
+    background: transparent;
+  }
+
+  .comparison-products__pager-button--next svg {
+    transform: rotate(180deg);
+  }
+
+  .comparison-products__pager-button:disabled {
+    opacity: .4;
+  }
+
+  .comparison-products__pager-label {
+    font-family: var(--font-text, "Onest", sans-serif);
+    font-weight: var(--font-weight-regular, 400);
+    font-size: 14px;
+    line-height: 18px;
+    color: var(--color-warm-taupe-400, #8F8579);
+    white-space: nowrap;
+  }
+
+  .comparison-specifications {
+    margin-top: 60px;
+  }
+
+  .comparison-characteristic__label {
+    padding-inline: 16px;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .comparison-characteristic__value {
+    min-height: 50px;
+    padding: 6px 16px 12px;
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .comparison-spec-table__swatch {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    border-radius: 4px;
+  }
+}
+
+@media (max-width: 640px) {
+  .comparison-page {
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+
+  .comparison-head {
+    gap: 30px;
+  }
+
+  .comparison-products .car-card__photo,
+  .comparison-products .car-card__photo img {
+    height: 110px;
+    max-height: 110px;
+  }
+
+  .comparison-specifications {
+    margin-top: 70px;
+  }
+
+  .comparison-specifications__head {
+    margin-bottom: 20px;
+  }
+
+  .comparison-specifications__title {
+    font-size: 20px;
+    line-height: 26px;
+  }
+}
+
+@media (max-width: 480px) {
+  .comparison-page {
+    padding-top: var(--page-top, 116px);
+    padding-right: var(--page-gutter, 16px);
+    padding-left: var(--page-gutter, 16px);
+  }
+
+  .comparison-head {
+    gap: 24px;
+  }
+
+  .comparison-head__tools {
+    align-items: center;
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  .comparison-head__action.ui-button--bare {
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .comparison-products__card > .car-card {
+    padding: 18px;
+  }
+
+  .comparison-products .car-card__photo,
+  .comparison-products .car-card__photo img {
+    height: clamp(138px, 38vw, 160px);
+    max-height: clamp(138px, 38vw, 160px);
+  }
+
+  .comparison-specifications {
+    margin-top: 48px;
+  }
+
+  .comparison-specifications__head {
+    gap: 8px;
+  }
+
+  .comparison-specifications .comparison-switch__content {
+    gap: 8px;
+  }
+
+  .comparison-specifications .comparison-switch__control {
+    width: 36px;
+    height: 18px;
+  }
+
+  .comparison-specifications .comparison-switch__thumb {
+    width: 14px;
+    height: 14px;
+  }
+
+  .comparison-specifications .comparison-switch[data-selected="true"] .comparison-switch__thumb {
+    transform: translateX(18px);
+  }
+
+  .comparison-specifications .comparison-switch__label {
+    font-size: 14px;
+    line-height: 18px;
+  }
+}
+
+@media (max-width: 390px) {
+  .comparison-page {
+    padding-top: 101px;
+  }
+
+  .comparison-head__title {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .comparison-head h1 {
+    font-size: 22px;
+    line-height: 28px;
+  }
+}
+
+/* Mobile comparison layouts (480 / 390). Both Figma frames keep two cars in
+   view; the pager changes one shared window used by cards and characteristics. */
+.comparison-sticky {
+  top: 18px;
+  width: calc(100% - 2 * clamp(40px, 3.90625vw, 60px));
+  max-width: 1800px;
+}
+.comparison-sticky__grid {
+  grid-template-columns: repeat(var(--comparison-columns), minmax(0, 1fr));
+  gap: var(--comparison-column-gap, 10px);
+  padding: 10px;
+}
+
+@media (max-width: 1200px) {
+  .comparison-sticky {
+    width: calc(100% - 80px);
+  }
+}
+
+@media (max-width: 640px) {
+  .comparison-sticky {
+    top: 10px;
+    width: calc(100% - 60px);
+  }
+}
+
+@media (max-width: 480px) {
+  .comparison-page {
+    padding-top: 106px;
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .comparison-head {
+    gap: 28px;
+    margin-bottom: 20px;
+  }
+
+  .comparison-head__title {
+    gap: 10px;
+  }
+
+  .comparison-head__title .badge {
+    min-height: 26px;
+    margin-top: 1px;
+    padding: 4px 8px;
+    border: 0;
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .comparison-head__tools {
+    align-items: center;
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  .comparison-head__action.ui-button--bare {
+    gap: 8px;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .comparison-head__action-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .comparison-head__action-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .comparison-data {
+    --comparison-column-gap: 6px;
+  }
+
+  .comparison-products {
+    gap: 6px;
+    padding: 6px;
+    border-radius: 14px;
+  }
+
+  .comparison-products__column {
+    gap: 6px;
+  }
+
+  .comparison-products__card,
+  .comparison-products__card > .car-card {
+    border-radius: 12px;
+  }
+
+  .comparison-products__card > .car-card {
+    min-height: 0;
+    gap: 16px;
+    padding: 12px;
+  }
+
+  .comparison-products .car-card__main {
+    gap: 10px;
+  }
+
+  .comparison-products .car-card__content {
+    gap: 16px;
+  }
+
+  .comparison-products .car-card__brand,
+  .comparison-products .car-card__brand img,
+  .comparison-products .wishlist,
+  .comparison-products .compare,
+  .comparison-products .ui-button.wishlist > svg,
+  .comparison-products .ui-button.compare > svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .comparison-products .car-card__actions {
+    gap: 16px;
+  }
+
+  .comparison-products .car-card__info {
+    gap: 4px;
+  }
+
+  .comparison-products .car-card__title {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .comparison-products .indicator--m {
+    gap: 4px;
+    font-size: 10px;
+    line-height: 14px;
+  }
+
+  .comparison-products .indicator__dot {
+    width: 4px;
+    height: 4px;
+  }
+
+  .comparison-products .car-card__tags {
+    gap: 2px;
+    padding-top: 0;
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+
+  .comparison-products .tag--card.tag--m,
+  .comparison-products .car-card__tags::after {
+    padding: 2px 6px;
+    font-size: 10px;
+    line-height: 14px;
+  }
+
+  .comparison-products .car-card__photo,
+  .comparison-products .car-card__photo img {
+    height: 90px;
+    max-height: 90px;
+  }
+
+  .comparison-products .car-card__action {
+    gap: 8px;
+  }
+
+  .comparison-products .car-card .price-block__label {
+    font-size: 10px;
+    line-height: 14px;
+  }
+
+  .comparison-products .car-card .price-block__value {
+    font-size: min(18px, 9.5cqi);
+    line-height: 22px;
+  }
+
+  .comparison-products .car-card__details-link.btn {
+    width: 28px;
+    min-width: 28px;
+    height: 28px;
+    flex-basis: 28px;
+    padding: 10px;
+  }
+
+  .comparison-products__pager {
+    min-height: 26px;
+    padding: 6px;
+    border-radius: 8px;
+  }
+
+  .comparison-products__pager-button.ui-button--bare {
+    width: 8px;
+    min-width: 8px;
+    height: 8px;
+    padding: 0;
+    border: 0;
+  }
+
+  .comparison-products__pager-button svg {
+    width: 8px;
+    height: 8px;
+  }
+
+  .comparison-products__pager-label {
+    font-size: 10px;
+    line-height: 14px;
+  }
+
+  .comparison-specifications {
+    margin-top: 40px;
+  }
+
+  .comparison-specifications__head {
+    margin-bottom: 10px;
+  }
+
+  .comparison-specifications__title {
+    font-size: 20px;
+    line-height: 26px;
+  }
+
+  .comparison-specifications .comparison-switch__content {
+    gap: 12px;
+    min-height: 0;
+  }
+
+  .comparison-specifications .comparison-switch__control {
+    width: 40px;
+    height: 20px;
+  }
+
+  .comparison-specifications .comparison-switch__thumb {
+    width: 16px;
+    height: 16px;
+  }
+
+  .comparison-specifications .comparison-switch[data-selected="true"] .comparison-switch__thumb {
+    transform: translateX(20px);
+  }
+
+  .comparison-specifications .comparison-switch__label {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .comparison-characteristics {
+    padding: 6px;
+  }
+
+  .comparison-characteristic__values {
+    gap: 6px;
+  }
+
+  .comparison-sticky {
+    width: calc(100% - 40px);
+    border-radius: 14px;
+  }
+
+  .comparison-sticky__grid {
+    gap: 6px;
+    padding: 6px;
+  }
+
+  .comparison-sticky-card {
+    min-height: 66px;
+    grid-template-columns: 44px minmax(0, 1fr) 24px;
+    gap: 6px;
+    padding: 6px;
+    border-radius: 10px;
+  }
+
+  .comparison-sticky-card__media {
+    height: 44px;
+    border-radius: 8px;
+  }
+
+  .comparison-sticky-card__content {
+    gap: 2px;
+  }
+
+  .comparison-sticky-card__content strong,
+  .comparison-sticky-card__content span {
+    font-size: 10px;
+    line-height: 14px;
+  }
+
+  .comparison-sticky-card__content strong {
+    -webkit-line-clamp: 2;
+  }
+
+  .comparison-sticky-card__remove.ui-button--bare {
+    width: 24px;
+    min-width: 24px;
+    height: 24px;
+    padding: 6px;
+  }
+
+  .comparison-sticky-card__remove svg {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+@media (max-width: 390px) {
+  .comparison-head {
+    gap: 20px;
+  }
+
+  .comparison-head__title {
+    gap: 6px;
+  }
+
+  .comparison-head__title .badge {
+    min-height: 18px;
+    margin-top: 1px;
+    padding: 2px 6px;
+    font-size: 10px;
+    line-height: 14px;
+  }
+
+  .comparison-head__tools {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .comparison-head__action.ui-button--bare {
+    min-height: 18px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .comparison-head__action-icon,
+  .comparison-head__action-icon svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .comparison-products__card > .car-card {
+    padding: 12px 10px;
+  }
+
+  .comparison-products .indicator,
+  .comparison-products .car-card__tags,
+  .comparison-products .car-card__details-link {
+    display: none;
+  }
+
+  .comparison-products .car-card__info {
+    gap: 0;
+  }
+
+  .comparison-products .car-card__photo,
+  .comparison-products .car-card__photo img {
+    height: 79px;
+    max-height: 79px;
+  }
+
+  .comparison-specifications {
+    margin-top: 50px;
+  }
+
+  .comparison-specifications__head {
+    margin-bottom: 12px;
+  }
+
+  .comparison-specifications .comparison-switch__control {
+    width: 32px;
+    height: 16px;
+  }
+
+  .comparison-specifications .comparison-switch__thumb {
+    width: 12px;
+    height: 12px;
+  }
+
+  .comparison-specifications .comparison-switch[data-selected="true"] .comparison-switch__thumb {
+    transform: translateX(16px);
+  }
+
+  .comparison-specifications .comparison-switch__label {
+    font-size: 12px;
+    line-height: 16px;
   }
 }

@@ -19,7 +19,7 @@ export function NewsGrid({ items }: { items: NewsItem[] }) {
   return (
     <>
       <header className="news-page__head">
-        <h1>Новости</h1>
+        <h1 className="t-page-title">Новости</h1>
         <Badge color="info">{visibleItems.length}</Badge>
       </header>
 

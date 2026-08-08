@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { SiteChrome } from "@/components/layout/SiteChrome";
+import { TypographyGuard } from "@/components/ui/TypographyGuard";
 import { VehicleActionsProvider } from "@/components/ui/VehicleActionsContext";
 
 export const metadata: Metadata = {
@@ -31,6 +32,7 @@ export default function RootLayout({
       <body>
         <VehicleActionsProvider>
           <SiteChrome>{children}</SiteChrome>
+          <TypographyGuard />
         </VehicleActionsProvider>
       </body>
     </html>

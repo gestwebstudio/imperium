@@ -166,7 +166,7 @@ export function VelesPage() {
 
       {/* ---------- Процесс работы (4 этапа, 1006:2917) ---------- */}
       <section className="home-wrap veles-process">
-        <h2 className="veles-process__title">Процесс работы</h2>
+        <h2 className="veles-process__title t-page-title">Процесс работы</h2>
         <div className="veles-steps">
           {STEPS.map((s) => (
             <article className="veles-step" key={s.stage}>

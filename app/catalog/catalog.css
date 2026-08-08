@@ -65,10 +65,6 @@
 .cat-filters-backdrop { display: none; }
 .catalog-head h1 {
   margin: 0;
-  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
-  font-weight: var(--font-weight-semibold, 600);
-  font-size: var(--fs-48);
-  line-height: 1.16;
   letter-spacing: -0.01em;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
@@ -729,11 +725,6 @@
     margin-bottom: 30px;
   }
 
-  .catalog-head h1 {
-    font-size: 36px;
-    line-height: 44px;
-  }
-
   .catalog-body {
     gap: 16px;
   }
@@ -792,11 +783,6 @@
     flex-wrap: nowrap;
     gap: 16px;
     margin-bottom: 10px;
-  }
-
-  .catalog-head h1 {
-    font-size: 36px;
-    line-height: 44px;
   }
 
   .catalog-head__title {
@@ -994,11 +980,6 @@
     gap: 20px;
   }
 
-  .catalog-head h1 {
-    font-size: 32px;
-    line-height: 40px;
-  }
-
   .catalog-grid > .car-card {
     height: 282px;
     gap: 16px;
@@ -1094,11 +1075,6 @@
     margin-bottom: var(--crumbs-gap-bottom);
   }
 
-  .catalog-head h1 {
-    font-size: 28px;
-    line-height: 34px;
-  }
-
   .catalog-head__title {
     gap: 8px;
   }
@@ -1189,11 +1165,6 @@
 }
 
 @media (max-width: 390px) {
-  .catalog-head h1 {
-    font-size: 24px;
-    line-height: 30px;
-  }
-
   .catalog-head__title {
     align-items: center;
     gap: 6px;

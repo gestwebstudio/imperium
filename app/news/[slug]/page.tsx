@@ -45,7 +45,7 @@ function NewsArticleContent({ article }: { article: NewsArticle }) {
         <div className="news-detail__copy">
           <time dateTime={article.dateTime}>{article.date}</time>
           <div className="news-detail__text">
-            <h1>{article.title}</h1>
+            <h1 className="t-page-title">{article.title}</h1>
             <div className="news-detail__body">
               {article.body.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>

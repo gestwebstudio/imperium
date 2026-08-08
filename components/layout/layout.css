@@ -19,6 +19,13 @@
 /* Headroom: уезжает вверх при скролле вниз */
 .site-header.is-hidden { transform: translateY(calc(-100% - 8px)); }
 
+/* В сравнении шапка остаётся частью начала страницы и уходит вместе с контентом:
+   верхнюю фиксированную позицию при прокрутке занимает ряд сравниваемых машин. */
+body.comparison-route .site-header {
+  position: absolute;
+  transform: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .site-header { transition: none; }
 }
@@ -245,7 +252,7 @@
 }
 
 /* Бургер-режим (до 1200): навигация/действия скрыты, по центру логотип. */
-@media (max-width: 1199px) {
+@media (max-width: 1200px) {
   .site-header {
     --site-header-height: 66px;
     --site-header-logo-height: 26px;
@@ -296,7 +303,7 @@
   }
 }
 
-@media (max-width: 1199px) {
+@media (max-width: 1200px) {
   .header-copy-alert {
     display: none;
   }

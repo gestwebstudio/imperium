@@ -5,6 +5,10 @@ import {
   ArrowDiagonalIcon,
   CloseIcon,
   CopyIcon,
+  FiltersIcon,
+  MenuIcon,
+  PlusIcon,
+  ShareIcon,
   HeartStrokeIcon,
   HeartFillIcon,
   ListAddIcon,
@@ -37,6 +41,10 @@ const icons = [
   ["Arrow-Diagonal", ArrowDiagonalIcon],
   ["Close", CloseIcon],
   ["Copy", CopyIcon],
+  ["Filters", FiltersIcon],
+  ["Menu", MenuIcon],
+  ["Plus", PlusIcon],
+  ["Share", ShareIcon],
   ["Heart-stroke", HeartStrokeIcon],
   ["Heart-fill", HeartFillIcon],
   ["List-Add", ListAddIcon],
@@ -157,6 +165,15 @@ const responsiveDisplayStyles: TypographySpec[] = [
   sample: "Mercedes-Benz CLE 200",
 }));
 
+const responsivePageTitleStyles: TypographySpec[] = [
+  {
+    name: "Page title / Semibold",
+    className: "t-page-title",
+    meta: "Wix Madefor Display · 48/56 · 36/44 · 32/40 · 28/34 · 24/30 · 600",
+    sample: "Автомобили в наличии",
+  },
+];
+
 const textScales = [
   [36, 42, ["regular", "medium", "semibold", "bold"]],
   [32, 44, ["regular", "medium", "semibold", "bold", "black"]],
@@ -239,6 +256,7 @@ const specialTypographyStyles: TypographySpec[] = [
 
 const typographyGroups = [
   ["Heading", headingStyles],
+  ["Responsive page title", responsivePageTitleStyles],
   ["Responsive display", responsiveDisplayStyles],
   ["Text", textStyles],
   ["Compact text", compactTextStyles],

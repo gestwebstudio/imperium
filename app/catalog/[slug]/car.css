@@ -2008,10 +2008,6 @@
     min-height: 44px;
     margin-bottom: 34px;
   }
-  .car > .cars-section .cars-section__title {
-    font-size: 36px;
-    line-height: 44px;
-  }
   .car > .cars-section .cars-section__head > .ui-button {
     height: 36px;
     padding-inline: 13px;
@@ -2941,10 +2937,6 @@
     height: 40px;
     min-height: 40px;
   }
-  .car > .cars-section .cars-section__title {
-    font-size: 32px;
-    line-height: 40px;
-  }
   .car > .cars-section .car-card {
     border-radius: 16px;
   }
@@ -3242,10 +3234,6 @@
   font-size: var(--type-text-16-font-size);
   line-height: var(--type-text-16-line-height);
 }
-.car > .cars-section .cars-section__title {
-  font-size: var(--type-display-36-font-size);
-  line-height: var(--type-display-36-line-height);
-}
 .car > .cars-section .car-card__title {
   font-size: var(--type-display-20-font-size);
   line-height: var(--type-display-20-line-height);
@@ -3372,10 +3360,6 @@
   .car-atelier .image-service-card__text {
     font-size: var(--type-text-16-font-size);
     line-height: var(--type-text-16-line-height);
-  }
-  .car > .cars-section .cars-section__title {
-    font-size: var(--type-display-32-font-size);
-    line-height: var(--type-display-32-line-height);
   }
   .car > .contacts .contacts__sub {
     font-size: var(--type-text-18-font-size);

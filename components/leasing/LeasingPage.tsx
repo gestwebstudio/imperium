@@ -118,7 +118,7 @@ export function LeasingPage({ cars }: { cars: Car[] }) {
 
       {/* ---------- Как оформить лизинг ---------- */}
       <section className="home-wrap ti-steps">
-        <h2 className="ti-section-title">Как оформить лизинг</h2>
+        <h2 className="ti-section-title t-page-title">Как оформить лизинг</h2>
         <div className="ti-steps__grid">
           {STEPS.map((s) => (
             <article className="ti-step" key={s.stage}>

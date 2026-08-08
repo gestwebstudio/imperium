@@ -14,10 +14,6 @@
 }
 .favorites-head h1 {
   margin: 0;
-  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
-  font-weight: var(--font-weight-semibold, 600);
-  font-size: var(--fs-48);
-  line-height: 1.16;
   letter-spacing: -.01em;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
@@ -25,12 +21,12 @@
 .favorites-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: start;
   gap: clamp(16px, 1.25vw, 24px);
 }
 .favorites-grid > .car-card {
-  max-width: none;
-  height: 100%;
-  min-height: 484px;
+  height: auto;
+  min-height: 0;
 }
 
 .favorites-loading {
@@ -73,13 +69,13 @@
   color: var(--color-warm-taupe-500, #6A6259);
 }
 
-@media (max-width: 1536px) {
+@media (max-width: 1199px) {
   .favorites-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 960px) {
+@media (max-width: 767px) {
   .favorites-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -91,12 +87,6 @@
   }
   .favorites-head {
     margin-bottom: 24px;
-  }
-  .favorites-grid {
-    grid-template-columns: 1fr;
-  }
-  .favorites-grid > .car-card {
-    min-height: 0;
   }
   .favorites-empty {
     min-height: 360px;
@@ -112,6 +102,12 @@
   .favorites-head {
     align-items: flex-start;
     gap: 10px;
+  }
+  .favorites-grid {
+    grid-template-columns: 1fr;
+  }
+  .favorites-grid > .car-card {
+    max-width: none;
   }
   .favorites-empty {
     min-height: 320px;

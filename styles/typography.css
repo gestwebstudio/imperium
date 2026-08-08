@@ -207,6 +207,43 @@
   line-height: 1.2222;
 }
 
+/* ---- Responsive page/section title ----
+   Figma: «Автомобили в наличии» (1920 / 1536 / 1200 / 960 / 768 / 640 / 480 / 390). */
+.t-page-title {
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--type-display-48-font-size);
+  line-height: var(--type-display-48-line-height);
+}
+
+@media (max-width: 1536px) {
+  .t-page-title {
+    font-size: var(--type-display-36-font-size);
+    line-height: var(--type-display-36-line-height);
+  }
+}
+
+@media (max-width: 960px) {
+  .t-page-title {
+    font-size: var(--type-display-32-font-size);
+    line-height: var(--type-display-32-line-height);
+  }
+}
+
+@media (max-width: 640px) {
+  .t-page-title {
+    font-size: var(--type-display-28-font-size);
+    line-height: var(--type-display-28-line-height);
+  }
+}
+
+@media (max-width: 390px) {
+  .t-page-title {
+    font-size: var(--type-display-24-font-size);
+    line-height: var(--type-display-24-line-height);
+  }
+}
+
 /* ---- Text ---- */
 .t-text-18-18-regular {
   font-family: "Onest", sans-serif;

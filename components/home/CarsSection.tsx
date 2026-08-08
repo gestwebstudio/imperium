@@ -48,7 +48,7 @@ export function CarsSection({
       )}
     >
       <div className="cars-section__head">
-        <h2 className="cars-section__title">
+        <h2 className="cars-section__title t-page-title">
           {title}
           {badge != null && <span className="badge badge--info">{badge}</span>}
         </h2>

@@ -51,7 +51,7 @@ export function ProjectsRow() {
   return (
     <section className="home-wrap projects">
       <div className="projects__head">
-        <h2 className="projects__title">Проекты, которыми мы гордимся</h2>
+        <h2 className="projects__title t-page-title">Проекты, которыми мы гордимся</h2>
       </div>
 
       <div className="cars-carousel projects-carousel">
