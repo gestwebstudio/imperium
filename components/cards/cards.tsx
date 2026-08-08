@@ -60,6 +60,9 @@ export type ServiceCardModal = {
   comment?: boolean;
   commentLabel?: string;
   commentPlaceholder?: string;
+  photo?: boolean;
+  photoLabel?: string;
+  photoHint?: string;
 };
 export type ServiceImageCardProps = {
   title: string;
@@ -97,6 +100,9 @@ export function ServiceImageCard({
           comment={modal.comment}
           commentLabel={modal.commentLabel}
           commentPlaceholder={modal.commentPlaceholder}
+          photo={modal.photo}
+          photoLabel={modal.photoLabel}
+          photoHint={modal.photoHint}
         />
       ) : (
         <Link

@@ -16,6 +16,9 @@ const VELES_MODAL = {
   comment: true,
   commentLabel: "Идея проекта",
   commentPlaceholder: "Автомобиль, пожелания, референсы",
+  photo: true,
+  photoLabel: "Референсы или примеры",
+  photoHint: "Прикрепите изображения-референсы — необязательно",
 } as const;
 
 const STEPS = [
@@ -121,6 +124,9 @@ export function VelesPage() {
               comment: true,
               commentLabel: "Идея проекта",
               commentPlaceholder: "Автомобиль, пожелания, референсы",
+              photo: true,
+              photoLabel: "Референсы или примеры",
+              photoHint: "Прикрепите изображения-референсы — необязательно",
             }}
           />
           <ServiceImageCard
@@ -134,6 +140,9 @@ export function VelesPage() {
               comment: true,
               commentLabel: "Идея проекта",
               commentPlaceholder: "Автомобиль, пожелания, референсы",
+              photo: true,
+              photoLabel: "Референсы или примеры",
+              photoHint: "Прикрепите изображения-референсы — необязательно",
             }}
           />
           <ServiceImageCard
@@ -147,6 +156,9 @@ export function VelesPage() {
               comment: true,
               commentLabel: "Идея проекта",
               commentPlaceholder: "Автомобиль, пожелания, референсы",
+              photo: true,
+              photoLabel: "Референсы или примеры",
+              photoHint: "Прикрепите изображения-референсы — необязательно",
             }}
           />
         </div>
