@@ -66,18 +66,42 @@ export function AtelierPage() {
             title="Электроника и мультимедиа"
             image="/images/services/atelie1.webp"
             text="Современный автомобиль — это мощный цифровой центр. Мы адаптируем его под вас: язык, функции, интерфейсы."
+            modal={{
+              description:
+                "Оставьте контакты — обсудим адаптацию электроники и мультимедиа вашего автомобиля.",
+              successText: ATELIER_MODAL.successText,
+              comment: true,
+              commentLabel: ATELIER_MODAL.commentLabel,
+              commentPlaceholder: ATELIER_MODAL.commentPlaceholder,
+            }}
           />
           <ServiceImageCard
             className="svc-card--selection"
             title="Диски и обвесы"
             image="/images/services/atelie2.webp"
             text="Посадка и силуэт решают всё. Подбираем колёса и аэродинамические элементы."
+            modal={{
+              description:
+                "Оставьте контакты — подберём диски и аэродинамический обвес для вашего автомобиля.",
+              successText: ATELIER_MODAL.successText,
+              comment: true,
+              commentLabel: ATELIER_MODAL.commentLabel,
+              commentPlaceholder: ATELIER_MODAL.commentPlaceholder,
+            }}
           />
           <ServiceImageCard
             className="svc-card--veles"
             title="Защита кузова и смена цвета"
             image="/images/services/atelie3.webp"
             text="Сохраняем безупречный вид автомобиля или меняем его образ без покраски"
+            modal={{
+              description:
+                "Оставьте контакты — обсудим защиту кузова или смену цвета вашего автомобиля.",
+              successText: ATELIER_MODAL.successText,
+              comment: true,
+              commentLabel: ATELIER_MODAL.commentLabel,
+              commentPlaceholder: ATELIER_MODAL.commentPlaceholder,
+            }}
           />
         </div>
       </section>
