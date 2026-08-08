@@ -1,3 +1,4 @@
+import { Badge } from "@/components";
 import { ServiceImageCard } from "@/components/cards/cards";
 import { Crumbs } from "@/components/ui/Crumbs";
 import { LeadModal } from "@/components/ui/LeadModal";
@@ -47,22 +48,22 @@ const STEPS = [
 export function VelesPage() {
   return (
     <main className="veles">
-      {/* ---------- Hero (1006:2865) ---------- */}
-      <section className="veles-hero">
-        <div className="veles-hero__inner home-wrap">
+      {/* ---------- Hero — общий блок трейд-ина (.ti-hero*), без ряда преимуществ ---------- */}
+      <section className="ti-hero veles-hero">
+        <div className="ti-hero__inner home-wrap">
           <Crumbs
             items={[
               { label: "Главная", href: "/" },
               { label: "Индивидуальный дизайн" },
             ]}
           />
-          <div className="veles-hero__top">
-            <h1 className="veles-hero__title">
+          <div className="ti-hero__top">
+            <h1 className="ti-hero__title">
               <span className="reg">ИНДИВИДУАЛЬНЫЙ</span>
               <span className="bold">ДИЗАЙН АВТОМОБИЛЯ</span>
             </h1>
-            <div className="veles-hero__aside">
-              <p className="veles-hero__sub">
+            <div className="ti-hero__aside">
+              <p className="ti-hero__sub">
                 Ваш автомобиль может стать больше, чем средством передвижения. В
                 партнёрстве с автомобильным дизайнером Александром Велесом мы
                 превращаем его в арт-объект, отражающий вашу личность.
@@ -70,6 +71,7 @@ export function VelesPage() {
               <LeadModal
                 {...VELES_MODAL}
                 triggerLabel="Записаться на консультацию"
+                triggerClassName="ti-hero__cta"
                 triggerVariant="primary-surface"
               />
             </div>
@@ -164,15 +166,18 @@ export function VelesPage() {
         </div>
       </section>
 
-      {/* ---------- Процесс работы (4 этапа, 1006:2917) ---------- */}
+      {/* ---------- Процесс работы (4 этапа) — общий блок «этапы» трейд-ина
+          (.ti-steps__grid/.ti-step*), чтобы работали все адаптации. ---------- */}
       <section className="home-wrap veles-process">
-        <h2 className="veles-process__title t-page-title">Процесс работы</h2>
-        <div className="veles-steps">
+        <h2 className="ti-section-title">Процесс работы</h2>
+        <div className="ti-steps__grid">
           {STEPS.map((s) => (
-            <article className="veles-step" key={s.stage}>
-              <span className="veles-step__badge">{s.stage}</span>
-              <h3 className="veles-step__title">{s.title}</h3>
-              <p className="veles-step__text">{s.text}</p>
+            <article className="ti-step" key={s.stage}>
+              <Badge color="info" className="ti-step__badge">
+                {s.stage}
+              </Badge>
+              <h3 className="ti-step__title">{s.title}</h3>
+              <p className="ti-step__text">{s.text}</p>
             </article>
           ))}
         </div>

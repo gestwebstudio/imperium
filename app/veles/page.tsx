@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "../home.css";
+import "../trade-in/trade-in.css";
 import "./veles.css";
 import { VelesPage } from "@/components/veles/VelesPage";
 
