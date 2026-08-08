@@ -81,7 +81,11 @@ export function CarView({ car }: CarViewProps) {
         <Crumbs
           className="cat-crumbs"
           compactOnMobile
-          items={[{ label: "Главная", href: "/" }, { label: title }]}
+          items={[
+            { label: "Главная", href: "/" },
+            { label: "Каталог", href: "/catalog" },
+            { label: title },
+          ]}
         />
       </div>
 
