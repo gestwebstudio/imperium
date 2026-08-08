@@ -2,62 +2,12 @@
   padding-bottom: 0;
 }
 
-.about-salon__hero {
-  overflow: hidden;
-  border-radius: 0 0 var(--radius-page, 50px) var(--radius-page, 50px);
-  background: var(--color-stone-beige-200, #E4DFDB);
-}
+/* Первый блок использует общий hero трейд-ина (.ti-hero*). Здесь только дельта:
+   крошки железно 20px (как на остальных страницах) и паддинг под видео. */
+.about-salon .ui-crumbs { margin-bottom: var(--crumbs-gap-bottom); }
 
-.about-salon__hero-inner {
-  padding-top: var(--page-top, 155px);
-  padding-bottom: clamp(48px, 5vw, 96px);
-}
-
-.about-salon__hero-head {
-  display: grid;
-  grid-template-columns: minmax(0, 1.45fr) minmax(320px, .55fr);
-  align-items: end;
-  gap: clamp(40px, 6vw, 116px);
-}
-
-.about-salon__title {
-  min-width: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
-  font-size: clamp(48px, 4.584vw, 88px);
-  line-height: 1.06;
-  letter-spacing: -.02em;
-  text-transform: uppercase;
-  color: var(--color-carbon-black-500, #1B1E1D);
-}
-
-.about-salon__title span {
-  font-weight: var(--font-weight-regular, 400);
-}
-
-.about-salon__title strong {
-  font-weight: var(--font-weight-extrabold, 800);
-}
-
-.about-salon__hero-aside {
-  width: min(100%, 520px);
-  justify-self: end;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 24px;
-  text-align: right;
-}
-
-.about-salon__hero-aside p {
-  margin: 0;
-  font-family: var(--font-text, "Onest", sans-serif);
-  font-size: var(--fs-18);
-  line-height: 1.45;
-  color: var(--color-carbon-black-500, #1B1E1D);
-}
+/* На about в hero нет ряда преимуществ — снизу обычный паддинг (не под наезд плашки). */
+.about-salon__hero .ti-hero__inner { padding-bottom: clamp(48px, 5vw, 96px); }
 
 .about-salon__gallery {
   height: clamp(520px, 39vw, 748px);
@@ -272,15 +222,10 @@
 }
 
 @media (max-width: 1200px) {
-  .about-salon__hero-head,
   .about-salon__story-intro,
   .about-salon__section-head {
     grid-template-columns: minmax(0, 1.2fr) minmax(300px, .8fr);
     gap: 48px;
-  }
-
-  .about-salon__title {
-    font-size: var(--fs-66);
   }
 
   .about-salon__principle {
@@ -293,14 +238,12 @@
 }
 
 @media (max-width: 960px) {
-  .about-salon__hero-head,
   .about-salon__story-intro,
   .about-salon__section-head {
     grid-template-columns: minmax(0, 1fr);
     gap: 28px;
   }
 
-  .about-salon__hero-aside,
   .about-salon__story-copy,
   .about-salon__section-description {
     width: min(100%, 760px);
@@ -337,20 +280,10 @@
 }
 
 @media (max-width: 640px) {
-  .about-salon__hero-inner {
+  .about-salon__hero .ti-hero__inner {
     padding-bottom: 32px;
   }
 
-  .about-salon__title {
-    font-size: clamp(36px, 10.256vw, 48px);
-    line-height: 1.08;
-  }
-
-  .about-salon__hero-aside {
-    gap: 20px;
-  }
-
-  .about-salon__hero-aside p,
   .about-salon__story-copy p,
   .about-salon__section-description,
   .about-salon__principle p {
@@ -431,10 +364,6 @@
 }
 
 @media (max-width: 390px) {
-  .about-salon__title {
-    font-size: 36px;
-  }
-
   .about-salon__section-title {
     font-size: 34px;
   }

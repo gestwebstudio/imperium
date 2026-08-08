@@ -49,31 +49,38 @@ export async function AboutSalonPage() {
   const reviews = await getReviews();
   return (
     <main className="about-salon">
-      <section className="about-salon__hero">
-        <div className="home-wrap about-salon__hero-inner">
+      {/* Первый блок — на общем hero трейд-ина (.ti-hero*), но без ряда преимуществ;
+          вместо него — видео. Токены заголовка/текста/кнопки адаптированы по всем брейкам. */}
+      <section className="ti-hero about-salon__hero">
+        <div className="ti-hero__inner home-wrap">
           <Crumbs
             items={[{ label: "Главная", href: "/" }, { label: "О салоне" }]}
           />
 
-          <div className="about-salon__hero-head">
-            <h1 className="about-salon__title">
-              <span>Салон премиальных</span>
-              <strong>автомобилей</strong>
+          <div className="ti-hero__top">
+            <h1 className="ti-hero__title">
+              <span className="reg">Салон премиальных</span>
+              <span className="bold">автомобилей</span>
             </h1>
 
-            <div className="about-salon__hero-aside">
-              <p>
+            <div className="ti-hero__aside">
+              <p className="ti-hero__sub">
                 Imperium Motors — пространство для осознанного выбора автомобиля.
                 Здесь редкие модели, персональный подход и понятный процесс
                 соединяются в один спокойный клиентский опыт.
               </p>
-              <ButtonLink href="#contacts" size="l" variant="primary-surface">
+              <ButtonLink
+                href="#contacts"
+                size="l"
+                variant="primary-surface"
+                className="ti-hero__cta"
+              >
                 Посетить салон
               </ButtonLink>
             </div>
           </div>
 
-          {/* Видео о салоне — VK Video, в первом блоке на серой подложке. */}
+          {/* Видео о салоне — VK Video, на месте ряда преимуществ. */}
           <div className="about-salon__video">
             <iframe
               className="about-salon__video-frame"
