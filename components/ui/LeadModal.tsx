@@ -9,6 +9,7 @@ import {
   useOverlayState,
 } from "@heroui/react";
 import { Button, type ButtonVariant } from "@/components/ui/Button";
+import { Checkbox } from "@/components/ui/Checkbox";
 
 export type LeadModalProps = {
   title: string;
@@ -216,10 +217,13 @@ export function LeadModal({
                       )}
                     </div>
 
-                    <p className="lead-modal__legal">
-                      Нажимая кнопку, вы соглашаетесь на обработку персональных
-                      данных.
-                    </p>
+                    <Checkbox
+                      className="lead-modal__consent"
+                      size="s"
+                      name="consent"
+                      isRequired
+                      label="Нажимая кнопку, вы соглашаетесь на обработку персональных данных."
+                    />
                   </Modal.Body>
 
                   <Modal.Footer className="lead-modal__footer">

@@ -32,10 +32,10 @@
 .lead-modal__close {
   position: absolute;
   z-index: 2;
-  top: 24px;
-  right: 24px;
-  width: 40px;
-  height: 40px;
+  top: 20px;
+  right: 20px;
+  width: 36px;
+  height: 36px;
   border: 0;
   border-radius: 50%;
   background: var(--color-stone-beige-100, #F3F0EE);
@@ -61,60 +61,60 @@
 .lead-modal__header {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 38px 76px 0 38px;
+  gap: 8px;
+  padding: 26px 64px 0 32px;
 }
 .lead-modal__title,
 .lead-modal__success-title {
   margin: 0;
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
   font-weight: var(--font-weight-semibold, 600);
-  font-size: 36px;
-  line-height: 42px;
+  font-size: 26px;
+  line-height: 32px;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 .lead-modal__description {
   margin: 0;
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: 17px;
-  line-height: 24px;
+  font-size: 15px;
+  line-height: 20px;
   color: var(--color-carbon-black-300, #898785);
 }
 .lead-modal__body {
   display: flex;
   flex-direction: column;
-  padding: 28px 38px 0;
+  padding: 20px 32px 0;
 }
 .lead-modal__fields {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
+  gap: 14px;
 }
 .lead-modal__field {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 .lead-modal__field--full { grid-column: 1 / -1; }
 .lead-modal__label {
   font-family: var(--font-text, "Onest", sans-serif);
   font-weight: var(--font-weight-medium, 500);
-  font-size: 15px;
-  line-height: 20px;
+  font-size: 14px;
+  line-height: 18px;
   color: var(--color-warm-taupe-500, #6A6259);
 }
 .lead-modal__input {
   box-sizing: border-box;
   width: 100%;
-  height: 54px;
-  padding: 14px 16px;
+  height: 46px;
+  padding: 11px 14px;
   border: 1px solid var(--color-stone-beige-300, #C9C0B8);
-  border-radius: 16px;
+  border-radius: 14px;
   background: var(--color-white, #FFFFFF);
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: 17px;
-  line-height: 24px;
+  font-size: 16px;
+  line-height: 22px;
   color: var(--color-carbon-black-500, #1B1E1D);
   transition:
     border-color 180ms ease,
@@ -130,7 +130,7 @@
 }
 .lead-modal__textarea {
   height: auto;
-  min-height: 96px;
+  min-height: 72px;
   resize: vertical;
 }
 /* Необязательное поле загрузки фото */
@@ -139,10 +139,10 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  min-height: 54px;
-  padding: 12px 16px;
+  min-height: 46px;
+  padding: 10px 14px;
   border: 1px dashed var(--color-stone-beige-300, #C9C0B8);
-  border-radius: 16px;
+  border-radius: 14px;
   background: var(--color-white, #FFFFFF);
   cursor: pointer;
   transition: border-color 180ms ease, box-shadow 180ms ease;
@@ -181,31 +181,33 @@
   white-space: nowrap;
 }
 .lead-modal__legal {
-  margin: 18px 0 0;
+  margin: 14px 0 0;
   font-family: var(--font-text, "Onest", sans-serif);
   font-size: 12px;
-  line-height: 18px;
+  line-height: 16px;
   color: var(--color-carbon-black-300, #898785);
 }
+/* Обязательный чекбокс согласия (перед текстом «Нажимая…») */
+.lead-modal__consent { margin-top: 14px; }
 .lead-modal__footer {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  padding: 30px 38px 38px;
+  padding: 22px 32px 30px;
 }
 .lead-modal__success {
-  min-height: 380px;
+  min-height: 280px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 18px;
-  padding: 56px 48px;
+  gap: 16px;
+  padding: 40px 40px;
   text-align: center;
 }
 .lead-modal__success-icon {
-  width: 64px;
-  height: 64px;
+  width: 52px;
+  height: 52px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -218,10 +220,10 @@
 }
 .lead-modal__success-text {
   max-width: 430px;
-  margin: 0 0 10px;
+  margin: 0 0 8px;
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: 17px;
-  line-height: 24px;
+  font-size: 15px;
+  line-height: 20px;
   color: var(--color-carbon-black-300, #898785);
 }
 
@@ -236,8 +238,8 @@
   .lead-modal__header { padding: 30px 68px 0 24px; }
   .lead-modal__title,
   .lead-modal__success-title {
-    font-size: 28px;
-    line-height: 34px;
+    font-size: 24px;
+    line-height: 30px;
   }
   .lead-modal__body { padding: 24px 24px 0; }
   .lead-modal__fields { grid-template-columns: minmax(0, 1fr); }
