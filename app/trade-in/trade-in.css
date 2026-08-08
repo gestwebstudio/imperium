@@ -209,17 +209,17 @@
   .ti-stat__label { font-size: 14px; line-height: 18px; }
 }
 
-/* ≤639 (390): одна колонка; CTA h34/14; карточка h70. */
+/* ≤639: CTA h34/14 (преимущества остаются 2×2 вплоть до тира 480). */
 @media (max-width: 639px) {
-  .ti-hero__stats { grid-template-columns: minmax(0, 1fr); }
-  .ti-hero__stats-wrap { margin-top: -35px; } /* половина карточки h70 */
-  .ti-stat .liquid-glass__content { min-height: 70px; }
   .ti-hero__cta.btn { height: 34px; padding: 0 14px; font-size: 14px; line-height: 18px; }
 }
 
-/* ≤479 (тир 390): reg-строка заголовка ужата до 36/44, bold остаётся 40/48. */
+/* ≤479 (тир 390): reg-строка заголовка 36/44 (bold 40/48); преимущества в 1 колонку, карточка h70. */
 @media (max-width: 479px) {
   .ti-hero__title .reg { font-size: 36px; line-height: 44px; }
+  .ti-hero__stats { grid-template-columns: minmax(0, 1fr); }
+  .ti-hero__stats-wrap { margin-top: -35px; } /* половина карточки h70 */
+  .ti-stat .liquid-glass__content { min-height: 70px; }
 }
 
 /* Общий заголовок секции (H4 SemiBold 48/56) */
@@ -456,28 +456,30 @@
   .ti-call__sub { font-size: 14px; line-height: 18px; }
 }
 
-/* ≤639 (390): зазор секций 80; секц.заголовки 24/30; шаги в одну колонку;
-   баннер заголовок 24/30. */
+/* ≤639 (480/390): зазор секций 80; секц.заголовки 24/30; шаги в одну колонку;
+   баннер заголовок 24/30. Блоки «что влияет» / «мы готовы принять» — беж-карточка
+   без фото (по макету 480: stone-beige, radius 30, паддинг 20), картинка скрыта. */
 @media (max-width: 639px) {
   .trade-in { --section-space: 80px; }
   .ti-section-title { font-size: 24px; line-height: 30px; }
   .ti-steps__grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
   .ti-call__title { font-size: 24px; line-height: 30px; }
-}
-
-/* ≤479 (390): блоки «что влияет» / «мы готовы принять» — беж-карточка без фото
-   (по макету), картинка скрыта; callout 18/24. */
-@media (max-width: 479px) {
   .ti-factors,
   .ti-accept {
     grid-template-columns: minmax(0, 1fr);
     gap: 40px;
     background: var(--color-stone-beige-200, #E4DFDB);
-    border-radius: 16px;
+    border-radius: 30px;
     padding: 20px;
   }
   .ti-factors__media,
   .ti-accept__media { display: none; }
+}
+
+/* ≤479 (390): у беж-карточки радиус 16; callout 18/24 и переносится по словам. */
+@media (max-width: 479px) {
+  .ti-factors,
+  .ti-accept { border-radius: 16px; }
   .ti-callout { font-size: 18px; line-height: 24px; }
   .ti-callout .reg,
   .ti-callout .bold { white-space: normal; }
