@@ -828,8 +828,9 @@
 
 /* ≤1536: единые размеры шрифтов по макетам (заголовок 66/70 — регистр как в базе). */
 @media (max-width: 1536px) {
+  /* регистр — обычный на всех адаптациях; uppercase остаётся только на базе (1920) */
   .contacts__title .l1,
-  .contacts__title .l2 { font-size: 66px; line-height: 70px; }
+  .contacts__title .l2 { font-size: 66px; line-height: 70px; text-transform: none; }
   .contacts__sub { font-size: 18px; line-height: 24px; }
   /* карточка-инфо 582 (макет 1536), галерея занимает остаток */
   .contacts__grid { grid-template-columns: minmax(0, 1fr) 582px; gap: 40px; }
@@ -838,9 +839,11 @@
   .contacts__row .note { font-size: 18px; line-height: 24px; }
 }
 
-/* 961–1200: мозаика сохраняется (НЕ схлопывать); кнопка size M (36). */
+/* ≤1200: заголовок 50/70 (H3 — на 1536 было 66/70); мозаика сохраняется; кнопка M. */
 @media (max-width: 1200px) {
   .contacts__title { gap: 0; }
+  .contacts__title .l1,
+  .contacts__title .l2 { font-size: 50px; line-height: 70px; }
   .contacts__sub { margin-top: 20px; }
   /* карточка-инфо 499 (макет 1200) */
   .contacts__grid { grid-template-columns: minmax(0, 1fr) 499px; }
