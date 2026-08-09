@@ -1746,12 +1746,15 @@
   .contacts__row .note { font-size: 18px; line-height: 24px; }
 }
 
-/* ≤1200: заголовок 50/70 (H3 — на 1536 было 66/70); мозаика сохраняется; кнопка M. */
+/* ≤1200: заголовок H3 50/56 (на 1536 было H2 66/70); мозаика сохраняется; кнопка M.
+   Токены Figma 1107:2962 — H3 50/56, label/note Text16 16/20, value Text24 24/30. */
 @media (max-width: 1200px) {
   .contacts__title { gap: 0; }
   .contacts__title .l1,
-  .contacts__title .l2 { font-size: 50px; line-height: 70px; }
+  .contacts__title .l2 { font-size: 50px; line-height: 56px; }
   .contacts__sub { margin-top: 20px; }
+  .contacts__row .label { font-size: 16px; line-height: 20px; }
+  .contacts__row .note { font-size: 16px; line-height: 20px; }
   /* карточка-инфо 499 (макет 1200) */
   .contacts__grid { grid-template-columns: minmax(0, 1fr) 499px; }
   .contacts__rows .btn {
@@ -1871,30 +1874,9 @@
   .contacts__left {
     min-width: 0;
   }
-  .contacts__gallery {
-    display: flex;
-    align-items: flex-start;
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-    gap: 16px;
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-  }
-  .contacts__gallery::-webkit-scrollbar { display: none; }
-  .contacts__gallery img,
-  .contacts__gallery .tall {
-    flex: 0 0 300px;
-    width: 300px;
-    height: 230px;
-    aspect-ratio: auto;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-  }
-  .contacts__info { flex-direction: column; min-height: 700px; padding: 28px; }
-  .contacts__row .value { font-size: var(--fs-24); line-height: 1.33; }
+  /* 768 (Figma 1137:10008): галерея — 3 фото в ряд (как 960), инфо-карточка
+     остаётся в 2 колонки (реквизиты | карта). value Text18 → 18/24. */
+  .contacts__row .value { font-size: 18px; line-height: 24px; }
 
   .body-type-card__arrow {
     width: 28px;
@@ -2114,5 +2096,65 @@
   .body-type-card__text,
   .body-type-card--wide .body-type-card__text {
     right: 14px;
+  }
+}
+
+/* ===== Контакты: нижние брейки по макетам Figma 1137:* (640 / 480 / 390).
+   Числовая сверка типографики (font-size из токенов Figma, не из line-height):
+   заголовок H5 40/48 → H6 36/44 → Display 32/40; value/note/sub уменьшаются.
+   Раскладка инфо-карточки: 960/768 — реквизиты | карта; 640/480 — карта снизу,
+   телефон|часы в ряд, адрес на всю ширину; ≤430 — всё в один столбец, галерея-скролл. ===== */
+@media (max-width: 640px) {
+  .contacts__title .l1,
+  .contacts__title .l2 { font-size: 40px; line-height: 48px; } /* H5 */
+
+  /* карта уходит под реквизиты; телефон|часы — в ряд, адрес — на всю ширину */
+  .contacts__info { flex-direction: column; min-height: 0; gap: 24px; padding: 24px; }
+  .contacts__rows {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 24px;
+    row-gap: 20px;
+    align-items: start;
+  }
+  .contacts__rows > .contacts__row:nth-child(1) { grid-column: 1; grid-row: 1; } /* Телефон */
+  .contacts__rows > .contacts__row:nth-child(2) { grid-column: 1 / -1; grid-row: 2; } /* Адрес */
+  .contacts__rows > .contacts__row:nth-child(3) { grid-column: 2; grid-row: 1; } /* Часы */
+  .contacts__rows > .btn { grid-column: 1 / -1; grid-row: 3; justify-self: start; }
+  .contacts__map { flex: none; width: 100%; min-height: 300px; }
+}
+
+@media (max-width: 480px) {
+  .contacts__title .l1,
+  .contacts__title .l2 { font-size: 36px; line-height: 44px; } /* H6 */
+  .contacts__sub { font-size: 16px; line-height: 20px; }
+  .contacts__row .value { font-size: 16px; line-height: 20px; }
+  .contacts__row .note { font-size: 14px; line-height: 18px; }
+}
+
+@media (max-width: 430px) {
+  .contacts__title .l1,
+  .contacts__title .l2 { font-size: 32px; line-height: 40px; } /* Display 32 */
+
+  /* реквизиты — в один столбец */
+  .contacts__rows { display: flex; flex-direction: column; gap: 18px; }
+
+  /* галерея — горизонтальный скролл (макет 390) */
+  .contacts__gallery {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .contacts__gallery::-webkit-scrollbar { display: none; }
+  .contacts__gallery img,
+  .contacts__gallery .tall {
+    flex: 0 0 auto;
+    width: clamp(150px, 44vw, 172px);
+    height: auto;
+    aspect-ratio: 284 / 186;
+    scroll-snap-align: start;
   }
 }
