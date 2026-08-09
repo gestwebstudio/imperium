@@ -50,6 +50,8 @@ function addRipple(
   clientX: number,
   clientY: number,
 ) {
+  if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+
   const layer = target.querySelector<HTMLElement>(
     ":scope > .ui-button__ripple-layer",
   );
@@ -60,8 +62,12 @@ function addRipple(
   const radius = diameter / 2;
   const rect = target.getBoundingClientRect();
   const keyboardClick = clientX === 0 && clientY === 0;
-  const x = keyboardClick ? rect.left + rect.width / 2 : clientX;
-  const y = keyboardClick ? rect.top + rect.height / 2 : clientY;
+  const x = keyboardClick
+    ? rect.left + rect.width / 2
+    : Math.min(Math.max(clientX, rect.left), rect.right);
+  const y = keyboardClick
+    ? rect.top + rect.height / 2
+    : Math.min(Math.max(clientY, rect.top), rect.bottom);
 
   circle.className = "ripple";
   circle.style.width = circle.style.height = `${diameter}px`;

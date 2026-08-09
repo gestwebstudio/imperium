@@ -40,11 +40,11 @@
 .catalog-page {
   max-width: var(--layout-max, 1920px);
   margin: 0 auto;
-  padding: var(--page-top, 155px) var(--page-gutter, 60px) 0;
+  padding: var(--crumbs-page-top, var(--page-top, 155px)) var(--page-gutter, 60px) 0;
 }
 
 /* ---------- Хлебные крошки (китовый Crumbs поверх HeroUI) ---------- */
-.cat-crumbs { margin-bottom: var(--crumbs-gap-bottom); }
+.cat-crumbs { margin-bottom: 10px; }
 
 /* ---------- Шапка: заголовок + бейдж + сортировка ---------- */
 .catalog-head {
@@ -55,7 +55,7 @@
   flex-wrap: wrap;
   margin-bottom: 34px;
 }
-.catalog-head__title { display: flex; align-items: flex-start; gap: 16px; }
+.catalog-head__title { display: flex; align-items: flex-start; gap: 10px; }
 .catalog-head__title > .badge { margin-top: 1px; }
 .catalog-head__tools { display: flex; align-items: center; gap: 20px; }
 
@@ -65,7 +65,7 @@
 .cat-filters-backdrop { display: none; }
 .catalog-head h1 {
   margin: 0;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 
@@ -77,7 +77,7 @@
   padding: 0;
   border: none;
   background: transparent;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   cursor: pointer;
   font-family: var(--font-text, "Onest", sans-serif);
 }
@@ -94,19 +94,26 @@
   font-weight: var(--font-weight-regular, 400);
   font-size: 16px;
   line-height: 20px;
-  color: var(--color-heritage-green-500, #294434);
-  text-decoration: underline;
-  text-underline-offset: 2px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+  text-decoration: none;
 }
 .cat-sort__arrow {
   flex: none;
   width: 8px;
   height: 8px;
-  color: var(--color-heritage-green-500, #294434);
+  color: var(--color-carbon-black-500, #1B1E1D);
   transform: rotate(-90deg); /* «<» → «v» */
   transition: transform .18s ease;
 }
 .cat-sort[aria-expanded="true"] .cat-sort__arrow { transform: rotate(90deg); }
+.cat-sort[data-hovered] .cat-sort__value,
+.cat-sort:active .cat-sort__value {
+  color: var(--color-heritage-green-400, #4E7B60);
+}
+.cat-sort[data-focus-visible="true"] {
+  outline: 2px solid var(--color-heritage-green-400, #4E7B60);
+  outline-offset: 3px;
+}
 
 /* Всплывашка сортировки (HeroUI Dropdown.Popover / Menu) */
 .cat-sort-pop {
@@ -160,20 +167,29 @@
 .catalog-empty {
   margin: 0;
   padding: 48px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
   font-size: 18px;
   line-height: 26px;
   color: var(--color-warm-taupe-500, #6A6259);
 }
+.catalog-empty p { margin: 0; }
 
 /* ---------- Сайдбар фильтров (прилипающий, со скроллом) ---------- */
 .cat-filters {
   flex: 0 0 433px;
   align-self: flex-start;
   position: sticky;
-  top: 34px;
+  top: 0;
   height: 688px;
-  max-height: calc(100vh - 68px);
+  max-height: min(
+    100dvh,
+    var(--cat-filters-available-height, 100dvh)
+  );
   overflow-y: auto;
+  overflow-x: hidden;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -181,7 +197,8 @@
   padding: 30px;
   border-radius: 30px;
   background: rgba(255, 255, 255, .6);
-  overscroll-behavior: contain;
+  overscroll-behavior-y: auto;
+  scrollbar-gutter: stable;
 }
 .cat-filters__block { display: flex; flex-direction: column; }
 .cat-filters__block--selected { gap: 12px; }
@@ -226,7 +243,7 @@
   min-width: 0;
   max-width: 100%;
 }
-.cat-selected__tag:hover { z-index: 4; }
+.cat-selected__tag:focus-visible { z-index: 4; }
 .cat-selected__tag-text {
   min-width: 0;
   overflow: hidden;
@@ -247,7 +264,7 @@
   transform: translateY(4px);
   transition: opacity .15s ease, transform .15s ease, visibility .15s ease;
 }
-.cat-selected__tag:hover .cat-selected__tag-tooltip {
+.cat-selected__tag:focus-visible .cat-selected__tag-tooltip {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
@@ -285,6 +302,10 @@
   transition: border-color .15s ease;
 }
 .cat-range__input:focus { border-color: var(--color-warm-taupe-300, #B2A79B); }
+.cat-range__input:focus-visible {
+  border-color: var(--color-heritage-green-400, #4E7B60);
+  box-shadow: 0 0 0 2px rgba(78, 123, 96, .2);
+}
 .cat-range__input::placeholder {
   color: var(--color-warm-taupe-300, #B2A79B);
   opacity: 1;
@@ -328,6 +349,10 @@
 .cat-slider .slider__thumb {
   z-index: 3;
 }
+.cat-slider .slider__thumb[data-focus-visible] {
+  outline: 2px solid var(--color-heritage-green-500, #294434);
+  outline-offset: 3px;
+}
 
 /* ---------- Аккордеоны фильтров (HeroUI Accordion) ---------- */
 .cat-acc { display: flex; flex-direction: column; gap: 0; }
@@ -339,6 +364,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  box-sizing: border-box;
   width: calc(100% + 24px);
   margin-inline: -12px;
   padding: 8px 12px;
@@ -350,9 +376,11 @@
   transition: background-color .15s ease;
   outline: none;
 }
-.cat-acc__trigger[data-hovered],
-.cat-acc__trigger:hover { background: var(--color-warm-taupe-100, #F2EEEA); }
-.cat-acc__trigger[data-focus-visible] { background: var(--color-warm-taupe-100, #F2EEEA); }
+.cat-acc__trigger[data-hovered] { background: var(--color-warm-taupe-100, #F2EEEA); }
+.cat-acc__trigger[data-focus-visible] {
+  background: var(--color-warm-taupe-100, #F2EEEA);
+  box-shadow: inset 0 0 0 2px var(--color-heritage-green-400, #4E7B60);
+}
 .cat-acc__label {
   flex: 1 1 0;
   font-family: var(--font-text, "Onest", sans-serif);
@@ -400,10 +428,6 @@
   outline: none;
   transition: transform .15s ease, box-shadow .15s ease;
 }
-.cat-color-option:hover {
-  z-index: 4;
-  transform: scale(1.08);
-}
 .cat-color-option[aria-pressed="true"] {
   box-shadow:
     0 0 0 2px var(--color-white, #FFFFFF),
@@ -436,10 +460,47 @@
   transform: translate(-50%, 4px);
   transition: opacity .15s ease, transform .15s ease, visibility .15s ease;
 }
-.cat-color-option:hover .cat-color-option__tooltip {
+.cat-color-option:focus-visible .cat-color-option__tooltip {
   opacity: 1;
   visibility: visible;
   transform: translate(-50%, 0);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cat-sort:hover .cat-sort__value {
+    color: var(--color-heritage-green-400, #4E7B60);
+  }
+  .cat-selected__tag:hover { z-index: 4; }
+  .cat-selected__tag:hover .cat-selected__tag-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .cat-acc__trigger:hover {
+    background: var(--color-warm-taupe-100, #F2EEEA);
+  }
+  .cat-color-option:hover {
+    z-index: 4;
+    transform: scale(1.08);
+  }
+  .cat-color-option:hover .cat-color-option__tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+  }
+}
+
+.cat-check[data-focus-visible] .ui-checkbox__content,
+.cat-check .ui-checkbox__content[data-focus-visible] {
+  box-shadow: inset 0 0 0 2px var(--color-heritage-green-400, #4E7B60);
+}
+
+.catalog-page .btn:focus-visible,
+.cat-selected__tag:focus-visible,
+.cat-filters-toggle:focus-visible,
+.cat-filters__close:focus-visible {
+  outline: 2px solid var(--color-heritage-green-400, #4E7B60);
+  outline-offset: 3px;
 }
 
 /* ---------- Секции каталога ---------- */
@@ -533,6 +594,7 @@
     box-shadow: -20px 0 60px rgba(27, 30, 29, 0.15);
     transform: translateX(100%);
     transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+    overscroll-behavior-y: contain;
   }
   .cat-filters.is-open { transform: translateX(0); }
 
@@ -666,10 +728,6 @@
     width: min(100vw, 432px);
     padding: 24px 20px;
   }
-  .cat-selected__tag > .cat-selected__tag-tooltip,
-  .cat-color-option > .cat-color-option__tooltip {
-    display: none;
-  }
   .podbor {
     gap: 24px;
   }
@@ -691,7 +749,7 @@
     gap: 12px;
   }
   .cat-crumbs {
-    margin-bottom: var(--crumbs-gap-bottom);
+    margin-bottom: 10px;
   }
   .cat-filters {
     width: 100%;
@@ -714,6 +772,7 @@
 .catalog-grid > .car-card {
   max-width: none;
   justify-content: space-between;
+  overflow: hidden;
 }
 
 @media (min-width: 1200px) and (max-width: 1536px) {
@@ -732,12 +791,12 @@
   .catalog-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     column-gap: clamp(10px, calc(10px + (100vw - 1200px) * .017857), 16px);
-    row-gap: clamp(10px, calc(10px + (100vw - 1200px) * .029762), 20px);
+    row-gap: clamp(10px, calc(10px + (100vw - 1200px) * .02381), 18px);
   }
 
   .cat-filters {
     position: sticky;
-    top: 34px;
+    top: 0;
     right: auto;
     bottom: auto;
     left: auto;
@@ -745,13 +804,17 @@
     flex: 0 0 clamp(278px, calc(278px + (100vw - 1200px) * .190476), 342px);
     width: auto;
     height: clamp(684px, calc(684px + (100vw - 1200px) * .059524), 704px);
-    max-height: calc(100vh - 68px);
+    max-height: min(
+      100dvh,
+      var(--cat-filters-available-height, 100dvh)
+    );
     padding: clamp(20px, calc(20px + (100vw - 1200px) * .029762), 30px);
     border-radius: clamp(20px, calc(20px + (100vw - 1200px) * .029762), 30px);
     background: rgba(255, 255, 255, .6);
     box-shadow: none;
     transform: none;
     transition: none;
+    overscroll-behavior-y: auto;
   }
 
   .cat-filters-toggle,
@@ -761,9 +824,25 @@
   }
 
   .catalog-grid > .car-card {
-    height: clamp(338px, calc(338px + (100vw - 1200px) * .139881), 385px);
+    height: clamp(338px, calc(338px + (100vw - 1200px) * .145833), 387px);
     border-radius: clamp(20px, calc(20px + (100vw - 1200px) * .029762), 30px);
   }
+
+  .catalog-grid .car-card__title {
+    line-height: clamp(22px, calc(22px + (100vw - 1200px) * .011905), 26px);
+  }
+
+  .catalog-grid .car-card__tags {
+    padding-top: clamp(0px, calc((100vw - 1200px) * .005952), 2px);
+  }
+
+  .catalog-grid .price-block--l .price-block__value {
+    font-size: clamp(20px, calc(20px + (100vw - 1200px) * .011905), 24px);
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1200px) {
+  .catalog-head { margin-bottom: 31px; }
 }
 
 /* At widths below 1200 the filter becomes a drawer and its compact toolbar
@@ -774,19 +853,19 @@
   }
 
   .cat-crumbs {
-    margin-bottom: var(--crumbs-gap-bottom);
+    margin-bottom: 10px;
   }
 
   .catalog-head {
     align-items: stretch;
     flex-direction: column;
     flex-wrap: nowrap;
-    gap: 16px;
+    gap: 20px;
     margin-bottom: 10px;
   }
 
   .catalog-head__title {
-    gap: 12px;
+    gap: 10px;
   }
 
   .catalog-head__tools {
@@ -875,7 +954,8 @@
   }
 
   .catalog-grid .car-card__actions {
-    gap: 16px;
+    --car-action-icon-size: 18px;
+    --car-action-gap: 16px;
   }
 
   .catalog-grid .wishlist,
@@ -926,7 +1006,7 @@
   }
 
   .catalog-grid .price-block--l .price-block__value {
-    font-size: min(20px, 8cqi);
+    font-size: 20px;
     line-height: 26px;
   }
 }
@@ -981,22 +1061,28 @@
   }
 
   .catalog-grid > .car-card {
-    height: 282px;
+    height: 290px;
     gap: 16px;
     padding: 12px;
   }
 
   .catalog-grid .car-card__brand,
   .catalog-grid .car-card__brand img {
-    height: 18px;
+    height: 20px;
+  }
+
+  .catalog-grid .car-card__actions {
+    --car-action-icon-size: 14px;
+    --car-action-gap: 8px;
+    --car-action-edge-shift: -10px;
   }
 
   .catalog-grid .wishlist,
   .catalog-grid .compare,
   .catalog-grid .ui-button.wishlist > svg,
   .catalog-grid .ui-button.compare > svg {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
   }
 
   .catalog-grid .car-card__title {
@@ -1004,18 +1090,31 @@
     line-height: 20px;
   }
 
-  .catalog-grid .indicator--l,
+  .catalog-grid .indicator--l {
+    font-size: 10px;
+    line-height: 14px;
+  }
+
   .catalog-grid .tag--card.tag--l,
   .catalog-grid .car-card__tags::after {
     font-size: 12px;
     line-height: 16px;
   }
 
+  .catalog-grid .car-card__tags { padding-top: 0; }
+
   .catalog-grid .car-card__photo,
   .catalog-grid .car-card__photo img {
     height: 96px;
     max-height: 96px;
   }
+
+  .catalog-grid .price-block--l .price-block__label {
+    font-size: 10px;
+    line-height: 14px;
+  }
+
+  .catalog-grid .price-block--l .price-block__value { font-size: 20px; }
 }
 
 @media (max-width: 767px) {
@@ -1039,6 +1138,12 @@
     height: 20px;
   }
 
+  .catalog-grid .car-card__actions {
+    --car-action-icon-size: 18px;
+    --car-action-gap: 16px;
+    --car-action-edge-shift: 0px;
+  }
+
   .catalog-grid .wishlist,
   .catalog-grid .compare,
   .catalog-grid .ui-button.wishlist > svg,
@@ -1059,6 +1164,11 @@
     line-height: 18px;
   }
 
+  .catalog-grid .price-block--l .price-block__label {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
   .catalog-grid .car-card__photo,
   .catalog-grid .car-card__photo img {
     height: 110px;
@@ -1076,8 +1186,10 @@
   }
 
   .catalog-head__title {
-    gap: 8px;
+    gap: 10px;
   }
+
+  .cat-crumbs { margin-bottom: 6px; }
 }
 
 @media (max-width: 480px) {
@@ -1127,6 +1239,11 @@
     height: clamp(18px, calc(18px + (100vw - 390px) * .066667), 24px);
   }
 
+  .catalog-grid .car-card__actions {
+    --car-action-icon-size: clamp(18px, calc(18px + (100vw - 390px) * .066667), 24px);
+    --car-action-gap: 16px;
+  }
+
   .catalog-grid .car-card__title {
     font-size: clamp(18px, calc(18px + (100vw - 390px) * .066667), 24px);
     line-height: clamp(22px, calc(22px + (100vw - 390px) * .088889), 30px);
@@ -1134,8 +1251,8 @@
 
   .catalog-grid .indicator--l,
   .catalog-grid .tag--card.tag--l {
-    font-size: clamp(12px, calc(12px + (100vw - 390px) * .044444), 16px);
-    line-height: clamp(16px, calc(16px + (100vw - 390px) * .044444), 20px);
+    font-size: clamp(14px, calc(14px + (100vw - 390px) * .022222), 16px);
+    line-height: clamp(18px, calc(18px + (100vw - 390px) * .022222), 20px);
   }
 
   .catalog-grid .car-card__photo,
@@ -1145,8 +1262,8 @@
   }
 
   .catalog-grid .price-block--l .price-block__label {
-    font-size: clamp(10px, calc(10px + (100vw - 390px) * .022222), 12px);
-    line-height: clamp(13px, calc(13px + (100vw - 390px) * .033333), 16px);
+    font-size: clamp(12px, calc(12px + (100vw - 390px) * .022222), 14px);
+    line-height: clamp(16px, calc(16px + (100vw - 390px) * .022222), 18px);
   }
 
   .catalog-grid .price-block--l .price-block__value {
@@ -1158,6 +1275,25 @@
     display: inline;
   }
 
+  .catalog-grid .car-card__tags {
+    padding-top: 2px;
+  }
+
+  .catalog-grid .car-card__action {
+    gap: clamp(8px, calc(8px + (100vw - 390px) * .177778), 24px);
+  }
+
+  .catalog-grid .price-block--l {
+    gap: clamp(0px, calc((100vw - 390px) * .044444), 4px);
+  }
+
+  .catalog-grid .car-card__details-link.btn--m {
+    height: 36px;
+    padding-inline: 14px;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
   .catalog-grid .car-card__details-link > .btn__icon:has(.car-card__details-icon),
   .catalog-grid .car-card__details-icon {
     display: none;
@@ -1165,6 +1301,8 @@
 }
 
 @media (max-width: 390px) {
+  .cat-crumbs { margin-bottom: 2px; }
+
   .catalog-head__title {
     align-items: center;
     gap: 6px;
@@ -1176,11 +1314,17 @@
     margin-inline: 2px 0;
   }
 
+  .catalog-grid .car-card__tags { padding-top: 0; }
+
+  .catalog-grid .price-block--l { gap: 0; }
+
   .catalog-grid .car-card__details-link.btn--m {
     flex: 0 0 28px;
     width: 28px;
     height: 28px;
     padding: 0;
+    font-size: 14px;
+    line-height: 18px;
   }
 
   .catalog-grid .car-card__details-link > .btn__label {

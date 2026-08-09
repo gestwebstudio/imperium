@@ -5,7 +5,7 @@
 
 .car { padding-bottom: 0; }
 .car-wrap { max-width: var(--layout-max, 1920px); margin: 0 auto; padding: 0 var(--page-gutter, 60px); }
-.car-wrap--top { padding-top: var(--page-top, 155px); padding-bottom: var(--crumbs-gap-bottom); }
+.car-wrap--top { padding-top: var(--crumbs-page-top, var(--page-top, 155px)); padding-bottom: var(--crumbs-gap-bottom); }
 .car > .cars-section { height: 574px; margin-top: 126px; }
 .car > .contacts { margin-top: 200px; }
 
@@ -357,7 +357,7 @@
   background: var(--color-white, #FFFFFF);
   box-shadow: 4px 4px 10px 0 rgba(106, 98, 89, .1);
   position: sticky;
-  top: 116px;
+  top: 18px;
 }
 .car-price__section { display: flex; flex-direction: column; gap: 10px; }
 .car-price__value { min-height: 70px; }
@@ -1359,7 +1359,7 @@
     padding-inline: 40px;
   }
   .car-wrap--top {
-    padding-top: 134px;
+    padding-top: var(--crumbs-page-top, var(--page-top, 134px));
     padding-bottom: 0;
   }
   .car-gallery {

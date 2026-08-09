@@ -20,7 +20,7 @@
 .atelier-hero__inner {
   position: relative;
   min-height: 688px;
-  padding-top: var(--page-top, 155px);
+  padding-top: var(--crumbs-page-top, var(--page-top, 155px));
   padding-bottom: 91px;
 }
 .atelier-hero__title {

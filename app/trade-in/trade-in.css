@@ -32,7 +32,7 @@
   overflow: hidden;
 }
 .ti-hero__inner {
-  padding-top: var(--page-top, 155px);
+  padding-top: var(--crumbs-page-top, var(--page-top, 155px));
   padding-bottom: 128px; /* беж под контентом; ряд преимуществ наезжает сверху */
 }
 

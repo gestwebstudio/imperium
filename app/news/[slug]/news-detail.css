@@ -3,7 +3,7 @@
   max-width: var(--layout-max, 1920px);
   margin: 0 auto;
   padding:
-    var(--page-top, 155px)
+    var(--crumbs-page-top, var(--page-top, 155px))
     var(--page-gutter, 60px)
     clamp(40px, 3.125vw, 60px);
 }

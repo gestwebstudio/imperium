@@ -4,7 +4,12 @@ import { useEffect, useRef, useState, type MouseEvent } from "react";
 import Link from "next/link";
 import { Alert, Button as HeroButton } from "@heroui/react";
 import "./layout.css";
-import { PhoneIcon, ArrowDiagonalIcon, CloseIcon } from "@/components/icons";
+import {
+  PhoneIcon,
+  ArrowDiagonalIcon,
+  ChevronDownIcon,
+  CloseIcon,
+} from "@/components/icons";
 import { ButtonLink } from "@/components/ui/Button";
 import { GlassSurface } from "@/components/ui/GlassSurface";
 import { MobileMenu } from "./MobileMenu";
@@ -66,21 +71,7 @@ function useHideOnScroll() {
   return hidden;
 }
 
-function ChevronDown() {
-  return (
-    <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M2.5 4.5 6 8l3.5-3.5"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-export function Header() {
+export function Header({ flowWithPage = false }: { flowWithPage?: boolean }) {
   const hidden = useHideOnScroll();
   const [copyStatus, setCopyStatus] = useState<"idle" | "success" | "error">(
     "idle",
@@ -170,7 +161,11 @@ export function Header() {
   }
 
   return (
-    <header className={`site-header${hidden ? " is-hidden" : ""}`}>
+    <header
+      className={`site-header${hidden ? " is-hidden" : ""}${
+        flowWithPage ? " is-flowing" : ""
+      }`}
+    >
       <GlassSurface
         className="site-header__bar"
         height="var(--site-header-height)"
@@ -195,7 +190,7 @@ export function Header() {
             onClick={() => setServicesOpen((v) => !v)}
           >
             Услуги
-            <ChevronDown />
+            <ChevronDownIcon />
           </button>
           <Link href="/about">О салоне</Link>
           <Link href="/contacts">Контакты</Link>
@@ -221,6 +216,7 @@ export function Header() {
           </ButtonLink>
           <ButtonLink
             href="/catalog"
+            size="m"
             variant="primary-cta"
             className="site-header__cta"
             ctaIcon={<ArrowDiagonalIcon />}

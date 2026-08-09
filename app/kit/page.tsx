@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import {
   ArrowIcon,
   ArrowDiagonalIcon,
+  ChevronDownIcon,
   CloseIcon,
   CopyIcon,
   FiltersIcon,
@@ -39,6 +40,7 @@ export const metadata: Metadata = {
 const icons = [
   ["Arrow", ArrowIcon],
   ["Arrow-Diagonal", ArrowDiagonalIcon],
+  ["Chevron-Down", ChevronDownIcon],
   ["Close", CloseIcon],
   ["Copy", CopyIcon],
   ["Filters", FiltersIcon],
@@ -377,10 +379,11 @@ export default function KitPage() {
               </div>
             </div>
 
-            <div className="btn-sub">CTA</div>
+            <div className="btn-sub">CTA · L / M / S</div>
             <div className="btn-row">
               <div className="btn-rowhead">
-                Primary · CTA<code>.btn--primary-cta</code>
+                Primary · CTA
+                <code>.btn--primary-cta · M = 36px</code>
               </div>
               <div className="btn-group">
                 <Button

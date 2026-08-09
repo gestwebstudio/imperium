@@ -111,6 +111,7 @@ $type-price-20-line-height: 26px;
 $layout-max: 1920px;
 $page-gutter: clamp(16px, 3.125vw, 60px);
 $page-top: clamp(104px, 8.073vw, 155px);
+$crumbs-page-top: var(--crumbs-page-top);
 $section-space: clamp(72px, 8.333vw, 160px);
 $section-space-lg: clamp(88px, 10.416vw, 200px);
 $surface-padding: clamp(20px, 2.083vw, 40px);

@@ -3,7 +3,7 @@
   max-width: var(--layout-max, 1920px);
   min-height: 70vh;
   margin: 0 auto;
-  padding: var(--page-top, 155px) var(--page-gutter, 60px) clamp(56px, 4.167vw, 80px);
+  padding: var(--crumbs-page-top, var(--page-top, 155px)) var(--page-gutter, 60px) clamp(56px, 4.167vw, 80px);
 }
 
 .comparison-head {
@@ -1095,7 +1095,7 @@
 
 @media (min-width: 1201px) {
   .comparison-page {
-    padding-top: clamp(124px, calc(124px + (100vw - 1536px) * .083333), 156px);
+    padding-top: var(--crumbs-page-top, var(--page-top, 155px));
   }
 }
 
@@ -1325,7 +1325,7 @@
 
 @media (max-width: 768px) {
   .comparison-page {
-    padding-top: calc(var(--page-top, 124px) + 10px);
+    padding-top: var(--crumbs-page-top, var(--page-top, 124px));
   }
 
   .comparison-head {
@@ -1456,7 +1456,7 @@
 
 @media (max-width: 480px) {
   .comparison-page {
-    padding-top: var(--page-top, 116px);
+    padding-top: var(--crumbs-page-top, var(--page-top, 116px));
     padding-right: var(--page-gutter, 16px);
     padding-left: var(--page-gutter, 16px);
   }
@@ -1520,7 +1520,7 @@
 
 @media (max-width: 390px) {
   .comparison-page {
-    padding-top: 101px;
+    padding-top: var(--crumbs-page-top, 106px);
   }
 
   .comparison-head__title {
@@ -1536,7 +1536,7 @@
 }
 
 /* Mobile comparison layouts (480 / 390). Both Figma frames keep two cars in
-   view; the pager changes one shared window used by cards and characteristics. */
+   view; each pager independently selects the car for its own comparison slot. */
 .comparison-sticky {
   top: 18px;
   width: calc(100% - 2 * clamp(40px, 3.90625vw, 60px));
@@ -1563,7 +1563,7 @@
 
 @media (max-width: 480px) {
   .comparison-page {
-    padding-top: 106px;
+    padding-top: var(--crumbs-page-top, 106px);
     padding-right: 20px;
     padding-left: 20px;
   }

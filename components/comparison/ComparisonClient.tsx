@@ -63,6 +63,9 @@ export function ComparisonClient({ cars }: { cars: Car[] }) {
     MAX_VISIBLE_COMPARISON_CARS,
   );
   const [visibleStart, setVisibleStart] = useState(0);
+  const [independentVisibleIds, setIndependentVisibleIds] = useState<string[]>(
+    [],
+  );
   const [isStickyVisible, setIsStickyVisible] = useState(false);
   const comparisonViewportRef = useRef<HTMLDivElement>(null);
   const specificationsRef = useRef<HTMLElement>(null);
@@ -99,10 +102,34 @@ export function ComparisonClient({ cars }: { cars: Car[] }) {
     comparedCars.length - renderedColumnCount,
   );
   const resolvedVisibleStart = Math.min(visibleStart, maxVisibleStart);
-  const visibleCars = comparedCars.slice(
+  const windowVisibleCars = comparedCars.slice(
     resolvedVisibleStart,
     resolvedVisibleStart + renderedColumnCount,
   );
+  const usesIndependentSelectors = visibleColumnCount <= 2;
+  const normalizedIndependentIds = independentVisibleIds
+    .filter(
+      (id, index, ids) =>
+        carsById.has(id) &&
+        comparisonIds.includes(id) &&
+        ids.indexOf(id) === index,
+    )
+    .slice(0, renderedColumnCount);
+
+  for (const car of comparedCars) {
+    if (normalizedIndependentIds.length >= renderedColumnCount) break;
+    if (!normalizedIndependentIds.includes(car.id)) {
+      normalizedIndependentIds.push(car.id);
+    }
+  }
+
+  const independentVisibleCars = normalizedIndependentIds.flatMap((id) => {
+    const car = carsById.get(id);
+    return car ? [car] : [];
+  });
+  const visibleCars = usesIndependentSelectors
+    ? independentVisibleCars
+    : windowVisibleCars;
   const canShowPrevious = resolvedVisibleStart > 0;
   const canShowNext = resolvedVisibleStart < maxVisibleStart;
   const hasCarouselNavigation = comparedCars.length > renderedColumnCount;
@@ -188,6 +215,42 @@ export function ComparisonClient({ cars }: { cars: Car[] }) {
   useEffect(() => {
     setVisibleStart((current) => Math.min(current, maxVisibleStart));
   }, [maxVisibleStart]);
+
+  function getIndependentCandidate(
+    columnIndex: number,
+    direction: -1 | 1,
+  ): Car | null {
+    const currentCar = visibleCars[columnIndex];
+    if (!currentCar) return null;
+
+    const currentIndex = comparedCars.findIndex(
+      (car) => car.id === currentCar.id,
+    );
+    const occupiedIds = new Set(
+      visibleCars
+        .filter((_, index) => index !== columnIndex)
+        .map((car) => car.id),
+    );
+
+    for (
+      let index = currentIndex + direction;
+      index >= 0 && index < comparedCars.length;
+      index += direction
+    ) {
+      const candidate = comparedCars[index];
+      if (!occupiedIds.has(candidate.id)) return candidate;
+    }
+
+    return null;
+  }
+
+  function selectIndependentCar(columnIndex: number, car: Car) {
+    setIndependentVisibleIds(() => {
+      const next = [...normalizedIndependentIds];
+      next[columnIndex] = car.id;
+      return next;
+    });
+  }
 
   useEffect(() => {
     if (!storageReady || comparedCars.length === 0) {
@@ -374,44 +437,53 @@ export function ComparisonClient({ cars }: { cars: Car[] }) {
                       </div>
 
                       {hasCarouselNavigation && (
-                        <div
-                          className="comparison-products__pager"
-                          aria-label={`Автомобиль ${resolvedVisibleStart + columnIndex + 1} из ${comparedCars.length}`}
-                        >
-                          <Button
-                            className="comparison-products__pager-button comparison-products__pager-button--previous"
-                            bare
-                            iconOnly
-                            startIcon={<ArrowIcon width={8} height={8} />}
-                            aria-label="Показать предыдущий автомобиль"
-                            disabled={!canShowPrevious}
-                            onClick={() =>
-                              setVisibleStart(
-                                Math.max(0, resolvedVisibleStart - 1),
-                              )
-                            }
-                          />
-                          <span className="comparison-products__pager-label">
-                            {resolvedVisibleStart + columnIndex + 1} из{" "}
-                            {comparedCars.length}
-                          </span>
-                          <Button
-                            className="comparison-products__pager-button comparison-products__pager-button--next"
-                            bare
-                            iconOnly
-                            startIcon={<ArrowIcon width={8} height={8} />}
-                            aria-label="Показать следующий автомобиль"
-                            disabled={!canShowNext}
-                            onClick={() =>
-                              setVisibleStart(
-                                Math.min(
-                                  maxVisibleStart,
-                                  resolvedVisibleStart + 1,
-                                ),
-                              )
-                            }
-                          />
-                        </div>
+                        (() => {
+                          const carIndex = comparedCars.findIndex(
+                            (candidate) => candidate.id === car.id,
+                          );
+                          const previousCar = getIndependentCandidate(
+                            columnIndex,
+                            -1,
+                          );
+                          const nextCar = getIndependentCandidate(columnIndex, 1);
+
+                          return (
+                            <div
+                              className="comparison-products__pager"
+                              aria-label={`Автомобиль ${carIndex + 1} из ${comparedCars.length}`}
+                            >
+                              <Button
+                                className="comparison-products__pager-button comparison-products__pager-button--previous"
+                                bare
+                                iconOnly
+                                startIcon={<ArrowIcon width={8} height={8} />}
+                                aria-label="Показать предыдущий автомобиль"
+                                disabled={!previousCar}
+                                onClick={() => {
+                                  if (previousCar) {
+                                    selectIndependentCar(columnIndex, previousCar);
+                                  }
+                                }}
+                              />
+                              <span className="comparison-products__pager-label">
+                                {carIndex + 1} из {comparedCars.length}
+                              </span>
+                              <Button
+                                className="comparison-products__pager-button comparison-products__pager-button--next"
+                                bare
+                                iconOnly
+                                startIcon={<ArrowIcon width={8} height={8} />}
+                                aria-label="Показать следующий автомобиль"
+                                disabled={!nextCar}
+                                onClick={() => {
+                                  if (nextCar) {
+                                    selectIndependentCar(columnIndex, nextCar);
+                                  }
+                                }}
+                              />
+                            </div>
+                          );
+                        })()
                       )}
                     </div>
                   ))}
@@ -484,10 +556,12 @@ export function ComparisonClient({ cars }: { cars: Car[] }) {
                   >
                     {rows.map((row, rowIndex) => {
                       const labelId = `comparison-spec-${rowIndex}`;
-                      const visibleValues = row.values.slice(
-                        resolvedVisibleStart,
-                        resolvedVisibleStart + visibleCars.length,
-                      );
+                      const visibleValues = visibleCars.map((car) => {
+                        const carIndex = comparedCars.findIndex(
+                          (candidate) => candidate.id === car.id,
+                        );
+                        return row.values[carIndex];
+                      });
 
                       return (
                         <div

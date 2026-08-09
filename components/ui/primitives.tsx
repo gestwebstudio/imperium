@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { CloseIcon } from "@/components/icons";
 
@@ -115,14 +115,15 @@ export function Indicator({
 }
 
 /* --- Tooltip (визуальный специмен; интерактивный — через HeroUI) --- */
-export type TooltipProps = {
+export type TooltipProps = Omit<ComponentPropsWithoutRef<"span">, "children"> & {
   size?: "s" | "m" | "l";
-  className?: string;
   children: ReactNode;
 };
-export function Tooltip({ size = "s", className, children }: TooltipProps) {
+export function Tooltip({ size = "s", className, children, ...props }: TooltipProps) {
   return (
-    <span className={cn("tooltip", `tooltip--${size}`, className)}>{children}</span>
+    <span {...props} className={cn("tooltip", `tooltip--${size}`, className)}>
+      {children}
+    </span>
   );
 }
 

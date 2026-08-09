@@ -236,7 +236,8 @@ export function CarCard({
         <Link
           className="car-card__link"
           href={href}
-          aria-label={`Открыть страницу ${title}`}
+          aria-hidden="true"
+          tabIndex={-1}
         />
       )}
 
@@ -287,6 +288,7 @@ export function CarCard({
             variant={action.variant}
             endIcon={<ArrowDiagonalIcon className="car-card__details-icon" />}
             className="car-card__details-link"
+            aria-label={`${action.label}: ${title}`}
           >
             {action.label}
           </ButtonLink>
@@ -296,6 +298,7 @@ export function CarCard({
             size={size === "m" ? "s" : "m"}
             endIcon={<ArrowDiagonalIcon className="car-card__details-icon" />}
             className="car-card__details-link"
+            aria-label={`${action.label}: ${title}`}
           >
             {action.label}
           </Button>
