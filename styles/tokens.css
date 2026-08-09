@@ -44,6 +44,10 @@
   --color-green-100: #DCEFDC;
   --color-green-500: #55AB4D;
 
+  /* ---------- Colors: Semantic foreground ---------- */
+  --color-foreground-muted: #71717A;
+  --color-foreground-link: #18181B;
+
   /* ---------- Colors: Effects ---------- */
   --color-shadow-fin: #B4AAA3;
 
@@ -59,10 +63,68 @@
   --font-weight-extrabold: 800;
   --font-weight-black: 900;
 
+  /* ---------- Typography: Fixed Figma scales ---------- */
+  --type-display-66-font-size: 66px;
+  --type-display-66-line-height: 70px;
+  --type-display-50-font-size: 50px;
+  --type-display-50-line-height: 70px;
+  --type-display-48-font-size: 48px;
+  --type-display-48-line-height: 56px;
+  --type-display-40-font-size: 40px;
+  --type-display-40-line-height: 48px;
+  --type-display-36-font-size: 36px;
+  --type-display-36-line-height: 44px;
+  --type-display-32-font-size: 32px;
+  --type-display-32-line-height: 40px;
+  --type-display-30-font-size: 30px;
+  --type-display-30-line-height: 38px;
+  --type-display-28-font-size: 28px;
+  --type-display-28-line-height: 34px;
+  --type-display-24-font-size: 24px;
+  --type-display-24-line-height: 30px;
+  --type-display-20-font-size: 20px;
+  --type-display-20-line-height: 26px;
+  --type-display-18-font-size: 18px;
+  --type-display-18-line-height: 22px;
+
+  --type-text-30-font-size: 30px;
+  --type-text-30-line-height: 40px;
+  --type-text-24-font-size: 24px;
+  --type-text-24-line-height: 30px;
+  --type-text-20-font-size: 20px;
+  --type-text-20-line-height: 28px;
+  --type-text-18-font-size: 18px;
+  --type-text-18-line-height: 24px;
+  --type-text-16-font-size: 16px;
+  --type-text-16-line-height: 20px;
+  --type-text-14-font-size: 14px;
+  --type-text-14-line-height: 18px;
+  --type-text-12-font-size: 12px;
+  --type-text-12-line-height: 16px;
+  --type-text-10-font-size: 10px;
+  --type-text-10-line-height: 14px;
+
+  --type-price-28-font-size: 28px;
+  --type-price-28-line-height: 36px;
+  --type-price-24-font-size: 24px;
+  --type-price-24-line-height: 30px;
+  --type-price-20-font-size: 20px;
+  --type-price-20-line-height: 26px;
+
   /* ---------- Responsive layout ---------- */
   --layout-max: 1920px;
   --page-gutter: clamp(16px, 3.125vw, 60px);
-  --page-top: clamp(104px, 8.073vw, 155px);
+  /* Высота фикс. шапки. Меняешь шапку — меняешь ТОЛЬКО это (в т.ч. в медиа ниже). */
+  --header-h: 76px;
+  /* Зазор «шапка → хлебные крошки». */
+  --crumbs-gap-top: 40px;
+  /* Зазор «крошки → ближайший элемент снизу». */
+  --crumbs-gap-bottom: 20px;
+  /* Верхний отступ страницы = высота шапки + зазор. Один источник для всех страниц. */
+  --page-top: calc(var(--header-h) + var(--crumbs-gap-top));
+  /* Верхняя позиция контейнера с крошками. Матрица соответствует эталонной
+     странице сравнения и переопределяется на её контрольных брейкпоинтах. */
+  --crumbs-page-top: var(--page-top);
   --section-space: clamp(72px, 8.333vw, 160px);
   --section-space-lg: clamp(88px, 10.416vw, 200px);
   --surface-padding: clamp(20px, 2.083vw, 40px);
@@ -70,5 +132,42 @@
   --radius-card: clamp(22px, 1.563vw, 30px);
   --radius-media: clamp(22px, 1.875vw, 36px);
 
-  /* Готовые текстовые стили (73 шт.) — в styles/typography.css (классы .t-*) */
+  /* ---------- Layering ---------- */
+  --z-header: 50;
+  --z-overlay: 100;
+  --z-sheet: 1000;
+  --z-modal: 1200;
+
+  /* Готовые текстовые стили и адаптивные расширения — в styles/typography.css. */
+}
+
+/* Высота фикс. шапки по брейкам (реальная: 76/84/96). Меняешь шапку — только тут. */
+@media (min-width: 640px)  { :root { --header-h: 84px; } }
+@media (min-width: 1201px) { :root { --header-h: 96px; } }
+/* Зазор «шапка → крошки»: 40 (≤768) / 50 (960–1536) / 60 (1920). */
+@media (min-width: 960px)  { :root { --crumbs-gap-top: 50px; } }
+@media (min-width: 1920px) { :root { --crumbs-gap-top: 60px; } }
+/* --page-top пересчитается сам (calc в :root выше). */
+
+@media (min-width: 1201px) {
+  :root {
+    --crumbs-page-top: clamp(
+      124px,
+      calc(124px + (100vw - 1536px) * .083333),
+      156px
+    );
+  }
+}
+@media (max-width: 768px) {
+  :root { --crumbs-page-top: calc(var(--page-top) + 10px); }
+}
+@media (max-width: 480px) {
+  :root { --crumbs-page-top: 106px; }
+}
+
+/* Нижний зазор крошек «крошки → ближайший элемент снизу» — одинаково на всех
+   страницах. Верхнюю позицию задаёт --crumbs-page-top (padding контейнера). */
+.ui-crumbs,
+.cat-crumbs {
+  margin-bottom: var(--crumbs-gap-bottom);
 }

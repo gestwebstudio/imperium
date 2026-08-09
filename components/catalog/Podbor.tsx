@@ -1,8 +1,10 @@
-import { Button } from "@/components/ui/Button";
+import { ButtonLink } from "@/components/ui/Button";
+import { LeadModal } from "@/components/ui/LeadModal";
 
 /**
  * Блок «Не нашли подходящий автомобиль?» (услуга подбора).
  * Размеры/тексты — по макету Figma 578:2501, фото — services/podbor.webp.
+ * Первая кнопка — окно-заявка, вторая — ссылка на страницу подбора.
  */
 export function Podbor() {
   return (
@@ -36,12 +38,21 @@ export function Podbor() {
         </div>
 
         <div className="podbor__actions">
-          <Button size="l" variant="primary-surface">
-            Подобрать автомобиль
-          </Button>
-          <Button size="l" variant="secondary-outlined">
+          <LeadModal
+            triggerLabel="Подобрать автомобиль"
+            triggerVariant="primary-surface"
+            title="Подбор автомобиля"
+            description="Оставьте контакты и опишите желаемый автомобиль — менеджер подберёт варианты и рассчитает стоимость с доставкой и оформлением."
+            submitLabel="Отправить заявку"
+            successTitle="Заявка принята"
+            successText="Менеджер свяжется с вами, уточнит параметры и предложит варианты под ваш запрос."
+            comment
+            commentLabel="Какой автомобиль ищете"
+            commentPlaceholder="Марка, модель, комплектация, бюджет"
+          />
+          <ButtonLink size="l" variant="secondary-outlined" href="/car-selection">
             Подробнее об услуге
-          </Button>
+          </ButtonLink>
         </div>
       </div>
     </section>

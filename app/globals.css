@@ -8,6 +8,7 @@
 @import "../styles/tokens.css";
 @import "../styles/typography.css";
 @import "../styles/components.css";
+@import "../styles/lead-modal.css";
 
 /* Базовые стили страницы (как в кит-витрине) */
 * { box-sizing: border-box; }

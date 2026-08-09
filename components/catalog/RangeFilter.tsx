@@ -33,8 +33,9 @@ export type RangeFilterProps = {
 /**
  * Составной фильтр «диапазон»: два поля с маской сверху и HeroUI-слайдер снизу.
  * Поля работают как подсказка (placeholder) — по умолчанию пустые; при вводе
- * текст форматируется маской. Двусторонняя связь: правка поля двигает ползунок,
- * перетаскивание ползунка заполняет поле.
+ * текст форматируется маской. Ручной ввод применяется только при blur/Enter,
+ * поэтому фильтр не пересчитывается на каждый символ. Слайдер обновляет
+ * применённый диапазон сразу.
  */
 export function RangeFilter({
   label,
@@ -66,27 +67,35 @@ export function RangeFilter({
   const handleInput = (side: 0 | 1, raw: string) => {
     setEditing(side);
     setEditText(maskRaw(raw));
-    const digits = raw.replace(/\D/g, "");
-    if (!digits) {
-      // очистили поле → сбрасываем этот край к границе диапазона
-      onChange(side === 0 ? [min, value[1]] : [value[0], max]);
-      return;
-    }
-    const n = parseInt(digits, 10);
-    onChange(
-      side === 0
-        ? [clamp(n, min, value[1]), value[1]]
-        : [value[0], clamp(n, value[0], max)],
-    );
   };
 
   const handleFocus = (side: 0 | 1) => {
     setEditing(side);
     setEditText(displayFor(side));
   };
-  const handleBlur = () => {
+  const commitInput = (side: 0 | 1) => {
+    const digits = editText.replace(/\D/g, "");
+    const requested = digits
+      ? parseInt(digits, 10)
+      : side === 0
+        ? min
+        : max;
+
+    const bounded = clamp(requested, min, max);
+    const next: RangeValue =
+      side === 0
+        ? [Math.min(bounded, value[1]), value[1]]
+        : [value[0], Math.max(bounded, value[0])];
+
+    if (next[0] !== value[0] || next[1] !== value[1]) onChange(next);
     setEditing(null);
     setEditText("");
+  };
+
+  const handleSliderChange = (next: RangeValue) => {
+    setEditing(null);
+    setEditText("");
+    onChange(next);
   };
 
   const renderInput = (side: 0 | 1) => (
@@ -99,7 +108,13 @@ export function RangeFilter({
       value={displayFor(side)}
       onChange={(e) => handleInput(side, e.target.value)}
       onFocus={() => handleFocus(side)}
-      onBlur={handleBlur}
+      onBlur={() => commitInput(side)}
+      onKeyDown={(event) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          event.currentTarget.blur();
+        }
+      }}
     />
   );
 
@@ -119,7 +134,7 @@ export function RangeFilter({
         maxValue={max}
         step={step}
         value={value}
-        onChange={(v) => onChange(v as RangeValue)}
+        onChange={(v) => handleSliderChange(v as RangeValue)}
       >
         <Slider.Track>
           <Slider.Marks className="cat-slider__marks" aria-hidden="true">

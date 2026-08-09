@@ -1,7 +1,7 @@
 import Link from "next/link";
 import "./layout.css";
-import { CopyIcon } from "@/components/icons";
 import { ButtonLink } from "@/components/ui/Button";
+import { FooterPhone } from "@/components/layout/FooterPhone";
 
 type FooterLink = string | { label: string; w?: number; href?: string };
 const columns: { title: string; links: FooterLink[] }[] = [
@@ -31,15 +31,15 @@ const columns: { title: string; links: FooterLink[] }[] = [
       { label: "Трейд-ин", href: "/trade-in" },
       { label: "Лизинг", href: "/leasing" },
       { label: "Авто под заказ", href: "/car-selection" },
-      "Автоателье",
-      { label: "Индивидуальный дизайн авто", w: 151 },
-      { label: "Помощь на дороге", href: "/help-on-roads" },
+      { label: "Автоателье", href: "/atelier" },
+      { label: "Индивидуальный дизайн авто", href: "/veles", w: 151 },
+      { label: "Помощь на дорогах", href: "/help-on-roads" },
     ],
   },
   {
     title: "Imperium Motors",
     links: [
-      "О салоне",
+      { label: "О салоне", href: "/about" },
       { label: "Новости", href: "/news" },
       { label: "Контакты", href: "/contacts" },
     ],
@@ -47,10 +47,18 @@ const columns: { title: string; links: FooterLink[] }[] = [
 ];
 
 const SOCIALS = [
-  { label: "Telegram", icon: "/icons/tg.svg" },
-  { label: "WhatsApp", icon: "/icons/wa.svg" },
+  {
+    label: "Telegram",
+    icon: "/icons/tg.svg",
+    href: "https://telegram.me/Vladislav_imperium_motors",
+  },
+  {
+    label: "WhatsApp",
+    icon: "/icons/wa.svg",
+    href: "https://wa.me/79250158725",
+  },
   { label: "MAX", icon: "/icons/max.svg" },
-];
+] as const;
 
 export function Footer() {
   return (
@@ -86,18 +94,18 @@ export function Footer() {
           <div className="footer-contacts">
             <div>
               <div className="footer-phone__label">Телефон</div>
-              <a href="tel:+74997041444" className="footer-phone__value">
-                +7 499 704-14-44
-                <span className="copy">
-                  <CopyIcon width={24} height={24} />
-                </span>
-              </a>
+              <FooterPhone />
             </div>
             <div className="footer-socials">
-              {SOCIALS.map((s) => (
+              {SOCIALS.map((s) => {
+                const href = "href" in s ? s.href : undefined;
+                return (
                 <ButtonLink
                   key={s.label}
-                  href="#"
+                  href={href ?? "#"}
+                  {...(href
+                    ? { target: "_blank", rel: "nofollow noopener noreferrer" }
+                    : {})}
                   bare
                   className="footer-social"
                   aria-label={s.label}
@@ -105,7 +113,8 @@ export function Footer() {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={s.icon} alt={s.label} width={42} height={42} />
                 </ButtonLink>
-              ))}
+                );
+              })}
             </div>
           </div>
 
@@ -116,6 +125,11 @@ export function Footer() {
               All Rights Reserved
             </p>
             <Link href="#">Правовые документы</Link>
+            <p className="footer-disclaimer">
+              Изложенная на данном сайте информация носит ознакомительный
+              характер не является публичной офертой, определяемой положениями
+              статей 435 и 437 Гражданского Кодекса Российской Федерации
+            </p>
           </div>
         </div>
 

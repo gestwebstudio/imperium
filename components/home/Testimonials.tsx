@@ -2,33 +2,17 @@
 
 import { ArrowIcon } from "@/components/icons";
 import { Button } from "@/components/ui/Button";
+import type { Review } from "@/lib/reviews";
 import {
   INFINITE_CAROUSEL_COPIES,
   INFINITE_CAROUSEL_MIDDLE_COPY,
   useInfiniteCarousel,
 } from "@/components/ui/useInfiniteCarousel";
 
-const reviews = [
-  {
-    id: "mikhail",
-    author: "Михаил",
-    car: "BMW 7 Series",
-    image: "/images/reviews/review1.webp",
-    imageAlt: "Михаил рядом с BMW 7 Series",
-    text: "«Искал автомобиль без компромиссов по комплектации и состоянию. Команда быстро поняла задачу, предложила несколько точных вариантов и полностью взяла на себя сопровождение сделки. В результате я получил именно тот автомобиль, который хотел.»",
-  },
-  {
-    id: "anna",
-    author: "Анна",
-    car: "BMW 5 Series",
-    image: "/images/reviews/review2.webp",
-    imageAlt: "Анна рядом с BMW 5 Series",
-    text: "«Хотела найти автомобиль, который сочетает комфорт на каждый день и характер. В Imperium Motors предложили подходящую комплектацию, организовали осмотр и подробно объяснили каждый этап. Сделка прошла спокойно, а результат превзошел ожидания.»",
-  },
-] as const;
-
-export function Testimonials() {
+export function Testimonials({ reviews }: { reviews: Review[] }) {
   const { rowRef, scroll } = useInfiniteCarousel(reviews.length);
+
+  if (reviews.length === 0) return null;
 
   return (
     <div className="about__testimonial">

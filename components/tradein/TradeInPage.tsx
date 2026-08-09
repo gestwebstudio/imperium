@@ -1,11 +1,27 @@
 import { Fragment } from "react";
 import type { Car } from "@/lib/cars";
 import { Badge } from "@/components";
-import { Button } from "@/components/ui/Button";
 import { GlassSurface } from "@/components/ui/GlassSurface";
 import { Crumbs } from "@/components/ui/Crumbs";
+import { LeadModal } from "@/components/ui/LeadModal";
 import { CarsSection } from "@/components/home/CarsSection";
 import { Contacts } from "@/components/home/Contacts";
+
+const EVAL_MODAL = {
+  title: "Экспресс-оценка автомобиля",
+  description:
+    "Оставьте контакты — эксперт оценит ваш автомобиль по фото, видео и VIN и назовёт сумму зачёта.",
+  submitLabel: "Отправить заявку",
+  successTitle: "Заявка принята",
+  successText:
+    "Эксперт Imperium Motors свяжется с вами, чтобы уточнить детали и провести оценку.",
+  comment: true,
+  commentLabel: "Ваш автомобиль",
+  commentPlaceholder: "Марка, модель, год, пробег",
+  photo: true,
+  photoLabel: "Фото автомобиля",
+  photoHint: "Можно прикрепить несколько фото — необязательно",
+} as const;
 
 /* Данные страницы Trade-in (тексты и стили — из макета 775:4922). */
 const HERO_STATS = [
@@ -74,44 +90,46 @@ export function TradeInPage({ cars }: { cars: Car[] }) {
                 Motors. Финальная цена формируется прозрачно — вы заранее знаете
                 итоговую сумму и проходите все этапы без суеты
               </p>
-              <Button variant="primary-surface" size="l" className="ti-hero__cta">
-                Экспресс-оценка
-              </Button>
+              <LeadModal
+                {...EVAL_MODAL}
+                triggerLabel="Экспресс-оценка"
+                triggerClassName="ti-hero__cta"
+              />
             </div>
           </div>
 
         </div>
-
-        {/* Преимущества — 4 отдельные стеклянные карточки (стекло как у шапки),
-            ряд наезжает наполовину на кромку hero */}
-        <div className="ti-hero__stats-wrap home-wrap">
-          <div className="ti-hero__stats">
-            {HERO_STATS.map((s) => (
-              <GlassSurface
-                key={s.value}
-                className="ti-stat"
-                borderRadius={30}
-                height="auto"
-                backgroundOpacity={0.06}
-                saturation={1.02}
-                lightAngle={-45}
-                lightIntensity={35}
-                refraction={100}
-                depth={75}
-                frost={3}
-                splay={70}
-              >
-                <span className="ti-stat__value">{s.value}</span>
-                <span className="ti-stat__label">{s.label}</span>
-              </GlassSurface>
-            ))}
-          </div>
-        </div>
       </section>
+
+      {/* Преимущества — 4 отдельные стеклянные карточки (стекло как у шапки),
+          ряд наезжает наполовину на нижнюю кромку hero */}
+      <div className="ti-hero__stats-wrap home-wrap">
+        <div className="ti-hero__stats">
+          {HERO_STATS.map((s) => (
+            <GlassSurface
+              key={s.value}
+              className="ti-stat"
+              borderRadius={30}
+              height="auto"
+              backgroundOpacity={0.06}
+              saturation={1.02}
+              lightAngle={-45}
+              lightIntensity={35}
+              refraction={100}
+              depth={75}
+              frost={3}
+              splay={70}
+            >
+              <span className="ti-stat__value">{s.value}</span>
+              <span className="ti-stat__label">{s.label}</span>
+            </GlassSurface>
+          ))}
+        </div>
+      </div>
 
       {/* ---------- Как проходит trade-in ---------- */}
       <section className="home-wrap ti-steps">
-        <h2 className="ti-section-title">Как проходит trade-in</h2>
+        <h2 className="ti-section-title t-page-title">Как проходит trade-in</h2>
         <div className="ti-steps__grid">
           {STEPS.map((s) => (
             <article className="ti-step" key={s.stage}>
@@ -129,7 +147,7 @@ export function TradeInPage({ cars }: { cars: Car[] }) {
       <section className="home-wrap ti-factors">
         <div className="ti-factors__media">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/services/podbor.webp" alt="Оценка автомобиля" />
+          <img src="/images/services/tradein1.webp" alt="Оценка автомобиля" />
         </div>
         <div className="ti-block__body ti-factors__body">
           <h2 className="ti-block__title">
@@ -178,7 +196,7 @@ export function TradeInPage({ cars }: { cars: Car[] }) {
         <div className="ti-accept__media">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/services/podbor.webp"
+            src="/images/services/tradein2.webp"
             alt="Приём автомобиля в trade-in"
           />
         </div>
@@ -188,15 +206,21 @@ export function TradeInPage({ cars }: { cars: Car[] }) {
       <section className="home-wrap">
         <div className="ti-call">
           <div className="ti-call__text">
-            <h2 className="ti-call__title">Позвоните нам</h2>
+            <h2 className="ti-call__title">
+              Рассчитайте ваше предложение по trade-in
+            </h2>
             <p className="ti-call__sub">
-              Круглосуточная поддержка для клиентов автосалона: эвакуация, замена
-              колеса, доставка топлива и выезд механика.
+              Оставьте заявку на предварительную оценку. Менеджер свяжется с
+              вами, уточнит детали и рассчитает возможную стоимость trade-in.
             </p>
           </div>
-          <Button variant="primary-surface" inverse size="m">
-            Подробнее
-          </Button>
+          <LeadModal
+            {...EVAL_MODAL}
+            triggerLabel="Получить оценку"
+            triggerVariant="primary-surface"
+            triggerInverse
+            triggerSize="m"
+          />
         </div>
       </section>
 

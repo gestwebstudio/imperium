@@ -1,9 +1,22 @@
 import type { Car } from "@/lib/cars";
 import { Badge } from "@/components";
-import { Button } from "@/components/ui/Button";
 import { GlassSurface } from "@/components/ui/GlassSurface";
 import { Crumbs } from "@/components/ui/Crumbs";
+import { LeadModal } from "@/components/ui/LeadModal";
 import { Contacts } from "@/components/home/Contacts";
+
+const ORDER_MODAL = {
+  title: "Заказ автомобиля",
+  description:
+    "Оставьте контакты и опишите желаемый автомобиль — менеджер подберёт варианты и рассчитает стоимость с доставкой и оформлением.",
+  submitLabel: "Отправить заявку",
+  successTitle: "Заявка принята",
+  successText:
+    "Менеджер свяжется с вами, уточнит параметры и предложит варианты под ваш запрос.",
+  comment: true,
+  commentLabel: "Какой автомобиль ищете",
+  commentPlaceholder: "Марка, модель, комплектация, бюджет",
+} as const;
 
 /* Страница «Авто под заказ» — макет Figma 821:212. Блоки переиспользованы с Trade-in. */
 const HERO_STATS = [
@@ -75,37 +88,39 @@ export function CarSelectionPage() {
                 Востока — с понятными условиями, прозрачной стоимостью и
                 сопровождением на каждом этапе.
               </p>
-              <Button variant="primary-surface" size="l" className="ti-hero__cta">
-                Заказать автомобиль
-              </Button>
+              <LeadModal
+                {...ORDER_MODAL}
+                triggerLabel="Заказать автомобиль"
+                triggerClassName="ti-hero__cta"
+              />
             </div>
           </div>
         </div>
-
-        {/* Преимущества — 4 стеклянные карточки (только заголовок, 2 строки → 116px как trade-in) */}
-        <div className="ti-hero__stats-wrap home-wrap">
-          <div className="ti-hero__stats">
-            {HERO_STATS.map((s) => (
-              <GlassSurface
-                key={s}
-                className="ti-stat"
-                borderRadius={30}
-                height="auto"
-                backgroundOpacity={0.06}
-                saturation={1.02}
-                lightAngle={-45}
-                lightIntensity={35}
-                refraction={100}
-                depth={75}
-                frost={3}
-                splay={70}
-              >
-                <span className="ti-stat__value">{s}</span>
-              </GlassSurface>
-            ))}
-          </div>
-        </div>
       </section>
+
+      {/* Преимущества — 4 стеклянные карточки; ряд-сиблинг наезжает половиной на кромку hero */}
+      <div className="ti-hero__stats-wrap home-wrap">
+        <div className="ti-hero__stats">
+          {HERO_STATS.map((s) => (
+            <GlassSurface
+              key={s}
+              className="ti-stat"
+              borderRadius={30}
+              height="auto"
+              backgroundOpacity={0.06}
+              saturation={1.02}
+              lightAngle={-45}
+              lightIntensity={35}
+              refraction={100}
+              depth={75}
+              frost={3}
+              splay={70}
+            >
+              <span className="ti-stat__value">{s}</span>
+            </GlassSurface>
+          ))}
+        </div>
+      </div>
 
       {/* ---------- Что входит в стоимость (фото слева) ---------- */}
       <section className="home-wrap ti-factors">
@@ -136,7 +151,7 @@ export function CarSelectionPage() {
 
       {/* ---------- Как проходит заказ автомобиля ---------- */}
       <section className="home-wrap ti-steps">
-        <h2 className="ti-section-title">Как проходит заказ автомобиля</h2>
+        <h2 className="ti-section-title t-page-title">Как проходит заказ автомобиля</h2>
         <div className="ti-steps__grid">
           {STEPS.map((s) => (
             <article className="ti-step" key={s.stage}>
@@ -154,7 +169,7 @@ export function CarSelectionPage() {
       <section className="home-wrap ti-factors ti-cs-2">
         <div className="ti-factors__media">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/services/podbor.webp" alt="Условия заказа" />
+          <img src="/images/services/podbor2.png" alt="Условия заказа" />
         </div>
         <div className="ti-block__body ti-factors__body">
           <h2 className="ti-block__title">
@@ -181,15 +196,22 @@ export function CarSelectionPage() {
       <section className="home-wrap">
         <div className="ti-call">
           <div className="ti-call__text">
-            <h2 className="ti-call__title">Позвоните нам</h2>
+            <h2 className="ti-call__title">
+              Подберём автомобиль под ваш запрос
+            </h2>
             <p className="ti-call__sub">
-              Круглосуточная поддержка для клиентов автосалона: эвакуация, замена
-              колеса, доставка топлива и выезд механика.
+              Оставьте заявку на подбор. Менеджер уточнит параметры, найдёт
+              подходящие варианты и рассчитает стоимость с доставкой и
+              оформлением.
             </p>
           </div>
-          <Button variant="primary-surface" inverse size="m">
-            Подробнее
-          </Button>
+          <LeadModal
+            {...ORDER_MODAL}
+            triggerLabel="Подобрать авто"
+            triggerVariant="primary-surface"
+            triggerInverse
+            triggerSize="m"
+          />
         </div>
       </section>
 

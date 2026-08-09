@@ -3,20 +3,36 @@
    ============================================================ */
 .site-header {
   --site-header-height: 78px;
+  --site-header-logo-width: 336px;
   --site-header-logo-height: 32px;
   --site-header-control-size: 46px;
   --site-header-icon-size: 24px;
+  --header-gutter: 20px;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 50;
-  padding: 18px 20px 0;
+  z-index: var(--z-header, 50);
+  padding: 18px var(--header-gutter) 0;
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }
 /* Headroom: уезжает вверх при скролле вниз */
 .site-header.is-hidden { transform: translateY(calc(-100% - 8px)); }
+
+/* На страницах со своим закреплённым контентом шапка уходит вместе с началом
+   документа и не занимает верхнюю область viewport при прокрутке. */
+.site-header.is-flowing {
+  position: absolute;
+  transform: none;
+}
+
+/* В сравнении шапка остаётся частью начала страницы и уходит вместе с контентом:
+   верхнюю фиксированную позицию при прокрутке занимает ряд сравниваемых машин. */
+body.comparison-route .site-header {
+  position: absolute;
+  transform: none;
+}
 
 @media (prefers-reduced-motion: reduce) {
   .site-header { transition: none; }
@@ -26,6 +42,9 @@
   margin: 0 auto;
   min-height: var(--site-header-height);
 }
+.liquid-glass.site-header__bar {
+  background: rgb(228 223 219 / 30%);
+}
 .site-header__bar > .liquid-glass__content {
   display: flex;
   align-items: center;
@@ -33,14 +52,14 @@
   gap: 24px;
   padding: 16px 40px;
 }
-.site-header__nav { display: flex; align-items: center; gap: clamp(24px, 2.6vw, 38px); }
+.site-header__nav { display: flex; align-items: center; gap: 38px; }
 .site-header__nav a {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   font-family: var(--font-text, "Onest", sans-serif);
   font-weight: var(--font-weight-medium, 500);
-  font-size: var(--fs-20);
+  font-size: 20px;
   line-height: 28px;
   color: var(--color-carbon-black-500, #1B1E1D);
   text-decoration: none;
@@ -48,28 +67,23 @@
 }
 .site-header__nav a:hover { color: var(--color-heritage-green-500, #294434); }
 .site-header__nav svg { width: 15px; height: 15px; }
-@media (min-width: 1201px) and (max-width: 1536px) {
-  .site-header__nav a {
-    font-size: var(--fs-18);
-    line-height: 1.3333;
-  }
-}
 .site-header__logo {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   display: block;
+  width: var(--site-header-logo-width);
   height: var(--site-header-logo-height);
 }
 .site-header__logo img {
+  width: var(--site-header-logo-width);
   height: var(--site-header-logo-height);
-  width: auto;
   display: block;
 }
 .site-header__actions { display: flex; align-items: center; gap: 16px; }
 
-/* Бургер скрыт на широком десктопе и заменяет основную навигацию ≤1200. */
+/* Бургер скрыт на десктопе и заменяет основную навигацию ниже 1200. */
 .site-header__burger { display: none; }
 .header-call {
   box-sizing: border-box;
@@ -190,7 +204,7 @@
   color: var(--color-red-500, #BB4545);
 }
 
-@media (min-width: 1201px) {
+@media (min-width: 1200px) {
   .header-call:focus-visible {
     width: 222px;
   }
@@ -201,7 +215,7 @@
   }
 }
 
-@media (min-width: 1201px) and (hover: hover) and (pointer: fine) {
+@media (min-width: 1200px) and (hover: hover) and (pointer: fine) {
   .header-call:hover {
     width: 222px;
   }
@@ -212,28 +226,70 @@
   }
 }
 
-@media (max-width: 1200px) {
+/* ===== Десктоп-навигация: тиры по макету (1200 / 1536 / 1920) =====
+   База (.site-header) = тир 1920: высота 78, лого 32, контрол 46, навигация 20/28. */
+
+/* Тир 1536 (1536–1919): высота 66, лого 273×26,
+   контролы CTA M 36, навигация 16/20. */
+@media (max-width: 1919px) {
   .site-header {
+    --header-gutter: 60px;
     --site-header-height: 66px;
-    --site-header-logo-height: 28px;
-    padding: 14px 16px 0;
+    --site-header-logo-width: 273px;
+    --site-header-logo-height: 26px;
+    --site-header-control-size: 36px;
+    --site-header-icon-size: 18px;
+  }
+  .site-header__nav a,
+  .site-header__nav-trigger {
+    font-size: 16px;
+    line-height: 20px;
+  }
+  .site-header__actions { gap: 12px; }
+  .header-call { background: var(--color-warm-taupe-100, #F2EEEA); }
+}
+
+/* Тир 1200 (1200–1535): десктопная шапка, поля 40, лого 241×23. */
+@media (max-width: 1535px) {
+  .site-header {
+    --header-gutter: 40px;
+    --site-header-logo-width: 241px;
+    --site-header-logo-height: 23px;
+  }
+}
+
+/* Бургер-режим включается ниже десктопного тира 1200. */
+@media (max-width: 1199px) {
+  .site-header {
+    --header-gutter: 40px;
+    --site-header-height: 66px;
+    --site-header-logo-width: 275px;
+    --site-header-logo-height: 26px;
+    --site-header-control-size: 44px;
   }
   .site-header__nav { display: none; }
-  .site-header__logo { position: static; transform: none; }
-  .site-header__bar > .liquid-glass__content {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-    padding: 10px 12px;
-    gap: 12px;
+  .site-header__actions { display: none; }
+  .site-header__logo {
+    position: static;
+    order: 1;
+    width: 275px;
+    height: 26px;
+    transform: none;
   }
-  .site-header__logo { grid-column: 2; }
-  .site-header__actions {
-    grid-column: 3;
-    justify-self: end;
+  .site-header__logo img {
+    width: 275px;
+    height: 26px;
+  }
+  .site-header__bar > .liquid-glass__content {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 11px 11px 11px 30px;
   }
 
   .site-header__burger {
     position: relative;
+    order: 2;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -243,34 +299,16 @@
     flex: none;
     padding: 0;
     border: none;
-    border-radius: 90px;
+    border-radius: 30px;
     cursor: pointer;
-    background: var(--color-stone-beige-100, #F3F0EE);
+    background: var(--color-white, #FFFFFF);
     color: var(--color-carbon-black-500, #1B1E1D);
-    justify-self: start;
+    isolation: isolate;
   }
-  .site-header__burger span {
-    position: absolute;
-    top: 50%;
-    left: 50%;
+  .site-header__burger img {
     display: block;
-    width: 20px;
-    height: 2px;
-    border-radius: 2px;
-    background: currentColor;
-    transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .site-header__burger span:first-child {
-    transform: translate(-50%, -4px);
-  }
-  .site-header__burger span:last-child {
-    transform: translate(-50%, 4px);
-  }
-  .site-header__burger.is-open span:first-child {
-    transform: translate(-50%, 0) rotate(45deg);
-  }
-  .site-header__burger.is-open span:last-child {
-    transform: translate(-50%, 0) rotate(-45deg);
+    width: 16px;
+    height: 10.667px;
   }
 }
 
@@ -280,62 +318,44 @@
   }
 }
 
-@media (max-width: 960px) {
-  .site-header {
-    --site-header-height: 64px;
-    --site-header-logo-height: 26px;
-    padding: 12px 14px 0;
-  }
-  .site-header__bar > .liquid-glass__content {
-    padding-block: 9px;
-  }
-}
-
-/* На телефоне CTA «Каталог» уезжает в drawer — в баре остаётся бургер+лого+телефон */
-@media (max-width: 768px) {
-  .site-header {
-    --site-header-height: 58px;
-    --site-header-logo-height: 22px;
-    --site-header-control-size: 44px;
-    --site-header-icon-size: 22px;
-    padding: 10px 12px 0;
-  }
-  .site-header__bar > .liquid-glass__content {
-    gap: 10px;
-    padding: 7px 10px;
-  }
-  .site-header__cta { display: none; }
-}
-
 @media (max-width: 640px) {
   .site-header {
-    --site-header-logo-height: 20px;
+    --header-gutter: 30px;
   }
 }
 
 @media (max-width: 480px) {
   .site-header {
-    --site-header-height: 56px;
-    --site-header-logo-height: 17px;
-    padding: 8px 10px 0;
+    --header-gutter: 20px;
+    --site-header-height: 58px;
+    --site-header-logo-width: 201px;
+    --site-header-logo-height: 20px;
+    --site-header-control-size: 36px;
   }
-  .site-header__bar > .liquid-glass__content {
-    gap: 8px;
-    padding: 6px 8px;
+  .site-header__logo,
+  .site-header__logo img {
+    width: 201px;
+    height: 20px;
+  }
+  .site-header__burger img {
+    width: 10px;
+    height: 6.667px;
   }
 }
 
-@media (max-width: 390px) {
-  .site-header {
-    --site-header-logo-height: 14px;
-    padding-inline: 8px;
-  }
-  .site-header__bar > .liquid-glass__content {
-    gap: 6px;
-    padding-inline: 6px;
-  }
-  .site-header__burger span {
-    width: 18px;
+/* В макете 1920 CTA использует размер L, на 1536/1200 — китовый M. */
+@media (min-width: 1920px) {
+  .site-header__cta.btn--primary-cta {
+    --cta-control-size: 46px;
+    --cta-pressed-size: 148px;
+    --cta-arrow-shift: -11px;
+    --cta-icon-size: 16px;
+    --cta-label-shift: 8px;
+    height: 46px;
+    padding: 0 0 0 22px;
+    gap: 12px;
+    font-size: 18px;
+    line-height: 24px;
   }
 }
 
@@ -384,10 +404,13 @@
 
 .footer-contacts { display: flex; flex-direction: column; gap: 32px; }
 .footer-phone__label { font-size: var(--fs-20); line-height: 1.4; opacity: 0.5; margin-bottom: 16px; }
-.footer-phone__value {
+.footer-phone {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 12px;
+}
+.footer-phone__value {
   font-family: var(--font-text, "Onest", sans-serif);
   font-weight: var(--font-weight-semibold, 600);
   font-size: var(--fs-24);
@@ -395,7 +418,51 @@
   color: var(--color-stone-beige-200, #E4DFDB);
   text-decoration: none;
 }
-.footer-phone__value .copy { width: 24px; height: 24px; opacity: 0.8; }
+/* Кнопка-иконка «Скопировать» */
+.footer-phone__copy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex: none;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  opacity: 0.8;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+.footer-phone__copy:hover { opacity: 1; }
+.footer-phone__copy svg { width: 24px; height: 24px; display: block; }
+/* Подсказка «Номер скопирован» */
+.footer-phone__hint {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 10px);
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: var(--color-white, #FFFFFF);
+  color: var(--color-carbon-black-500, #1B1E1D);
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-medium, 500);
+  font-size: var(--fs-14, 14px);
+  line-height: 20px;
+  white-space: nowrap;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 25%);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.18s;
+}
+.footer-phone__hint.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.footer-phone__hint.is-error { color: var(--color-red-500, #BB4545); }
 .footer-socials { display: flex; gap: 16px; }
 .footer-social {
   width: 42px;
@@ -416,6 +483,14 @@
   text-decoration: none;
 }
 .footer-legal a:hover { opacity: 0.7; }
+.footer-legal .footer-disclaimer {
+  max-width: 365px;
+  margin-left: auto;
+  font-size: 10px;
+  line-height: 14px;
+  color: var(--color-white, #FFFFFF);
+  opacity: 0.3;
+}
 
 .footer-tagline { margin: clamp(64px, 9.271vw, 178px) 0 0; font-size: var(--fs-20); line-height: 1.4; color: var(--color-white, #FFFFFF); opacity: 0.3; max-width: 474px; }
 .footer-logo { margin-top: 1px; }
@@ -448,7 +523,7 @@
   .footer-contacts {
     gap: 24px;
   }
-  .footer-phone__value {
+  .footer-phone {
     gap: 8px;
   }
   .footer-legal {
@@ -497,7 +572,8 @@
 .mobile-menu__panel {
   position: absolute;
   top: 0;
-  left: 0;
+  right: 0;
+  left: auto;
   width: clamp(540px, 60vw, 620px);
   height: 100dvh;
 }
@@ -525,7 +601,7 @@
   display: flex;
   flex-direction: column;
   background: var(--color-stone-beige-100, #F3F0EE);
-  box-shadow: 20px 0 60px rgba(27, 30, 29, 0.15);
+  box-shadow: -20px 0 60px rgba(27, 30, 29, 0.15);
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -752,5 +828,132 @@
 @media (prefers-reduced-motion: reduce) {
   .site-header__burger span {
     transition-duration: .01ms;
+  }
+}
+
+/* ============================================================
+   Услуги — мега-выпадайка (по мотивам React Bits «Card Nav»)
+   Показывается только на десктоп-навигации (от 1200px, до бургера)
+   ============================================================ */
+.site-header__nav-trigger {
+  appearance: none;
+  background: none;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-medium, 500);
+  font-size: 20px;
+  line-height: 28px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+.site-header__nav-trigger:hover,
+.site-header__nav-trigger.is-open {
+  color: var(--color-heritage-green-500, #294434);
+}
+.site-header__nav-trigger svg {
+  width: 15px;
+  height: 15px;
+  transition: transform 0.25s ease;
+}
+.site-header__nav-trigger.is-open svg {
+  transform: rotate(180deg);
+}
+/* Тиры навигации для «Услуги» — после базы (иначе базовые 20px перебивают по порядку). */
+@media (max-width: 1919px) {
+  .site-header__nav-trigger { font-size: 16px; line-height: 20px; }
+}
+
+.services-mega {
+  position: absolute;
+  top: calc(18px + var(--site-header-height) + 10px);
+  left: 0;
+  right: 0;
+  z-index: 49;
+  pointer-events: none;
+  /* абс.-позиционирование игнорирует padding самой шапки, поэтому
+     повторяем внешний отступ бара здесь */
+  padding-inline: var(--header-gutter, 20px);
+}
+.services-mega.is-open {
+  pointer-events: auto;
+}
+.services-mega__inner {
+  /* повторяем центрирование бара (max-width + auto) и его внутренний
+     паддинг (40px), чтобы панель встала точно под пунктом «Услуги» */
+  max-width: 1880px;
+  margin: 0 auto;
+  padding-inline: 40px;
+}
+.services-mega__panel {
+  display: grid;
+  grid-template-columns: repeat(3, 260px); /* равные, вмещают услугу в одну строку */
+  gap: 12px;
+  width: max-content;
+  max-width: 100%;
+  padding: 12px;
+  background: rgb(255 255 255 / 65%);
+  border: 0.5px solid rgb(228 223 219 / 60%);
+  border-radius: 20px;
+  box-shadow: 0 20px 44px -18px rgb(27 30 29 / 32%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  visibility: hidden; /* дальше управляет GSAP (autoAlpha) */
+}
+.services-mega__card {
+  display: flex;
+  flex-direction: column;
+  min-height: 172px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  color: var(--color-white, #fff);
+}
+.services-mega__card-title {
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-weight: var(--font-weight-medium, 500);
+  font-size: 20px;
+  line-height: 26px;
+  letter-spacing: -0.3px;
+}
+.services-mega__card-links {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.services-mega__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 16px;
+  line-height: 22px;
+  color: rgb(255 255 255 / 82%);
+  text-decoration: none;
+  white-space: nowrap; /* услуга всегда в одну строку */
+  transition: color 0.2s ease;
+}
+.services-mega__link:hover {
+  color: var(--color-white, #fff);
+}
+.services-mega__link-icon {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  transition: transform 0.2s ease;
+}
+.services-mega__link:hover .services-mega__link-icon {
+  transform: translate(2px, -2px);
+}
+/* На бургер-режиме (<= 1200px) навигации нет — прячем и панель */
+@media (max-width: 1200px) {
+  .services-mega {
+    display: none;
   }
 }

@@ -1,6 +1,7 @@
-import { Button, ButtonLink } from "@/components/ui/Button";
+import { ButtonLink } from "@/components/ui/Button";
 import { PhoneIcon } from "@/components/icons";
 import { Crumbs } from "@/components/ui/Crumbs";
+import { HelpRoadsPricing } from "@/components/helproads/HelpRoadsPricing";
 import { Contacts } from "@/components/home/Contacts";
 
 /* Страница «Помощь на дорогах» — макет Figma 841:6808.
@@ -43,10 +44,12 @@ export function HelpRoadsPage() {
             </h1>
             <div className="ti-hero__aside">
               <p className="ti-hero__sub">
-                Круглосуточная техническая поддержка и выездной автосервис в
-                любой точке маршрута. Одна телефонная линия, один стандарт
-                качества — где бы вы ни находились, мы приедем и поможем. Звонок
-                бесплатный.
+                <b>
+                  Круглосуточная техническая поддержка и выездной автосервис
+                </b>{" "}
+                в любой точке маршрута. Одна телефонная линия, один стандарт
+                качества — где бы вы ни находились, мы приедем и поможем.{" "}
+                <b>Звонок бесплатный.</b>
               </p>
               <ButtonLink
                 href="tel:88002507262"
@@ -84,8 +87,8 @@ export function HelpRoadsPage() {
           </p>
         </article>
 
-        <article className="hr-card hr-card--right">
-          <h2 className="ti-block__title hr-title--right">
+        <article className="hr-card">
+          <h2 className="ti-block__title">
             <span className="reg">Многолетний опыт</span>
             <span className="bold">позволяет нам гарантировать:</span>
           </h2>
@@ -97,7 +100,7 @@ export function HelpRoadsPage() {
               </li>
             ))}
           </ul>
-          <p className="ti-callout hr-card__callout hr-card__callout--right">
+          <p className="ti-callout hr-card__callout">
             <span className="reg">Ваша уверенность за рулём</span>
             <span className="bold">в любой точке маршрута</span>
           </p>
@@ -105,19 +108,28 @@ export function HelpRoadsPage() {
         </div>
       </section>
 
+      {/* ---------- Тарифы (таблица со страницы сравнения) ---------- */}
+      <HelpRoadsPricing />
+
       {/* ---------- Позвоните нам (баннер, переиспользуем) ---------- */}
       <section className="home-wrap">
         <div className="ti-call">
           <div className="ti-call__text">
-            <h2 className="ti-call__title">Позвоните нам</h2>
+            <h2 className="ti-call__title">Помощь 24/7</h2>
             <p className="ti-call__sub">
               Круглосуточная поддержка для клиентов автосалона: эвакуация, замена
               колеса, доставка топлива и выезд механика.
             </p>
           </div>
-          <Button variant="primary-surface" inverse size="m">
-            Подробнее
-          </Button>
+          <ButtonLink
+            href="tel:88002507262"
+            variant="primary-surface"
+            inverse
+            size="m"
+            endIcon={<PhoneIcon width={16} height={16} />}
+          >
+            8-800-250-72-62
+          </ButtonLink>
         </div>
       </section>
 

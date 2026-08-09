@@ -465,12 +465,12 @@ export function getCarSpecs(car: Car): { primary: Spec[]; extra: Spec[] } {
     { label: "Год выпуска", value: String(car.year) },
     { label: "Кузов", value: car.bodyType },
     { label: "Цвет", value: car.color.name },
-    { label: "Привод", value: `${car.drive} привод` },
+    { label: "Привод", value: car.drive },
     { label: "Коробка", value: car.transmission },
     { label: "Тип топлива", value: car.fuelType },
     { label: "Мощность", value: `${car.power} л.с.` },
     { label: "Разгон 0–100 км/ч", value: `${accel} с` },
-    { label: "Максимальная скорость", value: `${topSpeed} км/ч` },
+    { label: "Макс. скорость", value: `${topSpeed} км/ч` },
   ];
 
   const extra: Spec[] = [

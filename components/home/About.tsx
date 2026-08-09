@@ -1,8 +1,10 @@
 import { ServiceImageCard } from "@/components/cards/cards";
 import { ServiceCards } from "@/components/ServiceCards";
 import { Testimonials } from "@/components/home/Testimonials";
+import { getReviews } from "@/lib/reviews";
 
-export function About() {
+export async function About() {
+  const reviews = await getReviews();
   return (
     <section className="home-wrap about">
       <ServiceCards />
@@ -22,23 +24,26 @@ export function About() {
           className="svc-card--atelier"
           title="Ателье персонализации"
           image="/images/services/atelie.webp"
+          href="/atelier"
           text="Защита бронепленкой, смена цвета автомобиля, апгрейд мультимедиа, подбор дисков — всё в одном месте."
         />
         <ServiceImageCard
           className="svc-card--selection"
           title="Индивидуальный подбор"
           image="/images/services/podbor.webp"
+          href="/car-selection"
           text="Мы находим редкие комплектации и привозим автомобили под заказ со всего мира."
         />
         <ServiceImageCard
           className="svc-card--veles"
           title="Дизайн с Александром Велесом"
           image="/images/services/veles.webp"
+          href="/veles"
           text="Авторская концепция экстерьера вашего автомобиля: уникальный дизайн, который делает автомобиль продолжением вас."
         />
       </div>
 
-      <Testimonials />
+      <Testimonials reviews={reviews} />
     </section>
   );
 }

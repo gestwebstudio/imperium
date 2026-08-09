@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Breadcrumbs } from "@heroui/react";
-import { ArrowIcon } from "@/components/icons";
 import { ButtonLink } from "@/components/ui/Button";
+import { Crumbs } from "@/components/ui/Crumbs";
 import {
   getNewsArticle,
   getNewsSlugs,
@@ -12,8 +11,8 @@ import "./news-detail.css";
 
 type Params = { slug: string };
 
-export function generateStaticParams(): Params[] {
-  return getNewsSlugs().map((slug) => ({ slug }));
+export async function generateStaticParams(): Promise<Params[]> {
+  return (await getNewsSlugs()).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -22,7 +21,7 @@ export async function generateMetadata({
   params: Promise<Params>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const article = getNewsArticle(slug);
+  const article = await getNewsArticle(slug);
 
   if (!article) {
     return { title: "Новость не найдена — Imperium Motors" };
@@ -46,7 +45,7 @@ function NewsArticleContent({ article }: { article: NewsArticle }) {
         <div className="news-detail__copy">
           <time dateTime={article.dateTime}>{article.date}</time>
           <div className="news-detail__text">
-            <h1>{article.title}</h1>
+            <h1 className="t-page-title">{article.title}</h1>
             <div className="news-detail__body">
               {article.body.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
@@ -69,26 +68,16 @@ export default async function NewsArticlePage({
   params: Promise<Params>;
 }) {
   const { slug } = await params;
-  const article = getNewsArticle(slug);
+  const article = await getNewsArticle(slug);
 
   if (!article) notFound();
 
   return (
     <main className="news-detail">
-      <Breadcrumbs
+      <Crumbs
         className="news-detail__crumbs"
-        separator={<ArrowIcon width={12} height={12} />}
-      >
-        <Breadcrumbs.Item href="/" className="news-detail__crumb">
-          Главная
-        </Breadcrumbs.Item>
-        <Breadcrumbs.Item
-          href="/news"
-          className="news-detail__crumb news-detail__crumb--current"
-        >
-          Новости
-        </Breadcrumbs.Item>
-      </Breadcrumbs>
+        items={[{ label: "Главная", href: "/" }, { label: "Новости" }]}
+      />
 
       <NewsArticleContent article={article} />
     </main>

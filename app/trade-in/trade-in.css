@@ -1,10 +1,13 @@
 /* ============================================================
-   Страница Trade-in — макет Figma 775:4922.
-   Значения по дизайн-контексту макета; токены/компоненты — из кита.
+   Страница Trade-in — макет Figma 775:4922 + адаптации 1072:*.
+   Desktop-first, дискретные значения по артбордам:
+   1920/1536 (база) · 1200 · 960 · 768 · 640 · 390.
+   Числовая сверка с макетами (getComputedStyle/rect), не «на глаз».
    ============================================================ */
 
 .trade-in {
   padding-bottom: 0;
+  --section-space: 160px;      /* зазор между секциями (1536); тиры ниже */
 }
 
 /* Вертикальный ритм секций */
@@ -29,8 +32,13 @@
   overflow: hidden;
 }
 .ti-hero__inner {
-  padding-top: var(--page-top, 155px);
-  padding-bottom: clamp(32px, 3vw, 48px);
+  padding-top: var(--crumbs-page-top, var(--page-top, 155px));
+  padding-bottom: 128px; /* беж под контентом; ряд преимуществ наезжает сверху */
+}
+
+/* Крупным многострочным заголовкам нужен одинаковый зазор на всех ширинах. */
+.trade-in .ui-crumbs {
+  margin-bottom: var(--crumbs-gap-bottom);
 }
 
 /* Хлебные крошки страниц услуг — те же, что в каталоге (catalog.css) */
@@ -43,7 +51,7 @@
   margin: 0;
   padding: 0;
 }
-.cat-crumbs { height: 18px; margin-bottom: 10px; }
+.cat-crumbs { height: 18px; margin-bottom: var(--crumbs-gap-bottom); }
 .cat-crumbs li {
   display: inline-flex;
   align-items: center;
@@ -73,7 +81,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: clamp(32px, 5vw, 96px);
+  gap: clamp(40px, 5vw, 96px);
 }
 .ti-hero__title {
   margin: 0;
@@ -81,12 +89,14 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
+  gap: 5px;
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
   text-transform: uppercase;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
-.ti-hero__title .reg { font-weight: var(--font-weight-regular, 400); font-size: var(--fs-66); line-height: 1.06; }
-.ti-hero__title .bold { font-weight: var(--font-weight-extrabold, 800); font-size: var(--fs-66); line-height: 1.06; }
+/* Заголовок — дискретные размеры по адаптациям (базовый тир 1920/1536: H2 66/70). */
+.ti-hero__title .reg { font-weight: var(--font-weight-regular, 400); font-size: 66px; line-height: 70px; }
+.ti-hero__title .bold { font-weight: var(--font-weight-extrabold, 800); font-size: 66px; line-height: 70px; }
 .ti-hero__aside {
   flex: 0 1 730px;
   display: flex;
@@ -94,20 +104,22 @@
   align-items: flex-end;
   text-align: right;
   gap: 24px;
-  padding-top: 12px;
 }
 .ti-hero__sub {
   margin: 0;
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: var(--fs-18);
-  line-height: 1.333;
+  font-size: 18px;
+  line-height: 24px;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 .ti-hero__cta { align-self: flex-end; }
 
-/* Преимущества hero: 4 отдельные стеклянные карточки 1398px по центру */
+/* Преимущества hero: ряд карточек 1398px по центру — сиблинг ПОСЛЕ hero,
+   наезжает верхней половиной первой карточки на нижнюю кромку hero. */
 .ti-hero__stats-wrap {
-  margin-top: clamp(40px, 4vw, 56px);
+  position: relative;
+  z-index: 3;
+  margin-top: -58px; /* половина карточки h116 (тиры 1920/1536) */
 }
 .ti-hero__stats {
   width: 100%;
@@ -128,45 +140,91 @@
   align-items: center;
   justify-content: center;
   gap: 2px;
-  padding: clamp(18px, 1.458vw, 28px) clamp(14px, 1.146vw, 22px);
+  padding: 28px 22px;
+  min-height: 116px; /* единая высота карточки (1920/1536); значение центрируется */
   text-align: center;
 }
 .ti-stat__value {
   font-family: var(--font-text, "Onest", sans-serif);
   font-weight: var(--font-weight-semibold, 600);
-  font-size: var(--fs-24);
-  line-height: 1.25;
+  font-size: 24px;
+  line-height: 30px;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 .ti-stat__label {
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: var(--fs-20);
-  line-height: 1.4;
+  font-size: 20px;
+  line-height: 28px;
   color: var(--color-warm-taupe-400, #8F8579);
 }
 
-/* Десктоп: плашка стекла наезжает нижней половиной за кромку hero */
-@media (min-width: 961px) {
-  /* flow-root — свой BFC: отрицательный margin плашки укорачивает hero,
-     а не схлопывается в его собственный margin */
-  .ti-hero { display: flow-root; overflow: visible; }
-  .ti-hero__inner { padding-bottom: 0; }
-  .ti-hero__stats-wrap {
-    margin-top: clamp(40px, 4vw, 57px);
-    margin-bottom: -58px;
-    position: relative;
-    z-index: 3;
+/* ===== Адаптации hero + преимуществ (desktop-first, база = 1536/1920) ===== */
+
+/* 1536–1919: всё как база (заголовок 66/70). */
+
+/* 1200–1535: заголовок 40/48; подзаг 16/20; преимущества 18/24 · 16/20 (карточка h102). */
+@media (max-width: 1535px) {
+  .ti-hero__title .reg,
+  .ti-hero__title .bold { font-size: 40px; line-height: 48px; }
+  .ti-hero__sub { font-size: 16px; line-height: 20px; }
+  .ti-hero__inner { padding-bottom: 118px; }
+  .ti-hero__stats-wrap { margin-top: -51px; } /* половина карточки h102 */
+  .ti-stat .liquid-glass__content { min-height: 102px; }
+  .ti-stat__value { font-size: 18px; line-height: 24px; }
+  .ti-stat__label { font-size: 16px; line-height: 20px; }
+}
+
+/* ≤1199: заголовок на всю ширину, aside под ним слева; CTA size M (36/16). Шапка = бургер.
+   Преимущества: 3-в-ряд (4-я «Зачёт стоимости» скрыта — по макету), карточка h92. */
+@media (max-width: 1199px) {
+  .ti-hero__top { flex-direction: column; gap: 24px; }
+  .ti-hero__title { flex-basis: auto; } /* в колонке 883px не должно уходить в высоту */
+  .ti-hero__aside {
+    flex-basis: auto;
+    align-self: stretch;
+    align-items: flex-start;
+    text-align: left;
   }
-  .trade-in > .ti-steps { margin-top: 178px; }
+  .ti-hero__cta { align-self: flex-start; }
+  .ti-hero__cta.btn { height: 36px; padding: 0 14px; font-size: 16px; line-height: 20px; }
+  .ti-hero__stats-wrap { margin-top: -46px; } /* половина карточки h92 */
+  .ti-stat .liquid-glass__content { min-height: 92px; }
+}
+
+/* 960–1199: в ряду только 3 карточки (4-я «Зачёт стоимости» скрыта — по макету). */
+@media (min-width: 960px) and (max-width: 1199px) {
+  .ti-stat:nth-child(4) { display: none; }
+}
+
+/* ≤959 (768): преимущества сеткой 2×2; значение/подпись 16/20 · 14/18; карточка h84. */
+@media (max-width: 959px) {
+  .ti-hero__stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 17px;
+  }
+  .ti-hero__stats-wrap { margin-top: -42px; } /* половина карточки h84 */
+  .ti-stat .liquid-glass__content { min-height: 84px; padding: 22px 20px; }
+  .ti-stat__value { font-size: 16px; line-height: 20px; }
+  .ti-stat__label { font-size: 14px; line-height: 18px; }
+}
+
+/* ≤639: CTA h34/14 (преимущества остаются 2×2 вплоть до тира 480). */
+@media (max-width: 639px) {
+  .ti-hero__cta.btn { height: 34px; padding: 0 14px; font-size: 14px; line-height: 18px; }
+}
+
+/* ≤479 (тир 390): reg-строка заголовка 36/44 (bold 40/48); преимущества в 1 колонку, карточка h70. */
+@media (max-width: 479px) {
+  .ti-hero__title .reg { font-size: 36px; line-height: 44px; }
+  .ti-hero__stats { grid-template-columns: minmax(0, 1fr); }
+  .ti-hero__stats-wrap { margin-top: -35px; } /* половина карточки h70 */
+  .ti-stat .liquid-glass__content { min-height: 70px; }
 }
 
 /* Общий заголовок секции (H4 SemiBold 48/56) */
 .ti-section-title {
   margin: 0 0 clamp(28px, 3vw, 45px);
-  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
-  font-weight: var(--font-weight-semibold, 600);
-  font-size: var(--fs-48);
-  line-height: 1.167;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 
@@ -178,7 +236,7 @@
 }
 .ti-step {
   position: relative;
-  padding: clamp(22px, 1.563vw, 30px);
+  padding: 30px;
   border-radius: var(--radius-card, 30px);
   background: var(--color-white, #FFFFFF);
   display: flex;
@@ -194,15 +252,15 @@
   margin: 0;
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
   font-weight: var(--font-weight-semibold, 600);
-  font-size: var(--fs-36);
-  line-height: 1.222;
+  font-size: 36px;
+  line-height: 44px;
   color: var(--color-heritage-green-500, #294434);
 }
 .ti-step__text {
   margin: 0;
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: var(--fs-18);
-  line-height: 1.333;
+  font-size: 18px;
+  line-height: 24px;
   color: var(--color-warm-taupe-500, #6A6259);
   opacity: 0.7;
 }
@@ -211,8 +269,8 @@
 .ti-factors,
 .ti-accept {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(32px, 4vw, 50px);
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
   align-items: stretch;
 }
 .ti-factors__media,
@@ -221,12 +279,11 @@
 .ti-accept__media img {
   width: 100%;
   height: 100%;
-  aspect-ratio: 875 / 459;
   object-fit: cover;
   border-radius: var(--radius-media, 36px);
   display: block;
 }
-.ti-accept__media { order: 1; }
+.ti-accept__media { order: -1; } /* картинка слева, текст справа — как в первом блоке */
 
 .ti-block__body {
   min-width: 0;
@@ -235,15 +292,15 @@
   align-items: flex-start;
   gap: 20px;
 }
-.ti-accept__body { align-items: flex-end; text-align: right; }
+.ti-accept__body { align-items: flex-start; text-align: left; }
 
 .ti-block__title {
   margin: 0;
   display: flex;
   flex-direction: column;
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
-  font-size: var(--fs-48);
-  line-height: 1.167;
+  font-size: 48px;
+  line-height: 56px;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 .ti-block__title .reg { font-weight: var(--font-weight-regular, 400); }
@@ -252,15 +309,19 @@
 .ti-list {
   margin: 0;
   padding: 0;
-  list-style: none;
+  padding-left: 27px;
+  list-style: disc;
 }
 .ti-list li {
+  list-style: disc;
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: var(--fs-18);
-  line-height: 1.333;
+  font-size: 16px;
+  line-height: 20px;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
-.ti-list li + li { margin-top: 4px; }
+.ti-list li + li { margin-top: 0; }
+/* Список «Мы готовы принять» — на 1536/1920 крупнее (18/24). */
+.ti-accept .ti-list li { font-size: 18px; line-height: 24px; }
 
 /* Выделение (зелёное, 30px) — прижато к низу колонки, с декоративной кавычкой */
 .ti-callout {
@@ -271,8 +332,8 @@
   display: flex;
   flex-direction: column;
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: var(--fs-30);
-  line-height: 1.333;
+  font-size: 30px;
+  line-height: 40px;
   color: var(--color-heritage-green-400, #4E7B60);
 }
 .ti-callout .reg { font-weight: var(--font-weight-regular, 400); white-space: nowrap; }
@@ -291,120 +352,129 @@
   z-index: -1;
   pointer-events: none;
 }
-.ti-factors .ti-callout::before { left: -25px; }
-/* accept: кавычка на верхнем правом крае выделения (правый край +30px за колонку), зеркальная */
-.ti-accept .ti-callout::before { right: -30px; left: auto; transform: scaleX(-1); }
+.ti-factors .ti-callout::before,
+.ti-accept .ti-callout::before { left: -25px; }
 
 .ti-accept__note {
   margin: 0;
   max-width: 468px;
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: var(--fs-18);
-  line-height: 1.333;
+  font-size: 18px;
+  line-height: 24px;
   color: var(--color-warm-taupe-400, #8F8579);
 }
 
 /* ---------------- Позвоните нам (баннер) ---------------- */
 .ti-call {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   gap: 24px;
+  min-height: 216px;
   padding: clamp(22px, 1.563vw, 30px);
   border-radius: var(--radius-card, 30px);
-  background: var(--color-heritage-green-500, #294434);
+  background:
+    url("/images/services/tradein3.webp") center center / cover no-repeat,
+    var(--color-heritage-green-500, #294434);
   color: var(--color-white, #FFFFFF);
 }
-.ti-call__text { display: flex; flex-direction: column; gap: 12px; max-width: 686px; }
+.ti-call__text { display: flex; flex-direction: column; align-items: center; gap: 12px; max-width: 960px; }
 .ti-call__title {
   margin: 0;
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
   font-weight: var(--font-weight-semibold, 600);
-  font-size: var(--fs-36);
-  line-height: 1.222;
+  font-size: 36px;
+  line-height: 44px;
 }
 .ti-call__sub {
   margin: 0;
+  max-width: 686px;
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: var(--fs-16);
-  line-height: 1.25;
+  font-size: 16px;
+  line-height: 20px;
   color: var(--color-heritage-green-100, #E1EAE5);
 }
 
-/* ---------------- Адаптив ---------------- */
-@media (max-width: 960px) {
-  .ti-hero__top { flex-direction: column; gap: 24px; }
-  .ti-hero__aside { flex-basis: auto; align-self: stretch; padding-top: 0; }
-  .ti-hero__cta { align-self: flex-start; }
-  .ti-hero__stats { flex-wrap: wrap; }
-  .ti-stat { flex: 1 1 40%; min-width: 180px; }
+/* ===== Адаптации секций ниже hero (desktop-first) ===== */
 
+/* 1200–1535: общий .t-page-title даёт 36/44; шаг 30/38 + текст 16/20;
+   блок-заголовки 36/44; список «принять» 16/20; callout 24/30; примечание 16/20;
+   зазор секций 120; блоки картинка+текст gap 50 (как база). */
+@media (max-width: 1535px) {
+  .trade-in { --section-space: 120px; }
+  .ti-step__title { font-size: 30px; line-height: 38px; }
+  .ti-step__text { font-size: 16px; line-height: 20px; }
+  .ti-block__title { font-size: 36px; line-height: 44px; }
+  .ti-accept .ti-list li { font-size: 16px; line-height: 20px; }
+  .ti-callout { font-size: 24px; line-height: 30px; }
+  .ti-accept__note { font-size: 16px; line-height: 20px; }
+}
+
+/* 960–1199: .t-page-title переключается на 32/40 при 960; шаг 24/28;
+   блок-заголовки 32/40; callout 20/28.
+   Ряды карточек — gap 20. */
+@media (max-width: 1199px) {
+  .ti-step__title { font-size: 24px; line-height: 28px; }
+  .ti-block__title { font-size: 32px; line-height: 40px; }
+  .ti-callout { font-size: 20px; line-height: 28px; }
+  .ti-steps__grid { gap: 20px; }
+}
+
+/* ≤959 (768): шаг 20/26; блок-заголовки 30/38; примечание 14/18.
+   Блоки картинка+текст: картинка уже, текст шире; gap 50. */
+@media (max-width: 959px) {
+  .ti-step__title { font-size: 20px; line-height: 26px; }
+  .ti-block__title { font-size: 30px; line-height: 38px; }
+  .ti-accept__note { font-size: 14px; line-height: 18px; }
   .ti-factors,
-  .ti-accept { grid-template-columns: minmax(0, 1fr); }
-  .ti-factors__media,
-  .ti-accept__media { order: 0; }
-  .ti-accept__body { align-items: flex-start; text-align: left; }
-  /* В одну колонку кавычка обоих блоков — слева, без зеркала */
-  .ti-accept .ti-callout::before { left: -25px; right: auto; transform: none; }
+  .ti-accept { grid-template-columns: minmax(0, 0.82fr) minmax(0, 1fr); gap: 50px; }
+  .ti-call__title { font-size: 30px; line-height: 38px; }
+  /* Кавычка мельче */
+  .ti-callout::before { width: 80px; height: 66px; top: -32px; }
 }
 
-@media (max-width: 768px) {
-  .ti-steps__grid { grid-template-columns: minmax(0, 1fr); }
-  .ti-hero__stats { display: grid; grid-template-columns: 1fr 1fr; }
-  .ti-stat { min-width: 0; }
-  /* Кавычка мельче на узких экранах */
-  .ti-callout::before { width: 72px; height: 60px; top: -32px; }
+/* ≤767 (640): .t-page-title переключается на 28/34 при 640; шаг 18/22 + текст 14/18, паддинг 26/20;
+   блок-заголовки 24/32; баннер заголовок 28/34, подзаг 14/18.
+   Блоки картинка+текст: картинка узкой полосой слева, gap 40. */
+@media (max-width: 767px) {
+  .ti-step__title { font-size: 18px; line-height: 22px; }
+  .ti-step__text { font-size: 14px; line-height: 18px; }
+  .ti-step { padding: 26px 26px 20px; }
+  .ti-block__title { font-size: 24px; line-height: 32px; }
+  .ti-factors,
+  .ti-accept { grid-template-columns: minmax(0, 0.52fr) minmax(0, 1fr); gap: 40px; }
+  .ti-call__title { font-size: 28px; line-height: 34px; }
+  .ti-call__sub { font-size: 14px; line-height: 18px; }
 }
 
-@media (max-width: 640px) {
-  .ti-hero__inner {
-    padding-bottom: 28px;
-  }
-  .ti-hero__top {
-    gap: 20px;
-  }
-  .ti-hero__aside {
-    gap: 20px;
-  }
-  .ti-hero__stats {
-    margin-top: 32px;
-    gap: 10px;
-  }
-  .ti-stat .liquid-glass__content {
-    padding: 16px 10px;
-  }
-  .ti-steps__grid {
-    gap: 18px;
-  }
-  .ti-step {
-    gap: 8px;
-  }
+/* ≤639 (480/390): зазор секций 80; .t-page-title остаётся 28/34 до 390 и затем 24/30;
+   шаги в одну колонку;
+   баннер заголовок 24/30. Блоки «что влияет» / «мы готовы принять» — беж-карточка
+   без фото (по макету 480: stone-beige, radius 30, паддинг 20), картинка скрыта. */
+@media (max-width: 639px) {
+  .trade-in { --section-space: 80px; }
+  .ti-steps__grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .ti-call__title { font-size: 24px; line-height: 30px; }
   .ti-factors,
   .ti-accept {
-    gap: 24px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+    background: var(--color-stone-beige-200, #E4DFDB);
+    border-radius: 30px;
+    padding: 20px;
   }
-  .ti-block__body {
-    gap: 16px;
-  }
-  .ti-call {
-    gap: 20px;
-  }
+  .ti-factors__media,
+  .ti-accept__media { display: none; }
 }
 
-@media (max-width: 480px) {
-  .ti-hero__stats {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .ti-stat .liquid-glass__content {
-    align-items: flex-start;
-    text-align: left;
-  }
-  .ti-step__badge {
-    left: 22px;
-  }
-  .ti-call .btn {
-    width: 100%;
-  }
+/* ≤479 (390): у беж-карточки радиус 16; callout 18/24 и переносится по словам. */
+@media (max-width: 479px) {
+  .ti-factors,
+  .ti-accept { border-radius: 16px; }
+  .ti-callout { font-size: 18px; line-height: 24px; }
+  .ti-callout .reg,
+  .ti-callout .bold { white-space: normal; }
 }

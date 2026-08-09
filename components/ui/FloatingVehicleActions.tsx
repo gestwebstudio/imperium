@@ -54,12 +54,13 @@ function ActionCount({
 }
 
 export function FloatingVehicleActions() {
-  const { favoriteCount, comparisonCount } = useVehicleActions();
+  const { favoriteCount, comparisonCount, storageReady } = useVehicleActions();
 
   return (
     <aside
-      className="floating-vehicle-actions"
+      className={`floating-vehicle-actions${storageReady ? "" : " is-storage-pending"}`}
       aria-label="Сохранённые автомобили"
+      aria-busy={!storageReady}
     >
       <ActionCount
         count={favoriteCount}

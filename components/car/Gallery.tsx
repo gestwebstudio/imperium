@@ -3,7 +3,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowIcon } from "@/components/icons";
 import { Button } from "@/components/ui/Button";
-import { GalleryModal, type GalleryPhoto } from "./GalleryModal";
+import {
+  GalleryModal,
+  type GalleryModalHandle,
+  type GalleryPhoto,
+} from "./GalleryModal";
 
 /** Бесконечная карусель: центр — крупно и без прозрачности, боковые — меньше и 50%.
    При переходе соседний кадр «приезжает» в центр (растёт + проявляется). */
@@ -28,6 +32,7 @@ export function Gallery({ photos, alt }: GalleryProps) {
   const trackRef = useRef<HTMLDivElement>(null);
   const stepRef = useRef(0);
   const busy = useRef(false);
+  const modalRef = useRef<GalleryModalHandle>(null);
 
   const measure = useCallback(() => {
     const track = trackRef.current;
@@ -83,6 +88,20 @@ export function Gallery({ photos, alt }: GalleryProps) {
               <div
                 key={offset}
                 className={`car-gallery__slot${isCenter ? " is-center" : ""}`}
+                onClick={isCenter ? () => modalRef.current?.open() : undefined}
+                role={isCenter ? "button" : undefined}
+                tabIndex={isCenter ? 0 : undefined}
+                aria-label={isCenter ? "Открыть все фото" : undefined}
+                onKeyDown={
+                  isCenter
+                    ? (e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          modalRef.current?.open();
+                        }
+                      }
+                    : undefined
+                }
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -95,7 +114,7 @@ export function Gallery({ photos, alt }: GalleryProps) {
           })}
         </div>
 
-        <GalleryModal photos={photos} alt={alt} />
+        <GalleryModal ref={modalRef} photos={photos} alt={alt} />
 
         <Button
           bare

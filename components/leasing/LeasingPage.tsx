@@ -1,10 +1,20 @@
 import type { Car } from "@/lib/cars";
 import { Badge } from "@/components";
-import { Button } from "@/components/ui/Button";
 import { GlassSurface } from "@/components/ui/GlassSurface";
 import { Crumbs } from "@/components/ui/Crumbs";
+import { LeadModal } from "@/components/ui/LeadModal";
 import { CarsSection } from "@/components/home/CarsSection";
 import { Contacts } from "@/components/home/Contacts";
+
+const LEASING_MODAL = {
+  title: "Расчёт лизинга",
+  description:
+    "Оставьте контакты — менеджер подберёт программу под ваш бюджет и рассчитает ежемесячный платёж.",
+  submitLabel: "Отправить заявку",
+  successTitle: "Заявка принята",
+  successText:
+    "Менеджер Imperium Motors свяжется с вами и подготовит индивидуальный расчёт лизинга.",
+} as const;
 
 /* Данные страницы Лизинг (тексты и стили — из макета 812:8593). Разметка/кит — как у Trade-in. */
 const HERO_STATS = [
@@ -71,42 +81,44 @@ export function LeasingPage({ cars }: { cars: Car[] }) {
                 Подберём программу для физических лиц, ИП и бизнеса. Гибкие
                 условия, прозрачные расчёты и полное сопровождение сделки.
               </p>
-              <Button variant="primary-surface" size="l" className="ti-hero__cta">
-                Получить предложение
-              </Button>
+              <LeadModal
+                {...LEASING_MODAL}
+                triggerLabel="Получить предложение"
+                triggerClassName="ti-hero__cta"
+              />
             </div>
-          </div>
-        </div>
-
-        {/* Преимущества — 4 стеклянные карточки, только заголовок (короче на 30px);
-            отступы вокруг блока те же, что на trade-in (см. leasing.css) */}
-        <div className="ti-hero__stats-wrap home-wrap">
-          <div className="ti-hero__stats">
-            {HERO_STATS.map((s) => (
-              <GlassSurface
-                key={s}
-                className="ti-stat"
-                borderRadius={30}
-                height="auto"
-                backgroundOpacity={0.06}
-                saturation={1.02}
-                lightAngle={-45}
-                lightIntensity={35}
-                refraction={100}
-                depth={75}
-                frost={3}
-                splay={70}
-              >
-                <span className="ti-stat__value">{s}</span>
-              </GlassSurface>
-            ))}
           </div>
         </div>
       </section>
 
+      {/* Преимущества — 4 стеклянные карточки, только заголовок (короче на 30px);
+          ряд-сиблинг наезжает половиной карточки на нижнюю кромку hero */}
+      <div className="ti-hero__stats-wrap home-wrap">
+        <div className="ti-hero__stats">
+          {HERO_STATS.map((s) => (
+            <GlassSurface
+              key={s}
+              className="ti-stat"
+              borderRadius={30}
+              height="auto"
+              backgroundOpacity={0.06}
+              saturation={1.02}
+              lightAngle={-45}
+              lightIntensity={35}
+              refraction={100}
+              depth={75}
+              frost={3}
+              splay={70}
+            >
+              <span className="ti-stat__value">{s}</span>
+            </GlassSurface>
+          ))}
+        </div>
+      </div>
+
       {/* ---------- Как оформить лизинг ---------- */}
       <section className="home-wrap ti-steps">
-        <h2 className="ti-section-title">Как оформить лизинг</h2>
+        <h2 className="ti-section-title t-page-title">Как оформить лизинг</h2>
         <div className="ti-steps__grid">
           {STEPS.map((s) => (
             <article className="ti-step" key={s.stage}>
@@ -124,7 +136,7 @@ export function LeasingPage({ cars }: { cars: Car[] }) {
       <section className="home-wrap ti-factors">
         <div className="ti-factors__media">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/services/podbor.webp" alt="Условия лизинга" />
+          <img src="/images/services/leasing.png" alt="Условия лизинга" />
         </div>
         <div className="ti-block__body ti-factors__body">
           <h2 className="ti-block__title">
@@ -179,15 +191,21 @@ export function LeasingPage({ cars }: { cars: Car[] }) {
       <section className="home-wrap">
         <div className="ti-call">
           <div className="ti-call__text">
-            <h2 className="ti-call__title">Позвоните нам</h2>
+            <h2 className="ti-call__title">
+              Рассчитайте выгодные условия лизинга
+            </h2>
             <p className="ti-call__sub">
-              Круглосуточная поддержка для клиентов автосалона: эвакуация, замена
-              колеса, доставка топлива и выезд механика.
+              Оставьте заявку на расчёт. Менеджер подберёт программу под ваш
+              бюджет, рассчитает ежемесячный платёж и график погашения.
             </p>
           </div>
-          <Button variant="primary-surface" inverse size="m">
-            Подробнее
-          </Button>
+          <LeadModal
+            {...LEASING_MODAL}
+            triggerLabel="Рассчитать лизинг"
+            triggerVariant="primary-surface"
+            triggerInverse
+            triggerSize="m"
+          />
         </div>
       </section>
 

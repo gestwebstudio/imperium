@@ -4,10 +4,16 @@ import { useEffect, useRef, useState, type MouseEvent } from "react";
 import Link from "next/link";
 import { Alert, Button as HeroButton } from "@heroui/react";
 import "./layout.css";
-import { PhoneIcon, ArrowDiagonalIcon, CloseIcon } from "@/components/icons";
+import {
+  PhoneIcon,
+  ArrowDiagonalIcon,
+  ChevronDownIcon,
+  CloseIcon,
+} from "@/components/icons";
 import { ButtonLink } from "@/components/ui/Button";
 import { GlassSurface } from "@/components/ui/GlassSurface";
 import { MobileMenu } from "./MobileMenu";
+import { ServicesMega } from "./ServicesMega";
 
 const PHONE_NUMBER = "+7 499 704-14-44";
 
@@ -41,12 +47,11 @@ function useHideOnScroll() {
     let ticking = false;
 
     const TOLERANCE = 8; // порог, чтобы дрожание/отскок не переключали шапку
-    const HIDE_AFTER = 120; // у верха шапка стоит на месте; headroom — только дальше
     const update = () => {
       ticking = false;
       const y = Math.max(0, window.scrollY);
       if (Math.abs(y - lastY) < TOLERANCE) return; // игнор мелких движений
-      if (y <= HIDE_AFTER) setHidden(false); // у верха/начале скролла — всегда видима
+      if (y <= 8) setHidden(false); // у верха — всегда видима
       else if (y > lastY) setHidden(true); // вниз — прячем
       else setHidden(false); // вверх — показываем
       lastY = y;
@@ -66,26 +71,15 @@ function useHideOnScroll() {
   return hidden;
 }
 
-function ChevronDown() {
-  return (
-    <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M2.5 4.5 6 8l3.5-3.5"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-export function Header() {
+export function Header({ flowWithPage = false }: { flowWithPage?: boolean }) {
   const hidden = useHideOnScroll();
   const [copyStatus, setCopyStatus] = useState<"idle" | "success" | "error">(
     "idle",
   );
   const copyStatusTimer = useRef<number | null>(null);
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const servicesRef = useRef<HTMLDivElement | null>(null);
+  const servicesTriggerRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     return () => {
@@ -94,6 +88,34 @@ export function Header() {
       }
     };
   }, []);
+
+  // Закрытие выпадайки услуг: клик вне, Escape, скролл.
+  useEffect(() => {
+    if (!servicesOpen) return;
+
+    const onPointer = (e: PointerEvent) => {
+      const t = e.target as Node;
+      if (
+        !servicesRef.current?.contains(t) &&
+        !servicesTriggerRef.current?.contains(t)
+      ) {
+        setServicesOpen(false);
+      }
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setServicesOpen(false);
+    };
+    const onScroll = () => setServicesOpen(false);
+
+    document.addEventListener("pointerdown", onPointer);
+    document.addEventListener("keydown", onKey);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      document.removeEventListener("pointerdown", onPointer);
+      document.removeEventListener("keydown", onKey);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [servicesOpen]);
 
   function showCopyStatus(status: "success" | "error") {
     setCopyStatus(status);
@@ -139,7 +161,11 @@ export function Header() {
   }
 
   return (
-    <header className={`site-header${hidden ? " is-hidden" : ""}`}>
+    <header
+      className={`site-header${hidden ? " is-hidden" : ""}${
+        flowWithPage ? " is-flowing" : ""
+      }`}
+    >
       <GlassSurface
         className="site-header__bar"
         height="var(--site-header-height)"
@@ -155,11 +181,18 @@ export function Header() {
         <MobileMenu />
 
         <nav className="site-header__nav">
-          <a href="#">
+          <button
+            type="button"
+            ref={servicesTriggerRef}
+            className={`site-header__nav-trigger${servicesOpen ? " is-open" : ""}`}
+            aria-expanded={servicesOpen}
+            aria-controls="services-mega-panel"
+            onClick={() => setServicesOpen((v) => !v)}
+          >
             Услуги
-            <ChevronDown />
-          </a>
-          <a href="#">О салоне</a>
+            <ChevronDownIcon />
+          </button>
+          <Link href="/about">О салоне</Link>
           <Link href="/contacts">Контакты</Link>
         </nav>
 
@@ -183,6 +216,7 @@ export function Header() {
           </ButtonLink>
           <ButtonLink
             href="/catalog"
+            size="m"
             variant="primary-cta"
             className="site-header__cta"
             ctaIcon={<ArrowDiagonalIcon />}
@@ -191,6 +225,13 @@ export function Header() {
           </ButtonLink>
         </div>
       </GlassSurface>
+      <div ref={servicesRef}>
+        <ServicesMega
+          open={servicesOpen}
+          onClose={() => setServicesOpen(false)}
+          id="services-mega-panel"
+        />
+      </div>
       <Alert
         status={copyStatus === "error" ? "danger" : "success"}
         className={`header-copy-alert${

@@ -3,10 +3,6 @@
 import type { Key } from "react";
 import { Dropdown } from "@heroui/react";
 import { ArrowIcon } from "@/components/icons";
-import {
-  ButtonRippleLayer,
-  handleButtonRipplePointerDown,
-} from "@/components/ui/Button";
 
 /** react-aria Selection без прямой зависимости на пакет. */
 type Selection = "all" | Set<Key>;
@@ -15,9 +11,9 @@ export type SortKey = "popular" | "price-asc" | "price-desc";
 
 /** Пункты сортировки (порядок и тексты — по ТЗ). */
 const OPTIONS: { key: SortKey; label: string }[] = [
-  { key: "price-asc", label: "По возрастанию цены" },
-  { key: "price-desc", label: "По убыванию цены" },
-  { key: "popular", label: "Популярные" },
+  { key: "popular", label: "Сначала популярные" },
+  { key: "price-asc", label: "Сначала дешевле" },
+  { key: "price-desc", label: "Сначала дороже" },
 ];
 
 const labelOf = (key: SortKey) =>
@@ -29,7 +25,7 @@ export type SortDropdownProps = {
 };
 
 /**
- * Блок сортировки: собственный дизайн триггера («Сортировать по: …»), а сама
+ * Блок сортировки: собственный дизайн триггера, а сама
  * всплывашка — HeroUI Dropdown, стилизованная под кит (см. catalog.css).
  */
 export function SortDropdown({ value, onChange }: SortDropdownProps) {
@@ -43,10 +39,7 @@ export function SortDropdown({ value, onChange }: SortDropdownProps) {
     <Dropdown>
       <Dropdown.Trigger
         className="ui-button ui-button--bare cat-sort"
-        onPointerDown={handleButtonRipplePointerDown}
       >
-        <ButtonRippleLayer />
-        <span className="cat-sort__label">Сортировать по:</span>
         <span className="cat-sort__value">
           {labelOf(value)}
           <ArrowIcon className="cat-sort__arrow" width={8} height={8} />

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { FloatingVehicleActions } from "@/components/ui/FloatingVehicleActions";
+import { SiteChrome } from "@/components/layout/SiteChrome";
+import { TypographyGuard } from "@/components/ui/TypographyGuard";
 import { VehicleActionsProvider } from "@/components/ui/VehicleActionsContext";
+import { getAllCars } from "@/lib/cars";
 
 export const metadata: Metadata = {
   title: "Imperium Motors — Автосалон",
@@ -16,6 +16,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const validVehicleIds = getAllCars().map((car) => car.id);
+
   return (
     <html lang="ru">
       <head>
@@ -31,11 +33,9 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <VehicleActionsProvider>
-          <Header />
-          {children}
-          <FloatingVehicleActions />
-          <Footer />
+        <VehicleActionsProvider validVehicleIds={validVehicleIds}>
+          <SiteChrome>{children}</SiteChrome>
+          <TypographyGuard />
         </VehicleActionsProvider>
       </body>
     </html>

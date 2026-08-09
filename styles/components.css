@@ -75,9 +75,17 @@
   outline: none;
   transition: background-color .15s ease;
 }
-.ui-checkbox__content[data-hovered],
-.ui-checkbox__content:hover {
+.ui-checkbox__content[data-hovered] {
   background: var(--color-warm-taupe-100, #F2EEEA);
+}
+.ui-checkbox[data-focus-visible="true"] .ui-checkbox__content,
+.ui-checkbox__content[data-focus-visible="true"] {
+  box-shadow: inset 0 0 0 2px var(--color-heritage-green-400, #4E7B60);
+}
+@media (hover: hover) and (pointer: fine) {
+  .ui-checkbox__content:hover {
+    background: var(--color-warm-taupe-100, #F2EEEA);
+  }
 }
 .ui-checkbox__control {
   flex: none;
@@ -123,32 +131,36 @@
   right: 0;
   width: 56px;
   height: 96px;
-  padding: 16px;
+  padding: 8px;
   border-radius: 16px 0 0 16px;
   background: var(--color-white, #FFFFFF);
   box-shadow: 6px 4px 50px rgba(180, 170, 163, .45);
   color: var(--color-warm-taupe-400, #8F8579);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 0;
 }
 @supports (top: round(nearest, 1px, 1px)) {
   .floating-vehicle-actions {
     top: round(nearest, calc(50dvh - 48px), 1px);
   }
 }
+@media (max-width: 1200px) {
+  .floating-vehicle-actions {
+    display: none;
+  }
+}
 .floating-vehicle-actions__item {
   position: relative;
-  display: block;
-  width: 24px;
-  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
   border-radius: 6px;
   color: inherit;
   text-decoration: none;
   transition: color .15s ease;
-}
-.floating-vehicle-actions__item[href]:hover {
-  color: var(--color-heritage-green-500, #294434);
 }
 .floating-vehicle-actions__item[href]:focus-visible {
   outline: 2px solid var(--color-heritage-green-400, #4E7B60);
@@ -162,9 +174,18 @@
 .floating-vehicle-actions__bubble {
   position: absolute;
   z-index: 1;
-  top: -6px;
-  right: -8px;
+  top: 2px;
+  right: 0;
   pointer-events: none;
+}
+.floating-vehicle-actions.is-storage-pending {
+  visibility: hidden;
+  pointer-events: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .floating-vehicle-actions__item[href]:hover {
+    color: var(--color-heritage-green-500, #294434);
+  }
 }
 .floating-vehicle-actions__status {
   position: absolute;
@@ -197,6 +218,8 @@
 .btn {
   overflow: hidden;
   display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
@@ -210,7 +233,6 @@
   text-decoration: none;
   transition: filter .15s ease, background-color .15s ease, transform .04s ease;
 }
-.btn:hover  { filter: brightness(0.96); }
 .btn:active { transform: translateY(1px); filter: brightness(0.92); }
 .btn:disabled, .btn[aria-disabled="true"] { opacity: .5; pointer-events: none; }
 /* содержимое над волной */
@@ -237,6 +259,15 @@
 @keyframes btn-ripple {
   to { transform: scale(4); opacity: 0; }
 }
+@media (prefers-reduced-motion: reduce) {
+  .ui-button__ripple-layer .ripple {
+    display: none;
+    animation: none;
+  }
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover { filter: brightness(0.96); }
+}
 
 /* --- Sizes --- */
 .btn--s { height: 28px; padding: 0 12px; font-size: 14px; line-height: 18px; }
@@ -260,7 +291,7 @@
 .btn--primary-surface  { background: var(--color-heritage-green-500, #294434); color: var(--color-white, #FFFFFF); }
 .btn--primary-flat     { background: var(--color-heritage-green-100, #E1EAE5); color: var(--color-heritage-green-500, #294434); }
 .btn--primary-outlined { background: transparent; border-color: var(--color-heritage-green-500, #294434); color: var(--color-heritage-green-500, #294434); }
-.btn--primary-outlined:is(:hover, :focus-visible) {
+.btn--primary-outlined:focus-visible {
   background: var(--color-heritage-green-500, #294434);
   color: var(--color-white, #FFFFFF);
   filter: none;
@@ -273,6 +304,7 @@
   --cta-icon-size: 16px;
   --cta-label-shift: 8px;
   height: var(--cta-control-size);
+  border: 0;
   padding: 0 0 0 22px;
   gap: 12px;
   font-size: 18px;
@@ -300,10 +332,10 @@
   --cta-control-size: 36px;
   --cta-pressed-size: 116px;
   --cta-arrow-shift: -7px;
-  --cta-icon-size: 14px;
+  --cta-icon-size: 12px;
   --cta-label-shift: 6px;
-  padding: 0 0 0 14px;
-  gap: 10px;
+  padding: 0 0 0 18px;
+  gap: 12px;
   font-size: 16px;
   line-height: 20px;
 }
@@ -334,16 +366,6 @@
     height 220ms cubic-bezier(.22, 1, .36, 1),
     background-color .15s ease;
 }
-.btn--primary-cta:hover {
-  background: var(--color-warm-taupe-100, #F2EEEA);
-  color: var(--color-white, #FFFFFF);
-  filter: none;
-}
-.btn--primary-cta:hover::before {
-  width: calc(100% + 10px);
-  height: var(--cta-pressed-size);
-  background: var(--color-heritage-green-500, #294434);
-}
 .btn--primary-cta:active {
   filter: none;
   transform: none;
@@ -362,9 +384,6 @@
 .btn--primary-cta .btn__label {
   transition: transform 220ms cubic-bezier(.22, 1, .36, 1);
 }
-.btn--primary-cta:hover .btn__label {
-  transform: translateX(var(--cta-label-shift));
-}
 .btn--primary-cta .btn__cta-icon svg {
   display: block;
   width: var(--cta-icon-size);
@@ -372,8 +391,28 @@
   fill: currentColor;
   transition: transform 220ms cubic-bezier(.22, 1, .36, 1);
 }
-.btn--primary-cta:hover .btn__cta-icon svg {
-  transform: translateX(var(--cta-arrow-shift));
+@media (hover: hover) and (pointer: fine) {
+  .btn--primary-outlined:hover {
+    background: var(--color-heritage-green-500, #294434);
+    color: var(--color-white, #FFFFFF);
+    filter: none;
+  }
+  .btn--primary-cta:hover {
+    background: var(--color-warm-taupe-100, #F2EEEA);
+    color: var(--color-white, #FFFFFF);
+    filter: none;
+  }
+  .btn--primary-cta:hover::before {
+    width: calc(100% + 10px);
+    height: var(--cta-pressed-size);
+    background: var(--color-heritage-green-500, #294434);
+  }
+  .btn--primary-cta:hover .btn__label {
+    transform: translateX(var(--cta-label-shift));
+  }
+  .btn--primary-cta:hover .btn__cta-icon svg {
+    transform: translateX(var(--cta-arrow-shift));
+  }
 }
 
 /* --- Variants: Secondary --- */
@@ -385,9 +424,15 @@
 .btn--inverse.btn--primary-surface  { background: var(--color-white, #FFFFFF); color: var(--color-carbon-black-500, #1B1E1D); }
 .btn--inverse.btn--primary-flat     { background: rgba(255,255,255,.30); color: var(--color-white, #FFFFFF); }
 .btn--inverse.btn--primary-outlined { background: transparent; border-color: var(--color-white, #FFFFFF); color: var(--color-white, #FFFFFF); }
-.btn--inverse.btn--primary-outlined:is(:hover, :focus-visible) {
+.btn--inverse.btn--primary-outlined:focus-visible {
   background: var(--color-white, #FFFFFF);
   color: var(--color-heritage-green-500, #294434);
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn--inverse.btn--primary-outlined:hover {
+    background: var(--color-white, #FFFFFF);
+    color: var(--color-heritage-green-500, #294434);
+  }
 }
 
 
@@ -402,6 +447,7 @@
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
+  min-height: 0;
   padding: 5px 9px;
   border: 1px solid transparent;
   border-radius: 21px;
@@ -410,9 +456,19 @@
   font-size: 18px;
   line-height: 24px;
   white-space: nowrap;
+  overflow: hidden;
 }
 .badge--l { padding: 5px 9px; font-size: 18px; line-height: 24px; }
 .badge--m { padding: 3px 7px; font-size: 16px; line-height: 20px; }
+.badge--s { padding: 3px 7px; font-size: 14px; line-height: 18px; }
+.badge--xs { padding: 3px 5px; font-size: 10px; line-height: 13px; }
+
+@media (max-width: 768px) {
+  .badge.badge--responsive { padding: 3px 7px; font-size: 14px; line-height: 18px; }
+}
+@media (max-width: 390px) {
+  .badge.badge--responsive { padding: 3px 5px; font-size: 10px; line-height: 13px; }
+}
 /* --- Surface (заливка) --- */
 .badge--info    { background: var(--color-blue-100, #DCDFEF);   color: var(--color-blue-500, #5262C0); }
 .badge--error   { background: var(--color-red-100, #EFDCDD);    color: var(--color-red-500, #BB4545); }
@@ -424,6 +480,91 @@
 .badge--outlined.badge--error   { border-color: var(--color-red-500, #BB4545); }
 .badge--outlined.badge--warning { border-color: var(--color-yellow-500, #DDB103); }
 .badge--outlined.badge--success { border-color: var(--color-green-500, #55AB4D); }
+
+
+/* ============================================================
+   Breadcrumbs — HeroUI structure styled with project tokens
+   ============================================================ */
+.ui-crumbs,
+.ui-crumbs ol {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ui-crumbs {
+  margin-bottom: 10px;
+}
+.ui-crumbs li {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 18px;
+}
+.ui-crumbs__item {
+  padding: 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 14px;
+  font-weight: var(--font-weight-regular, 400);
+  line-height: 18px;
+  color: var(--color-foreground-muted, #71717A);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color .15s ease;
+}
+.ui-crumbs__item > .breadcrumbs__link {
+  padding-inline: 2px;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+.ui-crumbs__item[href]:hover,
+.ui-crumbs__item > .breadcrumbs__link:hover,
+.ui-crumbs__item--current {
+  color: var(--color-foreground-link, #18181B);
+}
+.ui-crumbs__item--current { cursor: default; }
+.ui-crumbs .breadcrumbs__separator {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  color: var(--color-foreground-muted, #71717A);
+  transform: rotate(180deg);
+}
+
+@media (max-width: 640px) {
+  .ui-crumbs {
+    margin-bottom: 6px;
+  }
+}
+
+@media (max-width: 390px) {
+  .ui-crumbs,
+  .ui-crumbs ol,
+  .ui-crumbs li {
+    gap: 2px;
+    height: 14px;
+  }
+  .ui-crumbs {
+    margin-bottom: 2px;
+  }
+  .ui-crumbs.ui-crumbs--compact-mobile {
+    margin-bottom: 2px;
+  }
+  .ui-crumbs .ui-crumbs__item {
+    font-size: 10px;
+    line-height: 14px;
+  }
+  .ui-crumbs .breadcrumbs__separator {
+    width: 8px;
+    height: 8px;
+  }
+}
 
 
 /* ============================================================
@@ -451,7 +592,6 @@
 .tag--card { background: rgba(143,133,121,.2); color: var(--color-heritage-green-500, #294434); } /* warm-taupe-400 @20% */
 .tag--card.tag--l { padding: 4px 12px; font-size: 16px; line-height: 20px; }
 .tag--card.tag--m { padding: 3px 8px; font-size: 14px; line-height: 18px; }
-.tag--card:hover { background: rgba(143,133,121,.4); }
 /* --- Filter (удаляемый) --- */
 .tag--filter {
   gap: 6px;
@@ -463,7 +603,10 @@
   cursor: pointer;
 }
 .tag--filter.tag--m { padding: 3px 8px; }
-.tag--filter:hover { background: rgba(144,138,134,.28); }
+@media (hover: hover) and (pointer: fine) {
+  .tag--card:hover { background: rgba(143,133,121,.4); }
+  .tag--filter:hover { background: rgba(144,138,134,.28); }
+}
 .tag__close { flex: none; width: 10px; height: 10px; display: inline-flex; align-items: center; justify-content: center; color: currentColor; }
 .tag__close svg { display: block; width: 100%; height: 100%; }
 
@@ -535,7 +678,6 @@
 }
 .ui-button.wishlist > svg { position: absolute; width: 24px; height: 24px; display: block; fill: currentColor; transition: opacity .12s ease; }
 .wishlist .icon-fill { opacity: 0; }
-.wishlist:hover .icon-stroke { opacity: .6; }
 .wishlist.is-active { color: var(--color-red-500, #BB4545); }
 .wishlist.is-active .icon-stroke { opacity: 0; }
 .wishlist.is-active .icon-fill   { opacity: 1; }
@@ -558,7 +700,8 @@
   pointer-events: none;
   transition: opacity .12s ease;
 }
-.wishlist:hover .wishlist__tip { opacity: 1; }
+.wishlist[data-focus-visible="true"] .wishlist__tip,
+.wishlist:focus-visible .wishlist__tip { opacity: 1; }
 
 
 /* ============================================================
@@ -583,11 +726,9 @@
 }
 .ui-button.compare > svg { position: absolute; width: 24px; height: 24px; display: block; fill: currentColor; transition: opacity .12s ease; }
 .compare .icon-check { opacity: 0; }
-.compare:hover .icon-add { opacity: .6; }
 .compare.is-active { color: var(--color-heritage-green-500, #294434); }
 .compare.is-active .icon-add   { opacity: 0; }
 .compare.is-active .icon-check { opacity: 1; }
-.compare.is-active:hover .icon-check { opacity: .6; }
 .ui-button > .compare__tip {
   position: absolute;
   top: 28px;
@@ -606,7 +747,30 @@
   pointer-events: none;
   transition: opacity .12s ease;
 }
-.compare:hover .compare__tip { opacity: 1; }
+.compare[data-focus-visible="true"] .compare__tip,
+.compare:focus-visible .compare__tip { opacity: 1; }
+
+.wishlist.is-storage-pending > svg,
+.compare.is-storage-pending > svg,
+.wishlist.is-storage-pending > .wishlist__tip,
+.compare.is-storage-pending > .compare__tip {
+  opacity: 0 !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .wishlist:hover .icon-stroke { opacity: .6; }
+  .wishlist:hover .wishlist__tip { opacity: 1; }
+  .compare:hover .icon-add { opacity: .6; }
+  .compare.is-active:hover .icon-check { opacity: .6; }
+  .compare:hover .compare__tip { opacity: 1; }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .wishlist__tip,
+  .compare__tip {
+    display: none;
+  }
+}
 
 
 /* ============================================================
@@ -681,10 +845,6 @@
   background: rgba(228,223,219,.4); /* stone-beige-200 @40% */
   transition: background .2s ease, box-shadow .2s ease;
 }
-.brand-card:hover {
-  background: rgba(255,255,255,.5);
-  box-shadow: 6px 4px 50px 0 rgba(205,197,190,.5);
-}
 .brand-card__image {
   width: min(270px, 100%);
   height: 106px;
@@ -698,10 +858,6 @@
   max-height: 100%;
   object-fit: contain;
   display: block;
-}
-.brand-card:hover .brand-card__image {
-  width: min(310px, 100%);
-  height: 122px;
 }
 
 
@@ -720,10 +876,6 @@
   overflow: hidden;
   transition: background .2s ease, box-shadow .2s ease;
 }
-.body-card:hover {
-  background: rgba(255,255,255,.5);
-  box-shadow: 6px 4px 50px 0 rgba(205,197,190,.5);
-}
 .body-card__label {
   position: absolute;
   top: 15px;
@@ -738,11 +890,6 @@
   pointer-events: none;
   transition: font-size .2s ease, line-height .2s ease, color .2s ease;
 }
-.body-card:hover .body-card__label {
-  font-size: var(--fs-36);
-  line-height: 42px;
-  color: var(--color-warm-taupe-200, #D5CCC4);
-}
 .body-card__img {
   position: absolute;
   left: 0;
@@ -755,13 +902,33 @@
   object-position: bottom;
   transition: transform .2s ease;
 }
-.body-card:hover .body-card__img { transform: scale(1.04); }
+@media (hover: hover) and (pointer: fine) {
+  .brand-card:hover {
+    background: rgba(255,255,255,.5);
+    box-shadow: 6px 4px 50px 0 rgba(205,197,190,.5);
+  }
+  .brand-card:hover .brand-card__image {
+    width: min(310px, 100%);
+    height: 122px;
+  }
+  .body-card:hover {
+    background: rgba(255,255,255,.5);
+    box-shadow: 6px 4px 50px 0 rgba(205,197,190,.5);
+  }
+  .body-card:hover .body-card__label {
+    font-size: var(--fs-36);
+    line-height: 42px;
+    color: var(--color-warm-taupe-200, #D5CCC4);
+  }
+  .body-card:hover .body-card__img { transform: scale(1.04); }
+}
 
 
 /* ============================================================
    Service Image Card — карточка услуги с изображением
    ============================================================ */
 .image-service-card {
+  position: relative;
   min-width: 0;
   min-height: 634px;
   padding: clamp(20px, 1.563vw, 30px);
@@ -772,6 +939,29 @@
   flex-direction: column;
   gap: 30px;
   transition: background-color 220ms cubic-bezier(.22, 1, .36, 1);
+}
+/* Ссылка на всю карточку (стрелка — декоративная). */
+.image-service-card__link {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+}
+/* Оверлей-кнопка на всю карточку (открывает окно-заявку). */
+.image-service-card__overlay-btn {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  cursor: pointer;
+}
+.image-service-card__overlay-btn:focus-visible {
+  outline: 2px solid var(--color-heritage-green-500, #294434);
+  outline-offset: 3px;
 }
 .image-service-card:is(:hover, :focus-within) {
   background: var(--color-white, #FFFFFF);
@@ -854,6 +1044,7 @@
    News Card — дефолтная карточка новости
    ============================================================ */
 .news-card {
+  position: relative;
   width: min(100%, 435px);
   box-sizing: border-box;
   padding: 26px;
@@ -864,6 +1055,18 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+/* Оверлей: клик по всей карточке ведёт на новость */
+.news-card__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+}
+/* Стрелка остаётся кликабельной поверх оверлея (та же ссылка) */
+.news-card__action-wrap {
+  position: relative;
+  z-index: 2;
 }
 .news-card__media {
   position: relative;
@@ -941,6 +1144,19 @@
   }
 }
 
+/* Sheet is portalled to body and always sits above the fixed site header. */
+.ui-sheet-layer {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-sheet, 1000);
+  isolation: isolate;
+  pointer-events: none;
+}
+
+.ui-sheet-layer > * {
+  pointer-events: auto;
+}
+
 
 /* ============================================================
    Car Card — карточка автомобиля (композиция компонентов кита)
@@ -969,12 +1185,78 @@
   outline: 2px solid var(--color-heritage-green-500, #294434);
   outline-offset: 3px;
 }
+/* Оверлей-кнопка на всю карточку (авто без страницы — открывает окно-заявку) */
+.car-card__overlay-btn {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  cursor: pointer;
+}
+.car-card__overlay-btn:focus-visible {
+  outline: 2px solid var(--color-heritage-green-500, #294434);
+  outline-offset: 3px;
+}
 .car-card__main { display: flex; flex-direction: column; gap: 10px; width: 100%; }
 .car-card__content { display: flex; flex-direction: column; gap: 16px; width: 100%; }
 .car-card__top { display: flex; align-items: center; justify-content: space-between; }
 .car-card__brand { height: 24px; display: flex; align-items: center; }
 .car-card__brand img { height: 24px; width: auto; max-width: 90px; object-fit: contain; display: block; }
-.car-card__actions { position: relative; z-index: 2; display: flex; align-items: center; gap: 16px; }
+.car-card__actions {
+  --car-action-icon-size: 24px;
+  --car-action-gap: 16px;
+  --car-action-hit-size: 40px;
+  --car-action-edge-shift: 0px;
+  position: relative;
+  z-index: 2;
+  flex: none;
+  width: calc(var(--car-action-icon-size) * 2 + var(--car-action-gap));
+  height: var(--car-action-icon-size);
+}
+.car-card__actions .wishlist,
+.car-card__actions .compare {
+  position: absolute;
+  top: 50%;
+  min-width: var(--car-action-hit-size);
+  min-height: var(--car-action-hit-size);
+  transform: translateY(-50%);
+}
+.car-card__actions .wishlist {
+  left: calc(
+    var(--car-action-icon-size) + var(--car-action-gap) / 2 -
+      var(--car-action-hit-size) + var(--car-action-edge-shift)
+  );
+}
+.car-card__actions .compare {
+  left: calc(
+    var(--car-action-icon-size) + var(--car-action-gap) / 2 +
+      var(--car-action-edge-shift)
+  );
+}
+.car-card__actions .wishlist > svg {
+  right: auto;
+  left: calc(
+    var(--car-action-hit-size) - var(--car-action-icon-size) -
+      var(--car-action-gap) / 2 - var(--car-action-edge-shift)
+  );
+  transform: none;
+}
+.car-card__actions .compare > svg {
+  right: auto;
+  left: calc(var(--car-action-gap) / 2 - var(--car-action-edge-shift));
+  transform: none;
+}
+.car-card__actions .wishlist:focus-visible,
+.car-card__actions .compare:focus-visible,
+.car-card__actions .wishlist[data-focus-visible="true"],
+.car-card__actions .compare[data-focus-visible="true"] {
+  outline: 2px solid var(--color-heritage-green-400, #4E7B60);
+  outline-offset: 2px;
+}
 .car-card__actions .wishlist:not(.is-active),
 .car-card__actions .compare:not(.is-active) {
   color: var(--color-warm-taupe-300, #B2A79B);
@@ -999,7 +1281,21 @@
 .car-card__photo img { max-width: 100%; max-height: 179px; object-fit: contain; display: block; }
 .car-card__action { display: flex; gap: clamp(12px, 1.25vw, 24px); align-items: flex-end; }
 .car-card__action .price-block { flex: 1 0 0; min-width: 0; }
-.car-card__details-link { z-index: 2; }
+.car-card__details-link {
+  z-index: 2;
+  overflow: visible;
+}
+.car-card__details-link::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 50%;
+  width: max(100%, 44px);
+  height: max(100%, 44px);
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+}
 .car-card__details-link > .btn__icon:has(.car-card__details-icon) { display: none; }
 .car-card__details-icon { display: none; }
 
@@ -1021,7 +1317,10 @@
 .car-card--m .car-card__content { gap: 16px; }
 .car-card--m .car-card__brand,
 .car-card--m .car-card__brand img { height: 20px; }
-.car-card--m .car-card__actions { gap: 16px; }
+.car-card--m .car-card__actions {
+  --car-action-icon-size: 18px;
+  --car-action-gap: 16px;
+}
 .car-card--m .wishlist,
 .car-card--m .compare,
 .car-card--m .ui-button.wishlist > svg,
@@ -1049,7 +1348,10 @@
   .car-card--l .car-card__content { gap: 16px; }
   .car-card--l .car-card__brand,
   .car-card--l .car-card__brand img { height: 20px; }
-  .car-card--l .car-card__actions { gap: 16px; }
+  .car-card--l .car-card__actions {
+    --car-action-icon-size: 18px;
+    --car-action-gap: 16px;
+  }
   .car-card--l .wishlist,
   .car-card--l .compare,
   .car-card--l .ui-button.wishlist > svg,
@@ -1134,20 +1436,12 @@
 }
 
 @media (max-width: 768px) {
-  .floating-vehicle-actions {
-    top: calc(50% - 44px);
-    width: 48px;
-    height: 88px;
-    padding: 12px;
-    border-radius: 14px 0 0 14px;
-  }
-
   .body-card:hover .body-card__img {
     transform: none;
   }
 
   .car-card__actions {
-    gap: 12px;
+    --car-action-gap: 12px;
   }
 
   .car-card__photo {
@@ -1188,23 +1482,8 @@
 }
 
 @media (max-width: 640px) {
-  .btn--m,
-  .btn--l {
-    height: 28px;
-    padding: 0 12px;
-    font-size: 14px;
-    line-height: 18px;
-  }
-
-  .btn--m .btn__icon,
-  .btn--l .btn__icon {
-    width: 12px;
-    height: 12px;
-  }
-
-  .btn--icon.btn--m,
-  .btn--icon.btn--l {
-    width: 28px;
+  .car-card__actions {
+    --car-action-icon-size: 20px;
   }
 
   .badge {
@@ -1242,30 +1521,6 @@
     height: 20px;
   }
 
-  .wishlist__tip,
-  .compare__tip {
-    display: none;
-  }
-
-  .floating-vehicle-actions {
-    top: calc(50% - 40px);
-    width: 44px;
-    height: 80px;
-    padding: 12px;
-    gap: 12px;
-  }
-
-  .floating-vehicle-actions__item,
-  .floating-vehicle-actions__item > svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  .floating-vehicle-actions__bubble {
-    top: -6px;
-    right: -7px;
-  }
-
   .price-block__value,
   .car-card .price-block__value {
     font-size: clamp(22px, 8cqi, 28px);
@@ -1289,7 +1544,8 @@
   }
 
   .car-card__actions {
-    gap: 10px;
+    --car-action-icon-size: 18px;
+    --car-action-gap: 10px;
   }
 
   .car-card .price-block__label {

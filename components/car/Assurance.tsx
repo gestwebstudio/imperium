@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/Button";
+import { ButtonLink } from "@/components/ui/Button";
 
 /**
  * Блок «Страхование / Гарантия / Помощь на дорогах» (макет 639:2747).
@@ -35,14 +35,15 @@ export function Assurance() {
               замена колеса, доставка топлива и выезд механика.
             </p>
           </div>
-          <Button
+          <ButtonLink
+            href="/help-on-roads"
             size="m"
             variant="primary-surface"
             inverse
             className="car-help__btn"
           >
             Подробнее
-          </Button>
+          </ButtonLink>
         </div>
       </div>
     </section>

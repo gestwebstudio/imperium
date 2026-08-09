@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/Button";
 import { Wishlist } from "@/components/ui/Wishlist";
 import { Comparison } from "@/components/ui/Comparison";
+import { LeadModal } from "@/components/ui/LeadModal";
 import { ArrowDiagonalIcon } from "@/components/icons";
 
 /* --- Brand Logo Card --- */
@@ -51,12 +52,26 @@ export function BodyCard({ label, src, className }: BodyCardProps) {
 }
 
 /* --- Service Card with Image --- */
+export type ServiceCardModal = {
+  description: string;
+  submitLabel?: string;
+  successTitle?: string;
+  successText?: string;
+  comment?: boolean;
+  commentLabel?: string;
+  commentPlaceholder?: string;
+  photo?: boolean;
+  photoLabel?: string;
+  photoHint?: string;
+};
 export type ServiceImageCardProps = {
   title: string;
   image: string;
   text: string;
   href?: string;
   className?: string;
+  /** Если задано — вся карточка открывает окно-заявку (заголовок окна = заголовок карточки). */
+  modal?: ServiceCardModal;
 };
 export function ServiceImageCard({
   title,
@@ -64,23 +79,51 @@ export function ServiceImageCard({
   text,
   href = "#contacts",
   className,
+  modal,
 }: ServiceImageCardProps) {
   return (
     <article className={cn("image-service-card", className)}>
+      {modal ? (
+        <LeadModal
+          overlayOnly
+          overlayClassName="image-service-card__overlay-btn"
+          overlayAriaLabel={title}
+          triggerLabel={title}
+          title={title}
+          description={modal.description}
+          submitLabel={modal.submitLabel ?? "Отправить заявку"}
+          successTitle={modal.successTitle ?? "Заявка принята"}
+          successText={
+            modal.successText ??
+            "Менеджер Imperium Motors свяжется с вами в ближайшее время."
+          }
+          comment={modal.comment}
+          commentLabel={modal.commentLabel}
+          commentPlaceholder={modal.commentPlaceholder}
+          photo={modal.photo}
+          photoLabel={modal.photoLabel}
+          photoHint={modal.photoHint}
+        />
+      ) : (
+        <Link
+          className="image-service-card__link"
+          href={href}
+          aria-label={`Подробнее: ${title}`}
+        />
+      )}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img className="image-service-card__img" src={image} alt={title} />
       <div className="image-service-card__body">
         <div className="image-service-card__head">
           <h3 className="image-service-card__title">{title}</h3>
-          <ButtonLink
-            href={href}
-            size="l"
-            variant="primary-outlined"
-            iconOnly
-            startIcon={<ArrowDiagonalIcon />}
-            className="image-service-card__arrow"
-            aria-label={`Подробнее: ${title}`}
-          />
+          <span
+            className="image-service-card__arrow btn btn--l btn--icon btn--primary-outlined"
+            aria-hidden="true"
+          >
+            <span className="btn__icon">
+              <ArrowDiagonalIcon />
+            </span>
+          </span>
         </div>
         <p className="image-service-card__text">{text}</p>
       </div>
@@ -111,6 +154,12 @@ export function NewsCard({
 }: NewsCardProps) {
   return (
     <article className={cn("news-card", className)}>
+      <Link
+        href={href}
+        className="news-card__overlay"
+        aria-hidden="true"
+        tabIndex={-1}
+      />
       <div className="news-card__media">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={image} alt={imageAlt ?? title} />
@@ -157,6 +206,8 @@ export type CarCardProps = {
   price: ReactNode;
   priceLabel?: string;
   action: { label: string; variant: ButtonVariant };
+  /** Заменяет кнопку действия (например, окно-заявка для авто без страницы). */
+  actionSlot?: ReactNode;
   comparisonEnabled?: boolean;
   href?: string;
   className?: string;
@@ -174,6 +225,7 @@ export function CarCard({
   price,
   priceLabel,
   action,
+  actionSlot,
   comparisonEnabled = true,
   href,
   className,
@@ -184,7 +236,8 @@ export function CarCard({
         <Link
           className="car-card__link"
           href={href}
-          aria-label={`Открыть страницу ${title}`}
+          aria-hidden="true"
+          tabIndex={-1}
         />
       )}
 
@@ -226,13 +279,16 @@ export function CarCard({
 
       <div className="car-card__action">
         <PriceBlock size={size} label={priceLabel} value={price} />
-        {href ? (
+        {actionSlot ? (
+          actionSlot
+        ) : href ? (
           <ButtonLink
             href={href}
             size={size === "m" ? "s" : "m"}
             variant={action.variant}
             endIcon={<ArrowDiagonalIcon className="car-card__details-icon" />}
             className="car-card__details-link"
+            aria-label={`${action.label}: ${title}`}
           >
             {action.label}
           </ButtonLink>
@@ -242,6 +298,7 @@ export function CarCard({
             size={size === "m" ? "s" : "m"}
             endIcon={<ArrowDiagonalIcon className="car-card__details-icon" />}
             className="car-card__details-link"
+            aria-label={`${action.label}: ${title}`}
           >
             {action.label}
           </Button>

@@ -1,9 +1,8 @@
 import { ButtonLink } from "@/components/ui/Button";
 
-const MAP_SRC =
-  "https://yandex.ru/map-widget/v1/?text=" +
-  encodeURIComponent("Москва, Кутузовский проспект, 48") +
-  "&z=16";
+// Виджет организации по oid — пин на здании с названием салона
+// («Империум Моторс / Автосалон»), а не карточка адреса.
+const MAP_SRC = "https://yandex.ru/map-widget/v1/org/28670517535/?z=16";
 
 export function Contacts({
   headingLevel = "h2",

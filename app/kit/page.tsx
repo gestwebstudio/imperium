@@ -3,8 +3,13 @@ import type { Metadata } from "next";
 import {
   ArrowIcon,
   ArrowDiagonalIcon,
+  ChevronDownIcon,
   CloseIcon,
   CopyIcon,
+  FiltersIcon,
+  MenuIcon,
+  PlusIcon,
+  ShareIcon,
   HeartStrokeIcon,
   HeartFillIcon,
   ListAddIcon,
@@ -35,8 +40,13 @@ export const metadata: Metadata = {
 const icons = [
   ["Arrow", ArrowIcon],
   ["Arrow-Diagonal", ArrowDiagonalIcon],
+  ["Chevron-Down", ChevronDownIcon],
   ["Close", CloseIcon],
   ["Copy", CopyIcon],
+  ["Filters", FiltersIcon],
+  ["Menu", MenuIcon],
+  ["Plus", PlusIcon],
+  ["Share", ShareIcon],
   ["Heart-stroke", HeartStrokeIcon],
   ["Heart-fill", HeartFillIcon],
   ["List-Add", ListAddIcon],
@@ -143,6 +153,29 @@ const headingStyles: TypographySpec[] = headingLevels.flatMap(
   })),
 );
 
+const responsiveDisplayStyles: TypographySpec[] = [
+  [32, 40],
+  [30, 38],
+  [28, 34],
+  [24, 30],
+  [20, 26],
+  [18, 22],
+].map(([fontSize, lineHeight]) => ({
+  name: `Display/${fontSize} Semibold`,
+  className: `t-display-${fontSize}-${fontSize}-semibold`,
+  meta: `Wix Madefor Display · ${fontSize}/${lineHeight} · 600`,
+  sample: "Mercedes-Benz CLE 200",
+}));
+
+const responsivePageTitleStyles: TypographySpec[] = [
+  {
+    name: "Page title / Semibold",
+    className: "t-page-title",
+    meta: "Wix Madefor Display · 48/56 · 36/44 · 32/40 · 28/34 · 24/30 · 600",
+    sample: "Автомобили в наличии",
+  },
+];
+
 const textScales = [
   [36, 42, ["regular", "medium", "semibold", "bold"]],
   [32, 44, ["regular", "medium", "semibold", "bold", "black"]],
@@ -176,6 +209,18 @@ const textStyles: TypographySpec[] = textScales.flatMap(
   }),
 );
 
+const compactTextStyles: TypographySpec[] = [
+  [12, 16],
+  [10, 14],
+].flatMap(([fontSize, lineHeight]) =>
+  (["regular", "medium", "semibold", "bold"] as const).map((weight) => ({
+    name: `Text/${fontSize} ${weight[0].toUpperCase()}${weight.slice(1)}`,
+    className: `t-text-${fontSize}-${lineHeight}-${weight}`,
+    meta: `Onest · ${fontSize}/${lineHeight} · ${textWeightValues[weight]}`,
+    sample: "Премиальные автомобили в Москве",
+  })),
+);
+
 const specialTypographyStyles: TypographySpec[] = [
   ...(["regular", "medium", "semibold", "bold"] as const).map(
     (weight, index) => ({
@@ -197,11 +242,26 @@ const specialTypographyStyles: TypographySpec[] = [
     meta: "Wix Madefor Display · 28/36 · 800",
     sample: "19 990 000 ₽",
   },
+  {
+    name: "Price/Value M",
+    className: "t-price-value-m",
+    meta: "Wix Madefor Display · 24/30 · 800",
+    sample: "19 990 000 ₽",
+  },
+  {
+    name: "Price/Value S",
+    className: "t-price-value-s",
+    meta: "Wix Madefor Display · 20/26 · 800",
+    sample: "19 990 000 ₽",
+  },
 ];
 
 const typographyGroups = [
   ["Heading", headingStyles],
+  ["Responsive page title", responsivePageTitleStyles],
+  ["Responsive display", responsiveDisplayStyles],
   ["Text", textStyles],
+  ["Compact text", compactTextStyles],
   ["Card & values", specialTypographyStyles],
 ] as const;
 
@@ -319,10 +379,11 @@ export default function KitPage() {
               </div>
             </div>
 
-            <div className="btn-sub">CTA</div>
+            <div className="btn-sub">CTA · L / M / S</div>
             <div className="btn-row">
               <div className="btn-rowhead">
-                Primary · CTA<code>.btn--primary-cta</code>
+                Primary · CTA
+                <code>.btn--primary-cta · M = 36px</code>
               </div>
               <div className="btn-group">
                 <Button
@@ -478,7 +539,14 @@ export default function KitPage() {
                 <Badge size="m" color="warning">Ожидается</Badge>
                 <Badge size="m" color="error">Продан</Badge>
               </div>
-              <div className="stage-label">Outlined · L / M</div>
+              <div className="stage-label">Surface · S / XS</div>
+              <div className="stage-row">
+                <Badge size="s" color="info">Badge S</Badge>
+                <Badge size="s" color="success">В наличии</Badge>
+                <Badge size="xs" color="warning">XS</Badge>
+                <Badge size="xs" color="error">XS</Badge>
+              </div>
+              <div className="stage-label">Outlined · L / M / S / XS</div>
               <div className="stage-row">
                 <Badge color="info" variant="outlined">
                   Badge
@@ -494,6 +562,12 @@ export default function KitPage() {
                 </Badge>
                 <Badge size="m" color="info" variant="outlined">
                   Badge M
+                </Badge>
+                <Badge size="s" color="success" variant="outlined">
+                  Badge S
+                </Badge>
+                <Badge size="xs" color="error" variant="outlined">
+                  XS
                 </Badge>
               </div>
             </div>
