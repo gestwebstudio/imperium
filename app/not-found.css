@@ -1,0 +1,133 @@
+/* Desktop 404 — Figma node 1188:13602 (1920 × 1080). */
+body:has(.not-found-page) {
+  overflow: hidden;
+  background: var(--color-carbon-black-500, #1B1E1D);
+}
+
+body:has(.not-found-page) .site-header,
+body:has(.not-found-page) .site-footer,
+body:has(.not-found-page) .floating-vehicle-actions {
+  display: none;
+}
+
+.not-found-page {
+  --not-found-content-top: clamp(240px, 30.556dvh, 330px);
+  --not-found-message-font-size: clamp(24px, 1.875vw, 36px);
+  --not-found-message-line-height: clamp(30px, 2.188vw, 42px);
+  --not-found-message-code-gap: clamp(32px, 2.552vw, 49px);
+  --not-found-code-font-size: clamp(255px, 21.25vw, 408px);
+  --not-found-code-line-height: clamp(188px, 15.625vw, 300px);
+  --not-found-code-button-gap: clamp(40px, 3.073vw, 59px);
+
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  min-height: 480px;
+  overflow: hidden;
+  background: var(--color-stone-beige-100, #F3F0EE);
+  color: var(--color-white, #FFFFFF);
+  isolation: isolate;
+}
+
+.not-found-page__background {
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  pointer-events: none;
+  user-select: none;
+}
+
+.not-found-page__content {
+  position: absolute;
+  z-index: 1;
+  top: var(--not-found-content-top);
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.not-found-page__message {
+  width: min(720px, calc(100% - 48px));
+  margin: 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-regular, 400);
+  font-size: var(--not-found-message-font-size);
+  line-height: var(--not-found-message-line-height);
+  letter-spacing: 0;
+  text-align: center;
+}
+
+.not-found-page__code {
+  margin: var(--not-found-message-code-gap) 0 0;
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-weight: var(--font-weight-extrabold, 800);
+  font-size: var(--not-found-code-font-size);
+  line-height: var(--not-found-code-line-height);
+  letter-spacing: 0;
+  color: rgba(255, 255, 255, 0.17);
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.not-found-page__button {
+  margin-top: var(--not-found-code-button-gap);
+}
+
+@media (max-width: 960px) {
+  .not-found-page {
+    --not-found-content-top: clamp(160px, 25dvh, 240px);
+    --not-found-message-font-size: 24px;
+    --not-found-message-line-height: 30px;
+    --not-found-message-code-gap: 28px;
+    --not-found-code-font-size: clamp(220px, 34vw, 300px);
+    --not-found-code-line-height: clamp(162px, 25vw, 221px);
+    --not-found-code-button-gap: 44px;
+  }
+
+  .not-found-page__background {
+    object-position: center center;
+  }
+}
+
+@media (max-width: 640px) {
+  .not-found-page {
+    --not-found-content-top: clamp(112px, 24dvh, 200px);
+    --not-found-message-font-size: 18px;
+    --not-found-message-line-height: 24px;
+    --not-found-message-code-gap: 24px;
+    --not-found-code-font-size: clamp(176px, 56vw, 240px);
+    --not-found-code-line-height: clamp(130px, 41.2vw, 176px);
+    --not-found-code-button-gap: 40px;
+  }
+
+  .not-found-page__message {
+    width: calc(100% - 32px);
+  }
+}
+
+@media (max-width: 480px) {
+  .not-found-page {
+    --not-found-content-top: clamp(96px, 24dvh, 200px);
+    --not-found-message-font-size: 16px;
+    --not-found-message-line-height: 20px;
+    --not-found-message-code-gap: 20px;
+    --not-found-code-font-size: clamp(144px, 45vw, 216px);
+    --not-found-code-line-height: clamp(106px, 33.1vw, 159px);
+    --not-found-code-button-gap: 36px;
+  }
+}
+
+@media (max-width: 960px) and (max-height: 600px) {
+  .not-found-page {
+    --not-found-content-top: 40px;
+    --not-found-message-code-gap: 12px;
+    --not-found-code-font-size: clamp(120px, min(45vw, 45dvh), 220px);
+    --not-found-code-line-height: clamp(88px, min(33.1vw, 33dvh), 162px);
+    --not-found-code-button-gap: 20px;
+  }
+}

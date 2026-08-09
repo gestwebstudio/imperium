@@ -319,6 +319,21 @@ export function getAllCars(): Car[] {
   return [...FEATURED_CARS, ...CARS];
 }
 
+/**
+ * Источник данных для страниц, которым нужны конкретные автомобили.
+ * Пока использует локальные данные; контракт можно заменить запросом к API/1С,
+ * не меняя потребляющие компоненты.
+ */
+export async function getCarsByIds(ids: readonly string[]): Promise<Car[]> {
+  if (ids.length === 0) return [];
+
+  const carsById = new Map(getAllCars().map((car) => [car.id, car]));
+  return [...new Set(ids)].flatMap((id) => {
+    const car = carsById.get(id);
+    return car ? [car] : [];
+  });
+}
+
 export function getCarBySlug(slug: string): Car | undefined {
   return getAllCars().find((c) => c.slug === slug);
 }
@@ -445,9 +460,16 @@ const VALUE_ORDER: Record<FacetKey, string[]> = {
 
 /* ------------------------------ Характеристики ------------------------------ */
 
+export type SpecRawValue = string | number | boolean | null;
+
 export interface Spec {
+  /** Стабильный идентификатор для сопоставления данных из разных источников. */
+  key: string;
   label: string;
-  value: string;
+  /** Исходное значение без UI-форматирования, используется при сравнении. */
+  rawValue: SpecRawValue;
+  /** Подготовленное для интерфейса значение. */
+  displayValue: string;
 }
 
 /**
@@ -462,28 +484,103 @@ export function getCarSpecs(car: Car): { primary: Spec[]; extra: Spec[] } {
   const torque = Math.round(car.power * 1.4);
 
   const primary: Spec[] = [
-    { label: "Год выпуска", value: String(car.year) },
-    { label: "Кузов", value: car.bodyType },
-    { label: "Цвет", value: car.color.name },
-    { label: "Привод", value: car.drive },
-    { label: "Коробка", value: car.transmission },
-    { label: "Тип топлива", value: car.fuelType },
-    { label: "Мощность", value: `${car.power} л.с.` },
-    { label: "Разгон 0–100 км/ч", value: `${accel} с` },
-    { label: "Макс. скорость", value: `${topSpeed} км/ч` },
+    {
+      key: "year",
+      label: "Год выпуска",
+      rawValue: car.year,
+      displayValue: String(car.year),
+    },
+    {
+      key: "bodyType",
+      label: "Кузов",
+      rawValue: car.bodyType,
+      displayValue: car.bodyType,
+    },
+    {
+      key: "color",
+      label: "Цвет",
+      rawValue: car.color.id,
+      displayValue: car.color.name,
+    },
+    {
+      key: "drive",
+      label: "Привод",
+      rawValue: car.drive,
+      displayValue: car.drive,
+    },
+    {
+      key: "transmission",
+      label: "Коробка",
+      rawValue: car.transmission,
+      displayValue: car.transmission,
+    },
+    {
+      key: "fuelType",
+      label: "Тип топлива",
+      rawValue: car.fuelType,
+      displayValue: car.fuelType,
+    },
+    {
+      key: "power",
+      label: "Мощность",
+      rawValue: car.power,
+      displayValue: `${car.power} л.с.`,
+    },
+    {
+      key: "acceleration",
+      label: "Разгон 0–100 км/ч",
+      rawValue: Number(accel),
+      displayValue: `${accel} с`,
+    },
+    {
+      key: "topSpeed",
+      label: "Макс. скорость",
+      rawValue: topSpeed,
+      displayValue: `${topSpeed} км/ч`,
+    },
   ];
 
   const extra: Spec[] = [
-    { label: "Объём двигателя", value: `${displacement} л` },
-    { label: "Крутящий момент", value: `${torque} Н·м` },
-    { label: "Длина", value: "4 850 мм" },
-    { label: "Ширина", value: "1 900 мм" },
-    { label: "Высота", value: "1 460 мм" },
-    { label: "Колёсная база", value: "2 865 мм" },
-    { label: "Дорожный просвет", value: "140 мм" },
-    { label: "Объём бака", value: "66 л" },
-    { label: "Расход (смешанный)", value: "8.4 л/100 км" },
-    { label: "Гарантия", value: "3 года / 100 000 км" },
+    {
+      key: "engineDisplacement",
+      label: "Объём двигателя",
+      rawValue: Number(displacement),
+      displayValue: `${displacement} л`,
+    },
+    {
+      key: "torque",
+      label: "Крутящий момент",
+      rawValue: torque,
+      displayValue: `${torque} Н·м`,
+    },
+    { key: "length", label: "Длина", rawValue: 4850, displayValue: "4 850 мм" },
+    { key: "width", label: "Ширина", rawValue: 1900, displayValue: "1 900 мм" },
+    { key: "height", label: "Высота", rawValue: 1460, displayValue: "1 460 мм" },
+    {
+      key: "wheelbase",
+      label: "Колёсная база",
+      rawValue: 2865,
+      displayValue: "2 865 мм",
+    },
+    {
+      key: "groundClearance",
+      label: "Дорожный просвет",
+      rawValue: 140,
+      displayValue: "140 мм",
+    },
+    { key: "fuelTank", label: "Объём бака", rawValue: 66, displayValue: "66 л" },
+    {
+      key: "combinedConsumption",
+      label: "Расход (смешанный)",
+      rawValue: 8.4,
+      displayValue: "8.4 л/100 км",
+    },
+    {
+      key: "warranty",
+      label: "Гарантия",
+      rawValue: "3 года / 100 000 км",
+      displayValue: "3 года / 100 000 км",
+    },
   ];
 
   return { primary, extra };

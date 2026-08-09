@@ -16,6 +16,7 @@ import {
   getCarSlugs,
   getCarSpecs,
   getCars,
+  getCarsByIds,
   getCarsForBody,
   getCarsForBrand,
   getFacetOptions,
@@ -90,6 +91,18 @@ describe("каталог автомобилей", () => {
     expect(getCarBySlug("does-not-exist")).toBeUndefined();
   });
 
+  it("получает только запрошенные автомобили по ID в порядке запроса", async () => {
+    const all = getAllCars();
+    const requested = await getCarsByIds([
+      all[2].id,
+      "removed-car",
+      all[0].id,
+      all[2].id,
+    ]);
+
+    expect(requested.map((car) => car.id)).toEqual([all[2].id, all[0].id]);
+  });
+
   it("форматирует цену и теги карточки", () => {
     const car = getCars()[0];
 
@@ -118,20 +131,28 @@ describe("каталог автомобилей", () => {
     expect(lowSpecs.primary).toHaveLength(9);
     expect(lowSpecs.extra).toHaveLength(10);
     expect(lowSpecs.primary).toContainEqual({
+      key: "acceleration",
       label: "Разгон 0–100 км/ч",
-      value: "6.9 с",
+      rawValue: 6.9,
+      displayValue: "6.9 с",
     });
     expect(highSpecs.primary).toContainEqual({
+      key: "acceleration",
       label: "Разгон 0–100 км/ч",
-      value: "3.5 с",
+      rawValue: 3.5,
+      displayValue: "3.5 с",
     });
     expect(highSpecs.primary).toContainEqual({
+      key: "topSpeed",
       label: "Макс. скорость",
-      value: "320 км/ч",
+      rawValue: 320,
+      displayValue: "320 км/ч",
     });
     expect(highSpecs.extra).toContainEqual({
+      key: "torque",
       label: "Крутящий момент",
-      value: "1400 Н·м",
+      rawValue: 1400,
+      displayValue: "1400 Н·м",
     });
   });
 

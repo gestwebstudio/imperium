@@ -55,6 +55,8 @@ for (const layout of headerLayouts) {
       await expect(nav).toBeVisible();
       await expect(burger).toBeHidden();
       await expectBox(call, { width: layout.control, height: layout.control });
+      await expect(call.locator(".header-call__number")).toHaveCSS("font-size", "16px");
+      await expect(call.locator(".header-call__number")).toHaveCSS("line-height", "20px");
       await expectBox(cta, { height: layout.control });
       await expect(cta).toHaveCSS("font-size", layout.width === 1920 ? "18px" : "16px");
       await expect(cta).toHaveCSS("line-height", layout.width === 1920 ? "24px" : "20px");
@@ -82,3 +84,32 @@ test("CTA M в UI Kit соответствует компоненту хедер
   await expectBox(cta.locator(".btn__cta-icon"), { width: 36, height: 36 });
   await expectBox(cta.locator(".btn__cta-icon svg"), { width: 12, height: 12 });
 });
+
+for (const width of [1200, 1536, 1920]) {
+  test(`раскрытый телефон сохраняет отступ 8px до иконки на ${width}px`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    await page.evaluate(() => document.fonts.ready);
+
+    const call = page.locator(".header-call");
+    const number = call.locator(".header-call__number");
+    const icon = call.locator(":scope > svg");
+    await call.hover();
+    await expect(call).toHaveCSS("width", width === 1920 ? "191px" : "181px");
+    await expect(number).toHaveCSS("transform", "matrix(1, 0, 0, 1, 0, 0)");
+
+    const callBox = await call.boundingBox();
+    const numberBox = await number.boundingBox();
+    const iconBox = await icon.boundingBox();
+    expect(callBox).not.toBeNull();
+    expect(numberBox).not.toBeNull();
+    expect(iconBox).not.toBeNull();
+    expect(Math.abs(iconBox!.x - (numberBox!.x + numberBox!.width) - 8)).toBeLessThanOrEqual(1);
+    const leftInset = numberBox!.x - callBox!.x;
+    const rightInset = callBox!.x + callBox!.width - (iconBox!.x + iconBox!.width);
+    expect(Math.abs(leftInset - rightInset)).toBeLessThanOrEqual(1);
+  });
+}

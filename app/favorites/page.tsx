@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { getAllCars } from "@/lib/cars";
 import { FavoritesClient } from "@/components/favorites/FavoritesClient";
 import "./favorites.css";
 
@@ -9,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function FavoritesPage() {
-  return <FavoritesClient cars={getAllCars()} />;
+  return <FavoritesClient />;
 }

@@ -1,18 +1,18 @@
 /* Imperium Motors — Typography Text Styles */
-/* Базовый экспорт из Figma: 73 стиля; ниже добавлены проектные fixed styles. */
+/* 108 local Figma Text Styles are mapped 1:1 below. Project responsive aliases are separated. */
 
 :root {
   --font-display: "Wix Madefor Display", sans-serif;
   --font-text: "Onest", sans-serif;
 
-  /* ---------- Fluid type scale (360 -> 1920). max = значение из макета (десктоп 1:1) ---------- */
+  /* Project-only fluid aliases (360 -> 1920); these are not Figma Text Styles. */
   --fs-88: clamp(2.5rem, 1.8077rem + 3.0769vw, 5.5rem);
   --fs-66: clamp(2.125rem, 1.6635rem + 2.0513vw, 4.125rem);
   --fs-50: clamp(1.875rem, 1.5865rem + 1.2821vw, 3.125rem);
   --fs-48: clamp(1.8125rem, 1.5385rem + 1.2179vw, 3rem);
   --fs-40: clamp(1.625rem, 1.4231rem + 0.8974vw, 2.5rem);
   --fs-36: clamp(1.5rem, 1.3269rem + 0.7692vw, 2.25rem);
-  --fs-32: clamp(1.375rem, 1.2308rem + 0.6410vw, 2rem);
+  --fs-32: clamp(1.375rem, 1.2308rem + 0.641vw, 2rem);
   --fs-30: clamp(1.375rem, 1.2596rem + 0.5128vw, 1.875rem);
   --fs-28: clamp(1.3125rem, 1.2115rem + 0.4487vw, 1.75rem);
   --fs-24: clamp(1.1875rem, 1.1154rem + 0.3205vw, 1.5rem);
@@ -23,197 +23,519 @@
   --fs-10: 0.625rem;
 }
 
-/* ---- Heading ---- */
-.t-heading-h4-h4-semibold {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 600;
-  font-size: var(--fs-48);
-  line-height: 1.1667;
-}
-.t-heading-h6-h6-semibold {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 600;
-  font-size: var(--fs-36);
-  line-height: 1.2222;
-}
-.t-heading-h1-h1-regular {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 400;
-  font-size: var(--fs-88);
-  line-height: 1.1364;
-  text-transform: uppercase;
-}
-.t-heading-h1-h1-extrabold {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 800;
-  font-size: var(--fs-88);
-  line-height: 1.1364;
-  text-transform: uppercase;
-}
-.t-heading-h4-h4-regular {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 400;
-  font-size: var(--fs-48);
-  line-height: 1.1667;
-}
-.t-heading-h5-h5-semibold {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 600;
-  font-size: var(--fs-40);
-  line-height: 1.2;
-}
-.t-heading-h2-h2-bold {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 700;
-  font-size: var(--fs-66);
-  line-height: 1.0606;
-}
-.t-heading-h3-h3-regular {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 400;
-  font-size: var(--fs-50);
-  line-height: 1.4;
-}
-.t-heading-h1-h1-medium {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 500;
-  font-size: var(--fs-88);
-  line-height: 1.1364;
-}
-.t-heading-h1-h1-semibold {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 600;
-  font-size: var(--fs-88);
-  line-height: 1.1364;
-}
-.t-heading-h1-h1-bold {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 700;
-  font-size: var(--fs-88);
-  line-height: 1.1364;
-}
-.t-heading-h2-h2-regular {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 400;
-  font-size: var(--fs-66);
-  line-height: 1.0606;
-}
-.t-heading-h2-h2-medium {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 500;
-  font-size: var(--fs-66);
-  line-height: 1.0606;
-}
-.t-heading-h2-h2-semibold {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 600;
-  font-size: var(--fs-66);
-  line-height: 1.0606;
-}
-.t-heading-h2-h2-extrabold {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 800;
-  font-size: var(--fs-66);
-  line-height: 1.0606;
-}
-.t-heading-h3-h3-medium {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 500;
-  font-size: var(--fs-50);
-  line-height: 1.4;
-}
-.t-heading-h3-h3-semibold {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 600;
-  font-size: var(--fs-50);
-  line-height: 1.4;
-}
-.t-heading-h3-h3-bold {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 700;
-  font-size: var(--fs-50);
-  line-height: 1.4;
-}
-.t-heading-h3-h3-extrabold {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 800;
-  font-size: var(--fs-50);
-  line-height: 1.4;
-}
-.t-heading-h4-h4-medium {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 500;
-  font-size: var(--fs-48);
-  line-height: 1.1667;
-}
-.t-heading-h4-h4-bold {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 700;
-  font-size: var(--fs-48);
-  line-height: 1.1667;
-}
-.t-heading-h4-h4-extrabold {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 800;
-  font-size: var(--fs-48);
-  line-height: 1.1667;
-}
-.t-heading-h5-h5-regular {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 400;
-  font-size: var(--fs-40);
-  line-height: 1.2;
-}
-.t-heading-h5-h5-medium {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 500;
-  font-size: var(--fs-40);
-  line-height: 1.2;
-}
-.t-heading-h5-h5-bold {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 700;
-  font-size: var(--fs-40);
-  line-height: 1.2;
-}
-.t-heading-h5-h5-extrabold {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 800;
-  font-size: var(--fs-40);
-  line-height: 1.2;
-}
-.t-heading-h6-h6-regular {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 400;
-  font-size: var(--fs-36);
-  line-height: 1.2222;
-}
-.t-heading-h6-h6-medium {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 500;
-  font-size: var(--fs-36);
-  line-height: 1.2222;
-}
-.t-heading-h6-h6-bold {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 700;
-  font-size: var(--fs-36);
-  line-height: 1.2222;
-}
+/* ---- Heading: exact Figma Text Styles ---- */
+.t-heading-h1-h1-regular,
+.t-heading-h1-h1-medium,
+.t-heading-h1-h1-semibold,
+.t-heading-h1-h1-bold,
+.t-heading-h1-h1-extrabold,
+.t-heading-h2-h2-regular,
+.t-heading-h2-h2-medium,
+.t-heading-h2-h2-semibold,
+.t-heading-h2-h2-bold,
+.t-heading-h2-h2-extrabold,
+.t-heading-h3-h3-regular,
+.t-heading-h3-h3-medium,
+.t-heading-h3-h3-semibold,
+.t-heading-h3-h3-bold,
+.t-heading-h3-h3-extrabold,
+.t-heading-h4-h4-regular,
+.t-heading-h4-h4-medium,
+.t-heading-h4-h4-semibold,
+.t-heading-h4-h4-bold,
+.t-heading-h4-h4-extrabold,
+.t-heading-h5-h5-regular,
+.t-heading-h5-h5-medium,
+.t-heading-h5-h5-semibold,
+.t-heading-h5-h5-bold,
+.t-heading-h5-h5-extrabold,
+.t-heading-h6-h6-regular,
+.t-heading-h6-h6-medium,
+.t-heading-h6-h6-semibold,
+.t-heading-h6-h6-bold,
 .t-heading-h6-h6-extrabold {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 800;
-  font-size: var(--fs-36);
-  line-height: 1.2222;
+  font-family: var(--font-display);
+  letter-spacing: 0;
+  text-decoration: none;
+  text-transform: none;
 }
 
-/* ---- Responsive page/section title ----
-   Figma: «Автомобили в наличии» (1920 / 1536 / 1200 / 960 / 768 / 640 / 480 / 390). */
+.t-heading-h1-h1-regular,
+.t-heading-h2-h2-regular,
+.t-heading-h3-h3-regular,
+.t-heading-h4-h4-regular,
+.t-heading-h5-h5-regular,
+.t-heading-h6-h6-regular {
+  font-weight: var(--font-weight-regular);
+}
+
+.t-heading-h1-h1-medium,
+.t-heading-h2-h2-medium,
+.t-heading-h3-h3-medium,
+.t-heading-h4-h4-medium,
+.t-heading-h5-h5-medium,
+.t-heading-h6-h6-medium {
+  font-weight: var(--font-weight-medium);
+}
+
+.t-heading-h1-h1-semibold,
+.t-heading-h2-h2-semibold,
+.t-heading-h3-h3-semibold,
+.t-heading-h4-h4-semibold,
+.t-heading-h5-h5-semibold,
+.t-heading-h6-h6-semibold {
+  font-weight: var(--font-weight-semibold);
+}
+
+.t-heading-h1-h1-bold,
+.t-heading-h2-h2-bold,
+.t-heading-h3-h3-bold,
+.t-heading-h4-h4-bold,
+.t-heading-h5-h5-bold,
+.t-heading-h6-h6-bold {
+  font-weight: var(--font-weight-bold);
+}
+
+.t-heading-h1-h1-extrabold,
+.t-heading-h2-h2-extrabold,
+.t-heading-h3-h3-extrabold,
+.t-heading-h4-h4-extrabold,
+.t-heading-h5-h5-extrabold,
+.t-heading-h6-h6-extrabold {
+  font-weight: var(--font-weight-extrabold);
+}
+
+.t-heading-h1-h1-regular,
+.t-heading-h1-h1-medium,
+.t-heading-h1-h1-semibold,
+.t-heading-h1-h1-bold,
+.t-heading-h1-h1-extrabold {
+  font-size: var(--type-heading-h1-font-size);
+  line-height: var(--type-heading-h1-line-height);
+}
+
+.t-heading-h2-h2-regular,
+.t-heading-h2-h2-medium,
+.t-heading-h2-h2-semibold,
+.t-heading-h2-h2-bold,
+.t-heading-h2-h2-extrabold {
+  font-size: var(--type-heading-h2-font-size);
+  line-height: var(--type-heading-h2-line-height);
+}
+
+.t-heading-h3-h3-regular,
+.t-heading-h3-h3-medium,
+.t-heading-h3-h3-semibold,
+.t-heading-h3-h3-bold,
+.t-heading-h3-h3-extrabold {
+  font-size: var(--type-heading-h3-font-size);
+  line-height: var(--type-heading-h3-line-height);
+}
+
+.t-heading-h4-h4-regular,
+.t-heading-h4-h4-medium,
+.t-heading-h4-h4-semibold,
+.t-heading-h4-h4-bold,
+.t-heading-h4-h4-extrabold {
+  font-size: var(--type-heading-h4-font-size);
+  line-height: var(--type-heading-h4-line-height);
+}
+
+.t-heading-h5-h5-regular,
+.t-heading-h5-h5-medium,
+.t-heading-h5-h5-semibold,
+.t-heading-h5-h5-bold,
+.t-heading-h5-h5-extrabold {
+  font-size: var(--type-heading-h5-font-size);
+  line-height: var(--type-heading-h5-line-height);
+}
+
+.t-heading-h6-h6-regular,
+.t-heading-h6-h6-medium,
+.t-heading-h6-h6-semibold,
+.t-heading-h6-h6-bold,
+.t-heading-h6-h6-extrabold {
+  font-size: var(--type-heading-h6-font-size);
+  line-height: var(--type-heading-h6-line-height);
+}
+
+.t-heading-h1-h1-regular,
+.t-heading-h1-h1-extrabold {
+  text-transform: uppercase;
+}
+
+/* ---- Display: exact Figma Text Styles ---- */
+.t-display-32-32-regular,
+.t-display-32-32-medium,
+.t-display-32-32-semibold,
+.t-display-32-32-bold,
+.t-display-32-32-extrabold,
+.t-display-30-30-regular,
+.t-display-30-30-medium,
+.t-display-30-30-semibold,
+.t-display-30-30-bold,
+.t-display-30-30-extrabold,
+.t-display-28-28-regular,
+.t-display-28-28-medium,
+.t-display-28-28-semibold,
+.t-display-28-28-bold,
+.t-display-28-28-extrabold,
+.t-display-24-24-regular,
+.t-display-24-24-medium,
+.t-display-24-24-semibold,
+.t-display-24-24-bold,
+.t-display-24-24-extrabold,
+.t-display-20-20-regular,
+.t-display-20-20-medium,
+.t-display-20-20-semibold,
+.t-display-20-20-bold,
+.t-display-20-20-extrabold,
+.t-display-18-18-regular,
+.t-display-18-18-medium,
+.t-display-18-18-semibold,
+.t-display-18-18-bold,
+.t-display-18-18-extrabold,
+.t-display-16-16-regular,
+.t-display-16-16-medium,
+.t-display-16-16-semibold,
+.t-display-16-16-bold,
+.t-display-16-16-extrabold {
+  font-family: var(--font-display);
+  letter-spacing: 0;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.t-display-32-32-regular,
+.t-display-30-30-regular,
+.t-display-28-28-regular,
+.t-display-24-24-regular,
+.t-display-20-20-regular,
+.t-display-18-18-regular,
+.t-display-16-16-regular {
+  font-weight: var(--font-weight-regular);
+}
+
+.t-display-32-32-medium,
+.t-display-30-30-medium,
+.t-display-28-28-medium,
+.t-display-24-24-medium,
+.t-display-20-20-medium,
+.t-display-18-18-medium,
+.t-display-16-16-medium {
+  font-weight: var(--font-weight-medium);
+}
+
+.t-display-32-32-semibold,
+.t-display-30-30-semibold,
+.t-display-28-28-semibold,
+.t-display-24-24-semibold,
+.t-display-20-20-semibold,
+.t-display-18-18-semibold,
+.t-display-16-16-semibold {
+  font-weight: var(--font-weight-semibold);
+}
+
+.t-display-32-32-bold,
+.t-display-30-30-bold,
+.t-display-28-28-bold,
+.t-display-24-24-bold,
+.t-display-20-20-bold,
+.t-display-18-18-bold,
+.t-display-16-16-bold {
+  font-weight: var(--font-weight-bold);
+}
+
+.t-display-32-32-extrabold,
+.t-display-30-30-extrabold,
+.t-display-28-28-extrabold,
+.t-display-24-24-extrabold,
+.t-display-20-20-extrabold,
+.t-display-18-18-extrabold,
+.t-display-16-16-extrabold {
+  font-weight: var(--font-weight-extrabold);
+}
+
+.t-display-32-32-regular,
+.t-display-32-32-medium,
+.t-display-32-32-semibold,
+.t-display-32-32-bold,
+.t-display-32-32-extrabold {
+  font-size: var(--type-display-32-font-size);
+  line-height: var(--type-display-32-line-height);
+}
+
+.t-display-30-30-regular,
+.t-display-30-30-medium,
+.t-display-30-30-semibold,
+.t-display-30-30-bold,
+.t-display-30-30-extrabold {
+  font-size: var(--type-display-30-font-size);
+  line-height: var(--type-display-30-line-height);
+}
+
+.t-display-28-28-regular,
+.t-display-28-28-medium,
+.t-display-28-28-semibold,
+.t-display-28-28-bold,
+.t-display-28-28-extrabold {
+  font-size: var(--type-display-28-font-size);
+  line-height: var(--type-display-28-line-height);
+}
+
+.t-display-24-24-regular,
+.t-display-24-24-medium,
+.t-display-24-24-semibold,
+.t-display-24-24-bold,
+.t-display-24-24-extrabold {
+  font-size: var(--type-display-24-font-size);
+  line-height: var(--type-display-24-line-height);
+}
+
+.t-display-20-20-regular,
+.t-display-20-20-medium,
+.t-display-20-20-semibold,
+.t-display-20-20-bold,
+.t-display-20-20-extrabold {
+  font-size: var(--type-display-20-font-size);
+  line-height: var(--type-display-20-line-height);
+}
+
+.t-display-18-18-regular,
+.t-display-18-18-medium,
+.t-display-18-18-semibold,
+.t-display-18-18-bold,
+.t-display-18-18-extrabold {
+  font-size: var(--type-display-18-font-size);
+  line-height: var(--type-display-18-line-height);
+}
+
+.t-display-16-16-regular,
+.t-display-16-16-medium,
+.t-display-16-16-semibold,
+.t-display-16-16-bold,
+.t-display-16-16-extrabold {
+  font-size: var(--type-display-16-font-size);
+  line-height: var(--type-display-16-line-height);
+}
+
+/* ---- Text: exact Figma Text Styles ---- */
+.t-text-36-36-regular,
+.t-text-36-36-medium,
+.t-text-36-36-semibold,
+.t-text-36-36-bold,
+.t-text-32-32-regular,
+.t-text-32-32-medium,
+.t-text-32-32-semibold,
+.t-text-32-32-bold,
+.t-text-32-32-black,
+.t-text-30-30-regular,
+.t-text-30-30-medium,
+.t-text-30-30-semibold,
+.t-text-30-30-bold,
+.t-text-24-24-regular,
+.t-text-24-24-medium,
+.t-text-24-24-semibold,
+.t-text-24-24-bold,
+.t-text-20-20-regular,
+.t-text-20-20-medium,
+.t-text-20-20-semibold,
+.t-text-20-20-bold,
+.t-text-18-18-regular,
+.t-text-18-18-medium,
+.t-text-18-18-semibold,
+.t-text-18-18-bold,
+.t-text-16-16-regular,
+.t-text-16-16-medium,
+.t-text-16-16-semibold,
+.t-text-16-16-bold,
+.t-text-14-14-regular,
+.t-text-14-14-medium,
+.t-text-14-14-semibold,
+.t-text-14-14-bold,
+.t-text-12-12-regular,
+.t-text-12-12-medium,
+.t-text-12-12-semibold,
+.t-text-12-12-bold,
+.t-text-10-10-regular,
+.t-text-10-10-medium,
+.t-text-10-10-semibold,
+.t-text-10-10-bold {
+  font-family: var(--font-text);
+  letter-spacing: 0;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.t-text-36-36-regular,
+.t-text-32-32-regular,
+.t-text-30-30-regular,
+.t-text-24-24-regular,
+.t-text-20-20-regular,
+.t-text-18-18-regular,
+.t-text-16-16-regular,
+.t-text-14-14-regular,
+.t-text-12-12-regular,
+.t-text-10-10-regular {
+  font-weight: var(--font-weight-regular);
+}
+
+.t-text-36-36-medium,
+.t-text-32-32-medium,
+.t-text-30-30-medium,
+.t-text-24-24-medium,
+.t-text-20-20-medium,
+.t-text-18-18-medium,
+.t-text-16-16-medium,
+.t-text-14-14-medium,
+.t-text-12-12-medium,
+.t-text-10-10-medium {
+  font-weight: var(--font-weight-medium);
+}
+
+.t-text-36-36-semibold,
+.t-text-32-32-semibold,
+.t-text-30-30-semibold,
+.t-text-24-24-semibold,
+.t-text-20-20-semibold,
+.t-text-18-18-semibold,
+.t-text-16-16-semibold,
+.t-text-14-14-semibold,
+.t-text-12-12-semibold,
+.t-text-10-10-semibold {
+  font-weight: var(--font-weight-semibold);
+}
+
+.t-text-36-36-bold,
+.t-text-32-32-bold,
+.t-text-30-30-bold,
+.t-text-24-24-bold,
+.t-text-20-20-bold,
+.t-text-18-18-bold,
+.t-text-16-16-bold,
+.t-text-14-14-bold,
+.t-text-12-12-bold,
+.t-text-10-10-bold {
+  font-weight: var(--font-weight-bold);
+}
+
+.t-text-32-32-black {
+  font-weight: var(--font-weight-black);
+}
+
+.t-text-36-36-regular,
+.t-text-36-36-medium,
+.t-text-36-36-semibold,
+.t-text-36-36-bold {
+  font-size: var(--type-text-36-font-size);
+  line-height: var(--type-text-36-line-height);
+}
+
+.t-text-32-32-regular,
+.t-text-32-32-medium,
+.t-text-32-32-semibold,
+.t-text-32-32-bold,
+.t-text-32-32-black {
+  font-size: var(--type-text-32-font-size);
+  line-height: var(--type-text-32-line-height);
+}
+
+.t-text-30-30-regular,
+.t-text-30-30-medium,
+.t-text-30-30-semibold,
+.t-text-30-30-bold {
+  font-size: var(--type-text-30-font-size);
+  line-height: var(--type-text-30-line-height);
+}
+
+.t-text-24-24-regular,
+.t-text-24-24-medium,
+.t-text-24-24-semibold,
+.t-text-24-24-bold {
+  font-size: var(--type-text-24-font-size);
+  line-height: var(--type-text-24-line-height);
+}
+
+.t-text-20-20-regular,
+.t-text-20-20-medium,
+.t-text-20-20-semibold,
+.t-text-20-20-bold {
+  font-size: var(--type-text-20-font-size);
+  line-height: var(--type-text-20-line-height);
+}
+
+.t-text-18-18-regular,
+.t-text-18-18-medium,
+.t-text-18-18-semibold,
+.t-text-18-18-bold {
+  font-size: var(--type-text-18-font-size);
+  line-height: var(--type-text-18-line-height);
+}
+
+.t-text-16-16-regular,
+.t-text-16-16-medium,
+.t-text-16-16-semibold,
+.t-text-16-16-bold {
+  font-size: var(--type-text-16-font-size);
+  line-height: var(--type-text-16-line-height);
+}
+
+.t-text-14-14-regular,
+.t-text-14-14-medium,
+.t-text-14-14-semibold,
+.t-text-14-14-bold {
+  font-size: var(--type-text-14-font-size);
+  line-height: var(--type-text-14-line-height);
+}
+
+.t-text-12-12-regular,
+.t-text-12-12-medium,
+.t-text-12-12-semibold,
+.t-text-12-12-bold {
+  font-size: var(--type-text-12-font-size);
+  line-height: var(--type-text-12-line-height);
+}
+
+.t-text-10-10-regular,
+.t-text-10-10-medium,
+.t-text-10-10-semibold,
+.t-text-10-10-bold {
+  font-size: var(--type-text-10-font-size);
+  line-height: var(--type-text-10-line-height);
+}
+
+.t-text-32-32-medium,
+.t-text-32-32-black {
+  text-transform: uppercase;
+}
+
+/* ---- Numeric and price: exact Figma Text Styles ---- */
+.t-numeric-value,
+.t-price-value {
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-extrabold);
+  letter-spacing: 0;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.t-numeric-value {
+  font-size: var(--type-numeric-40-font-size);
+  line-height: var(--type-numeric-40-line-height);
+}
+
+.t-price-value {
+  font-size: var(--type-price-28-font-size);
+  line-height: var(--type-price-28-line-height);
+}
+
+/* ---- Project responsive aliases ---- */
 .t-page-title {
   font-family: var(--font-display);
   font-weight: var(--font-weight-semibold);
   font-size: var(--type-display-48-font-size);
   line-height: var(--type-display-48-line-height);
+  letter-spacing: 0;
 }
 
 @media (max-width: 1536px) {
@@ -244,311 +566,21 @@
   }
 }
 
-/* ---- Text ---- */
-.t-text-18-18-regular {
-  font-family: "Onest", sans-serif;
-  font-weight: 400;
-  font-size: var(--fs-18);
-  line-height: 1.3333;
-}
-.t-text-10-10-medium {
-  font-family: "Onest", sans-serif;
-  font-weight: 500;
-  font-size: var(--fs-10);
-  line-height: 1;
-}
-.t-text-20-20-regular {
-  font-family: "Onest", sans-serif;
-  font-weight: 400;
-  font-size: var(--fs-20);
-  line-height: 1.4;
-}
-.t-text-24-24-semibold {
-  font-family: "Onest", sans-serif;
-  font-weight: 600;
-  font-size: var(--fs-24);
-  line-height: 1.25;
-}
-.t-text-14-14-regular {
-  font-family: "Onest", sans-serif;
-  font-weight: 400;
-  font-size: var(--fs-14);
-  line-height: 1.2857;
-}
-.t-text-18-18-semibold {
-  font-family: "Onest", sans-serif;
-  font-weight: 600;
-  font-size: var(--fs-18);
-  line-height: 1.3333;
-}
-.t-text-24-24-regular {
-  font-family: "Onest", sans-serif;
-  font-weight: 400;
-  font-size: var(--fs-24);
-  line-height: 1.25;
-}
-.t-text-30-30-semibold {
-  font-family: "Onest", sans-serif;
-  font-weight: 600;
-  font-size: var(--fs-30);
-  line-height: 1.3333;
-}
-.t-text-16-16-regular {
-  font-family: "Onest", sans-serif;
-  font-weight: 400;
-  font-size: var(--fs-16);
-  line-height: 1.25;
-}
-.t-text-20-20-medium {
-  font-family: "Onest", sans-serif;
-  font-weight: 500;
-  font-size: var(--fs-20);
-  line-height: 1.4;
-}
-.t-text-32-32-black {
-  font-family: "Onest", sans-serif;
-  font-weight: 900;
-  font-size: var(--fs-32);
-  line-height: 1.375;
-  text-transform: uppercase;
-}
-.t-text-32-32-medium {
-  font-family: "Onest", sans-serif;
-  font-weight: 500;
-  font-size: var(--fs-32);
-  line-height: 1.375;
-  text-transform: uppercase;
-}
-.t-text-36-36-regular {
-  font-family: "Onest", sans-serif;
-  font-weight: 400;
-  font-size: var(--fs-36);
-  line-height: 1.1667;
-}
-.t-text-14-14-semibold {
-  font-family: "Onest", sans-serif;
-  font-weight: 600;
-  font-size: var(--fs-14);
-  line-height: 1.2857;
-}
-.t-text-36-36-medium {
-  font-family: "Onest", sans-serif;
-  font-weight: 500;
-  font-size: var(--fs-36);
-  line-height: 1.1667;
-}
-.t-text-36-36-semibold {
-  font-family: "Onest", sans-serif;
-  font-weight: 600;
-  font-size: var(--fs-36);
-  line-height: 1.1667;
-}
-.t-text-36-36-bold {
-  font-family: "Onest", sans-serif;
-  font-weight: 700;
-  font-size: var(--fs-36);
-  line-height: 1.1667;
-}
-.t-text-32-32-regular {
-  font-family: "Onest", sans-serif;
-  font-weight: 400;
-  font-size: var(--fs-32);
-  line-height: 1.375;
-}
-.t-text-32-32-semibold {
-  font-family: "Onest", sans-serif;
-  font-weight: 600;
-  font-size: var(--fs-32);
-  line-height: 1.375;
-}
-.t-text-32-32-bold {
-  font-family: "Onest", sans-serif;
-  font-weight: 700;
-  font-size: var(--fs-32);
-  line-height: 1.375;
-}
-.t-text-30-30-regular {
-  font-family: "Onest", sans-serif;
-  font-weight: 400;
-  font-size: var(--fs-30);
-  line-height: 1.3333;
-}
-.t-text-30-30-medium {
-  font-family: "Onest", sans-serif;
-  font-weight: 500;
-  font-size: var(--fs-30);
-  line-height: 1.3333;
-}
-.t-text-30-30-bold {
-  font-family: "Onest", sans-serif;
-  font-weight: 700;
-  font-size: var(--fs-30);
-  line-height: 1.3333;
-}
-.t-text-24-24-medium {
-  font-family: "Onest", sans-serif;
-  font-weight: 500;
-  font-size: var(--fs-24);
-  line-height: 1.25;
-}
-.t-text-24-24-bold {
-  font-family: "Onest", sans-serif;
-  font-weight: 700;
-  font-size: var(--fs-24);
-  line-height: 1.25;
-}
-.t-text-20-20-semibold {
-  font-family: "Onest", sans-serif;
-  font-weight: 600;
-  font-size: var(--fs-20);
-  line-height: 1.4;
-}
-.t-text-20-20-bold {
-  font-family: "Onest", sans-serif;
-  font-weight: 700;
-  font-size: var(--fs-20);
-  line-height: 1.4;
-}
-.t-text-18-18-medium {
-  font-family: "Onest", sans-serif;
-  font-weight: 500;
-  font-size: var(--fs-18);
-  line-height: 1.3333;
-}
-.t-text-18-18-bold {
-  font-family: "Onest", sans-serif;
-  font-weight: 700;
-  font-size: var(--fs-18);
-  line-height: 1.3333;
-}
-.t-text-16-16-medium {
-  font-family: "Onest", sans-serif;
-  font-weight: 500;
-  font-size: var(--fs-16);
-  line-height: 1.25;
-}
-.t-text-16-16-semibold {
-  font-family: "Onest", sans-serif;
-  font-weight: 600;
-  font-size: var(--fs-16);
-  line-height: 1.25;
-}
-.t-text-16-16-bold {
-  font-family: "Onest", sans-serif;
-  font-weight: 700;
-  font-size: var(--fs-16);
-  line-height: 1.25;
-}
-.t-text-14-14-medium {
-  font-family: "Onest", sans-serif;
-  font-weight: 500;
-  font-size: var(--fs-14);
-  line-height: 1.2857;
-}
-.t-text-14-14-bold {
-  font-family: "Onest", sans-serif;
-  font-weight: 700;
-  font-size: var(--fs-14);
-  line-height: 1.2857;
-}
-.t-text-10-10-regular {
-  font-family: "Onest", sans-serif;
-  font-weight: 400;
-  font-size: var(--fs-10);
-  line-height: 1;
-}
-.t-text-10-10-semibold {
-  font-family: "Onest", sans-serif;
-  font-weight: 600;
-  font-size: var(--fs-10);
-  line-height: 1;
-}
-.t-text-10-10-bold {
-  font-family: "Onest", sans-serif;
-  font-weight: 700;
-  font-size: var(--fs-10);
-  line-height: 1;
-}
-
-/* ---- Title card ---- */
-.t-title-card-24-semibold {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 600;
-  font-size: var(--fs-24);
-  line-height: 1.25;
-}
-.t-title-card-24-regular {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 400;
-  font-size: var(--fs-24);
-  line-height: 1.25;
-}
-.t-title-card-24-medium {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 500;
-  font-size: var(--fs-24);
-  line-height: 1.25;
-}
+.t-title-card-24-regular,
+.t-title-card-24-medium,
+.t-title-card-24-semibold,
 .t-title-card-24-bold {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 700;
-  font-size: var(--fs-24);
-  line-height: 1.25;
-}
-
-/* ---- Numeric ---- */
-.t-numeric-value {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 800;
-  font-size: var(--fs-40);
-  line-height: 1.15;
-}
-
-/* ---- Price ---- */
-.t-price-value {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-weight: 800;
-  font-size: var(--type-price-28-font-size);
-  line-height: var(--type-price-28-line-height);
-}
-
-/* ---- Fixed responsive display styles from the car-card frames ---- */
-.t-display-32-32-semibold,
-.t-display-30-30-semibold,
-.t-display-28-28-semibold,
-.t-display-24-24-semibold,
-.t-display-20-20-semibold,
-.t-display-18-18-semibold {
   font-family: var(--font-display);
-  font-weight: var(--font-weight-semibold);
-}
-
-.t-display-32-32-semibold {
-  font-size: var(--type-display-32-font-size);
-  line-height: var(--type-display-32-line-height);
-}
-.t-display-30-30-semibold {
-  font-size: var(--type-display-30-font-size);
-  line-height: var(--type-display-30-line-height);
-}
-.t-display-28-28-semibold {
-  font-size: var(--type-display-28-font-size);
-  line-height: var(--type-display-28-line-height);
-}
-.t-display-24-24-semibold {
   font-size: var(--type-display-24-font-size);
   line-height: var(--type-display-24-line-height);
-}
-.t-display-20-20-semibold {
-  font-size: var(--type-display-20-font-size);
-  line-height: var(--type-display-20-line-height);
-}
-.t-display-18-18-semibold {
-  font-size: var(--type-display-18-font-size);
-  line-height: var(--type-display-18-line-height);
+  letter-spacing: 0;
 }
 
-/* ---- Compact text styles missing from the original export ---- */
+.t-title-card-24-regular { font-weight: var(--font-weight-regular); }
+.t-title-card-24-medium { font-weight: var(--font-weight-medium); }
+.t-title-card-24-semibold { font-weight: var(--font-weight-semibold); }
+.t-title-card-24-bold { font-weight: var(--font-weight-bold); }
+
 .t-text-12-16-regular,
 .t-text-12-16-medium,
 .t-text-12-16-semibold,
@@ -558,6 +590,7 @@
 .t-text-10-14-semibold,
 .t-text-10-14-bold {
   font-family: var(--font-text);
+  letter-spacing: 0;
 }
 
 .t-text-12-16-regular,
@@ -589,11 +622,14 @@
 .t-price-value-s {
   font-family: var(--font-display);
   font-weight: var(--font-weight-extrabold);
+  letter-spacing: 0;
 }
+
 .t-price-value-m {
   font-size: var(--type-price-24-font-size);
   line-height: var(--type-price-24-line-height);
 }
+
 .t-price-value-s {
   font-size: var(--type-price-20-font-size);
   line-height: var(--type-price-20-line-height);

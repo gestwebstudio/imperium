@@ -3,6 +3,7 @@ import "./globals.css";
 import { SiteChrome } from "@/components/layout/SiteChrome";
 import { TypographyGuard } from "@/components/ui/TypographyGuard";
 import { VehicleActionsProvider } from "@/components/ui/VehicleActionsContext";
+import { AppToastProvider } from "@/components/ui/AppToastProvider";
 import { getAllCars } from "@/lib/cars";
 
 export const metadata: Metadata = {
@@ -35,6 +36,7 @@ export default function RootLayout({
       <body>
         <VehicleActionsProvider validVehicleIds={validVehicleIds}>
           <SiteChrome>{children}</SiteChrome>
+          <AppToastProvider />
           <TypographyGuard />
         </VehicleActionsProvider>
       </body>

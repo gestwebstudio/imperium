@@ -30,6 +30,9 @@ import { Specs } from "@/components/car/Specs";
 import { TypographyGuard } from "@/components/ui/TypographyGuard";
 import { FloatingVehicleActions } from "@/components/ui/FloatingVehicleActions";
 import { CarCard } from "@/components/cards/cards";
+import { ComparisonClient } from "@/components/comparison/ComparisonClient";
+import { FavoritesClient } from "@/components/favorites/FavoritesClient";
+import { getCars } from "@/lib/cars";
 
 describe("китовые кнопки", () => {
   it("применяет варианты, размеры, слоты и пользовательские обработчики", async () => {
@@ -95,6 +98,41 @@ describe("китовые кнопки", () => {
 
     fireEvent.animationEnd(ripple!);
     expect(button.querySelector(".ripple")).not.toBeInTheDocument();
+  });
+
+  it("системно отключает ripple у текстовых controls, не блокируя обработчики", () => {
+    const onPointerDown = vi.fn();
+    const onClick = vi.fn();
+    render(
+      <>
+        <Button
+          bare
+          ripple={false}
+          onPointerDown={onPointerDown}
+          onClick={onClick}
+        >
+          Текстовый trigger
+        </Button>
+        <ButtonLink href="/catalog" bare ripple={false}>
+          Текстовая ссылка
+        </ButtonLink>
+      </>,
+    );
+
+    const trigger = screen.getByRole("button", { name: "Текстовый trigger" });
+    const link = screen.getByRole("link", { name: "Текстовая ссылка" });
+
+    expect(trigger).toHaveClass("ui-button--bare", "ui-button--no-ripple");
+    expect(link).toHaveClass("ui-button--bare", "ui-button--no-ripple");
+    expect(trigger.querySelector(".ui-button__ripple-layer")).not.toBeInTheDocument();
+    expect(link.querySelector(".ui-button__ripple-layer")).not.toBeInTheDocument();
+
+    fireEvent.pointerDown(trigger, { clientX: 10, clientY: 10 });
+    fireEvent.click(trigger, { detail: 0 });
+
+    expect(onPointerDown).toHaveBeenCalledOnce();
+    expect(onClick).toHaveBeenCalledOnce();
+    expect(trigger.querySelector(".ripple")).not.toBeInTheDocument();
   });
 
   it("не создаёт ripple при prefers-reduced-motion", () => {
@@ -249,6 +287,18 @@ describe("избранное и сравнение", () => {
     expect(markup.match(/aria-busy="true"/g)).toHaveLength(3);
   });
 
+  it("показывает структурный skeleton Favorites до восстановления storage", () => {
+    const markup = renderToString(
+      <VehicleActionsProvider validVehicleIds={["car-1"]}>
+        <FavoritesClient />
+      </VehicleActionsProvider>,
+    );
+
+    expect(markup).toContain("favorites-loading-grid");
+    expect(markup.match(/favorites-skeleton-card"/g)).toHaveLength(4);
+    expect(markup).not.toContain("favorites-empty");
+  });
+
   it("безопасно обрабатывает повреждённое хранилище", async () => {
     localStorage.setItem("imperium-vehicle-actions", "{broken");
     render(
@@ -331,6 +381,7 @@ describe("карточка автомобиля", () => {
   it("оставляет overlay для мыши вне Tab-порядка и один keyboard-переход", () => {
     const { container } = render(
       <CarCard
+        variant="comparison"
         vehicleId="car-1"
         brandLogo="/brand.svg"
         brandName="Imperium"
@@ -345,6 +396,9 @@ describe("карточка автомобиля", () => {
     );
 
     const overlay = container.querySelector(".car-card__link");
+    expect(container.querySelector(".car-card")).toHaveClass(
+      "car-card--comparison",
+    );
     expect(overlay).toHaveAttribute("tabindex", "-1");
     expect(overlay).toHaveAttribute("aria-hidden", "true");
     expect(screen.getAllByRole("link")).toHaveLength(1);
@@ -363,13 +417,13 @@ describe("характеристики автомобиля", () => {
     render(
       <Specs
         primary={[
-          { label: "Год", value: "2026" },
-          { label: "Кузов", value: "Купе" },
-          { label: "Привод", value: "Полный" },
+          { key: "year", label: "Год", rawValue: 2026, displayValue: "2026" },
+          { key: "body", label: "Кузов", rawValue: "Купе", displayValue: "Купе" },
+          { key: "drive", label: "Привод", rawValue: "Полный", displayValue: "Полный" },
         ]}
         extra={[
-          { label: "Длина", value: "4 850 мм" },
-          { label: "Ширина", value: "1 900 мм" },
+          { key: "length", label: "Длина", rawValue: 4850, displayValue: "4 850 мм" },
+          { key: "width", label: "Ширина", rawValue: 1900, displayValue: "1 900 мм" },
         ]}
       />,
     );
@@ -388,9 +442,28 @@ describe("характеристики автомобиля", () => {
 
   it("не создаёт пустые колонки при коротком наборе", () => {
     const { container } = render(
-      <Specs primary={[{ label: "Год", value: "2026" }]} extra={[]} />,
+      <Specs
+        primary={[
+          { key: "year", label: "Год", rawValue: 2026, displayValue: "2026" },
+        ]}
+        extra={[]}
+      />,
     );
     expect(container.querySelectorAll(".car-specs__column")).toHaveLength(1);
+  });
+});
+
+describe("loading сравнения", () => {
+  it("показывает структурный skeleton до восстановления localStorage", () => {
+    const markup = renderToString(
+      <VehicleActionsProvider validVehicleIds={getCars().map((car) => car.id)}>
+        <ComparisonClient cars={getCars()} />
+      </VehicleActionsProvider>,
+    );
+
+    expect(markup).toContain("comparison-loading--skeleton");
+    expect(markup.match(/comparison-loading__card/g)).toHaveLength(4);
+    expect(markup).not.toContain("comparison-empty");
   });
 });
 

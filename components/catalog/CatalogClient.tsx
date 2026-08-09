@@ -411,6 +411,7 @@ export function CatalogClient({
           {showFilters && (
             <Button
               bare
+              ripple={false}
               className="cat-filters-toggle"
               aria-controls="catalog-filter-dialog"
               aria-haspopup="dialog"

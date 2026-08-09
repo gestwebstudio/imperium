@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { HeartStrokeIcon, ListAddIcon } from "@/components/icons";
 import { Bubble } from "@/components/ui/primitives";
 import { useVehicleActions } from "@/components/ui/VehicleActionsContext";
@@ -9,11 +10,13 @@ function ActionCount({
   count,
   label,
   href,
+  current = false,
   children,
 }: {
   count: number;
   label: string;
   href?: string;
+  current?: boolean;
   children: React.ReactNode;
 }) {
   const content = (
@@ -31,7 +34,7 @@ function ActionCount({
     </>
   );
 
-  if (href) {
+  if (href && !current) {
     return (
       <Link
         href={href}
@@ -45,8 +48,9 @@ function ActionCount({
 
   return (
     <div
-      className="floating-vehicle-actions__item"
+      className={`floating-vehicle-actions__item${current ? " is-current" : ""}`}
       aria-label={`${label}: ${count}`}
+      aria-current={current ? "page" : undefined}
     >
       {content}
     </div>
@@ -54,7 +58,10 @@ function ActionCount({
 }
 
 export function FloatingVehicleActions() {
+  const pathname = usePathname();
   const { favoriteCount, comparisonCount, storageReady } = useVehicleActions();
+  const isFavoritesPage = pathname === "/favorites";
+  const isComparisonPage = pathname === "/comparison";
 
   return (
     <aside
@@ -66,6 +73,7 @@ export function FloatingVehicleActions() {
         count={favoriteCount}
         label="В избранном"
         href="/favorites"
+        current={isFavoritesPage}
       >
         <HeartStrokeIcon />
       </ActionCount>
@@ -73,6 +81,7 @@ export function FloatingVehicleActions() {
         count={comparisonCount}
         label="В сравнении"
         href="/comparison"
+        current={isComparisonPage}
       >
         <ListAddIcon />
       </ActionCount>

@@ -105,7 +105,13 @@ test("страница автомобиля сохраняет действия,
     comparisons: ["v-class-exclusive"],
   });
 
-  await page.getByRole("button", { name: "Развернуть" }).click();
+  const specsToggle = page.getByRole("button", { name: "Развернуть" });
+  await expect(specsToggle).toHaveClass(/ui-button--no-ripple/);
+  await expect(
+    specsToggle.locator(":scope > .ui-button__ripple-layer"),
+  ).toHaveCount(0);
+  await specsToggle.focus();
+  await page.keyboard.press("Enter");
   await expect(page.getByText("Объём двигателя").first()).toBeVisible();
   await page.getByRole("button", { name: "Свернуть" }).click();
 
@@ -142,22 +148,137 @@ test("на странице автомобиля шапка уходит со с
   expect(headerBox?.y ?? 0).toBeLessThan(0);
 });
 
-test("избранное отображает только сохранённые машины и позволяет удалить их", async ({ page }) => {
+test("избранное сортирует последние добавленные первыми, поддерживает undo и единый count", async ({
+  page,
+}) => {
   await seedVehicleActions(page, {
     favorites: ["v-class-exclusive", "cle-53-amg-4matic", "unknown"],
   });
   await page.goto("/favorites");
 
   await expect(page.locator(".favorites-grid .car-card")).toHaveCount(2);
+  await expect(page.locator(".favorites-grid .car-card__title")).toHaveText([
+    "CLE 53 AMG 4MATIC+",
+    "V-Класс Exclusive",
+  ]);
+  await expect(page.locator(".favorites-head .badge")).toHaveText("2");
+  await expect(
+    page.locator('.floating-vehicle-actions__item[aria-current="page"]'),
+  ).toHaveAttribute("aria-label", "В избранном: 2");
+  await expect.poll(() => storedActions(page)).toMatchObject({
+    favorites: ["v-class-exclusive", "cle-53-amg-4matic"],
+  });
+
   await page
     .locator(".favorites-grid .car-card")
     .first()
     .getByRole("button", { name: "Убрать из избранного" })
     .click();
   await expect(page.locator(".favorites-grid .car-card")).toHaveCount(1);
+  const undo = page.getByRole("button", { name: "Вернуть" });
+  await expect(undo).toBeVisible();
+  await expect(undo).toHaveClass(/ui-button--no-ripple/);
+  await expect(undo.locator(":scope > .ui-button__ripple-layer")).toHaveCount(0);
+  await undo.focus();
+  await page.keyboard.press("Enter");
+  await expect(page.locator(".favorites-grid .car-card")).toHaveCount(2);
+  await expect(page.locator(".favorites-grid .car-card__title")).toHaveText([
+    "CLE 53 AMG 4MATIC+",
+    "V-Класс Exclusive",
+  ]);
+
+  await page
+    .locator(".favorites-grid .car-card")
+    .first()
+    .getByRole("button", { name: "Убрать из избранного" })
+    .click();
+  await page
+    .locator(".favorites-grid .car-card")
+    .first()
+    .getByRole("button", { name: "Убрать из избранного" })
+    .click();
+  await expect(page.locator(".favorites-empty")).toBeVisible();
+  await expect(page.getByRole("button", { name: "Вернуть" })).toHaveCount(2);
   await expect.poll(() => storedActions(page)).toMatchObject({
-    favorites: ["cle-53-amg-4matic"],
+    favorites: [],
   });
+
+  await page
+    .locator('.ui-toast[data-frontmost="true"]')
+    .getByRole("button", { name: "Вернуть" })
+    .click();
+  await expect(page.locator(".favorites-grid .car-card")).toHaveCount(1);
+  await expect(page.locator(".favorites-empty")).toHaveCount(0);
+  await expect(page.locator(".favorites-head .badge")).toHaveText("1");
+  await expect(
+    page.locator('.floating-vehicle-actions__item[aria-current="page"]'),
+  ).toHaveAttribute("aria-label", "В избранном: 1");
+});
+
+test("сетка избранного сохраняет собственные брейкпоинты", async ({
+  page,
+}) => {
+  await seedVehicleActions(page, {
+    favorites: [
+      "x5-m60i-sport-pro",
+      "x3-xdrive20i",
+      "v-class-exclusive",
+      "cle-53-amg-4matic",
+      "range-rover-sv",
+      "defender-110-x",
+      "cayenne-turbo-gt",
+      "panamera-turbo",
+    ],
+  });
+  await page.goto("/favorites");
+
+  const checkpoints = [
+    [1920, 4],
+    [1440, 4],
+    [1200, 4],
+    [1024, 3],
+    [768, 3],
+    [640, 2],
+    [480, 1],
+    [390, 1],
+    [360, 1],
+    [320, 1],
+  ] as const;
+
+  for (const [width, columns] of checkpoints) {
+    await page.setViewportSize({ width, height: 900 });
+    await expect
+      .poll(() =>
+        page.locator(".favorites-grid").evaluate((grid) =>
+          getComputedStyle(grid).gridTemplateColumns.split(" ").length,
+        ),
+      )
+      .toBe(columns);
+    await expect
+      .poll(() =>
+        page.evaluate(
+          () => document.documentElement.scrollWidth <= window.innerWidth,
+        ),
+      )
+      .toBe(true);
+  }
+
+});
+
+test("empty-state Favorites доступен с клавиатуры на 320px", async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 700 });
+  await seedVehicleActions(page, { favorites: [] });
+  await page.goto("/favorites");
+
+  const cta = page.getByRole("link", { name: "Перейти в каталог" });
+  await expect(page.locator(".favorites-empty")).toBeVisible();
+  await cta.focus();
+  await expect(cta).toBeFocused();
+  await expect
+    .poll(() =>
+      page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
+    )
+    .toBe(true);
 });
 
 test("сравнение синхронизирует карточки и значения, листает и фильтрует различия", async ({
@@ -175,8 +296,16 @@ test("сравнение синхронизирует карточки и зна
     ],
   });
   await page.goto("/comparison");
+  const share = page.getByRole("button", { name: "Поделиться" });
+  const addCar = page.getByRole("link", { name: "Добавить автомобиль" }).first();
+  await expect(share).toHaveClass(/ui-button--no-ripple/);
+  await expect(addCar).toHaveClass(/ui-button--no-ripple/);
+  await expect(share.locator(":scope > .ui-button__ripple-layer")).toHaveCount(0);
+  await expect(addCar.locator(":scope > .ui-button__ripple-layer")).toHaveCount(0);
 
   await expect(page.locator(".comparison-products .car-card")).toHaveCount(4);
+  await expect(page.locator(".comparison-products__pager--products")).toHaveCount(0);
+  await expect(page.locator(".comparison-products__nav")).toHaveCount(2);
   const cardsBefore = await page.locator(".comparison-products .car-card__title").allTextContents();
   expect(cardsBefore).toEqual([
     "V-Класс Exclusive",
@@ -234,6 +363,8 @@ test("мобильное сравнение не выходит за viewport и
   await page.goto("/comparison");
 
   await expect(page.locator(".comparison-products .car-card")).toHaveCount(2);
+  await expect(page.locator(".comparison-products__pager--products")).toHaveCount(2);
+  await expect(page.locator(".comparison-products__nav")).toHaveCount(0);
   const widths = await page.evaluate(() => ({
     viewport: window.innerWidth,
     document: document.documentElement.scrollWidth,
@@ -254,7 +385,21 @@ test("мобильное сравнение не выходит за viewport и
   const columns = page.locator(".comparison-products__column");
   await columns
     .nth(0)
-    .getByRole("button", { name: "Показать следующий автомобиль" })
+    .getByRole("button", { name: "Показать предыдущий автомобиль в колонке 1" })
+    .click();
+  await expect(columns.nth(0).locator(".car-card__title")).toHaveText(
+    "GX Executive",
+  );
+  await columns
+    .nth(0)
+    .getByRole("button", { name: "Показать следующий автомобиль в колонке 1" })
+    .click();
+  await expect(columns.nth(0).locator(".car-card__title")).toHaveText(
+    "V-Класс Exclusive",
+  );
+  await columns
+    .nth(0)
+    .getByRole("button", { name: "Показать следующий автомобиль в колонке 1" })
     .click();
   await expect(columns.nth(0).locator(".car-card__title")).toHaveText(
     "X5 M60i Sport Pro",
@@ -266,7 +411,7 @@ test("мобильное сравнение не выходит за viewport и
 
   await columns
     .nth(1)
-    .getByRole("button", { name: "Показать следующий автомобиль" })
+    .getByRole("button", { name: "Показать следующий автомобиль в колонке 2" })
     .click();
   await expect(columns.nth(0).locator(".car-card__title")).toHaveText(
     "X5 M60i Sport Pro",
@@ -275,6 +420,154 @@ test("мобильное сравнение не выходит за viewport и
     "911 Turbo S",
   );
   await assertColumnsMatch();
+
+  await page.setViewportSize({ width: 320, height: 844 });
+  await expect(page.locator(".comparison-products .car-card")).toHaveCount(1);
+  await page.setViewportSize({ width: 340, height: 844 });
+  await expect(page.locator(".comparison-products .car-card")).toHaveCount(1);
+  await page.setViewportSize({ width: 350, height: 844 });
+  await expect(page.locator(".comparison-products .car-card")).toHaveCount(1);
+  await page.setViewportSize({ width: 360, height: 844 });
+  await expect(page.locator(".comparison-products .car-card")).toHaveCount(2);
+  await expect
+    .poll(() =>
+      page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
+    )
+    .toBe(true);
+});
+
+test("comparison сохраняет выбранную пару при переходе между режимами", async ({ page }) => {
+  await page.setViewportSize({ width: 799, height: 900 });
+  await seedVehicleActions(page, {
+    comparisons: [
+      "v-class-exclusive",
+      "cle-53-amg-4matic",
+      "x5-m60i-sport-pro",
+      "porsche-911-turbo-s",
+      "lexus-gx-executive",
+    ],
+  });
+  await page.goto("/comparison");
+
+  const columns = page.locator(".comparison-products__column");
+  await columns
+    .nth(0)
+    .getByRole("button", { name: "Показать следующий автомобиль в колонке 1" })
+    .click();
+  await columns
+    .nth(1)
+    .getByRole("button", { name: "Показать следующий автомобиль в колонке 2" })
+    .click();
+  await expect(columns.locator(".car-card__title")).toHaveText([
+    "X5 M60i Sport Pro",
+    "911 Turbo S",
+  ]);
+
+  await page.setViewportSize({ width: 800, height: 900 });
+  await expect(page.locator(".comparison-products .car-card")).toHaveCount(3);
+  await expect(page.locator(".comparison-products__pager--products")).toHaveCount(0);
+  await expect(page.locator(".comparison-products .car-card__title")).toContainText([
+    "X5 M60i Sport Pro",
+    "911 Turbo S",
+  ]);
+
+  await page.setViewportSize({ width: 799, height: 900 });
+  await expect(page.locator(".comparison-products .car-card")).toHaveCount(2);
+  await expect(page.locator(".comparison-products .car-card__title")).toHaveText([
+    "X5 M60i Sport Pro",
+    "911 Turbo S",
+  ]);
+
+  await page.setViewportSize({ width: 999, height: 900 });
+  await expect(page.locator(".comparison-products .car-card")).toHaveCount(3);
+  await page.setViewportSize({ width: 1000, height: 900 });
+  await expect(page.locator(".comparison-products .car-card")).toHaveCount(4);
+});
+
+test("sticky сравнения использует тот же independent selector и доступный Tab-order", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 700 });
+  await seedVehicleActions(page, {
+    comparisons: [
+      "v-class-exclusive",
+      "cle-53-amg-4matic",
+      "x5-m60i-sport-pro",
+      "porsche-911-turbo-s",
+    ],
+  });
+  await page.goto("/comparison");
+  await page.evaluate(() => window.scrollTo(0, 1150));
+
+  const sticky = page.locator(".comparison-sticky");
+  await expect(sticky).toBeVisible();
+  await expect(sticky.locator(".comparison-products__pager--sticky")).toHaveCount(2);
+  await expect(sticky.locator(".comparison-sticky-card__link").first()).toHaveAttribute(
+    "tabindex",
+    "-1",
+  );
+
+  await sticky
+    .locator(".comparison-sticky__column")
+    .nth(0)
+    .getByRole("button", { name: "Показать следующий автомобиль в колонке 1" })
+    .click();
+  await expect(
+    sticky.locator(".comparison-sticky__column").nth(0).locator("strong"),
+  ).toHaveText("X5 M60i Sport Pro");
+  await expect(
+    page.locator(".comparison-products__column").nth(0).locator(".car-card__title"),
+  ).toHaveText("X5 M60i Sport Pro");
+
+  const stickyRemove = sticky
+    .locator(".comparison-sticky__column")
+    .nth(0)
+    .getByRole("button", { name: "Удалить X5 M60i Sport Pro из сравнения" });
+  await stickyRemove.focus();
+  await expect(stickyRemove).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page.locator(".comparison-head__title .badge")).toHaveText("3");
+});
+
+test("share показывает успех Web Share, игнорирует AbortError и обрабатывает clipboard error", async ({
+  page,
+}) => {
+  await seedVehicleActions(page, { comparisons: ["v-class-exclusive", "cle-53-amg-4matic"] });
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, "share", {
+      configurable: true,
+      value: () => Promise.resolve(),
+    });
+  });
+  await page.goto("/comparison");
+  await page.getByRole("button", { name: "Поделиться" }).click();
+  await expect(page.getByRole("button", { name: "Ссылка отправлена" })).toBeVisible();
+
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, "share", {
+      configurable: true,
+      value: () => Promise.reject(new DOMException("Отменено", "AbortError")),
+    });
+  });
+  await page.reload();
+  await page.getByRole("button", { name: "Поделиться" }).click();
+  await expect(page.getByRole("button", { name: "Поделиться" })).toBeVisible();
+
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, "share", {
+      configurable: true,
+      value: undefined,
+    });
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: { writeText: () => Promise.reject(new Error("denied")) },
+    });
+  });
+  await page.reload();
+  await page.getByRole("button", { name: "Поделиться" }).click();
+  await expect(
+    page.getByRole("button", { name: "Не удалось скопировать ссылку" }),
+  ).toBeVisible();
 });
 
 test("shared comparison применяет валидные slug, убирает дубли и очищает URL", async ({ page }) => {

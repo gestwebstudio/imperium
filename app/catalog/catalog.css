@@ -195,7 +195,7 @@
   flex-direction: column;
   gap: 24px;
   padding: 30px;
-  border-radius: 30px;
+  border-radius: var(--radius-card, var(--radius-current, 30px));
   background: rgba(255, 255, 255, .6);
   overscroll-behavior-y: auto;
   scrollbar-gutter: stable;
@@ -651,7 +651,7 @@
   width: 100%;
   aspect-ratio: 875 / 583;
   object-fit: cover;
-  border-radius: 36px;
+  border-radius: var(--radius-media, var(--radius-current, 30px));
   display: block;
 }
 .podbor__body {
@@ -809,7 +809,7 @@
       var(--cat-filters-available-height, 100dvh)
     );
     padding: clamp(20px, calc(20px + (100vw - 1200px) * .029762), 30px);
-    border-radius: clamp(20px, calc(20px + (100vw - 1200px) * .029762), 30px);
+    border-radius: var(--radius-card, var(--radius-current, 26px));
     background: rgba(255, 255, 255, .6);
     box-shadow: none;
     transform: none;
@@ -825,7 +825,7 @@
 
   .catalog-grid > .car-card {
     height: clamp(338px, calc(338px + (100vw - 1200px) * .145833), 387px);
-    border-radius: clamp(20px, calc(20px + (100vw - 1200px) * .029762), 30px);
+    border-radius: var(--radius-card, var(--radius-current, 26px));
   }
 
   .catalog-grid .car-card__title {
@@ -941,7 +941,7 @@
     height: 338px;
     gap: 24px;
     padding: 20px;
-    border-radius: 16px;
+    border-radius: var(--radius-card, var(--radius-current, 16px));
   }
 
   .catalog-grid .car-card__content {
@@ -1223,7 +1223,7 @@
     height: clamp(361px, calc(361px + (100vw - 390px) * 1.133333), 463px);
     gap: clamp(16px, calc(16px + (100vw - 390px) * .088889), 24px);
     padding: clamp(16px, calc(16px + (100vw - 390px) * .111111), 26px);
-    border-radius: clamp(16px, calc(16px + (100vw - 390px) * .155556), 30px);
+    border-radius: var(--radius-card, var(--radius-current, 12px));
   }
 
   .catalog-grid .car-card__brand,

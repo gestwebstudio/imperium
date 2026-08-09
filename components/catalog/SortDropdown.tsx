@@ -38,7 +38,7 @@ export function SortDropdown({ value, onChange }: SortDropdownProps) {
   return (
     <Dropdown>
       <Dropdown.Trigger
-        className="ui-button ui-button--bare cat-sort"
+        className="ui-button ui-button--bare ui-button--no-ripple cat-sort"
       >
         <span className="cat-sort__value">
           {labelOf(value)}

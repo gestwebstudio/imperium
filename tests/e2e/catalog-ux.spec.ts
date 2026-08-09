@@ -21,6 +21,8 @@ test("мобильный drawer сохраняет body, изолирует фо
   await expect.poll(() => page.evaluate(() => document.body.style.overflow)).toBe("clip");
 
   const trigger = page.getByRole("button", { name: /Фильтры/ });
+  await expect(trigger).toHaveClass(/ui-button--no-ripple/);
+  await expect(trigger.locator(":scope > .ui-button__ripple-layer")).toHaveCount(0);
   await trigger.click();
 
   const dialog = page.getByRole("dialog", { name: "Фильтры" });
@@ -127,6 +129,7 @@ test("текстовая сортировка без ripple, а tooltip выбр
   await page.goto("/catalog");
 
   const sort = page.locator(".cat-sort");
+  await expect(sort).toHaveClass(/ui-button--no-ripple/);
   await expect(sort.locator(":scope > .ui-button__ripple-layer")).toHaveCount(0);
 
   for (let index = 0; index < 20 && !(await sort.evaluate((node) => node === document.activeElement)); index += 1) {
@@ -141,6 +144,15 @@ test("текстовая сортировка без ripple, а tooltip выбр
   await expect(sort).toBeFocused();
   await expect(sort).not.toHaveAttribute("data-focus-visible");
   await expect(sort).toHaveCSS("outline-style", "none");
+
+  const brandTrigger = page.getByRole("button", { name: "Бренд", exact: true });
+  await expect(brandTrigger).toHaveClass(/ui-button--no-ripple/);
+  await expect(
+    brandTrigger.locator(":scope > .ui-button__ripple-layer"),
+  ).toHaveCount(0);
+  await brandTrigger.focus();
+  await page.keyboard.press("Space");
+  await expect(brandTrigger).toHaveAttribute("aria-expanded", "true");
 
   await openFacet(page, "Бренд");
   const bmw = page.getByRole("checkbox", { name: "BMW" });

@@ -47,9 +47,13 @@ export function MobileMenu() {
   useEffect(() => setMounted(true), []);
 
   useEffect(() => {
-    document.body.style.overflow = visible ? "hidden" : "";
+    if (!visible) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousOverflow;
     };
   }, [visible]);
 
@@ -298,7 +302,7 @@ export function MobileMenu() {
               type="button"
               className="mobile-menu__backdrop"
               aria-label="Закрыть меню"
-              tabIndex={open ? 0 : -1}
+              tabIndex={-1}
               onClick={close}
             />
 
@@ -330,7 +334,7 @@ export function MobileMenu() {
                 </a>
                 <button
                   type="button"
-                  className="mobile-menu__close"
+                  className="mobile-menu__close ui-button--no-ripple"
                   aria-label="Закрыть меню"
                   onClick={close}
                 >
@@ -340,7 +344,7 @@ export function MobileMenu() {
               </div>
 
               <nav className="mobile-menu__nav" aria-label="Основная навигация">
-                <ol className="mobile-menu__list">
+                <ul className="mobile-menu__list">
                   {menuItems.map((item, index) => (
                     <li className="mobile-menu__item-wrap" key={item.label}>
                       <Link
@@ -355,7 +359,7 @@ export function MobileMenu() {
                       </Link>
                     </li>
                   ))}
-                </ol>
+                </ul>
               </nav>
             </aside>
           </div>,

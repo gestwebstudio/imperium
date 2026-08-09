@@ -39,19 +39,27 @@ function copyWithFallback(value: string) {
  * при скролле вверх — возвращается и остаётся зафиксированной.
  * У самого верха страницы всегда видима.
  */
-function useHideOnScroll() {
+function useHideOnScroll(enabled: boolean) {
   const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
+    if (!enabled) {
+      setHidden(false);
+      return;
+    }
+
     let lastY = window.scrollY;
     let ticking = false;
 
+    const TOP_EDGE = 8;
+    const HEADROOM_THRESHOLD = 120;
     const TOLERANCE = 8; // порог, чтобы дрожание/отскок не переключали шапку
     const update = () => {
       ticking = false;
       const y = Math.max(0, window.scrollY);
       if (Math.abs(y - lastY) < TOLERANCE) return; // игнор мелких движений
-      if (y <= 8) setHidden(false); // у верха — всегда видима
+      if (y <= TOP_EDGE) setHidden(false); // у верха — всегда видима
+      else if (y <= HEADROOM_THRESHOLD) setHidden(false); // первый экранный порог
       else if (y > lastY) setHidden(true); // вниз — прячем
       else setHidden(false); // вверх — показываем
       lastY = y;
@@ -66,13 +74,13 @@ function useHideOnScroll() {
 
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [enabled]);
 
   return hidden;
 }
 
 export function Header({ flowWithPage = false }: { flowWithPage?: boolean }) {
-  const hidden = useHideOnScroll();
+  const hidden = useHideOnScroll(!flowWithPage);
   const [copyStatus, setCopyStatus] = useState<"idle" | "success" | "error">(
     "idle",
   );
@@ -89,9 +97,13 @@ export function Header({ flowWithPage = false }: { flowWithPage?: boolean }) {
     };
   }, []);
 
-  // Закрытие выпадайки услуг: клик вне, Escape, скролл.
+  // Закрытие выпадайки услуг: клик вне, Escape, заметный скролл.
   useEffect(() => {
     if (!servicesOpen) return;
+
+    let lastScrollY = window.scrollY;
+    let accumulatedScroll = 0;
+    const CLOSE_SCROLL_THRESHOLD = 16;
 
     const onPointer = (e: PointerEvent) => {
       const t = e.target as Node;
@@ -103,9 +115,21 @@ export function Header({ flowWithPage = false }: { flowWithPage?: boolean }) {
       }
     };
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setServicesOpen(false);
+      if (e.key !== "Escape") return;
+
+      e.preventDefault();
+      setServicesOpen(false);
+      servicesTriggerRef.current?.focus({ preventScroll: true });
     };
-    const onScroll = () => setServicesOpen(false);
+    const onScroll = () => {
+      const currentScrollY = window.scrollY;
+      accumulatedScroll += Math.abs(currentScrollY - lastScrollY);
+      lastScrollY = currentScrollY;
+
+      if (accumulatedScroll >= CLOSE_SCROLL_THRESHOLD) {
+        setServicesOpen(false);
+      }
+    };
 
     document.addEventListener("pointerdown", onPointer);
     document.addEventListener("keydown", onKey);
@@ -184,7 +208,7 @@ export function Header({ flowWithPage = false }: { flowWithPage?: boolean }) {
           <button
             type="button"
             ref={servicesTriggerRef}
-            className={`site-header__nav-trigger${servicesOpen ? " is-open" : ""}`}
+            className={`site-header__nav-trigger ui-button--no-ripple${servicesOpen ? " is-open" : ""}`}
             aria-expanded={servicesOpen}
             aria-controls="services-mega-panel"
             onClick={() => setServicesOpen((v) => !v)}

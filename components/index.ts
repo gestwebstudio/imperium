@@ -18,4 +18,5 @@ export {
   type CheckboxSize,
 } from "./ui/Checkbox";
 export { SheetPortal, type SheetPortalProps } from "./ui/SheetPortal";
+export { AppToastProvider } from "./ui/AppToastProvider";
 export * from "./cards/cards";

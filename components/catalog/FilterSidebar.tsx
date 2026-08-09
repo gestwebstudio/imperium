@@ -4,11 +4,7 @@ import { Accordion, ColorSwatch } from "@heroui/react";
 import type { Ref } from "react";
 import { useCallback, useEffect, useRef } from "react";
 import { CloseIcon } from "@/components/icons";
-import {
-  Button,
-  ButtonRippleLayer,
-  handleButtonRipplePointerDown,
-} from "@/components/ui/Button";
+import { Button } from "@/components/ui/Button";
 import { Tooltip as KitTooltip } from "@/components/ui/primitives";
 import { Checkbox as KitCheckbox } from "@/components/ui/Checkbox";
 import { FACETS, type FacetKey, type FacetOption } from "@/lib/cars";
@@ -217,10 +213,8 @@ export function FilterSidebar({
               <Accordion.Item key={f.key} id={f.key} className="cat-acc__item">
                 <Accordion.Heading className="cat-acc__heading">
                   <Accordion.Trigger
-                    className="ui-button ui-button--bare cat-acc__trigger"
-                    onPointerDown={handleButtonRipplePointerDown}
+                    className="ui-button ui-button--bare ui-button--no-ripple cat-acc__trigger"
                   >
-                    <ButtonRippleLayer />
                     <span className="cat-acc__label">{f.label}</span>
                     <Accordion.Indicator className="cat-acc__chevron" />
                   </Accordion.Trigger>

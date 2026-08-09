@@ -192,6 +192,8 @@ export function NewsCard({
 /* --- Car Card (композиция компонентов кита) --- */
 export type CarCardProps = {
   size?: "m" | "l";
+  /** Явный layout-вариант для контекстов с особыми размерами карточки. */
+  variant?: "default" | "comparison";
   vehicleId?: string;
   brandLogo: string;
   brandName?: string;
@@ -209,11 +211,13 @@ export type CarCardProps = {
   /** Заменяет кнопку действия (например, окно-заявка для авто без страницы). */
   actionSlot?: ReactNode;
   comparisonEnabled?: boolean;
+  onFavoriteChange?: (active: boolean) => void;
   href?: string;
   className?: string;
 };
 export function CarCard({
   size = "l",
+  variant = "default",
   vehicleId,
   brandLogo,
   brandName = "",
@@ -227,11 +231,19 @@ export function CarCard({
   action,
   actionSlot,
   comparisonEnabled = true,
+  onFavoriteChange,
   href,
   className,
 }: CarCardProps) {
   return (
-    <div className={cn("car-card", `car-card--${size}`, className)}>
+    <div
+      className={cn(
+        "car-card",
+        `car-card--${size}`,
+        variant !== "default" && `car-card--${variant}`,
+        className,
+      )}
+    >
       {href && (
         <Link
           className="car-card__link"
@@ -249,7 +261,11 @@ export function CarCard({
               <img src={brandLogo} alt={brandName} />
             </div>
             <div className="car-card__actions">
-              <Wishlist vehicleId={vehicleId} tip="В избранное" />
+              <Wishlist
+                vehicleId={vehicleId}
+                tip="В избранное"
+                onChange={onFavoriteChange}
+              />
               {comparisonEnabled && (
                 <Comparison vehicleId={vehicleId} tip="В сравнение" />
               )}

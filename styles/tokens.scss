@@ -60,10 +60,25 @@ $font-weight-extrabold: 800;
 $font-weight-black: 900;
 
 // ---------- Typography: Fixed Figma scales ----------
+$type-heading-h1-font-size: 88px;
+$type-heading-h1-line-height: 100px;
+$type-heading-h2-font-size: 66px;
+$type-heading-h2-line-height: 70px;
+$type-heading-h3-font-size: 50px;
+$type-heading-h3-line-height: 56px;
+$type-heading-h4-font-size: 48px;
+$type-heading-h4-line-height: 56px;
+$type-heading-h5-font-size: 40px;
+$type-heading-h5-line-height: 48px;
+$type-heading-h6-font-size: 36px;
+$type-heading-h6-line-height: 44px;
+
+$type-display-88-font-size: 88px;
+$type-display-88-line-height: 100px;
 $type-display-66-font-size: 66px;
 $type-display-66-line-height: 70px;
 $type-display-50-font-size: 50px;
-$type-display-50-line-height: 70px;
+$type-display-50-line-height: 56px;
 $type-display-48-font-size: 48px;
 $type-display-48-line-height: 56px;
 $type-display-40-font-size: 40px;
@@ -82,7 +97,13 @@ $type-display-20-font-size: 20px;
 $type-display-20-line-height: 26px;
 $type-display-18-font-size: 18px;
 $type-display-18-line-height: 22px;
+$type-display-16-font-size: 16px;
+$type-display-16-line-height: 20px;
 
+$type-text-36-font-size: 36px;
+$type-text-36-line-height: 42px;
+$type-text-32-font-size: 32px;
+$type-text-32-line-height: 44px;
 $type-text-30-font-size: 30px;
 $type-text-30-line-height: 40px;
 $type-text-24-font-size: 24px;
@@ -100,12 +121,26 @@ $type-text-12-line-height: 16px;
 $type-text-10-font-size: 10px;
 $type-text-10-line-height: 14px;
 
+$type-numeric-40-font-size: 40px;
+$type-numeric-40-line-height: 46px;
 $type-price-28-font-size: 28px;
 $type-price-28-line-height: 36px;
+// Project-only compact price aliases; the Figma Price/Value style is 28/36.
 $type-price-24-font-size: 24px;
 $type-price-24-line-height: 30px;
 $type-price-20-font-size: 20px;
 $type-price-20-line-height: 26px;
+
+// ---------- Radius: Figma breakpoint tokens ----------
+$radius-1920: 30px;
+$radius-1536: 30px;
+$radius-1200: 26px;
+$radius-960: 22px;
+$radius-768: 16px;
+$radius-640: 14px;
+$radius-480: 12px;
+$radius-390: 12px;
+$radius-current: var(--radius-current);
 
 // ---------- Responsive layout ----------
 $layout-max: 1920px;
@@ -115,9 +150,9 @@ $crumbs-page-top: var(--crumbs-page-top);
 $section-space: clamp(72px, 8.333vw, 160px);
 $section-space-lg: clamp(88px, 10.416vw, 200px);
 $surface-padding: clamp(20px, 2.083vw, 40px);
-$radius-page: clamp(28px, 2.604vw, 50px);
-$radius-card: clamp(22px, 1.563vw, 30px);
-$radius-media: clamp(22px, 1.875vw, 36px);
+$radius-page: $radius-current;
+$radius-card: $radius-current;
+$radius-media: $radius-current;
 
 // ---------- Layering ----------
 $z-header: 50;
