@@ -7,10 +7,9 @@ type BodyType = {
   title: string;
   subtitle: string;
   image: string;
-  largeImage: string;
-  desktopImage: string;
-  tabletImage: string;
-  mobileImage: string;
+  /** Необязательный вариант картинки для узких экранов (≤960): в макете часть
+   *  карточек меняет ракурс (напр. внедорожник: анфас на десктопе → боком на планшете). */
+  narrowImage?: string;
   href: string;
   className?: string;
 };
@@ -20,10 +19,6 @@ const grid: BodyType[] = [
     title: "Купе",
     subtitle: "Динамичный дизайн и яркие эмоции от каждой поездки",
     image: "/images/typeofcar/coupe.webp",
-    largeImage: "/images/typeofcar/adaptive/coupe.webp",
-    desktopImage: "/images/typeofcar/adaptive/coupe.webp",
-    tabletImage: "/images/typeofcar/adaptive/coupe.webp",
-    mobileImage: "/images/typeofcar/adaptive/coupe.webp",
     href: "/coupe",
     className: "bento__a",
   },
@@ -31,10 +26,6 @@ const grid: BodyType[] = [
     title: "Кабриолеты",
     subtitle: "Открытая дорога, лёгкость и максимум впечатлений",
     image: "/images/typeofcar/cabriolet.webp",
-    largeImage: "/images/typeofcar/adaptive/cabriolet-1536.webp",
-    desktopImage: "/images/typeofcar/adaptive/cabriolet-1200.webp",
-    tabletImage: "/images/typeofcar/adaptive/cabriolet-tablet.webp",
-    mobileImage: "/images/typeofcar/adaptive/cabriolet-1536.webp",
     href: "/cabriolet",
     className: "bento__b",
   },
@@ -42,10 +33,7 @@ const grid: BodyType[] = [
     title: "Внедорожники",
     subtitle: "Уверенность, комфорт и свобода на любых маршрутах",
     image: "/images/typeofcar/off-road.webp",
-    largeImage: "/images/typeofcar/adaptive/off-road-1536.webp",
-    desktopImage: "/images/typeofcar/adaptive/off-road-1200.webp",
-    tabletImage: "/images/typeofcar/adaptive/off-road-tablet.webp",
-    mobileImage: "/images/typeofcar/adaptive/off-road-tablet.webp",
+    narrowImage: "/images/typeofcar/off-road-side.webp",
     href: "/off-road",
     className: "bento__c",
   },
@@ -53,10 +41,6 @@ const grid: BodyType[] = [
     title: "Минивэны",
     subtitle: "Простор для семьи, бизнеса и дальних путешествий",
     image: "/images/typeofcar/minivan.webp",
-    largeImage: "/images/typeofcar/adaptive/minivan.webp",
-    desktopImage: "/images/typeofcar/adaptive/minivan.webp",
-    tabletImage: "/images/typeofcar/adaptive/minivan.webp",
-    mobileImage: "/images/typeofcar/adaptive/minivan.webp",
     href: "/minivan",
     className: "bento__d",
   },
@@ -64,10 +48,6 @@ const grid: BodyType[] = [
     title: "Кроссоверы",
     subtitle: "Универсальность для города и активного образа жизни",
     image: "/images/typeofcar/crossover.webp",
-    largeImage: "/images/typeofcar/adaptive/crossover.webp",
-    desktopImage: "/images/typeofcar/adaptive/crossover.webp",
-    tabletImage: "/images/typeofcar/adaptive/crossover.webp",
-    mobileImage: "/images/typeofcar/adaptive/crossover.webp",
     href: "/crossover",
     className: "bento__e",
   },
@@ -77,10 +57,6 @@ const sedan: BodyType = {
   title: "Седаны",
   subtitle: "Элегантность, комфорт и безупречный стиль на каждый день",
   image: "/images/typeofcar/sedan.webp",
-  largeImage: "/images/typeofcar/adaptive/sedan-desktop.webp",
-  desktopImage: "/images/typeofcar/adaptive/sedan-desktop.webp",
-  tabletImage: "/images/typeofcar/adaptive/sedan-tablet.webp",
-  mobileImage: "/images/typeofcar/adaptive/sedan-tablet.webp",
   href: "/sedan",
   className: "body-type-card--wide",
 };
@@ -89,29 +65,16 @@ function BodyTypeCard({
   title,
   subtitle,
   image,
-  largeImage,
-  desktopImage,
-  tabletImage,
-  mobileImage,
+  narrowImage,
   href,
   className,
 }: BodyType) {
   return (
     <ButtonLink href={href} bare className={cn("body-type-card", className)}>
       <picture>
-        <source media="(max-width: 640px)" srcSet={mobileImage} />
-        <source
-          media="(min-width: 1367px) and (max-width: 1536px)"
-          srcSet={largeImage}
-        />
-        <source
-          media="(min-width: 961px) and (max-width: 1366px)"
-          srcSet={desktopImage}
-        />
-        <source
-          media="(min-width: 641px) and (max-width: 960px)"
-          srcSet={tabletImage}
-        />
+        {narrowImage ? (
+          <source media="(max-width: 960px)" srcSet={narrowImage} />
+        ) : null}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img className="body-type-card__img" src={image} alt={title} />
       </picture>
