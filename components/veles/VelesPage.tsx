@@ -82,6 +82,29 @@ export function VelesPage() {
       {/* ---------- Баннер «Александр Велес» (1006:2317) ---------- */}
       <section className="home-wrap veles-cta-section">
         <div className="veles-cta">
+          {/* Декор из макета: вордмарк «ВЕЛЕС» сверху, большой вордмарк под фото,
+              зелёный акцент справа снизу (Figma 1206:3573/3574/3584). */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            className="veles-cta__wm veles-cta__wm--big"
+            src="/images/veles/veles-wordmark-big.svg"
+            alt=""
+            aria-hidden="true"
+          />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            className="veles-cta__wm veles-cta__wm--top"
+            src="/images/veles/veles-wordmark-top.svg"
+            alt=""
+            aria-hidden="true"
+          />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            className="veles-cta__accent"
+            src="/images/veles/veles-accent.svg"
+            alt=""
+            aria-hidden="true"
+          />
           <div className="veles-cta__media">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/images/services/veles1.webp" alt="Александр Велес" />

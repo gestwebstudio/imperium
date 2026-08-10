@@ -58,14 +58,38 @@
    текст справа; с 960 — стопка. ---------------- */
 .veles-cta-section { margin-top: 100px; }
 .veles-cta {
+  position: relative;
   display: flex;
   align-items: stretch;
   gap: 0;
   padding: 40px;
   border-radius: 45px;
   background: rgba(213, 204, 196, 0.4);
+  overflow: hidden;
+}
+/* Декоративные вордмарки/акцент из макета (позиции по брейкам ниже). */
+.veles-cta__wm {
+  position: absolute;
+  z-index: 0;
+  display: block;
+  max-width: none;
+  pointer-events: none;
+}
+.veles-cta__wm--big { left: 122px; top: 0; width: 658px; height: 464px; }
+.veles-cta__wm--top { left: 845px; top: -20px; width: 968px; height: 163px; }
+.veles-cta__accent {
+  position: absolute;
+  right: 40px;
+  bottom: 40px;
+  width: 27.1px;
+  height: 19.1px;
+  z-index: 2;
+  display: block;
+  pointer-events: none;
 }
 .veles-cta__media {
+  position: relative;
+  z-index: 1;
   flex: 0 0 805px;
   width: 805px;
   height: 384px;
@@ -74,6 +98,8 @@
 }
 .veles-cta__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .veles-cta__body {
+  position: relative;
+  z-index: 1;
   flex: 1 1 0;
   min-width: 0;
   display: flex;
@@ -212,11 +238,15 @@
 /* 1536: фото 598×384 (блок в ряд) */
 @media (max-width: 1536px) {
   .veles-cta__media { flex-basis: 598px; width: 598px; }
+  .veles-cta__wm--big { left: 22px; }
+  .veles-cta__wm--top { left: 675px; }
 }
 /* 1200: фото 435×384, описание max 549 */
 @media (max-width: 1366px) {
   .veles-cta__media { flex-basis: 435px; width: 435px; }
   .veles-cta__sub { max-width: 549px; }
+  .veles-cta__wm--big { left: -178px; }
+  .veles-cta__wm--top { left: 475px; width: 840px; height: 141px; }
 }
 /* 960: стопка — [заголовок | описание] сверху, фото снизу; заголовок 50/56 */
 @media (max-width: 960px) {
@@ -234,18 +264,26 @@
   .veles-cta__title .bold { font-size: 50px; line-height: 56px; }
   .veles-cta__sub { flex: 1 1 0; max-width: none; }
   .veles-cta__media { order: 2; flex: none; width: 100%; height: auto; aspect-ratio: 800 / 384; }
+  /* большой вордмарк уходит под фото (снизу), верхний — над текстом; акцента нет */
+  .veles-cta__wm--big { left: 111px; top: 217px; }
+  .veles-cta__wm--top { left: 20px; top: -20px; width: 840px; height: 141px; }
+  .veles-cta__accent { display: none; }
 }
 /* 768: текст стопкой (заголовок над описанием, слева); падинг 30; фото 628×318 */
 @media (max-width: 768px) {
   .veles-cta { padding: 30px; }
   .veles-cta__body { flex-direction: column; gap: 20px; }
   .veles-cta__media { aspect-ratio: 628 / 318; }
+  .veles-cta__wm--big { left: 60px; top: 288px; width: 568px; height: 400px; }
+  .veles-cta__wm--top { left: -3px; top: -10px; width: 720px; height: 121px; }
 }
 /* 640: заголовок 40/48; фото 520×262 */
 @media (max-width: 640px) {
   .veles-cta__title .reg,
   .veles-cta__title .bold { font-size: 40px; line-height: 48px; }
   .veles-cta__media { aspect-ratio: 520 / 262; }
+  .veles-cta__wm--big { left: 59px; top: 322px; width: 462px; height: 326px; }
+  .veles-cta__wm--top { left: -7px; top: -10px; width: 614px; height: 103px; }
 }
 /* 480: падинг 26; заголовок 36/44; описание 16/20; фото 388×205 */
 @media (max-width: 480px) {
@@ -255,6 +293,8 @@
   .veles-cta__title .bold { font-size: 36px; line-height: 44px; }
   .veles-cta__sub { font-size: 16px; line-height: 20px; }
   .veles-cta__media { aspect-ratio: 388 / 205; }
+  .veles-cta__wm--big { left: 29px; top: 282px; width: 382px; height: 269px; }
+  .veles-cta__wm--top { left: -4px; top: -10px; width: 454px; height: 76px; }
 }
 /* 390: падинг 20; заголовок 32/40; gap текст→фото 40; фото 310×166 */
 @media (max-width: 430px) {
@@ -263,4 +303,6 @@
   .veles-cta__title .reg,
   .veles-cta__title .bold { font-size: 32px; line-height: 40px; }
   .veles-cta__media { aspect-ratio: 310 / 166; }
+  .veles-cta__wm--big { left: 25px; top: 323px; width: 300px; height: 211px; }
+  .veles-cta__wm--top { left: -4px; top: -6px; width: 370px; height: 62px; }
 }
