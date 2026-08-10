@@ -686,6 +686,18 @@ body.comparison-route .site-header {
   white-space: nowrap;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
+.mobile-menu__phone span,
+.mobile-menu__close span {
+  display: flex;
+  align-items: center;
+  height: 20px;
+  line-height: 20px;
+}
+.mobile-menu__phone svg,
+.mobile-menu__close svg {
+  display: block;
+  flex: none;
+}
 .mobile-menu__close svg {
   width: 20px;
   height: 20px;
@@ -779,7 +791,7 @@ body.comparison-route .site-header {
   flex-direction: column;
   gap: 12px;
   padding-top: 16px;
-  padding-left: 22px;
+  padding-left: 11px;
 }
 .mobile-submenu__link {
   font-family: var(--font-text, "Onest", sans-serif);
@@ -810,7 +822,7 @@ body.comparison-route .site-header {
 }
 .mobile-menu__secondary-link {
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
-  font-weight: var(--font-weight-semibold, 600);
+  font-weight: var(--font-weight-regular, 400);
   font-size: clamp(20px, calc(16px + 1.2vw), 28px);
   line-height: 1.1;
   letter-spacing: -.02em;
@@ -1002,7 +1014,7 @@ body.comparison-route .site-header {
   .mobile-submenu__list {
     gap: 10px;
     padding-top: 12px;
-    padding-left: 20px;
+    padding-left: 10px;
   }
   .mobile-submenu__link {
     font-size: 15px;

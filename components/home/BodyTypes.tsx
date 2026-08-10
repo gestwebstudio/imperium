@@ -6,48 +6,60 @@ import { LeadModal } from "@/components/ui/LeadModal";
 type BodyType = {
   title: string;
   subtitle: string;
-  image: string;
-  /** Необязательный вариант картинки для узких экранов (≤960): в макете часть
-   *  карточек меняет ракурс (напр. внедорожник: анфас на десктопе → боком на планшете). */
-  narrowImage?: string;
+  imageKey:
+    | "coupe"
+    | "cabriolet"
+    | "off-road"
+    | "minivan"
+    | "crossover"
+    | "sedan";
   href: string;
   className?: string;
 };
+
+const imageBreakpoints = [
+  { media: "(min-width: 1537px)", folder: "1920" },
+  { media: "(min-width: 1201px)", folder: "1536" },
+  { media: "(min-width: 961px)", folder: "1200" },
+  { media: "(min-width: 769px)", folder: "960" },
+  { media: "(min-width: 641px)", folder: "768" },
+  { media: "(min-width: 481px)", folder: "640" },
+  { media: "(min-width: 391px)", folder: "480" },
+] as const;
 
 const grid: BodyType[] = [
   {
     title: "Купе",
     subtitle: "Динамичный дизайн и яркие эмоции от каждой поездки",
-    image: "/images/typeofcar/coupe.webp",
+    imageKey: "coupe",
     href: "/coupe",
     className: "bento__a",
   },
   {
     title: "Кабриолеты",
     subtitle: "Открытая дорога, лёгкость и максимум впечатлений",
-    image: "/images/typeofcar/cabriolet.webp",
+    imageKey: "cabriolet",
     href: "/cabriolet",
     className: "bento__b",
   },
   {
     title: "Внедорожники",
     subtitle: "Уверенность, комфорт и свобода на любых маршрутах",
-    image: "/images/typeofcar/off-road.webp",
-    narrowImage: "/images/typeofcar/off-road-side.webp",
+    imageKey: "off-road",
     href: "/off-road",
     className: "bento__c",
   },
   {
     title: "Минивэны",
     subtitle: "Простор для семьи, бизнеса и дальних путешествий",
-    image: "/images/typeofcar/minivan.webp",
+    imageKey: "minivan",
     href: "/minivan",
     className: "bento__d",
   },
   {
     title: "Кроссоверы",
     subtitle: "Универсальность для города и активного образа жизни",
-    image: "/images/typeofcar/crossover.webp",
+    imageKey: "crossover",
     href: "/crossover",
     className: "bento__e",
   },
@@ -56,7 +68,7 @@ const grid: BodyType[] = [
 const sedan: BodyType = {
   title: "Седаны",
   subtitle: "Элегантность, комфорт и безупречный стиль на каждый день",
-  image: "/images/typeofcar/sedan.webp",
+  imageKey: "sedan",
   href: "/sedan",
   className: "body-type-card--wide",
 };
@@ -64,19 +76,28 @@ const sedan: BodyType = {
 function BodyTypeCard({
   title,
   subtitle,
-  image,
-  narrowImage,
+  imageKey,
   href,
   className,
 }: BodyType) {
   return (
     <ButtonLink href={href} bare className={cn("body-type-card", className)}>
       <picture>
-        {narrowImage ? (
-          <source media="(max-width: 960px)" srcSet={narrowImage} />
-        ) : null}
+        {imageBreakpoints.map(({ media, folder }) => (
+          <source
+            key={folder}
+            media={media}
+            srcSet={`/images/body-types/${folder}/${imageKey}.jpg`}
+          />
+        ))}
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="body-type-card__img" src={image} alt={title} />
+        <img
+          className="body-type-card__img"
+          src={`/images/body-types/390/${imageKey}.jpg`}
+          alt={title}
+          loading="lazy"
+          decoding="async"
+        />
       </picture>
       <span className="body-type-card__grad" />
       <div className="body-type-card__text">

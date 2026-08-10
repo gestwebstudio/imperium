@@ -405,7 +405,7 @@ export function MobileMenu() {
                   onClick={close}
                 >
                   <PhoneIcon width={20} height={20} />
-                  +7 499 704-14-44
+                  <span>+7 499 704-14-44</span>
                 </a>
                 <button
                   type="button"

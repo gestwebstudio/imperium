@@ -1639,6 +1639,7 @@
 /* ===== Каталог на главной: мобильные макеты Figma 1115:6250 / 1115:6285. ===== */
 @media (max-width: 640px) {
   .body-types__inner {
+    --bt-mobile-inset: clamp(20px, calc(6.25vw - 10px), 30px);
     --bt-mobile-card-title: clamp(16px, calc(2.2222vw + 7.3333px), 18px);
     --bt-mobile-card-line: clamp(20px, calc(2.2222vw + 11.3333px), 22px);
     --bt-mobile-card-x: clamp(14px, calc(2.2222vw + 5.3333px), 16px);
@@ -1646,7 +1647,7 @@
     position: relative;
     left: 50%;
     display: flex;
-    width: calc(100vw - 40px);
+    width: calc(100vw - (2 * var(--bt-mobile-inset)));
     transform: translateX(-50%);
     flex-direction: column;
     gap: 30px;
@@ -2793,4 +2794,17 @@
   .bento__d .body-type-card__img { left: -5.88%; top: -15.13%; width: 111.76%; height: 116.62%; }
   .bento__e .body-type-card__img { left: -15.29%; top: -33.24%; width: 132.35%; height: 133.53%; }
   .body-type-card--wide .body-type-card__img { left: -9.41%; top: -13.95%; width: 152.94%; height: 130.86%; }
+}
+
+/* Готовые экспортированные изображения уже повторяют кадрирование Figma для
+   каждого контрольного разрешения, поэтому внутри карточки они заполняют бокс
+   без дополнительного зума, сдвига или отражения. */
+.body-types .body-type-card__img {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  transform: none;
+  object-fit: cover;
+  object-position: center;
 }
