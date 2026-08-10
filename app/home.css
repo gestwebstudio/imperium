@@ -2804,13 +2804,15 @@
     min-height: 0;
     padding: 30px 20px;
     gap: 30px;
-    border-radius: 30px;
+    /* радиус — из токенов кита (styles/tokens.css: --radius-current
+       сам отдаёт 30/26/22/16/14/12 по брейкпоинтам) */
+    border-radius: var(--radius-card);
   }
   .about__identity .image-service-card__img {
     flex: 0 0 auto;
     height: calc(var(--content-w) * 0.307);
     aspect-ratio: auto;
-    border-radius: 30px;
+    border-radius: var(--radius-media);
   }
   .about__identity .image-service-card__body { gap: 12px; }
   .about__identity .image-service-card__head { align-items: center; }
@@ -2833,8 +2835,6 @@
   .about__identity .svc-card--selection { top: 38.6%; left: 0;      width: 40.9%; }
   .about__identity .svc-card--veles     { top: 49.9%; left: 43.75%; width: 54.5%; }
 
-  .about__identity .image-service-card { border-radius: 26px; }
-  .about__identity .image-service-card__img { border-radius: 26px; }
   .about__identity .image-service-card__head { align-items: flex-start; }
   .about__identity .image-service-card__title { font-size: 32px; line-height: 40px; }
 }
@@ -2869,11 +2869,9 @@
   .svc-card--veles     { grid-area: veles; }
   .svc-card--selection { grid-area: selection; }
 
-  .about__identity .image-service-card { border-radius: 22px; }
   .about__identity .image-service-card__img {
     height: auto;
     aspect-ratio: 424 / 290;
-    border-radius: 22px;
   }
   .about__identity .svc-card--selection .image-service-card__img { aspect-ratio: 888 / 292; }
   .about__identity .image-service-card__title { font-size: 30px; line-height: 38px; }
@@ -2887,12 +2885,8 @@
   .about__identity .image-service-card {
     padding: 20px;
     gap: 20px;
-    border-radius: 16px;
   }
-  .about__identity .image-service-card__img {
-    aspect-ratio: 328 / 190;
-    border-radius: 16px;
-  }
+  .about__identity .image-service-card__img { aspect-ratio: 328 / 190; }
   .about__identity .svc-card--selection .image-service-card__img { aspect-ratio: 696 / 302; }
   .about__identity .image-service-card__arrow.btn { width: 36px; height: 36px; }
   .about__identity .image-service-card__arrow .btn__icon { width: 10px; height: 10px; }
@@ -2915,12 +2909,11 @@
   .about__lead .reg { font-size: 30px; line-height: 38px; }
   .about__lead .bold { font-size: 32px; line-height: 40px; }
 
-  .about__identity .image-service-card { border-radius: 14px; gap: 20px; }
+  .about__identity .image-service-card { gap: 20px; }
   .about__identity .image-service-card__body { gap: 6px; }
   .about__identity .image-service-card__img,
   .about__identity .svc-card--selection .image-service-card__img {
     aspect-ratio: 588 / 317;
-    border-radius: 14px;
   }
   .about__identity .image-service-card__title,
   .about__identity .svc-card--selection .image-service-card__title { font-size: 30px; line-height: 38px; }
@@ -2937,12 +2930,10 @@
   .about__identity .image-service-card {
     padding: 0;
     gap: 20px;
-    border-radius: 12px;
   }
   .about__identity .image-service-card__img,
   .about__identity .svc-card--selection .image-service-card__img {
     aspect-ratio: 440 / 252;
-    border-radius: 12px;
   }
   .about__identity .image-service-card__title,
   .about__identity .svc-card--selection .image-service-card__title { font-size: 24px; line-height: 30px; }
