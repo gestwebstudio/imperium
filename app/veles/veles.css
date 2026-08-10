@@ -242,7 +242,7 @@
   .veles-cta__wm--top { left: 675px; }
 }
 /* 1200: фото 435×384, описание max 549 */
-@media (max-width: 1366px) {
+@media (max-width: 1200px) {
   .veles-cta__media { flex-basis: 435px; width: 435px; }
   .veles-cta__sub { max-width: 549px; }
   .veles-cta__wm--big { left: -178px; }
