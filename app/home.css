@@ -2229,21 +2229,6 @@
 @media (max-width: 960px) {
   .about__services { grid-template-columns: 1fr; }
   .service-card { height: auto; min-height: 167px; }
-  .about__identity {
-    height: auto;
-    margin-top: 80px;
-    display: flex;
-    flex-direction: column;
-    gap: 48px;
-  }
-  .about__wordmark-bg { display: none; }
-  .about__lead,
-  .image-service-card[class*="svc-card--"] {
-    position: relative;
-    inset: auto;
-    width: 100%;
-  }
-  .about__lead .bold { line-height: 1.08; }
 }
 
 /* ---------------- Contacts ---------------- */
@@ -2337,29 +2322,6 @@
   .body-types__head { min-height: 0; margin-bottom: 48px; }
   .body-types__aside { width: min(44%, 594px); padding-top: 72px; }
 
-  .about__identity {
-    height: auto;
-    margin-top: 120px;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-areas:
-      "lead atelier"
-      "selection veles";
-    gap: 64px 24px;
-  }
-  .about__wordmark-bg { display: none; }
-  .about__lead,
-  .image-service-card[class*="svc-card--"] {
-    position: relative;
-    inset: auto;
-    width: 100%;
-  }
-  .about__lead { grid-area: lead; align-self: center; }
-  .about__lead .reg { font-size: clamp(38px, 3.4vw, 50px); line-height: 1.25; }
-  .about__lead .bold { font-size: clamp(48px, 4.4vw, 64px); line-height: 1.08; }
-  .svc-card--atelier { grid-area: atelier; }
-  .svc-card--selection { grid-area: selection; }
-  .svc-card--veles { grid-area: veles; }
   .about__testimonial { margin-top: 140px; }
 
   .contacts__title { gap: 6px; }
@@ -2506,10 +2468,6 @@
   }
   .service-card__text {
     margin-top: 8px;
-  }
-  .about__identity {
-    margin-top: 64px;
-    gap: 32px;
   }
   .about__testimonial {
     margin-top: 64px;
@@ -2807,4 +2765,193 @@
   transform: none;
   object-fit: cover;
   object-position: center;
+}
+
+/* ============================================================
+   Блок услуг (Ателье / Подбор / Велес) — адаптив по макетам Figma:
+   1536 (1209:16461) · 1200 (16587) · 960 (16701) · 768 (16819) ·
+   640 (16953) · 480 (17097) · 390 (17229).
+   Блок один и тот же на главной, /atelier и /veles — правила
+   скоуплены под .about__identity, поэтому применяются на всех
+   трёх страницах. База 1920 — выше по файлу, её не трогаем.
+   Фото карточек задаётся размером (высота/аспект), тело — авто,
+   т.к. тексты на страницах разные (переиспользуемость).
+   ============================================================ */
+
+/* ---------- Коллаж-мозаика 1536 → 961 ----------
+   Лид + фоновый вордмарк + 3 карточки абсолютом. Позиции — в % от
+   контент-бокса (.about__identity = ширина home-wrap минус поля);
+   высота контейнера и фото привязаны к --content-w, поэтому мозаика
+   плавно масштабируется в диапазоне. */
+@media (max-width: 1536px) {
+  .about__identity {
+    --content-w: calc(100vw - 2 * var(--page-gutter, 60px));
+    height: calc(var(--content-w) * 1464 / 1416);
+    margin-top: 120px;
+  }
+  .about__wordmark-bg { display: block; top: 35.5%; left: 0; width: 100%; }
+
+  .about__lead { top: 11.2%; left: 0; width: 57.3%; }
+  .about__lead .reg { font-size: 48px; line-height: 56px; }
+  .about__lead .bold { font-size: 50px; line-height: 56px; }
+
+  .about__identity .svc-card--atelier   { top: 4.1%;  left: 57.3%;  width: 42.7%; }
+  .about__identity .svc-card--selection { top: 40.6%; left: 0;      width: 39.2%; }
+  .about__identity .svc-card--veles     { top: 51.1%; left: 42.0%;  width: 58.0%; }
+
+  /* внутренняя геометрия карточки — токены макета 1536 */
+  .about__identity .image-service-card {
+    min-height: 0;
+    padding: 30px 20px;
+    gap: 30px;
+    border-radius: 30px;
+  }
+  .about__identity .image-service-card__img {
+    flex: 0 0 auto;
+    height: calc(var(--content-w) * 0.307);
+    aspect-ratio: auto;
+    border-radius: 30px;
+  }
+  .about__identity .image-service-card__body { gap: 12px; }
+  .about__identity .image-service-card__head { align-items: center; }
+  .about__identity .image-service-card__title { font-size: 36px; line-height: 44px; }
+  .about__identity .image-service-card__text  { width: 100%; font-size: 18px; line-height: 24px; }
+  .about__identity .image-service-card__arrow.btn { width: 44px; height: 44px; }
+  .about__identity .image-service-card__arrow .btn__icon { width: 16px; height: 16px; }
+}
+
+/* ---------- Коллаж 1200 (16587): та же мозаика, компактнее ---------- */
+@media (max-width: 1200px) {
+  .about__identity { height: calc(var(--content-w) * 1214 / 1120); }
+  .about__wordmark-bg { top: 27.5%; }
+
+  .about__lead { top: 10.6%; width: 54.9%; }
+  .about__lead .reg { font-size: 36px; line-height: 44px; }
+  .about__lead .bold { font-size: 40px; line-height: 48px; }
+
+  .about__identity .svc-card--atelier   { top: 3.3%;  left: 54.9%;  width: 45.1%; }
+  .about__identity .svc-card--selection { top: 38.6%; left: 0;      width: 40.9%; }
+  .about__identity .svc-card--veles     { top: 49.9%; left: 43.75%; width: 54.5%; }
+
+  .about__identity .image-service-card { border-radius: 26px; }
+  .about__identity .image-service-card__img { border-radius: 26px; }
+  .about__identity .image-service-card__head { align-items: flex-start; }
+  .about__identity .image-service-card__title { font-size: 32px; line-height: 40px; }
+}
+
+/* ---------- Ряд 960 (16701): лид сверху, «Ателье | Велес», «Подбор»
+   во всю ширину. Порядок карточек в макете Ателье→Велес→Подбор
+   (в DOM Ателье→Подбор→Велес) — раскладываем по grid-areas. ---------- */
+@media (max-width: 960px) {
+  .about__identity {
+    height: auto;
+    margin-top: 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "lead lead"
+      "atelier veles"
+      "selection selection";
+    column-gap: 0;
+    row-gap: 24px;
+    align-items: start;
+  }
+  .about__wordmark-bg { display: none; }
+
+  .about__lead { grid-area: lead; position: static; inset: auto; width: 100%; }
+
+  .about__identity .image-service-card[class*="svc-card--"] {
+    position: static;
+    inset: auto;
+    width: 100%;
+  }
+  .svc-card--atelier   { grid-area: atelier; }
+  .svc-card--veles     { grid-area: veles; }
+  .svc-card--selection { grid-area: selection; }
+
+  .about__identity .image-service-card { border-radius: 22px; }
+  .about__identity .image-service-card__img {
+    height: auto;
+    aspect-ratio: 424 / 290;
+    border-radius: 22px;
+  }
+  .about__identity .svc-card--selection .image-service-card__img { aspect-ratio: 888 / 292; }
+  .about__identity .image-service-card__title { font-size: 30px; line-height: 38px; }
+  .about__identity .svc-card--selection .image-service-card__title { font-size: 32px; line-height: 40px; }
+}
+
+/* ---------- Ряд 768 (16819): та же раскладка, токены поменьше ---------- */
+@media (max-width: 768px) {
+  .about__identity { row-gap: 16px; }
+
+  .about__identity .image-service-card {
+    padding: 20px;
+    gap: 20px;
+    border-radius: 16px;
+  }
+  .about__identity .image-service-card__img {
+    aspect-ratio: 328 / 190;
+    border-radius: 16px;
+  }
+  .about__identity .svc-card--selection .image-service-card__img { aspect-ratio: 696 / 302; }
+  .about__identity .image-service-card__arrow.btn { width: 36px; height: 36px; }
+  .about__identity .image-service-card__arrow .btn__icon { width: 10px; height: 10px; }
+}
+
+/* ---------- Колонка 640 (16953): одна колонка; padding есть →
+   между карточками достаточно 4px (зазор дают внутренние отступы). ---------- */
+@media (max-width: 640px) {
+  .about__identity {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "lead"
+      "atelier"
+      "veles"
+      "selection";
+    row-gap: 4px;
+    margin-top: 64px;
+  }
+  .about__lead { margin-bottom: 16px; }
+  .about__lead .reg { font-size: 30px; line-height: 38px; }
+  .about__lead .bold { font-size: 32px; line-height: 40px; }
+
+  .about__identity .image-service-card { border-radius: 14px; gap: 20px; }
+  .about__identity .image-service-card__body { gap: 6px; }
+  .about__identity .image-service-card__img,
+  .about__identity .svc-card--selection .image-service-card__img {
+    aspect-ratio: 588 / 317;
+    border-radius: 14px;
+  }
+  .about__identity .image-service-card__title,
+  .about__identity .svc-card--selection .image-service-card__title { font-size: 30px; line-height: 38px; }
+}
+
+/* ---------- Колонка 480 / 390 (17097 / 17229): без padding, фото
+   встык к тексту → между карточками зазор 24px. ---------- */
+@media (max-width: 480px) {
+  .about__identity { row-gap: 24px; margin-top: 48px; }
+  .about__lead { margin-bottom: 16px; }
+  .about__lead .reg { font-size: 24px; line-height: 30px; }
+  .about__lead .bold { font-size: 24px; line-height: 30px; }
+
+  .about__identity .image-service-card {
+    padding: 0;
+    gap: 20px;
+    border-radius: 12px;
+  }
+  .about__identity .image-service-card__img,
+  .about__identity .svc-card--selection .image-service-card__img {
+    aspect-ratio: 440 / 252;
+    border-radius: 12px;
+  }
+  .about__identity .image-service-card__title,
+  .about__identity .svc-card--selection .image-service-card__title { font-size: 24px; line-height: 30px; }
+  .about__identity .image-service-card__text { font-size: 16px; line-height: 20px; }
+  .about__identity .image-service-card__arrow.btn { width: 28px; height: 28px; }
+  .about__identity .image-service-card__arrow .btn__icon { width: 8px; height: 8px; }
+}
+
+@media (max-width: 390px) {
+  .about__identity .image-service-card__img,
+  .about__identity .svc-card--selection .image-service-card__img { aspect-ratio: 350 / 210; }
 }
