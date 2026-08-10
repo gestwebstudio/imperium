@@ -342,18 +342,19 @@ body.comparison-route .site-header {
   color: var(--color-stone-beige-200, #E4DFDB);
   border-radius: var(--radius-page, 50px) var(--radius-page, 50px) 0 0;
   margin-top: clamp(72px, 5.208vw, 100px);
-  padding: clamp(40px, 3.125vw, 60px) var(--page-gutter, 60px) 40px;
+  padding: 60px 60px 40px;
   overflow: hidden;
 }
 .site-footer__inner { max-width: 1800px; margin: 0 auto; }
 
-.footer-top { display: flex; flex-wrap: wrap; gap: 48px 98px; justify-content: space-between; }
-.footer-cols { display: flex; flex-wrap: wrap; gap: 48px 98px; }
+.footer-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 40px 98px; }
+.footer-cols { display: flex; gap: 98px; }
+.footer-aside { display: flex; flex: 1; justify-content: space-between; align-items: flex-start; gap: 40px; }
 .footer-col { display: flex; flex-direction: column; gap: 16px; }
 .footer-col__title {
   font-family: var(--font-text, "Onest", sans-serif);
   font-weight: var(--font-weight-regular, 400);
-  font-size: var(--fs-20);
+  font-size: 20px;
   line-height: 28px;
   color: var(--color-stone-beige-200, #E4DFDB);
   opacity: 0.5;
@@ -362,15 +363,15 @@ body.comparison-route .site-header {
 .footer-col__list a {
   font-family: var(--font-text, "Onest", sans-serif);
   font-weight: var(--font-weight-regular, 400);
-  font-size: var(--fs-18);
+  font-size: 18px;
   line-height: 24px;
   color: var(--color-stone-beige-200, #E4DFDB);
   text-decoration: none;
 }
 .footer-col__list a:hover { opacity: 0.7; }
 
-.footer-contacts { display: flex; flex-direction: column; gap: 32px; }
-.footer-phone__label { font-size: var(--fs-20); line-height: 1.4; opacity: 0.5; margin-bottom: 16px; }
+.footer-contacts { display: flex; flex-direction: column; gap: 24px; }
+.footer-phone__label { font-size: 20px; line-height: 28px; opacity: 0.5; margin-bottom: 16px; }
 .footer-phone {
   position: relative;
   display: inline-flex;
@@ -380,7 +381,7 @@ body.comparison-route .site-header {
 .footer-phone__value {
   font-family: var(--font-text, "Onest", sans-serif);
   font-weight: var(--font-weight-semibold, 600);
-  font-size: var(--fs-24);
+  font-size: 24px;
   line-height: 30px;
   color: var(--color-stone-beige-200, #E4DFDB);
   text-decoration: none;
@@ -441,17 +442,20 @@ body.comparison-route .site-header {
 .footer-social img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .footer-social:hover { filter: brightness(0.94); }
 
-.footer-legal { text-align: right; display: flex; flex-direction: column; gap: 40px; margin-left: auto; }
+.footer-legal { text-align: right; display: flex; flex-direction: column; gap: 16px; }
 .footer-legal p, .footer-legal a {
   margin: 0;
-  font-size: var(--fs-18);
+  font-size: 18px;
   line-height: 24px;
   color: var(--color-stone-beige-200, #E4DFDB);
   text-decoration: none;
 }
 .footer-legal a:hover { opacity: 0.7; }
+/* Дисклеймер (ст. 435/437) — в макете его нет, адаптируем сами: мелкий текст
+   под правовыми, по выравниванию легала. */
 .footer-legal .footer-disclaimer {
   max-width: 365px;
+  margin-top: 8px;
   margin-left: auto;
   font-size: 10px;
   line-height: 14px;
@@ -459,52 +463,93 @@ body.comparison-route .site-header {
   opacity: 0.3;
 }
 
-.footer-tagline { margin: clamp(64px, 9.271vw, 178px) 0 0; font-size: var(--fs-20); line-height: 1.4; color: var(--color-white, #FFFFFF); opacity: 0.3; max-width: 474px; }
+.footer-tagline { margin: 178px 0 0; font-size: 20px; line-height: 28px; color: var(--color-white, #FFFFFF); opacity: 0.3; max-width: 474px; }
 .footer-logo { margin-top: 1px; }
 .footer-logo img { width: 100%; height: auto; display: block; }
 
+/* ===== Футер: адаптив по макетам Figma (1143:12794 / 1147:4873 … 1153:7811).
+   Все паддинги, гэпы, размеры шрифтов, шаги ссылок и иконки — из get_metadata. ===== */
+
+/* 1536: контакты+легал уходят в правую колонку стопкой; колонки gap 56 */
+@media (max-width: 1536px) {
+  .footer-cols { gap: 56px; }
+  .footer-contacts { gap: 16px; }
+  .footer-tagline { margin-top: 80px; }
+  .footer-logo { margin-top: 4px; }
+}
+
+/* 961–1536: правый блок (контакты + легал) — колонка, прижата к правому краю
+   (в макете contact+social на x=58 в 300-блоке, соцсети на x=86 — всё вправо). */
+@media (min-width: 961px) and (max-width: 1536px) {
+  .footer-aside { flex-direction: column; flex: 0 0 auto; gap: 24px; align-items: flex-end; text-align: right; }
+  .footer-contacts { align-items: flex-end; }
+}
+
+/* 1200: колонки gap 32; тайтлы колонок и лейбл телефона 18/24 */
+@media (max-width: 1366px) {
+  .footer-cols { gap: 32px; }
+  .footer-col__title { font-size: 18px; line-height: 24px; }
+  .footer-phone__label { font-size: 18px; line-height: 24px; }
+}
+
+/* 960: nav на всю ширину, инфо-ряд (контакты | копирайт) под ним; шрифты меньше */
 @media (max-width: 960px) {
-  .footer-cols { gap: 32px 48px; }
-  .footer-legal { text-align: left; margin-left: 0; }
-  .footer-tagline { margin-top: 72px; }
+  .site-footer { padding: 56px 48px 36px; }
+  .footer-top { flex-direction: column; align-items: stretch; gap: 40px; }
+  .footer-cols { justify-content: space-between; gap: 32px; }
+  .footer-col__list a { font-size: 16px; line-height: 20px; }
+  .footer-phone__value { font-size: 20px; line-height: 28px; }
+  .footer-social { width: 38px; height: 38px; }
+  .footer-socials { gap: 14px; }
+  .footer-aside { flex-direction: row; justify-content: space-between; align-items: flex-start; gap: 40px; }
+  .footer-legal { gap: 12px; }
+  .footer-legal p, .footer-legal a { font-size: 16px; line-height: 20px; }
+  .footer-tagline { font-size: 18px; line-height: 24px; margin-top: 64px; }
+  .footer-logo { margin-top: 4px; }
 }
 
+/* 768: колонки gap 48, шаг ссылок 28 (gap 8), тайтл→список 12 */
 @media (max-width: 768px) {
-  .footer-top { gap: 40px; }
-  .footer-legal { gap: 24px; }
+  .site-footer { padding: 56px 40px 32px; }
+  .footer-cols { gap: 48px; }
+  .footer-col { gap: 12px; }
+  .footer-col__list { gap: 8px; }
+  .footer-tagline { margin-top: 56px; }
 }
 
+/* 640: колонки в сетку 2×2 (gap 32/40), инфо стопкой, всё слева */
 @media (max-width: 640px) {
-  .site-footer {
-    padding-bottom: 28px;
-  }
-  .footer-top {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .footer-cols {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 32px 24px;
-  }
-  .footer-contacts {
-    gap: 24px;
-  }
-  .footer-phone {
-    gap: 8px;
-  }
-  .footer-legal {
-    max-width: 100%;
-  }
-  .footer-tagline {
-    margin-top: 48px;
-  }
+  .site-footer { padding: 48px 40px 32px; }
+  .footer-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 40px; }
+  .footer-col { gap: 16px; }
+  .footer-col__list { gap: 12px; }
+  .footer-aside { flex-direction: column; align-items: stretch; gap: 24px; }
+  .footer-contacts { gap: 16px; }
+  .footer-phone { gap: 8px; }
+  .footer-social { width: 36px; height: 36px; }
+  .footer-legal { text-align: left; max-width: 100%; }
+  .footer-legal .footer-disclaimer { margin-left: 0; }
+  .footer-tagline { margin-top: 48px; }
 }
 
-@media (max-width: 390px) {
-  .footer-cols {
-    grid-template-columns: minmax(0, 1fr);
-  }
+/* 480: 2×2 (row gap 28), тайтл 16/20, ссылки 14/18 */
+@media (max-width: 480px) {
+  .site-footer { padding: 44px 32px 28px; }
+  .footer-cols { gap: 28px 40px; }
+  .footer-col__title { font-size: 16px; line-height: 20px; }
+  .footer-phone__label { font-size: 16px; line-height: 20px; }
+  .footer-col__list a { font-size: 14px; line-height: 18px; }
+  .footer-legal p, .footer-legal a { font-size: 14px; line-height: 18px; }
+  .footer-social { width: 34px; height: 34px; }
+  .footer-tagline { font-size: 16px; line-height: 20px; margin-top: 44px; }
+}
+
+/* 390: колонки gap 16, паддинг 20 */
+@media (max-width: 430px) {
+  .site-footer { padding: 40px 20px 24px; }
+  .footer-cols { gap: 28px 16px; }
+  .footer-social { width: 32px; height: 32px; }
+  .footer-tagline { font-size: 14px; line-height: 18px; margin-top: 40px; }
 }
 
 /* ============================================================

@@ -91,45 +91,47 @@ export function Footer() {
             ))}
           </div>
 
-          <div className="footer-contacts">
-            <div>
-              <div className="footer-phone__label">Телефон</div>
-              <FooterPhone />
+          <div className="footer-aside">
+            <div className="footer-contacts">
+              <div>
+                <div className="footer-phone__label">Телефон</div>
+                <FooterPhone />
+              </div>
+              <div className="footer-socials">
+                {SOCIALS.map((s) => {
+                  const href = "href" in s ? s.href : undefined;
+                  return (
+                  <ButtonLink
+                    key={s.label}
+                    href={href ?? "#"}
+                    {...(href
+                      ? { target: "_blank", rel: "nofollow noopener noreferrer" }
+                      : {})}
+                    bare
+                    className="footer-social"
+                    aria-label={s.label}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={s.icon} alt={s.label} width={42} height={42} />
+                  </ButtonLink>
+                  );
+                })}
+              </div>
             </div>
-            <div className="footer-socials">
-              {SOCIALS.map((s) => {
-                const href = "href" in s ? s.href : undefined;
-                return (
-                <ButtonLink
-                  key={s.label}
-                  href={href ?? "#"}
-                  {...(href
-                    ? { target: "_blank", rel: "nofollow noopener noreferrer" }
-                    : {})}
-                  bare
-                  className="footer-social"
-                  aria-label={s.label}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={s.icon} alt={s.label} width={42} height={42} />
-                </ButtonLink>
-                );
-              })}
-            </div>
-          </div>
 
-          <div className="footer-legal">
-            <p>
-              Copyright © 2026 Imperium Motors
-              <br />
-              All Rights Reserved
-            </p>
-            <Link href="#">Правовые документы</Link>
-            <p className="footer-disclaimer">
-              Изложенная на данном сайте информация носит ознакомительный
-              характер не является публичной офертой, определяемой положениями
-              статей 435 и 437 Гражданского Кодекса Российской Федерации
-            </p>
+            <div className="footer-legal">
+              <p>
+                Copyright © 2026 Imperium Motors
+                <br />
+                All Rights Reserved
+              </p>
+              <Link href="#">Правовые документы</Link>
+              <p className="footer-disclaimer">
+                Изложенная на данном сайте информация носит ознакомительный
+                характер не является публичной офертой, определяемой положениями
+                статей 435 и 437 Гражданского Кодекса Российской Федерации
+              </p>
+            </div>
           </div>
         </div>
 
