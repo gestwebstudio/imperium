@@ -2348,7 +2348,6 @@
   .cars-section__head {
     height: auto;
     min-height: 48px;
-    margin-bottom: 24px;
   }
   .cars-row > * {
     flex-basis: calc((100% - 24px) / 2);
@@ -2942,3 +2941,46 @@
   .about__identity .image-service-card__img,
   .about__identity .svc-card--selection .image-service-card__img { aspect-ratio: 350 / 210; }
 }
+
+/* ============================================================
+   Карусель авто (CarsSection) — размер заголовка и отступ
+   «заголовок → карточки» по макетам Figma (cars-carousel):
+   578:2321 / 1072:6476 / 932:5874 / 932:9282 / 1072:7483 /
+   1072:7760 / 1072:8037 / 1100:6098.
+   Заголовок: 48/56 (≥1201) · 36/44 (1200) · 32/40 (960·768) ·
+   28/34 (640) · 24/30 (≤480).
+   Отступ head→карточки: 34 (≥769) · 28 (≤768) · 24 (≤480).
+   Скоуп только .cars-section (блоки с авто: в наличии, в пути,
+   трейд-ин, лизинг, просмотренные, похожие). Общий t-page-title и
+   заголовки новостей/каталога/«как проходит» не трогаем.
+   ============================================================ */
+.cars-section .cars-section__title {
+  font-size: var(--type-display-48-font-size);
+  line-height: var(--type-display-48-line-height);
+}
+@media (max-width: 1200px) {
+  .cars-section .cars-section__title {
+    font-size: var(--type-display-36-font-size);
+    line-height: var(--type-display-36-line-height);
+  }
+}
+@media (max-width: 960px) {
+  .cars-section .cars-section__title {
+    font-size: var(--type-display-32-font-size);
+    line-height: var(--type-display-32-line-height);
+  }
+}
+@media (max-width: 640px) {
+  .cars-section .cars-section__title {
+    font-size: var(--type-display-28-font-size);
+    line-height: var(--type-display-28-line-height);
+  }
+}
+@media (max-width: 480px) {
+  .cars-section .cars-section__title {
+    font-size: var(--type-display-24-font-size);
+    line-height: var(--type-display-24-line-height);
+  }
+}
+@media (max-width: 768px) { .cars-section__head { margin-bottom: 28px; } }
+@media (max-width: 480px) { .cars-section__head { margin-bottom: 24px; } }
