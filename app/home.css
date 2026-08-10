@@ -2198,7 +2198,8 @@
 @media (max-width: 1366px) {
   .bento__a .body-type-card__img { left: -5.00%; top: -2.54%; width: 109.44%; height: 107.25%; }
   .bento__b .body-type-card__img { left: -20.28%; top: -14.86%; width: 145.56%; height: 155.07%; }
-  .bento__c .body-type-card__img { left: -55.93%; top: -17.48%; width: 208.33%; height: 121.15%; }
+  /* внедорожник: новый бокс из макета — 442×572 по центру, top 0 (было 750×693 → перезум) */
+  .bento__c .body-type-card__img { left: -11.39%; top: 0%; width: 122.78%; height: 100%; }
   .bento__d .body-type-card__img { left: -7.78%; top: 0%; width: 114.44%; height: 103.62%; }
   .bento__e .body-type-card__img { left: -17.78%; top: -21.38%; width: 139.44%; height: 121.38%; }
   .body-type-card--wide .body-type-card__img { left: -0.89%; top: -22.46%; width: 108.04%; height: 158.33%; }
