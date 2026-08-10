@@ -706,12 +706,12 @@ body.comparison-route .site-header {
 }
 .mobile-menu__item-wrap {
   position: relative;
-  overflow: hidden;
   line-height: 1;
 }
 .mobile-menu__item {
   position: relative;
   display: inline-block;
+  overflow: hidden;
   padding: 4px 56px 4px 0;
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
   font-weight: var(--font-weight-semibold, 600);
@@ -722,6 +722,96 @@ body.comparison-route .site-header {
   text-decoration: none;
   text-transform: uppercase;
   transition: color 180ms ease;
+}
+/* Раскрывающийся пункт-триггер («Каталог», «Бренды», «Услуги»): та же
+   крупная типографика, но это <button> — сбрасываем оформление кнопки. */
+.mobile-menu__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: .26em;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.mobile-menu__chevron {
+  flex: none;
+  width: .42em;
+  height: .42em;
+  color: var(--color-heritage-green-400, #4E7B60);
+  transition: transform 200ms ease;
+}
+.mobile-menu__trigger.is-open .mobile-menu__chevron {
+  transform: rotate(180deg);
+}
+.mobile-menu__item.is-current {
+  color: var(--color-heritage-green-500, #294434);
+}
+
+/* Вложенное меню раздела: плавная высота через grid-template-rows. */
+.mobile-submenu {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 220ms ease, opacity 200ms ease;
+}
+.mobile-submenu.is-open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.mobile-submenu__inner {
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 16px;
+  padding-left: 22px;
+}
+.mobile-submenu__link {
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-medium, 500);
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--color-warm-taupe-500, #6A6259);
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+.mobile-submenu__link:hover,
+.mobile-submenu__link:focus-visible {
+  color: var(--color-heritage-green-500, #294434);
+}
+.mobile-submenu__link.is-active {
+  font-weight: var(--font-weight-semibold, 600);
+  color: var(--color-heritage-green-500, #294434);
+}
+
+/* Нижняя вторичная группа: меньшая типографика, без номеров, после 40px. */
+.mobile-menu__secondary {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 40px;
+}
+.mobile-menu__secondary-link {
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: clamp(20px, calc(16px + 1.2vw), 28px);
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  text-transform: none;
+  color: var(--color-carbon-black-500, #1B1E1D);
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+.mobile-menu__secondary-link:hover,
+.mobile-menu__secondary-link:focus-visible,
+.mobile-menu__secondary-link.is-active {
+  color: var(--color-heritage-green-500, #294434);
 }
 .mobile-menu__item::after {
   content: attr(data-index);
@@ -873,6 +963,19 @@ body.comparison-route .site-header {
     font-size: 10px;
     line-height: 14px;
   }
+  .mobile-submenu__inner {
+    gap: 10px;
+    padding-top: 12px;
+    padding-left: 20px;
+  }
+  .mobile-submenu__link {
+    font-size: 15px;
+    line-height: 19px;
+  }
+  .mobile-menu__secondary {
+    gap: 10px;
+    margin-top: 32px;
+  }
 }
 
 @media (max-height: 700px) {
@@ -884,6 +987,12 @@ body.comparison-route .site-header {
 @media (prefers-reduced-motion: reduce) {
   .site-header__burger span {
     transition-duration: .01ms;
+  }
+  .mobile-submenu {
+    transition: none;
+  }
+  .mobile-menu__chevron {
+    transition: none;
   }
 }
 
