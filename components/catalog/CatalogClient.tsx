@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Badge, CarCard } from "@/components";
 import { FiltersIcon } from "@/components/icons";
 import { Button } from "@/components/ui/Button";
@@ -9,6 +9,7 @@ import { SheetPortal } from "@/components/ui/SheetPortal";
 import {
   type Car,
   type FacetKey,
+  type FacetOption,
   FACETS,
   carTags,
   formatPrice,
@@ -27,6 +28,82 @@ const emptySelection = () =>
     FacetKey,
     string[]
   >;
+
+const SORT_VALUES: SortKey[] = ["popular", "price-asc", "price-desc"];
+const RANGE_QUERY_KEYS = ["priceMin", "priceMax", "powerMin", "powerMax"] as const;
+
+type CatalogUrlState = {
+  selected: Record<FacetKey, string[]>;
+  price: RangeValue;
+  power: RangeValue;
+  sort: SortKey;
+};
+
+const clamp = (value: number, min: number, max: number) =>
+  Math.min(Math.max(value, min), max);
+
+function readCatalogUrl(
+  search: string,
+  options: Record<FacetKey, FacetOption[]>,
+): CatalogUrlState {
+  const params = new URLSearchParams(search);
+  const selected = emptySelection();
+
+  for (const facet of FACETS) {
+    const allowed = new Set(options[facet.key].map((option) => option.value));
+    const values = (params.get(facet.key) ?? "")
+      .split(",")
+      .map((value) => value.trim())
+      .filter((value, index, list) =>
+        Boolean(value) && allowed.has(value) && list.indexOf(value) === index,
+      );
+    selected[facet.key] = values;
+  }
+
+  const numberParam = (key: string, fallback: number, min: number, max: number) => {
+    const parsed = Number(params.get(key));
+    return Number.isFinite(parsed) && params.has(key)
+      ? clamp(Math.round(parsed), min, max)
+      : fallback;
+  };
+
+  const priceMin = numberParam("priceMin", PRICE_MIN, PRICE_MIN, PRICE_MAX);
+  const priceMax = numberParam("priceMax", PRICE_MAX, PRICE_MIN, PRICE_MAX);
+  const powerMin = numberParam("powerMin", POWER_MIN, POWER_MIN, POWER_MAX);
+  const powerMax = numberParam("powerMax", POWER_MAX, POWER_MIN, POWER_MAX);
+  const requestedSort = params.get("sort") as SortKey | null;
+
+  return {
+    selected,
+    price: [Math.min(priceMin, priceMax), priceMax],
+    power: [Math.min(powerMin, powerMax), powerMax],
+    sort: requestedSort && SORT_VALUES.includes(requestedSort)
+      ? requestedSort
+      : "popular",
+  };
+}
+
+function catalogSearchForState(search: string, state: CatalogUrlState) {
+  const params = new URLSearchParams(search);
+
+  for (const facet of FACETS) {
+    params.delete(facet.key);
+    if (state.selected[facet.key].length) {
+      params.set(facet.key, state.selected[facet.key].join(","));
+    }
+  }
+
+  for (const key of RANGE_QUERY_KEYS) params.delete(key);
+  if (state.price[0] !== PRICE_MIN) params.set("priceMin", String(state.price[0]));
+  if (state.price[1] !== PRICE_MAX) params.set("priceMax", String(state.price[1]));
+  if (state.power[0] !== POWER_MIN) params.set("powerMin", String(state.power[0]));
+  if (state.power[1] !== POWER_MAX) params.set("powerMax", String(state.power[1]));
+
+  params.delete("sort");
+  if (state.sort !== "popular") params.set("sort", state.sort);
+
+  return params.toString();
+}
 
 export type CatalogClientProps = {
   cars: Car[];
@@ -56,28 +133,114 @@ export function CatalogClient({
   const [sort, setSort] = useState<SortKey>("popular");
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [filtersUseSheet, setFiltersUseSheet] = useState(false);
+  const [urlReady, setUrlReady] = useState(false);
+  const filterTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const filterDialogRef = useRef<HTMLElement | null>(null);
+  const previousBodyOverflowRef = useRef<string | null>(null);
+  const wasFiltersOpenRef = useRef(false);
+  const resultsRef = useRef<HTMLDivElement | null>(null);
+  const previousResultCountRef = useRef(cars.length);
+  const shouldSyncUrl = showFilters && crumbLabel === "Каталог";
 
   // Кол-во активных фильтров — для бейджа на кнопке «Фильтры»
-  const filterCount =
-    FACETS.reduce((n, f) => n + selected[f.key].length, 0) +
-    (price[0] !== PRICE_MIN || price[1] !== PRICE_MAX ? 1 : 0) +
-    (power[0] !== POWER_MIN || power[1] !== POWER_MAX ? 1 : 0);
+  const filterCount = useMemo(
+    () =>
+      FACETS.reduce((n, f) => n + selected[f.key].length, 0) +
+      (price[0] !== PRICE_MIN || price[1] !== PRICE_MAX ? 1 : 0) +
+      (power[0] !== POWER_MIN || power[1] !== POWER_MAX ? 1 : 0),
+    [power, price, selected],
+  );
 
   // Мобильный drawer фильтров: блокировка скролла, Escape, авто-закрытие >=1200
   useEffect(() => {
-    document.body.style.overflow = filtersOpen ? "hidden" : "";
+    if (!filtersOpen || !filtersUseSheet) return;
+
+    const previousOverflow = document.body.style.overflow;
+    previousBodyOverflowRef.current = previousOverflow;
+    document.body.style.overflow = "hidden";
+
     return () => {
-      document.body.style.overflow = "";
+      if (document.body.style.overflow === "hidden") {
+        document.body.style.overflow = previousBodyOverflowRef.current ?? previousOverflow;
+      }
+      previousBodyOverflowRef.current = null;
     };
-  }, [filtersOpen]);
+  }, [filtersOpen, filtersUseSheet]);
 
   useEffect(() => {
-    if (!filtersOpen) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setFiltersOpen(false);
+    if (!filtersOpen || !filtersUseSheet) return;
+
+    const dialog = filterDialogRef.current;
+    if (!dialog) return;
+
+    const layer = dialog.closest(".ui-sheet-layer");
+    const backgroundNodes = Array.from(document.body.children)
+      .filter((node): node is HTMLElement => node instanceof HTMLElement && node !== layer)
+      .map((node) => ({ node, inert: node.inert }));
+    for (const entry of backgroundNodes) entry.node.inert = true;
+
+    const focusableElements = () =>
+      Array.from(
+        dialog.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter(
+        (element) =>
+          element.getClientRects().length > 0 &&
+          !element.closest('[aria-hidden="true"]'),
+      );
+
+    const focusFrame = window.requestAnimationFrame(() => {
+      (focusableElements()[0] ?? dialog).focus();
+    });
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setFiltersOpen(false);
+        return;
+      }
+      if (event.key !== "Tab") return;
+
+      const focusable = focusableElements();
+      if (!focusable.length) {
+        event.preventDefault();
+        dialog.focus();
+        return;
+      }
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && (document.activeElement === first || !dialog.contains(document.activeElement))) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+
+    document.addEventListener("keydown", onKeyDown, true);
+    return () => {
+      window.cancelAnimationFrame(focusFrame);
+      document.removeEventListener("keydown", onKeyDown, true);
+      for (const entry of backgroundNodes) entry.node.inert = entry.inert;
+    };
+  }, [filtersOpen, filtersUseSheet]);
+
+  useEffect(() => {
+    if (filtersOpen) {
+      wasFiltersOpenRef.current = true;
+      return;
+    }
+    if (!wasFiltersOpenRef.current) return;
+
+    wasFiltersOpenRef.current = false;
+    const focusFrame = window.requestAnimationFrame(() => {
+      const trigger = filterTriggerRef.current;
+      if (trigger?.isConnected && trigger.getClientRects().length > 0) trigger.focus();
+    });
+    return () => window.cancelAnimationFrame(focusFrame);
   }, [filtersOpen]);
 
   useEffect(() => {
@@ -91,6 +254,52 @@ export function CatalogClient({
     mq.addEventListener("change", syncSheetMode);
     return () => mq.removeEventListener("change", syncSheetMode);
   }, []);
+
+  useEffect(() => {
+    if (!shouldSyncUrl) {
+      setUrlReady(true);
+      return;
+    }
+
+    const applyUrlState = () => {
+      const next = readCatalogUrl(window.location.search, options);
+      setSelected(next.selected);
+      setPrice(next.price);
+      setPower(next.power);
+      setSort(next.sort);
+
+      const canonical = catalogSearchForState(window.location.search, next);
+      const current = window.location.search.slice(1);
+      if (canonical !== current) {
+        const url = `${window.location.pathname}${canonical ? `?${canonical}` : ""}${window.location.hash}`;
+        window.history.replaceState(window.history.state, "", url);
+      }
+      setUrlReady(true);
+    };
+
+    applyUrlState();
+    window.addEventListener("popstate", applyUrlState);
+    return () => window.removeEventListener("popstate", applyUrlState);
+  }, [options, shouldSyncUrl]);
+
+  useEffect(() => {
+    if (!shouldSyncUrl || !urlReady) return;
+
+    const updateTimer = window.setTimeout(() => {
+      const nextSearch = catalogSearchForState(window.location.search, {
+        selected,
+        price,
+        power,
+        sort,
+      });
+      if (nextSearch === window.location.search.slice(1)) return;
+
+      const url = `${window.location.pathname}${nextSearch ? `?${nextSearch}` : ""}${window.location.hash}`;
+      window.history.pushState(window.history.state, "", url);
+    }, 180);
+
+    return () => window.clearTimeout(updateTimer);
+  }, [power, price, selected, shouldSyncUrl, sort, urlReady]);
 
   const toggleFacet = (key: FacetKey, value: string) =>
     setSelected((s) => {
@@ -130,14 +339,40 @@ export function CatalogClient({
   }, [filtered, sort]);
   const displayedCars = sorted;
 
+  useEffect(() => {
+    const previousCount = previousResultCountRef.current;
+    previousResultCountRef.current = displayedCars.length;
+    if (previousCount === displayedCars.length) return;
+
+    const scrollFrame = window.requestAnimationFrame(() => {
+      const results = resultsRef.current;
+      if (!results) return;
+      const rect = results.getBoundingClientRect();
+      const resultsTop = rect.top + window.scrollY;
+      const resultsBottom = rect.bottom + window.scrollY;
+      if (window.scrollY <= resultsBottom - 48) return;
+
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.scrollTo({
+        top: Math.max(0, resultsTop - 24),
+        behavior: reducedMotion ? "auto" : "smooth",
+      });
+    });
+
+    return () => window.cancelAnimationFrame(scrollFrame);
+  }, [displayedCars.length]);
+
   const filterLayer = showFilters ? (
     <>
       <div
         className={`cat-filters-backdrop${filtersOpen ? " is-open" : ""}`}
         onClick={() => setFiltersOpen(false)}
+        aria-hidden="true"
       />
       <FilterSidebar
         open={filtersOpen}
+        isDrawer={filtersUseSheet}
+        containerRef={filterDialogRef}
         onClose={() => setFiltersOpen(false)}
         hiddenFacets={hiddenFacets}
         options={options}
@@ -176,9 +411,15 @@ export function CatalogClient({
           {showFilters && (
             <Button
               bare
+              ripple={false}
               className="cat-filters-toggle"
+              aria-controls="catalog-filter-dialog"
+              aria-haspopup="dialog"
               aria-expanded={filtersOpen}
-              onClick={() => setFiltersOpen(true)}
+              onClick={(event) => {
+                filterTriggerRef.current = event.currentTarget;
+                setFiltersOpen(true);
+              }}
             >
               <FiltersIcon className="cat-filters-toggle__icon" />
               <span>Фильтры</span>
@@ -192,7 +433,7 @@ export function CatalogClient({
       <div className="catalog-body">
         {filtersUseSheet ? <SheetPortal>{filterLayer}</SheetPortal> : filterLayer}
 
-        <div className="catalog-results">
+        <div ref={resultsRef} className="catalog-results">
           {sorted.length > 0 ? (
             <div className={`catalog-grid${showFilters ? "" : " catalog-grid--wide"}`}>
               {displayedCars.map((car) => (
@@ -213,9 +454,12 @@ export function CatalogClient({
               ))}
             </div>
           ) : (
-            <p className="catalog-empty">
-              По заданным фильтрам ничего не найдено. Попробуйте изменить условия.
-            </p>
+            <div className="catalog-empty" role="status">
+              <p>По заданным фильтрам ничего не найдено. Попробуйте изменить условия.</p>
+              <Button size="m" variant="secondary-outlined" onClick={clearAll}>
+                Сбросить фильтры
+              </Button>
+            </div>
           )}
         </div>
       </div>

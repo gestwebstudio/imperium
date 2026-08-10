@@ -41,9 +41,9 @@ export function Specs({ primary, extra }: SpecsProps) {
         {columns.map((column, index) => (
           <div className="car-specs__column" key={index}>
             {column.map((spec) => (
-              <div className="car-specs__row" key={spec.label}>
+              <div className="car-specs__row" key={spec.key}>
                 <span className="car-specs__label">{spec.label}</span>
-                <span className="car-specs__value">{spec.value}</span>
+                <span className="car-specs__value">{spec.displayValue}</span>
               </div>
             ))}
           </div>
@@ -52,6 +52,7 @@ export function Specs({ primary, extra }: SpecsProps) {
 
       <Button
         bare
+        ripple={false}
         className="car-specs__toggle"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}

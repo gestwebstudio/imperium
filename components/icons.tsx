@@ -58,6 +58,24 @@ export const ArrowDiagonalIcon = (p: IconProps) => (
   </Svg>
 );
 
+/** Chevron down из Figma UI Kit, исходная сетка 15×15. */
+export const ChevronDownIcon = (p: IconProps) => (
+  <svg
+    viewBox="0 0 15 15"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...p}
+  >
+    <path
+      d="M11.25 5.55769 7.125 10 3 5.55769"
+      stroke="currentColor"
+      strokeWidth="2.12"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
 export const FiltersIcon = (p: IconProps) => (
   <Svg {...p}>
     <path

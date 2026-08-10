@@ -3,6 +3,8 @@ import "./globals.css";
 import { SiteChrome } from "@/components/layout/SiteChrome";
 import { TypographyGuard } from "@/components/ui/TypographyGuard";
 import { VehicleActionsProvider } from "@/components/ui/VehicleActionsContext";
+import { AppToastProvider } from "@/components/ui/AppToastProvider";
+import { getAllCars } from "@/lib/cars";
 
 export const metadata: Metadata = {
   title: "Imperium Motors — Автосалон",
@@ -15,6 +17,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const validVehicleIds = getAllCars().map((car) => car.id);
+
   return (
     <html lang="ru">
       <head>
@@ -30,8 +34,9 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <VehicleActionsProvider>
+        <VehicleActionsProvider validVehicleIds={validVehicleIds}>
           <SiteChrome>{children}</SiteChrome>
+          <AppToastProvider />
           <TypographyGuard />
         </VehicleActionsProvider>
       </body>

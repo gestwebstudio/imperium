@@ -4,6 +4,7 @@ import {
   createContext,
   useContext,
   useEffect,
+  useMemo,
   useState,
   type Dispatch,
   type ReactNode,
@@ -46,17 +47,39 @@ function updateMembership(
   });
 }
 
-function parseStoredIds(value: unknown): string[] {
+function parseStoredIds(
+  value: unknown,
+  validVehicleIds?: ReadonlySet<string> | null,
+): string[] {
   if (!Array.isArray(value)) return [];
   return [
-    ...new Set(value.filter((id): id is string => typeof id === "string")),
+    ...new Set(
+      value.filter(
+        (id): id is string =>
+          typeof id === "string" &&
+          (!validVehicleIds || validVehicleIds.has(id)),
+      ),
+    ),
   ];
 }
 
-export function VehicleActionsProvider({ children }: { children: ReactNode }) {
+export type VehicleActionsProviderProps = {
+  children: ReactNode;
+  /** Актуальные ID из текущего источника данных (моки, API или 1С). */
+  validVehicleIds?: readonly string[];
+};
+
+export function VehicleActionsProvider({
+  children,
+  validVehicleIds,
+}: VehicleActionsProviderProps) {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [comparisons, setComparisons] = useState<string[]>([]);
   const [storageReady, setStorageReady] = useState(false);
+  const validVehicleIdSet = useMemo(
+    () => (validVehicleIds ? new Set(validVehicleIds) : null),
+    [validVehicleIds],
+  );
 
   useEffect(() => {
     try {
@@ -65,8 +88,10 @@ export function VehicleActionsProvider({ children }: { children: ReactNode }) {
         const parsed = JSON.parse(stored) as unknown;
         if (parsed && typeof parsed === "object") {
           const actions = parsed as Partial<StoredVehicleActions>;
-          setFavorites(parseStoredIds(actions.favorites));
-          setComparisons(parseStoredIds(actions.comparisons));
+          setFavorites(parseStoredIds(actions.favorites, validVehicleIdSet));
+          setComparisons(
+            parseStoredIds(actions.comparisons, validVehicleIdSet),
+          );
         }
       }
     } catch {
@@ -74,7 +99,7 @@ export function VehicleActionsProvider({ children }: { children: ReactNode }) {
     } finally {
       setStorageReady(true);
     }
-  }, []);
+  }, [validVehicleIdSet]);
 
   useEffect(() => {
     if (!storageReady) return;
@@ -91,10 +116,12 @@ export function VehicleActionsProvider({ children }: { children: ReactNode }) {
   }, [comparisons, favorites, storageReady]);
 
   function setFavorite(vehicleId: string, active: boolean) {
+    if (validVehicleIdSet && !validVehicleIdSet.has(vehicleId)) return;
     updateMembership(setFavorites, vehicleId, active);
   }
 
   function setCompared(vehicleId: string, active: boolean) {
+    if (validVehicleIdSet && !validVehicleIdSet.has(vehicleId)) return;
     updateMembership(setComparisons, vehicleId, active);
   }
 

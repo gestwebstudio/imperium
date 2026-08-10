@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import {
   ArrowIcon,
   ArrowDiagonalIcon,
+  ChevronDownIcon,
   CloseIcon,
   CopyIcon,
   FiltersIcon,
@@ -39,6 +40,7 @@ export const metadata: Metadata = {
 const icons = [
   ["Arrow", ArrowIcon],
   ["Arrow-Diagonal", ArrowDiagonalIcon],
+  ["Chevron-Down", ChevronDownIcon],
   ["Close", CloseIcon],
   ["Copy", CopyIcon],
   ["Filters", FiltersIcon],
@@ -117,6 +119,17 @@ const bubbleColors = [
   ["Warm Taupe 400", "taupe-400"],
 ] as const;
 
+const radiusTokens = [
+  ["1920", "--radius-1920", 30],
+  ["1536", "--radius-1536", 30],
+  ["1200", "--radius-1200", 26],
+  ["960", "--radius-960", 22],
+  ["768", "--radius-768", 16],
+  ["640", "--radius-640", 14],
+  ["480", "--radius-480", 12],
+  ["390", "--radius-390", 12],
+] as const;
+
 type TypographySpec = {
   name: string;
   className: string;
@@ -127,7 +140,7 @@ type TypographySpec = {
 const headingWeights = [
   ["regular", "Regular", 400],
   ["medium", "Medium", 500],
-  ["semibold", "Semibold", 600],
+  ["semibold", "SemiBold", 600],
   ["bold", "Bold", 700],
   ["extrabold", "ExtraBold", 800],
 ] as const;
@@ -135,7 +148,7 @@ const headingWeights = [
 const headingLevels = [
   ["h1", 88, 100],
   ["h2", 66, 70],
-  ["h3", 50, 70],
+  ["h3", 50, 56],
   ["h4", 48, 56],
   ["h5", 40, 48],
   ["h6", 36, 44],
@@ -143,27 +156,33 @@ const headingLevels = [
 
 const headingStyles: TypographySpec[] = headingLevels.flatMap(
   ([level, fontSize, lineHeight]) =>
-  headingWeights.map(([weight, label, value]) => ({
-    name: `Heading/${level.toUpperCase()} ${label}`,
+    headingWeights.map(([weight, label, value]) => ({
+    name: `Heading/${level.toUpperCase()}/${level.toUpperCase()}-${label}`,
     className: `t-heading-${level}-${level}-${weight}`,
     meta: `Wix Madefor Display · ${fontSize}/${lineHeight} · ${value}`,
     sample: "Imperium Motors",
   })),
 );
 
-const responsiveDisplayStyles: TypographySpec[] = [
+const displayScales = [
   [32, 40],
   [30, 38],
   [28, 34],
   [24, 30],
   [20, 26],
   [18, 22],
-].map(([fontSize, lineHeight]) => ({
-  name: `Display/${fontSize} Semibold`,
-  className: `t-display-${fontSize}-${fontSize}-semibold`,
-  meta: `Wix Madefor Display · ${fontSize}/${lineHeight} · 600`,
-  sample: "Mercedes-Benz CLE 200",
-}));
+  [16, 20],
+] as const;
+
+const displayStyles: TypographySpec[] = displayScales.flatMap(
+  ([fontSize, lineHeight]) =>
+    headingWeights.map(([weight, label, value]) => ({
+      name: `Display/${fontSize}/${fontSize}-${label}`,
+      className: `t-display-${fontSize}-${fontSize}-${weight}`,
+      meta: `Wix Madefor Display · ${fontSize}/${lineHeight} · ${value}`,
+      sample: "Mercedes-Benz CLE 200",
+    })),
+);
 
 const responsivePageTitleStyles: TypographySpec[] = [
   {
@@ -183,7 +202,8 @@ const textScales = [
   [18, 24, ["regular", "medium", "semibold", "bold"]],
   [16, 20, ["regular", "medium", "semibold", "bold"]],
   [14, 18, ["regular", "medium", "semibold", "bold"]],
-  [10, 10, ["regular", "medium", "semibold", "bold"]],
+  [12, 16, ["regular", "medium", "semibold", "bold"]],
+  [10, 14, ["regular", "medium", "semibold", "bold"]],
 ] as const;
 
 const textWeightValues = {
@@ -194,12 +214,20 @@ const textWeightValues = {
   black: 900,
 } as const;
 
+const textWeightLabels = {
+  regular: "Regular",
+  medium: "Medium",
+  semibold: "SemiBold",
+  bold: "Bold",
+  black: "Black",
+} as const;
+
 const textStyles: TypographySpec[] = textScales.flatMap(
   ([fontSize, lineHeight, weights]) =>
   weights.map((weight) => {
     const weightValue = textWeightValues[weight];
     return {
-      name: `Text/${fontSize} ${weight[0].toUpperCase()}${weight.slice(1)}`,
+      name: `Text/${fontSize}/${fontSize}-${textWeightLabels[weight]}`,
       className: `t-text-${fontSize}-${fontSize}-${weight}`,
       meta: `Onest · ${fontSize}/${lineHeight} · ${weightValue}`,
       sample: "Премиальные автомобили в Москве",
@@ -212,22 +240,14 @@ const compactTextStyles: TypographySpec[] = [
   [10, 14],
 ].flatMap(([fontSize, lineHeight]) =>
   (["regular", "medium", "semibold", "bold"] as const).map((weight) => ({
-    name: `Text/${fontSize} ${weight[0].toUpperCase()}${weight.slice(1)}`,
+    name: `Project/Text ${fontSize}/${lineHeight}-${textWeightLabels[weight]}`,
     className: `t-text-${fontSize}-${lineHeight}-${weight}`,
     meta: `Onest · ${fontSize}/${lineHeight} · ${textWeightValues[weight]}`,
     sample: "Премиальные автомобили в Москве",
   })),
 );
 
-const specialTypographyStyles: TypographySpec[] = [
-  ...(["regular", "medium", "semibold", "bold"] as const).map(
-    (weight, index) => ({
-      name: `Title card/24 ${weight[0].toUpperCase()}${weight.slice(1)}`,
-      className: `t-title-card-24-${weight}`,
-      meta: `Wix Madefor Display · 24/30 · ${[400, 500, 600, 700][index]}`,
-      sample: "Porsche 911 Turbo S",
-    }),
-  ),
+const figmaValueStyles: TypographySpec[] = [
   {
     name: "Numeric/Value",
     className: "t-numeric-value",
@@ -240,14 +260,25 @@ const specialTypographyStyles: TypographySpec[] = [
     meta: "Wix Madefor Display · 28/36 · 800",
     sample: "19 990 000 ₽",
   },
+];
+
+const projectCardValueStyles: TypographySpec[] = [
+  ...(["regular", "medium", "semibold", "bold"] as const).map(
+    (weight, index) => ({
+      name: `Project/Title card 24-${textWeightLabels[weight]}`,
+      className: `t-title-card-24-${weight}`,
+      meta: `Wix Madefor Display · 24/30 · ${[400, 500, 600, 700][index]}`,
+      sample: "Porsche 911 Turbo S",
+    }),
+  ),
   {
-    name: "Price/Value M",
+    name: "Project/Price Value M",
     className: "t-price-value-m",
     meta: "Wix Madefor Display · 24/30 · 800",
     sample: "19 990 000 ₽",
   },
   {
-    name: "Price/Value S",
+    name: "Project/Price Value S",
     className: "t-price-value-s",
     meta: "Wix Madefor Display · 20/26 · 800",
     sample: "19 990 000 ₽",
@@ -255,12 +286,13 @@ const specialTypographyStyles: TypographySpec[] = [
 ];
 
 const typographyGroups = [
-  ["Heading", headingStyles],
-  ["Responsive page title", responsivePageTitleStyles],
-  ["Responsive display", responsiveDisplayStyles],
-  ["Text", textStyles],
-  ["Compact text", compactTextStyles],
-  ["Card & values", specialTypographyStyles],
+  ["Heading — Figma", headingStyles],
+  ["Display — Figma", displayStyles],
+  ["Text — Figma", textStyles],
+  ["Values — Figma", figmaValueStyles],
+  ["Responsive page title — project", responsivePageTitleStyles],
+  ["Compact text aliases — project", compactTextStyles],
+  ["Card & value aliases — project", projectCardValueStyles],
 ] as const;
 
 export default function KitPage() {
@@ -377,10 +409,11 @@ export default function KitPage() {
               </div>
             </div>
 
-            <div className="btn-sub">CTA</div>
+            <div className="btn-sub">CTA · L / M / S</div>
             <div className="btn-row">
               <div className="btn-rowhead">
-                Primary · CTA<code>.btn--primary-cta</code>
+                Primary · CTA
+                <code>.btn--primary-cta · M = 36px</code>
               </div>
               <div className="btn-group">
                 <Button
@@ -427,8 +460,9 @@ export default function KitPage() {
         <div className="kit-wrap">
           <h2>Типографика</h2>
           <p className="section-lead">
-            Все 73 локальных текстовых стиля из Figma. Имена CSS-классов можно
-            использовать напрямую; размеры адаптируются через шкалу в{" "}
+            Все 108 локальных Text Styles из Figma перенесены 1:1: family,
+            weight, size, line-height, letter-spacing и text-case. Проектные
+            responsive aliases вынесены в отдельные группы в{" "}
             <code>styles/typography.css</code>.
           </p>
           {typographyGroups.map(([groupName, styles]) => (
@@ -804,6 +838,31 @@ export default function KitPage() {
                   action={{ label: "Забронировать", variant: "secondary-outlined" }}
                 />
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------------- Радиусы ---------------- */}
+      <section className="kit-section">
+        <div className="kit-wrap">
+          <h2>Радиусы</h2>
+          <p className="section-lead">
+            Токены коллекции Radius из Figma для контрольных разрешений.
+          </p>
+          <div className="kit-block">
+            <div className="radius-token-grid">
+              {radiusTokens.map(([viewport, token, value]) => (
+                <article className="radius-token" key={viewport}>
+                  <div
+                    className="radius-token__sample"
+                    style={{ borderRadius: `var(${token})` }}
+                  />
+                  <strong>{viewport}px</strong>
+                  <code>{token}</code>
+                  <span>{value}px</span>
+                </article>
+              ))}
             </div>
           </div>
         </div>

@@ -27,6 +27,8 @@ type CommonButtonProps = {
   iconOnly?: boolean;
   /** Только Ripple-ядро кита; внешний вид задаёт специализированный класс. */
   bare?: boolean;
+  /** Отключает ripple для текстовых trigger/control-кнопок без button surface. */
+  ripple?: boolean;
   startIcon?: ReactNode;
   endIcon?: ReactNode;
   /** Произвольный элемент-потомок после текста (например, Bubble-счётчик). */
@@ -50,6 +52,8 @@ function addRipple(
   clientX: number,
   clientY: number,
 ) {
+  if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+
   const layer = target.querySelector<HTMLElement>(
     ":scope > .ui-button__ripple-layer",
   );
@@ -60,8 +64,12 @@ function addRipple(
   const radius = diameter / 2;
   const rect = target.getBoundingClientRect();
   const keyboardClick = clientX === 0 && clientY === 0;
-  const x = keyboardClick ? rect.left + rect.width / 2 : clientX;
-  const y = keyboardClick ? rect.top + rect.height / 2 : clientY;
+  const x = keyboardClick
+    ? rect.left + rect.width / 2
+    : Math.min(Math.max(clientX, rect.left), rect.right);
+  const y = keyboardClick
+    ? rect.top + rect.height / 2
+    : Math.min(Math.max(clientY, rect.top), rect.bottom);
 
   circle.className = "ripple";
   circle.style.width = circle.style.height = `${diameter}px`;
@@ -89,6 +97,7 @@ function getButtonClassName({
   inverse,
   iconOnly,
   bare,
+  ripple,
   className,
 }: {
   size: NonNullable<CommonButtonProps["size"]>;
@@ -96,6 +105,7 @@ function getButtonClassName({
   inverse?: boolean;
   iconOnly?: boolean;
   bare?: boolean;
+  ripple: boolean;
   className?: string;
 }) {
   return cn(
@@ -106,12 +116,14 @@ function getButtonClassName({
     !bare && inverse && "btn--inverse",
     !bare && iconOnly && "btn--icon",
     bare && "ui-button--bare",
+    !ripple && "ui-button--no-ripple",
     className,
   );
 }
 
 function ButtonContent({
   bare,
+  ripple,
   startIcon,
   children,
   endSlot,
@@ -121,7 +133,7 @@ function ButtonContent({
 }: CommonButtonProps & { isCta: boolean }) {
   return (
     <>
-      <ButtonRippleLayer />
+      {ripple !== false && <ButtonRippleLayer />}
       {startIcon &&
         (bare ? startIcon : <span className="btn__icon">{startIcon}</span>)}
       {children != null &&
@@ -141,6 +153,7 @@ export function Button({
   inverse,
   iconOnly,
   bare,
+  ripple = true,
   startIcon,
   endIcon,
   endSlot,
@@ -156,12 +169,14 @@ export function Button({
   const resolvedSize = size ?? (isCta ? "l" : "m");
 
   function handlePointerDown(e: PointerEvent<HTMLButtonElement>) {
-    handleButtonRipplePointerDown(e);
+    if (ripple) handleButtonRipplePointerDown(e);
     onPointerDown?.(e);
   }
 
   function handleClick(e: MouseEvent<HTMLButtonElement>) {
-    if (e.detail === 0) addRipple(e.currentTarget, e.clientX, e.clientY);
+    if (ripple && e.detail === 0) {
+      addRipple(e.currentTarget, e.clientX, e.clientY);
+    }
     onClick?.(e);
   }
 
@@ -174,6 +189,7 @@ export function Button({
         inverse,
         iconOnly,
         bare,
+        ripple,
         className,
       })}
       onPointerDown={handlePointerDown}
@@ -182,6 +198,7 @@ export function Button({
     >
       <ButtonContent
         bare={bare}
+        ripple={ripple}
         startIcon={startIcon}
         endIcon={endIcon}
         endSlot={endSlot}
@@ -201,6 +218,7 @@ export function ButtonLink({
   inverse,
   iconOnly,
   bare,
+  ripple = true,
   startIcon,
   endIcon,
   endSlot,
@@ -219,22 +237,26 @@ export function ButtonLink({
     inverse,
     iconOnly,
     bare,
+    ripple,
     className,
   });
 
   function handlePointerDown(e: PointerEvent<HTMLAnchorElement>) {
-    handleButtonRipplePointerDown(e);
+    if (ripple) handleButtonRipplePointerDown(e);
     onPointerDown?.(e);
   }
 
   function handleClick(e: MouseEvent<HTMLAnchorElement>) {
-    if (e.detail === 0) addRipple(e.currentTarget, e.clientX, e.clientY);
+    if (ripple && e.detail === 0) {
+      addRipple(e.currentTarget, e.clientX, e.clientY);
+    }
     onClick?.(e);
   }
 
   const content = (
     <ButtonContent
       bare={bare}
+      ripple={ripple}
       startIcon={startIcon}
       endIcon={endIcon}
       endSlot={endSlot}

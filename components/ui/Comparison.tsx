@@ -34,6 +34,9 @@ export function Comparison({
     vehicleId && vehicleActions
       ? vehicleActions.isCompared(vehicleId)
       : undefined;
+  const storagePending =
+    active === undefined &&
+    Boolean(vehicleId && vehicleActions && !vehicleActions.storageReady);
   const isActive = active ?? globalActive ?? internal;
   const resolvedTip = isActive
     ? activeTip
@@ -55,9 +58,16 @@ export function Comparison({
   return (
     <Button
       bare
-      className={cn("compare", isActive && "is-active", className)}
+      className={cn(
+        "compare",
+        isActive && "is-active",
+        storagePending && "is-storage-pending",
+        className,
+      )}
       aria-pressed={isActive}
       aria-label={resolvedTip}
+      aria-busy={storagePending || undefined}
+      disabled={storagePending}
       onClick={toggle}
     >
       <ListAddIcon className="icon-add" />

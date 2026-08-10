@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "../home.css";
 import "../trade-in/trade-in.css";
-import "../comparison/comparison.css";
 import "../help-on-roads/help-roads.css";
 import { HelpOnRoadPage } from "@/components/helproads/HelpOnRoadPage";
 

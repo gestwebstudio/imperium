@@ -4,7 +4,12 @@ import { useEffect, useRef, useState, type MouseEvent } from "react";
 import Link from "next/link";
 import { Alert, Button as HeroButton } from "@heroui/react";
 import "./layout.css";
-import { PhoneIcon, ArrowDiagonalIcon, CloseIcon } from "@/components/icons";
+import {
+  PhoneIcon,
+  ArrowDiagonalIcon,
+  ChevronDownIcon,
+  CloseIcon,
+} from "@/components/icons";
 import { ButtonLink } from "@/components/ui/Button";
 import { GlassSurface } from "@/components/ui/GlassSurface";
 import { MobileMenu } from "./MobileMenu";
@@ -34,19 +39,27 @@ function copyWithFallback(value: string) {
  * при скролле вверх — возвращается и остаётся зафиксированной.
  * У самого верха страницы всегда видима.
  */
-function useHideOnScroll() {
+function useHideOnScroll(enabled: boolean) {
   const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
+    if (!enabled) {
+      setHidden(false);
+      return;
+    }
+
     let lastY = window.scrollY;
     let ticking = false;
 
+    const TOP_EDGE = 8;
+    const HEADROOM_THRESHOLD = 120;
     const TOLERANCE = 8; // порог, чтобы дрожание/отскок не переключали шапку
     const update = () => {
       ticking = false;
       const y = Math.max(0, window.scrollY);
       if (Math.abs(y - lastY) < TOLERANCE) return; // игнор мелких движений
-      if (y <= 8) setHidden(false); // у верха — всегда видима
+      if (y <= TOP_EDGE) setHidden(false); // у верха — всегда видима
+      else if (y <= HEADROOM_THRESHOLD) setHidden(false); // первый экранный порог
       else if (y > lastY) setHidden(true); // вниз — прячем
       else setHidden(false); // вверх — показываем
       lastY = y;
@@ -61,27 +74,13 @@ function useHideOnScroll() {
 
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [enabled]);
 
   return hidden;
 }
 
-function ChevronDown() {
-  return (
-    <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M2.5 4.5 6 8l3.5-3.5"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-export function Header() {
-  const hidden = useHideOnScroll();
+export function Header({ flowWithPage = false }: { flowWithPage?: boolean }) {
+  const hidden = useHideOnScroll(!flowWithPage);
   const [copyStatus, setCopyStatus] = useState<"idle" | "success" | "error">(
     "idle",
   );
@@ -98,9 +97,13 @@ export function Header() {
     };
   }, []);
 
-  // Закрытие выпадайки услуг: клик вне, Escape, скролл.
+  // Закрытие выпадайки услуг: клик вне, Escape, заметный скролл.
   useEffect(() => {
     if (!servicesOpen) return;
+
+    let lastScrollY = window.scrollY;
+    let accumulatedScroll = 0;
+    const CLOSE_SCROLL_THRESHOLD = 16;
 
     const onPointer = (e: PointerEvent) => {
       const t = e.target as Node;
@@ -112,9 +115,21 @@ export function Header() {
       }
     };
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setServicesOpen(false);
+      if (e.key !== "Escape") return;
+
+      e.preventDefault();
+      setServicesOpen(false);
+      servicesTriggerRef.current?.focus({ preventScroll: true });
     };
-    const onScroll = () => setServicesOpen(false);
+    const onScroll = () => {
+      const currentScrollY = window.scrollY;
+      accumulatedScroll += Math.abs(currentScrollY - lastScrollY);
+      lastScrollY = currentScrollY;
+
+      if (accumulatedScroll >= CLOSE_SCROLL_THRESHOLD) {
+        setServicesOpen(false);
+      }
+    };
 
     document.addEventListener("pointerdown", onPointer);
     document.addEventListener("keydown", onKey);
@@ -170,7 +185,11 @@ export function Header() {
   }
 
   return (
-    <header className={`site-header${hidden ? " is-hidden" : ""}`}>
+    <header
+      className={`site-header${hidden ? " is-hidden" : ""}${
+        flowWithPage ? " is-flowing" : ""
+      }`}
+    >
       <GlassSurface
         className="site-header__bar"
         height="var(--site-header-height)"
@@ -189,13 +208,13 @@ export function Header() {
           <button
             type="button"
             ref={servicesTriggerRef}
-            className={`site-header__nav-trigger${servicesOpen ? " is-open" : ""}`}
+            className={`site-header__nav-trigger ui-button--no-ripple${servicesOpen ? " is-open" : ""}`}
             aria-expanded={servicesOpen}
             aria-controls="services-mega-panel"
             onClick={() => setServicesOpen((v) => !v)}
           >
             Услуги
-            <ChevronDown />
+            <ChevronDownIcon />
           </button>
           <Link href="/about">О салоне</Link>
           <Link href="/contacts">Контакты</Link>
@@ -221,6 +240,7 @@ export function Header() {
           </ButtonLink>
           <ButtonLink
             href="/catalog"
+            size="m"
             variant="primary-cta"
             className="site-header__cta"
             ctaIcon={<ArrowDiagonalIcon />}

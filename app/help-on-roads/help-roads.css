@@ -43,7 +43,7 @@
   flex-direction: column;
   gap: 20px;
   padding: 40px;
-  border-radius: 40px;
+  border-radius: var(--radius-card, var(--radius-current, 30px));
   background: var(--color-white, #ffffff);
   overflow: hidden;
 }
@@ -87,7 +87,96 @@
   height: 77px;
 }
 
-/* ---------- Тарифы (переиспользуем таблицу сравнения) ---------- */
+/* ---------- Таблица тарифов (общий table-примитив страниц помощи) ---------- */
+.comparison-table-section__title {
+  margin: 0 0 14px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-size: 24px;
+  font-weight: var(--font-weight-semibold, 600);
+  line-height: 30px;
+}
+
+.comparison-spec-table {
+  width: 100%;
+  padding: 4px;
+  overflow: hidden;
+  border-radius: var(--radius-card, var(--radius-current, 30px));
+  background: rgba(228, 223, 219, .72);
+}
+
+.comparison-spec-table__content {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  font-family: var(--font-text, "Onest", sans-serif);
+}
+
+.comparison-spec-table__header {
+  background: transparent;
+}
+
+.comparison-spec-table__column {
+  height: 52px;
+  padding: 14px 20px;
+  background: transparent;
+  color: var(--color-warm-taupe-500, #6A6259);
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 15px;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 22px;
+  text-align: left;
+}
+
+.comparison-spec-table__column::after {
+  height: 20px;
+  background: var(--color-stone-beige-300, #C9C0B8);
+}
+
+.comparison-spec-table__column--label,
+.comparison-spec-table__cell--label {
+  width: var(--comparison-label-width);
+}
+
+.comparison-spec-table__cell {
+  height: 64px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--color-stone-beige-200, #E4DFDB);
+  background: var(--color-white, #FFFFFF);
+  color: var(--color-carbon-black-500, #1B1E1D);
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 16px;
+  line-height: 22px;
+  transition: background-color 150ms ease;
+}
+
+.comparison-spec-table__cell--label {
+  color: var(--color-warm-taupe-500, #6A6259);
+  font-weight: var(--font-weight-medium, 500);
+}
+
+.comparison-spec-table__cell--value {
+  gap: 10px;
+  text-align: left;
+}
+
+.comparison-spec-table__row:last-child .comparison-spec-table__cell {
+  border-bottom: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .comparison-spec-table__row:hover .comparison-spec-table__cell,
+  .comparison-spec-table__row[data-hovered="true"] .comparison-spec-table__cell {
+    background: var(--color-warm-taupe-100, #F2EEEA);
+  }
+}
+
+.comparison-spec-table__row[data-focus-visible="true"] .comparison-spec-table__cell {
+  box-shadow: inset 0 0 0 2px var(--color-heritage-green-400, #4E7B60);
+}
+
+/* ---------- Тарифы ---------- */
 @media (min-width: 961px) {
   .help-roads > .hr-pricing {
     margin-top: clamp(72px, 6.25vw, 120px);
@@ -222,7 +311,7 @@
     min-height: 0;
     gap: 16px;
     padding: clamp(24px, 4.167vw, 40px);
-    border-radius: clamp(24px, 4.167vw, 40px);
+    border-radius: var(--radius-card, var(--radius-current, 16px));
   }
   .hr-title--right {
     text-align: left;
@@ -262,7 +351,7 @@
   }
   .hr-card {
     padding: 24px;
-    border-radius: 24px;
+    border-radius: var(--radius-card, var(--radius-current, 14px));
   }
   .hr-card__text,
   .hr-guarantees {
@@ -284,6 +373,14 @@
   .help-roads .comparison-table-section__title {
     font-size: var(--fs-20);
   }
+  .comparison-spec-table {
+    border-radius: var(--radius-card, var(--radius-current, 14px));
+  }
+  .comparison-spec-table__column,
+  .comparison-spec-table__cell {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
   .hr-pricing__footnote {
     line-height: 1.5;
   }
@@ -298,6 +395,17 @@
   }
   .hr-pricing__subtitle {
     font-size: var(--fs-16);
+    line-height: 1.4;
+  }
+  .comparison-spec-table__column {
+    height: 48px;
+    padding: 12px;
+    font-size: var(--fs-14);
+  }
+  .comparison-spec-table__cell {
+    height: 56px;
+    padding: 12px;
+    font-size: var(--fs-14);
     line-height: 1.4;
   }
 }

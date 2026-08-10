@@ -3,10 +3,6 @@
 import type { Key } from "react";
 import { Dropdown } from "@heroui/react";
 import { ArrowIcon } from "@/components/icons";
-import {
-  ButtonRippleLayer,
-  handleButtonRipplePointerDown,
-} from "@/components/ui/Button";
 
 /** react-aria Selection без прямой зависимости на пакет. */
 type Selection = "all" | Set<Key>;
@@ -42,10 +38,8 @@ export function SortDropdown({ value, onChange }: SortDropdownProps) {
   return (
     <Dropdown>
       <Dropdown.Trigger
-        className="ui-button ui-button--bare cat-sort"
-        onPointerDown={handleButtonRipplePointerDown}
+        className="ui-button ui-button--bare ui-button--no-ripple cat-sort"
       >
-        <ButtonRippleLayer />
         <span className="cat-sort__value">
           {labelOf(value)}
           <ArrowIcon className="cat-sort__arrow" width={8} height={8} />

@@ -37,6 +37,9 @@ export function Wishlist({
     vehicleId && vehicleActions
       ? vehicleActions.isFavorite(vehicleId)
       : undefined;
+  const storagePending =
+    active === undefined &&
+    Boolean(vehicleId && vehicleActions && !vehicleActions.storageReady);
   const isActive = active ?? globalActive ?? internal;
   const resolvedTip = isActive
     ? activeTip
@@ -58,9 +61,16 @@ export function Wishlist({
   return (
     <Button
       bare
-      className={cn("wishlist", isActive && "is-active", className)}
+      className={cn(
+        "wishlist",
+        isActive && "is-active",
+        storagePending && "is-storage-pending",
+        className,
+      )}
       aria-pressed={isActive}
       aria-label={resolvedTip}
+      aria-busy={storagePending || undefined}
+      disabled={storagePending}
       onClick={toggle}
     >
       <HeartStrokeIcon className="icon-stroke" />
