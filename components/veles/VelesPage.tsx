@@ -87,7 +87,10 @@ export function VelesPage() {
             <img src="/images/services/veles1.webp" alt="Александр Велес" />
           </div>
           <div className="veles-cta__body">
-            <h2 className="veles-cta__title">Александр Велес</h2>
+            <h2 className="veles-cta__title">
+              <span className="reg">Александр</span>
+              <span className="bold">Велес</span>
+            </h2>
             <p className="veles-cta__sub">
               Автор индивидуальных концепций автомобильного дизайна,
               специализирующийся на персонализации премиальных и гоночных
