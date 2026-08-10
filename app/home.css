@@ -2741,10 +2741,18 @@
 @media (max-width: 960px) {
   .bento__a .body-type-card__img { left: -2.07%; top: -38.02%; width: 102.07%; height: 152.52%; }
   .bento__b .body-type-card__img { left: -8.05%; top: -40.00%; width: 117.01%; height: 190.08%; }
-  .bento__c .body-type-card__img { left: -7.36%; top: -54.81%; width: 111.95%; height: 206.56%; }
+  /* внедорожник (боковой профиль): в макете object-contain — RR виден целиком */
+  .bento__c .body-type-card__img { left: -7.36%; top: -54.81%; width: 111.95%; height: 206.56%; object-fit: contain; }
   .bento__d .body-type-card__img { left: 0%; top: -32.06%; width: 100%; height: 138.32%; }
   .bento__e .body-type-card__img { left: -14.25%; top: -68.85%; width: 128.74%; height: 170.84%; }
-  .body-type-card--wide .body-type-card__img { left: -12.64%; top: -14.96%; width: 162.99%; height: 141.53%; }
+  .body-type-card--wide .body-type-card__img { left: -12.64%; top: -24%; width: 162.99%; height: 141.53%; }
+}
+/* 960: минивэн, кроссовер и седан в макете отзеркалены по горизонтали
+   (трансформ scaleY(-1) rotate(180)) — на 960 все машины смотрят влево. */
+@media (min-width: 769px) and (max-width: 960px) {
+  .bento__d .body-type-card__img,
+  .bento__e .body-type-card__img,
+  .body-type-card--wide .body-type-card__img { transform: scaleX(-1); }
 }
 
 /* 768 (2 колонки) */

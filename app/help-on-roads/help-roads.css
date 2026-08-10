@@ -252,9 +252,7 @@
     line-height: 1.08;
   }
   .help-roads .ti-block__title,
-  .help-roads .ti-call__title,
-  .help-roads .contacts__title .l1,
-  .help-roads .contacts__title .l2 {
+  .help-roads .ti-call__title {
     font-size: var(--fs-36);
     line-height: 1.16;
   }
@@ -267,14 +265,8 @@
   .help-roads .hr-card__text,
   .help-roads .hr-guarantees,
   .help-roads .hr-pricing__subtitle,
-  .help-roads .ti-call__sub,
-  .help-roads .contacts__sub,
-  .help-roads .contacts__row .label,
-  .help-roads .contacts__row .note {
+  .help-roads .ti-call__sub {
     font-size: var(--fs-16);
-  }
-  .help-roads .contacts__row .value {
-    font-size: var(--fs-20);
   }
   .help-roads .comparison-spec-table__column,
   .help-roads .comparison-spec-table__cell {

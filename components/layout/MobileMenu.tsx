@@ -5,24 +5,80 @@ import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { gsap } from "gsap";
-import { CloseIcon, PhoneIcon } from "@/components/icons";
+import { ChevronDownIcon, CloseIcon, PhoneIcon } from "@/components/icons";
 import {
   ButtonRippleLayer,
   handleButtonRipplePointerDown,
 } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
 
-const primaryMenuItems = [
-  { label: "Каталог", href: "/catalog" },
-  { label: "Услуги", href: "#" },
-  { label: "О салоне", href: "/about" },
-  { label: "Контакты", href: "/contacts" },
-] as const;
+type SubLink = { label: string; href: string };
+type SectionKey = "catalog" | "brands" | "services";
+type NavItem =
+  | { type: "link"; label: string; href: string }
+  | { type: "section"; key: SectionKey; label: string; links: SubLink[] };
 
-const secondaryMenuItems = [
+/**
+ * Основная навигация мобильного меню. «Каталог», «Бренды» и «Услуги» —
+ * раскрывающиеся разделы (accordion). Ссылки берём из футера (кузова/бренды).
+ */
+const primaryNav: NavItem[] = [
+  {
+    type: "section",
+    key: "catalog",
+    label: "Каталог",
+    links: [
+      { label: "Все автомобили", href: "/catalog" },
+      { label: "Седаны", href: "/sedan" },
+      { label: "Кроссоверы", href: "/crossover" },
+      { label: "Внедорожники", href: "/off-road" },
+      { label: "Купе", href: "/coupe" },
+      { label: "Минивэны", href: "/minivan" },
+      { label: "Кабриолеты", href: "/cabriolet" },
+    ],
+  },
+  {
+    type: "section",
+    key: "brands",
+    label: "Бренды",
+    links: [
+      { label: "BMW", href: "/bmw" },
+      { label: "Mercedes-Benz", href: "/mercedes" },
+      { label: "Lexus", href: "/lexus" },
+    ],
+  },
+  {
+    type: "section",
+    key: "services",
+    label: "Услуги",
+    links: [
+      { label: "Трейд-ин", href: "/trade-in" },
+      { label: "Лизинг", href: "/leasing" },
+      { label: "Авто под заказ", href: "/car-selection" },
+      { label: "Автоателье", href: "/atelier" },
+      { label: "Индивидуальный дизайн авто", href: "/veles" },
+      { label: "Помощь на дорогах", href: "/help-on-roads" },
+    ],
+  },
+  { type: "link", label: "О салоне", href: "/about" },
+  { type: "link", label: "Контакты", href: "/contacts" },
+];
+
+// Нижняя вторичная группа — меньшая типографика, без номеров.
+const secondaryNav: SubLink[] = [
   { label: "Избранное", href: "/favorites" },
   { label: "Сравнение", href: "/comparison" },
-] as const;
+];
+
+/** Раздел, которому принадлежит текущий путь (для current-state и авто-раскрытия). */
+function sectionForPath(pathname: string | null): SectionKey | null {
+  if (!pathname) return null;
+  for (const item of primaryNav) {
+    if (item.type !== "section") continue;
+    if (item.links.some((l) => pathname === l.href)) return item.key;
+  }
+  return null;
+}
 
 function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -38,16 +94,21 @@ function getMotionFactor() {
 }
 
 export function MobileMenu() {
-  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [openSection, setOpenSection] = useState<SectionKey | null>(null);
   const openRef = useRef(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const backdropRef = useRef<HTMLButtonElement>(null);
   const layersRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLElement>(null);
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
+
+  const pathname = usePathname();
+  const pathnameRef = useRef(pathname);
+  pathnameRef.current = pathname;
+  const currentSection = sectionForPath(pathname);
 
   useEffect(() => setMounted(true), []);
 
@@ -146,6 +207,8 @@ export function MobileMenu() {
     openRef.current = true;
     setVisible(true);
     setOpen(true);
+    // Авто-раскрытие раздела, если пользователь на одной из его страниц.
+    setOpenSection(sectionForPath(pathnameRef.current));
 
     requestAnimationFrame(() => {
       const backdrop = backdropRef.current;
@@ -171,13 +234,13 @@ export function MobileMenu() {
         gsap.set(backdrop, { opacity: 1 });
         gsap.set(labels, { yPercent: 0, rotate: 0 });
         gsap.set(panelHead, { y: 0, opacity: 1 });
-        panel.querySelector<HTMLAnchorElement>(".mobile-menu__item")?.focus();
+        panel.querySelector<HTMLElement>(".mobile-menu__item")?.focus();
         return;
       }
 
       const timeline = gsap.timeline({
         onComplete: () => {
-          panel.querySelector<HTMLAnchorElement>(".mobile-menu__item")?.focus();
+          panel.querySelector<HTMLElement>(".mobile-menu__item")?.focus();
         },
       });
       timelineRef.current = timeline;
@@ -230,6 +293,11 @@ export function MobileMenu() {
     });
   }, []);
 
+  // Раскрыт одновременно только один раздел; повторный клик — сворачивает.
+  const toggleSection = useCallback((key: SectionKey) => {
+    setOpenSection((prev) => (prev === key ? null : key));
+  }, []);
+
   useEffect(() => {
     if (!visible) return;
 
@@ -241,7 +309,7 @@ export function MobileMenu() {
           panelRef.current.querySelectorAll<HTMLElement>(
             'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
           ),
-        );
+        ).filter((el) => !el.closest("[inert]"));
         if (focusable.length === 0) return;
 
         const first = focusable[0];
@@ -275,6 +343,8 @@ export function MobileMenu() {
     },
     [],
   );
+
+  let primaryIndex = 0;
 
   return (
     <>
@@ -348,71 +418,119 @@ export function MobileMenu() {
                 </button>
               </div>
 
-              <nav className="mobile-menu__nav" aria-label="Меню сайта">
-                <ul
-                  className="mobile-menu__list mobile-menu__list--primary"
-                  aria-label="Основная навигация"
-                >
-                  {primaryMenuItems.map((item, index) => {
-                    const isCurrent =
-                      item.href !== "#" &&
-                      (pathname === item.href ||
-                        pathname.startsWith(`${item.href}/`));
+              <nav className="mobile-menu__nav" aria-label="Основная навигация">
+                <ul className="mobile-menu__list">
+                  {primaryNav.map((item) => {
+                    primaryIndex += 1;
+                    const dataIndex = String(primaryIndex).padStart(2, "0");
+
+                    if (item.type === "link") {
+                      const active = pathname === item.href;
+                      return (
+                        <li className="mobile-menu__item-wrap" key={item.label}>
+                          <Link
+                            className={cn(
+                              "mobile-menu__item",
+                              active && "is-current",
+                            )}
+                            href={item.href}
+                            data-index={dataIndex}
+                            aria-current={active ? "page" : undefined}
+                            onClick={close}
+                          >
+                            <span className="mobile-menu__item-label">
+                              {item.label}
+                            </span>
+                          </Link>
+                        </li>
+                      );
+                    }
+
+                    const isOpen = openSection === item.key;
+                    const isCurrentSection = currentSection === item.key;
+                    const panelId = `mobile-submenu-${item.key}`;
 
                     return (
-                      <li className="mobile-menu__item-wrap" key={item.label}>
-                        <Link
+                      <li className="mobile-menu__item-wrap" key={item.key}>
+                        <button
+                          type="button"
                           className={cn(
-                            "mobile-menu__item",
-                            isCurrent && "is-current",
+                            "mobile-menu__item mobile-menu__trigger",
+                            "ui-button--no-ripple",
+                            isCurrentSection && "is-current",
+                            isOpen && "is-open",
                           )}
-                          href={item.href}
-                          data-index={String(index + 1).padStart(2, "0")}
-                          aria-current={isCurrent ? "page" : undefined}
-                          onClick={close}
+                          data-index={dataIndex}
+                          aria-expanded={isOpen}
+                          aria-controls={panelId}
+                          onClick={() => toggleSection(item.key)}
                         >
                           <span className="mobile-menu__item-label">
                             {item.label}
                           </span>
-                        </Link>
+                          <ChevronDownIcon
+                            className="mobile-menu__chevron"
+                            aria-hidden="true"
+                          />
+                        </button>
+
+                        <div
+                          id={panelId}
+                          className={cn(
+                            "mobile-submenu",
+                            isOpen && "is-open",
+                          )}
+                          inert={isOpen ? undefined : true}
+                        >
+                          <div className="mobile-submenu__inner">
+                           <div className="mobile-submenu__list">
+                            {item.links.map((link) => {
+                              const active = pathname === link.href;
+                              return (
+                                <Link
+                                  key={link.href}
+                                  className={cn(
+                                    "mobile-submenu__link",
+                                    active && "is-active",
+                                  )}
+                                  href={link.href}
+                                  aria-current={active ? "page" : undefined}
+                                  onClick={close}
+                                >
+                                  {link.label}
+                                </Link>
+                              );
+                            })}
+                           </div>
+                          </div>
+                        </div>
                       </li>
                     );
                   })}
                 </ul>
 
-                <ul
-                  className="mobile-menu__list mobile-menu__list--secondary"
-                  aria-label="Пользовательские разделы"
+                <div
+                  className="mobile-menu__secondary"
+                  aria-label="Дополнительно"
                 >
-                  {secondaryMenuItems.map((item, index) => {
-                    const isCurrent =
-                      pathname === item.href ||
-                      pathname.startsWith(`${item.href}/`);
-                    const displayIndex = primaryMenuItems.length + index + 1;
-
+                  {secondaryNav.map((link) => {
+                    const active = pathname === link.href;
                     return (
-                      <li
-                        className="mobile-menu__item-wrap mobile-menu__item-wrap--secondary"
-                        key={item.label}
+                      <Link
+                        key={link.href}
+                        className={cn(
+                          "mobile-menu__secondary-link",
+                          active && "is-active",
+                        )}
+                        href={link.href}
+                        aria-current={active ? "page" : undefined}
+                        onClick={close}
                       >
-                        <Link
-                          className={cn(
-                            "mobile-menu__item mobile-menu__item--secondary",
-                            isCurrent && "is-current",
-                          )}
-                          href={item.href}
-                          data-index={String(displayIndex).padStart(2, "0")}
-                          aria-current={isCurrent ? "page" : undefined}
-                          onClick={close}
-                        >
-                          <span className="mobile-menu__item-label">
-                            {item.label}
-                          </span>
-                        </Link>
-                      </li>
+                        {link.label}
+                      </Link>
                     );
                   })}
-                </ul>
+                </div>
               </nav>
             </aside>
           </div>,
