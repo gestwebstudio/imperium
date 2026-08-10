@@ -1297,8 +1297,8 @@
   align-items: stretch;
   scroll-snap-align: start;
 }
-.about__testi-img { overflow: hidden; border-radius: 36px; }
-.about__testi-img img { width: 100%; height: 100%; border-radius: 36px; display: block; object-fit: cover; }
+.about__testi-img { overflow: hidden; border-radius: var(--radius-media); }
+.about__testi-img img { width: 100%; height: 100%; border-radius: var(--radius-media); display: block; object-fit: cover; }
 .about__testi-body { display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
 .about__testi-title { font-family: var(--font-display, "Wix Madefor Display", sans-serif); font-size: clamp(32px, 3.4vw, 48px); line-height: 1.17; color: var(--color-carbon-black-500, #1B1E1D); }
 .about__testi-title .reg { font-weight: 400; }
@@ -1326,7 +1326,6 @@
     --testi-padding-block: clamp(40px, calc(40px + (100vw - 1200px) * .1011905), 74px);
     --testi-height: clamp(763px, calc(763px + (100vw - 1200px) * .4821429), 925px);
     --testi-body-gap: 136px;
-    --testi-radius: 36px;
     --testi-title-size: clamp(36px, calc(36px + (100vw - 1200px) * .0357143), 48px);
     --testi-title-line: clamp(44px, calc(44px + (100vw - 1200px) * .0357143), 56px);
     --testi-author-size: var(--type-text-18-font-size, 18px);
@@ -1363,7 +1362,7 @@
     position: relative;
     min-width: 0;
     min-height: 0;
-    border-radius: var(--testi-radius);
+    border-radius: var(--radius-media);
   }
 
   .about__testi-img img {
@@ -1431,7 +1430,6 @@
     --testi-padding-block: 40px;
     --testi-height: clamp(667px, calc(667px + (100vw - 960px) * .4), 763px);
     --testi-body-gap: clamp(66px, calc(66px + (100vw - 960px) * .2916667), 136px);
-    --testi-radius: clamp(26px, calc(26px + (100vw - 960px) * .0416667), 36px);
     --testi-title-size: clamp(32px, calc(32px + (100vw - 960px) * .0166667), 36px);
     --testi-title-line: clamp(40px, calc(40px + (100vw - 960px) * .0166667), 44px);
     --testi-text-size: var(--type-text-24-font-size, 24px);
@@ -1448,7 +1446,6 @@
   .about__testimonial {
     --testi-height: 667px;
     --testi-body-gap: 66px;
-    --testi-radius: 26px;
     --testi-title-size: var(--type-display-32-font-size, 32px);
     --testi-title-line: var(--type-display-32-line-height, 40px);
     --testi-nav-size: 36px;
@@ -1463,7 +1460,6 @@
     --testi-inset: clamp(30px, calc(30px + (100vw - 640px) * .078125), 40px);
     --testi-padding-block: clamp(30px, calc(30px + (100vw - 640px) * .078125), 40px);
     --testi-height: clamp(666px, calc(666px + (100vw - 640px) * .421875), 720px);
-    --testi-radius: 20px;
     --testi-title-size: clamp(24px, calc(24px + (100vw - 640px) * .046875), 30px);
     --testi-title-line: clamp(32px, calc(32px + (100vw - 640px) * .046875), 38px);
     --testi-author-size: clamp(16px, calc(16px + (100vw - 640px) * .015625), 18px);
@@ -2249,12 +2245,12 @@
 .contacts__grid { display: grid; grid-template-columns: 973fr 734fr; gap: 93px; align-items: stretch; }
 .contacts__left { display: flex; flex-direction: column; }
 .contacts__gallery { display: grid; grid-template-columns: 496fr 454fr; grid-template-rows: 349px 345px; column-gap: 24px; row-gap: 28px; }
-.contacts__gallery img { width: 100%; height: 100%; border-radius: 32px; object-fit: cover; display: block; }
+.contacts__gallery img { width: 100%; height: 100%; border-radius: var(--radius-media); object-fit: cover; display: block; }
 .contacts__gallery .tall { grid-column: 1; grid-row: 1 / span 2; }
 
 .contacts__info {
   background: rgba(228, 223, 219, 0.4);
-  border-radius: 22px;
+  border-radius: var(--radius-card);
   padding: 40px;
   display: flex;
   flex-direction: column;
@@ -2264,7 +2260,7 @@
 .contacts__row .label { display: block; font-family: var(--font-text, "Onest", sans-serif); font-size: var(--fs-18); line-height: 1.33; color: var(--color-warm-taupe-400, #8F8579); }
 .contacts__row .value { display: block; margin-top: 4px; font-family: var(--font-text, "Onest", sans-serif); font-weight: 600; font-size: var(--fs-30); line-height: 1.33; color: var(--color-carbon-black-500, #1B1E1D); }
 .contacts__row .note { display: block; font-family: var(--font-text, "Onest", sans-serif); font-size: var(--fs-18); line-height: 1.33; color: var(--color-carbon-black-500, #1B1E1D); }
-.contacts__map { flex: 1; min-height: 0; border-radius: 32px; overflow: hidden; background: var(--color-stone-beige-200, #E4DFDB); }
+.contacts__map { flex: 1; min-height: 0; border-radius: var(--radius-media); overflow: hidden; background: var(--color-stone-beige-200, #E4DFDB); }
 .contacts__map iframe { width: 100%; height: 100%; border: 0; display: block; }
 
 /* ===== Адаптации контактов по макетам Figma 1107:* (1536 / 1200 / 960).
