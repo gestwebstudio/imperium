@@ -503,11 +503,6 @@
   outline-offset: 3px;
 }
 
-/* ---------- Секции каталога ---------- */
-.catalog > .cars-section--available .car-card {
-  height: 484px;
-}
-
 /* ---------- Адаптив ---------- */
 /* 1200-1536: геометрия плавно масштабируется между двумя ноутбучными
    макетами. Так фильтр и три карточки всегда занимают сетку целиком. */
@@ -629,10 +624,6 @@
 
 @media (max-width: 768px) {
   .catalog-grid { grid-template-columns: 1fr; }
-  .catalog > .cars-section--available .car-card {
-    height: auto;
-    min-height: 0;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
