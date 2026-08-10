@@ -1,8 +1,10 @@
 "use client";
 
+import type { ReactNode } from "react";
 import type { Car } from "@/lib/cars";
 import { carTags, formatPrice } from "@/lib/cars";
 import { CarCard } from "@/components/cards/cards";
+import { CarCardSkeleton } from "@/components/ui/Skeletons";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { LeadModal } from "@/components/ui/LeadModal";
 import { ArrowIcon, ArrowDiagonalIcon } from "@/components/icons";
@@ -29,15 +31,24 @@ export function CarsSection({
   viewAll,
   cars,
   variant = "available",
+  loading = false,
+  error,
+  onRetry,
 }: {
   title: string;
   badge?: number;
   viewAll?: string;
   cars: Car[];
   variant?: "available" | "upcoming";
+  /** Реальное ожидание данных: не используется для синхронных моков. */
+  loading?: boolean;
+  error?: ReactNode;
+  onRetry?: () => void;
 }) {
   const isUpcoming = variant === "upcoming";
-  const { rowRef, scroll } = useInfiniteCarousel(cars.length);
+  const { rowRef, scroll } = useInfiniteCarousel(
+    loading || error ? 0 : cars.length,
+  );
 
   return (
     <section
@@ -46,6 +57,7 @@ export function CarsSection({
         "cars-section",
         `cars-section--${variant}`,
       )}
+      aria-busy={loading || undefined}
     >
       <div className="cars-section__head">
         <h2 className="cars-section__title t-page-title">
@@ -59,90 +71,115 @@ export function CarsSection({
         )}
       </div>
       <div className="cars-carousel">
-        <Button
-          size="l"
-          variant="secondary-flat"
-          iconOnly
-          startIcon={<ArrowIcon />}
-          className="cars-section__nav"
-          aria-label="Предыдущие автомобили"
-          onClick={() => scroll(-1)}
-        />
-        <div className="cars-row" ref={rowRef}>
-          {INFINITE_CAROUSEL_COPIES.map((copy) =>
-            cars.map((car, index) => {
-              const isMiddleCopy = copy === INFINITE_CAROUSEL_MIDDLE_COPY;
-              return (
-                <div
-                  key={`${copy}-${car.id}`}
-                  className="cars-carousel__item"
-                  data-carousel-cycle-start={index === 0 ? "" : undefined}
-                  aria-hidden={isMiddleCopy ? undefined : true}
-                  inert={isMiddleCopy ? undefined : true}
-                >
-                  <CarCard
-                    vehicleId={isUpcoming ? "lexus-gx-executive" : car.id}
-                    href={isUpcoming ? undefined : `/catalog/${car.slug}`}
-                    actionSlot={
-                      isUpcoming ? (
-                        <LeadModal
-                          {...UPCOMING_MODAL}
-                          triggerLabel="Забронировать"
-                          triggerVariant="secondary-outlined"
-                          triggerSize="m"
-                          triggerClassName="car-card__details-link"
-                          triggerEndIcon={
-                            <ArrowDiagonalIcon className="car-card__details-icon" />
-                          }
-                          cardOverlay
-                          overlayAriaLabel="Забронировать автомобиль"
-                        />
-                      ) : undefined
-                    }
-                    brandLogo={
-                      isUpcoming
-                        ? "/images/logo_cards/lexus.webp"
-                        : car.brandLogo
-                    }
-                    brandName={isUpcoming ? "Lexus" : car.brand}
-                    title={isUpcoming ? "GX Executive" : car.name}
-                    status={
-                      isUpcoming
-                        ? { type: "warning", label: "Ожидаем поступления" }
-                        : car.status
-                    }
-                    tags={
-                      isUpcoming
-                        ? ["2026", "Бензин", "Полный привод"]
-                        : carTags(car)
-                    }
-                    photo={isUpcoming ? "/images/cars/mask.webp" : car.photo}
-                    photoAlt={isUpcoming ? "Автомобиль ожидается" : car.name}
-                    price={
-                      isUpcoming ? "15 490 000 ₽" : formatPrice(car.price)
-                    }
-                    action={{
-                      label: isUpcoming ? "Забронировать" : "Подробнее",
-                      variant: isUpcoming
-                        ? "secondary-outlined"
-                        : "primary-surface",
-                    }}
-                    comparisonEnabled={!isUpcoming}
-                  />
-                </div>
-              );
-            }),
-          )}
-        </div>
-        <Button
-          size="l"
-          variant="secondary-flat"
-          iconOnly
-          startIcon={<ArrowIcon />}
-          className="cars-section__nav cars-section__nav--next"
-          aria-label="Следующие автомобили"
-          onClick={() => scroll(1)}
-        />
+        {loading ? (
+          <div
+            className="cars-row cars-row--loading"
+            role="status"
+            aria-label={`Загружаем раздел «${title}»`}
+          >
+            {Array.from({ length: 4 }, (_, index) => (
+              <div className="cars-carousel__item" key={index}>
+                <CarCardSkeleton />
+              </div>
+            ))}
+          </div>
+        ) : error ? (
+          <div className="cars-section__state cars-section__state--error" role="alert">
+            <p>{error}</p>
+            {onRetry && (
+              <Button size="m" variant="secondary-outlined" onClick={onRetry}>
+                Повторить
+              </Button>
+            )}
+          </div>
+        ) : (
+          <>
+            <Button
+              size="l"
+              variant="secondary-flat"
+              iconOnly
+              startIcon={<ArrowIcon />}
+              className="cars-section__nav"
+              aria-label="Предыдущие автомобили"
+              onClick={() => scroll(-1)}
+            />
+            <div className="cars-row" ref={rowRef}>
+              {INFINITE_CAROUSEL_COPIES.map((copy) =>
+                cars.map((car, index) => {
+                  const isMiddleCopy = copy === INFINITE_CAROUSEL_MIDDLE_COPY;
+                  return (
+                    <div
+                      key={`${copy}-${car.id}`}
+                      className="cars-carousel__item"
+                      data-carousel-cycle-start={index === 0 ? "" : undefined}
+                      aria-hidden={isMiddleCopy ? undefined : true}
+                      inert={isMiddleCopy ? undefined : true}
+                    >
+                      <CarCard
+                        vehicleId={isUpcoming ? "lexus-gx-executive" : car.id}
+                        href={isUpcoming ? undefined : `/catalog/${car.slug}`}
+                        actionSlot={
+                          isUpcoming ? (
+                            <LeadModal
+                              {...UPCOMING_MODAL}
+                              triggerLabel="Забронировать"
+                              triggerVariant="secondary-outlined"
+                              triggerSize="m"
+                              triggerClassName="car-card__details-link"
+                              triggerEndIcon={
+                                <ArrowDiagonalIcon className="car-card__details-icon" />
+                              }
+                              cardOverlay
+                              overlayAriaLabel="Забронировать автомобиль"
+                            />
+                          ) : undefined
+                        }
+                        brandLogo={
+                          isUpcoming
+                            ? "/images/logo_cards/lexus.webp"
+                            : car.brandLogo
+                        }
+                        brandName={isUpcoming ? "Lexus" : car.brand}
+                        title={isUpcoming ? "GX Executive" : car.name}
+                        status={
+                          isUpcoming
+                            ? { type: "warning", label: "Ожидаем поступления" }
+                            : car.status
+                        }
+                        tags={
+                          isUpcoming
+                            ? ["2026", "Бензин", "Полный привод"]
+                            : carTags(car)
+                        }
+                        photo={isUpcoming ? "/images/cars/mask.webp" : car.photo}
+                        photoAlt={isUpcoming ? "Автомобиль ожидается" : car.name}
+                        price={
+                          isUpcoming ? "15 490 000 ₽" : formatPrice(car.price)
+                        }
+                        action={{
+                          label: isUpcoming ? "Забронировать" : "Подробнее",
+                          variant: isUpcoming
+                            ? "secondary-outlined"
+                            : "primary-surface",
+                        }}
+                        comparisonEnabled={!isUpcoming}
+                      />
+                    </div>
+                  );
+                }),
+              )}
+            </div>
+            <Button
+              size="l"
+              variant="secondary-flat"
+              iconOnly
+              startIcon={<ArrowIcon />}
+              className="cars-section__nav cars-section__nav--next"
+              aria-label="Следующие автомобили"
+              onClick={() => scroll(1)}
+            />
+          </>
+        )}
       </div>
     </section>
   );

@@ -6,9 +6,10 @@ import type { Car } from "@/lib/cars";
 import { carTags, formatPrice, getCarsByIds } from "@/lib/cars";
 import { HeartStrokeIcon } from "@/components/icons";
 import { Badge } from "@/components/ui/primitives";
-import { ButtonLink } from "@/components/ui/Button";
+import { Button, ButtonLink } from "@/components/ui/Button";
 import { Crumbs } from "@/components/ui/Crumbs";
 import { CarCard } from "@/components/cards/cards";
+import { CarCardSkeleton } from "@/components/ui/Skeletons";
 import { useVehicleActions } from "@/components/ui/VehicleActionsContext";
 
 export function FavoritesClient() {
@@ -16,6 +17,8 @@ export function FavoritesClient() {
     useVehicleActions();
   const [loadedCars, setLoadedCars] = useState<Car[]>([]);
   const [carsReady, setCarsReady] = useState(false);
+  const [loadError, setLoadError] = useState(false);
+  const [loadAttempt, setLoadAttempt] = useState(0);
   const requestVersionRef = useRef(0);
   const favoriteIdsKey = favoriteIds.join(",");
   const loadedCarsById = useMemo(
@@ -32,6 +35,7 @@ export function FavoritesClient() {
     if (!storageReady) return;
 
     const requestVersion = ++requestVersionRef.current;
+    setLoadError(false);
     getCarsByIds(favoriteIds)
       .then((cars) => {
         if (requestVersion !== requestVersionRef.current) return;
@@ -42,13 +46,12 @@ export function FavoritesClient() {
         });
       })
       .catch(() => {
-        // The mock source is local; a future API failure must not leave a
-        // permanent skeleton or an unhandled rejected promise.
+        if (requestVersion === requestVersionRef.current) setLoadError(true);
       })
       .finally(() => {
         if (requestVersion === requestVersionRef.current) setCarsReady(true);
       });
-  }, [favoriteIdsKey, storageReady]);
+  }, [favoriteIdsKey, loadAttempt, storageReady]);
 
   function showRemovalUndo(car: Car, active: boolean) {
     if (active) return;
@@ -82,30 +85,30 @@ export function FavoritesClient() {
         <section
           className="favorites-loading-grid"
           role="status"
+          aria-busy="true"
           aria-label="Загружаем избранные автомобили"
         >
           <span className="favorites-loading-grid__sr">
             Загружаем избранные автомобили…
           </span>
           {Array.from({ length: 4 }, (_, index) => (
-            <article
-              className="favorites-skeleton-card"
-              aria-hidden="true"
-              key={index}
-            >
-              <div className="favorites-skeleton-card__top">
-                <span className="favorites-skeleton-card__brand" />
-                <span className="favorites-skeleton-card__actions" />
-              </div>
-              <span className="favorites-skeleton-card__title" />
-              <span className="favorites-skeleton-card__meta" />
-              <span className="favorites-skeleton-card__photo" />
-              <div className="favorites-skeleton-card__bottom">
-                <span className="favorites-skeleton-card__price" />
-                <span className="favorites-skeleton-card__button" />
-              </div>
-            </article>
+            <CarCardSkeleton key={index} />
           ))}
+        </section>
+      ) : loadError ? (
+        <section className="favorites-error" role="alert">
+          <p>Не удалось загрузить избранные автомобили.</p>
+          <Button
+            size="m"
+            variant="secondary-outlined"
+            className="favorites-error__retry"
+            onClick={() => {
+              setCarsReady(false);
+              setLoadAttempt((current) => current + 1);
+            }}
+          >
+            Повторить
+          </Button>
         </section>
       ) : favoriteCars.length > 0 ? (
         <div className="favorites-grid">

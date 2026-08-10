@@ -30,8 +30,12 @@ import { Specs } from "@/components/car/Specs";
 import { TypographyGuard } from "@/components/ui/TypographyGuard";
 import { FloatingVehicleActions } from "@/components/ui/FloatingVehicleActions";
 import { CarCard } from "@/components/cards/cards";
+import { CarsSection } from "@/components/home/CarsSection";
+import { CatalogClient } from "@/components/catalog/CatalogClient";
 import { ComparisonClient } from "@/components/comparison/ComparisonClient";
 import { FavoritesClient } from "@/components/favorites/FavoritesClient";
+import { LoadingIframe } from "@/components/ui/LoadingIframe";
+import { CarCardSkeleton } from "@/components/ui/Skeletons";
 import { getCars } from "@/lib/cars";
 
 describe("китовые кнопки", () => {
@@ -295,7 +299,8 @@ describe("избранное и сравнение", () => {
     );
 
     expect(markup).toContain("favorites-loading-grid");
-    expect(markup.match(/favorites-skeleton-card"/g)).toHaveLength(4);
+    expect(markup.match(/class="car-card car-card-skeleton /g)).toHaveLength(4);
+    expect(markup).toContain("skeleton--shimmer");
     expect(markup).not.toContain("favorites-empty");
   });
 
@@ -462,8 +467,63 @@ describe("loading сравнения", () => {
     );
 
     expect(markup).toContain("comparison-loading--skeleton");
-    expect(markup.match(/comparison-loading__card/g)).toHaveLength(4);
+    expect(markup.match(/class="car-card car-card-skeleton /g)).toHaveLength(4);
+    expect(markup).toContain("skeleton--shimmer");
     expect(markup).not.toContain("comparison-empty");
+  });
+});
+
+describe("единая система loading states", () => {
+  it("собирает CarCardSkeleton только из HeroUI Skeleton placeholders", () => {
+    const markup = renderToString(<CarCardSkeleton />);
+
+    expect(markup).toContain("car-card-skeleton");
+    expect(markup.match(/skeleton--shimmer/g)?.length).toBeGreaterThan(5);
+    expect(markup).not.toContain("favorites-skeleton-card");
+    expect(markup).not.toContain("comparison-loading__line");
+  });
+
+  it("готовит CarsSection к API loading без запуска infinite carousel", () => {
+    const markup = renderToString(
+      <CarsSection title="Автомобили" cars={[]} loading />,
+    );
+
+    expect(markup).toContain("cars-row--loading");
+    expect(markup.match(/class="car-card car-card-skeleton /g)).toHaveLength(4);
+    expect(markup).not.toContain("Предыдущие автомобили");
+    expect(markup).not.toContain("Следующие автомобили");
+  });
+
+  it("готовит Catalog к API loading и skeleton счётчика", () => {
+    const markup = renderToString(<CatalogClient cars={[]} loading />);
+
+    expect(markup).toContain("catalog-grid--loading");
+    expect(markup).toContain("catalog-head__count-skeleton");
+    expect(markup.match(/class="car-card car-card-skeleton /g)).toHaveLength(6);
+    expect(markup).not.toContain("catalog-empty");
+  });
+
+  it("держит HeroUI skeleton iframe до реального onLoad", () => {
+    const { container } = render(
+      <LoadingIframe
+        containerClassName="test-map"
+        src="about:blank"
+        title="Тестовая карта"
+      />,
+    );
+    const frame = screen.getByTitle("Тестовая карта");
+
+    expect(container.querySelector(".loading-iframe__skeleton")).toHaveClass(
+      "skeleton",
+      "skeleton--shimmer",
+    );
+    expect(frame).toHaveAttribute("tabindex", "-1");
+    expect(frame).toHaveAttribute("aria-hidden", "true");
+
+    fireEvent.load(frame);
+
+    expect(container.querySelector(".loading-iframe__skeleton")).not.toBeInTheDocument();
+    expect(frame).not.toHaveAttribute("aria-hidden");
   });
 });
 

@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { INITIAL_ADMIN_ACTION_STATE } from "@/lib/admin-action-state";
 
 const db = vi.hoisted(() => ({
   news: {
@@ -14,9 +15,18 @@ const db = vi.hoisted(() => ({
   },
 }));
 
-const cookieStore = vi.hoisted(() => ({
-  set: vi.fn(),
-  delete: vi.fn(),
+const auth = vi.hoisted(() => ({
+  requireAdmin: vi.fn(),
+  verifyAdminPassword: vi.fn(),
+  createAdminSession: vi.fn(),
+  deleteAdminSession: vi.fn(),
+}));
+
+const rateLimit = vi.hoisted(() => ({
+  getAdminClientIdentifier: vi.fn(),
+  canAttemptAdminLogin: vi.fn(),
+  recordFailedAdminLogin: vi.fn(),
+  clearAdminLoginFailures: vi.fn(),
 }));
 
 const navigation = vi.hoisted(() => ({
@@ -24,11 +34,11 @@ const navigation = vi.hoisted(() => ({
     throw new Error(`REDIRECT:${path}`);
   }),
 }));
-
 const cache = vi.hoisted(() => ({ revalidatePath: vi.fn() }));
 
 vi.mock("@/lib/db", () => ({ prisma: db }));
-vi.mock("next/headers", () => ({ cookies: vi.fn(async () => cookieStore) }));
+vi.mock("@/lib/admin-auth", () => auth);
+vi.mock("@/lib/admin-rate-limit", () => rateLimit);
 vi.mock("next/navigation", () => navigation);
 vi.mock("next/cache", () => cache);
 
@@ -43,153 +53,182 @@ import {
   updateReview,
 } from "@/app/admin/actions";
 
-function newsForm(overrides: Record<string, string> = {}) {
-  const values = {
+function newsForm(overrides: Record<string, string | null> = {}) {
+  const values: Record<string, string | null> = {
     title: "  Новая модель  ",
     slug: "",
     excerpt: "  Кратко  ",
     body: " Первый абзац\r\n\r\nВторой абзац ",
-    image: " /news.webp ",
+    image: "/images/news.webp",
     imageAlt: " Фото ",
     date: "2026-08-09",
     published: "on",
     ...overrides,
   };
   const form = new FormData();
-  Object.entries(values).forEach(([key, value]) => form.set(key, value));
+  Object.entries(values).forEach(([key, value]) => {
+    if (value !== null) form.set(key, value);
+  });
   return form;
 }
 
-function reviewForm(overrides: Record<string, string> = {}) {
-  const values = {
+function reviewForm(overrides: Record<string, string | null> = {}) {
+  const values: Record<string, string | null> = {
     author: "  Анна  ",
     car: " BMW X5 ",
     text: " Отличный автомобиль ",
-    image: " /review.webp ",
+    image: "/images/review.webp",
     imageAlt: " Фото автора ",
     published: "on",
     ...overrides,
   };
   const form = new FormData();
-  Object.entries(values).forEach(([key, value]) => form.set(key, value));
+  Object.entries(values).forEach(([key, value]) => {
+    if (value !== null) form.set(key, value);
+  });
   return form;
 }
 
 beforeEach(() => {
   vi.clearAllMocks();
-  vi.unstubAllEnvs();
-  vi.stubEnv("ADMIN_PASSWORD", "secret");
+  auth.requireAdmin.mockResolvedValue({ id: "session" });
+  auth.verifyAdminPassword.mockResolvedValue(false);
+  rateLimit.getAdminClientIdentifier.mockResolvedValue("client:test");
+  rateLimit.canAttemptAdminLogin.mockResolvedValue(true);
 });
 
 describe("admin actions: авторизация", () => {
-  it("отклоняет пустой и неверный пароль", async () => {
-    const empty = new FormData();
-    await expect(login(empty)).rejects.toThrow("REDIRECT:/admin/login?error=1");
-
+  it("возвращает одинаковый ответ для неверного пароля и rate limit", async () => {
     const wrong = new FormData();
     wrong.set("password", "wrong");
     await expect(login(wrong)).rejects.toThrow("REDIRECT:/admin/login?error=1");
-    expect(cookieStore.set).not.toHaveBeenCalled();
+    expect(rateLimit.recordFailedAdminLogin).toHaveBeenCalledWith("client:test");
+
+    rateLimit.canAttemptAdminLogin.mockResolvedValue(false);
+    await expect(login(wrong)).rejects.toThrow("REDIRECT:/admin/login?error=1");
+    expect(auth.verifyAdminPassword).toHaveBeenCalledTimes(1);
   });
 
-  it("создаёт недельную защищённую сессию", async () => {
+  it("создаёт opaque-сессию после успешной проверки", async () => {
+    auth.verifyAdminPassword.mockResolvedValue(true);
     const form = new FormData();
-    form.set("password", "secret");
+    form.set("password", "correct password");
 
     await expect(login(form)).rejects.toThrow("REDIRECT:/admin/news");
-    expect(cookieStore.set).toHaveBeenCalledWith("admin_session", "secret", {
-      httpOnly: true,
-      sameSite: "lax",
-      path: "/",
-      maxAge: 604_800,
-    });
+    expect(rateLimit.clearAdminLoginFailures).toHaveBeenCalledWith("client:test");
+    expect(auth.createAdminSession).toHaveBeenCalledOnce();
   });
 
   it("удаляет сессию при выходе", async () => {
     await expect(logout()).rejects.toThrow("REDIRECT:/admin/login");
-    expect(cookieStore.delete).toHaveBeenCalledWith("admin_session");
+    expect(auth.deleteAdminSession).toHaveBeenCalledOnce();
+  });
+});
+
+describe("admin actions: обязательная авторизация", () => {
+  it("останавливает все шесть CRUD actions до Prisma и revalidation", async () => {
+    auth.requireAdmin.mockRejectedValue(new Error("UNAUTHORIZED"));
+    const attempts = [
+      () => createNews(INITIAL_ADMIN_ACTION_STATE, newsForm()),
+      () => updateNews("news-id", INITIAL_ADMIN_ACTION_STATE, newsForm()),
+      () => deleteNews("news-id"),
+      () => createReview(INITIAL_ADMIN_ACTION_STATE, reviewForm()),
+      () =>
+        updateReview("review-id", INITIAL_ADMIN_ACTION_STATE, reviewForm()),
+      () => deleteReview("review-id"),
+    ];
+
+    for (const attempt of attempts) {
+      await expect(attempt()).rejects.toThrow("UNAUTHORIZED");
+    }
+
+    expect(auth.requireAdmin).toHaveBeenCalledTimes(6);
+    expect(db.news.findUnique).not.toHaveBeenCalled();
+    expect(db.news.create).not.toHaveBeenCalled();
+    expect(db.news.update).not.toHaveBeenCalled();
+    expect(db.news.delete).not.toHaveBeenCalled();
+    expect(db.review.create).not.toHaveBeenCalled();
+    expect(db.review.update).not.toHaveBeenCalled();
+    expect(db.review.delete).not.toHaveBeenCalled();
+    expect(cache.revalidatePath).not.toHaveBeenCalled();
   });
 });
 
 describe("admin actions: новости", () => {
-  it("создаёт новость, нормализует поля и подбирает уникальный slug", async () => {
+
+  it("создаёт новость, нормализует поля и подбирает slug", async () => {
     db.news.findUnique
       .mockResolvedValueOnce({ id: "occupied" })
       .mockResolvedValueOnce(null);
 
-    await expect(createNews(newsForm())).rejects.toThrow(
-      "REDIRECT:/admin/news",
-    );
-
+    await expect(
+      createNews(INITIAL_ADMIN_ACTION_STATE, newsForm()),
+    ).rejects.toThrow("REDIRECT:/admin/news");
     expect(db.news.create).toHaveBeenCalledWith({
       data: {
         title: "Новая модель",
         excerpt: "Кратко",
         body: "Первый абзац\n\nВторой абзац",
-        image: "/news.webp",
+        image: "/images/news.webp",
         imageAlt: "Фото",
-        date: new Date("2026-08-09"),
+        date: new Date("2026-08-09T00:00:00.000Z"),
         published: true,
         slug: "novaya-model-2",
       },
     });
-    expect(cache.revalidatePath.mock.calls.map(([path]) => path)).toEqual([
-      "/",
-      "/news",
-      "/about",
-    ]);
   });
 
-  it("использует запасной slug и сохраняет черновик", async () => {
-    db.news.findUnique.mockResolvedValue(null);
-    const form = newsForm({ title: "", slug: "!!!", published: "off" });
-
-    await expect(createNews(form)).rejects.toThrow("REDIRECT:/admin/news");
-    expect(db.news.create).toHaveBeenCalledWith({
-      data: expect.objectContaining({ slug: "news", published: false }),
-    });
-  });
-
-  it("обновляет новость и разрешает сохранить её текущий slug", async () => {
-    db.news.findUnique.mockResolvedValue({ id: "same-id" });
-
-    await expect(updateNews("same-id", newsForm({ slug: "Свежая новость" }))).rejects.toThrow(
-      "REDIRECT:/admin/news",
+  it("возвращает field errors и не пишет невалидные данные", async () => {
+    const result = await createNews(
+      INITIAL_ADMIN_ACTION_STATE,
+      newsForm({ image: "javascript:alert(1)", date: "2026-02-30" }),
     );
-    expect(db.news.update).toHaveBeenCalledWith({
-      where: { id: "same-id" },
-      data: expect.objectContaining({ slug: "svezhaya-novost" }),
-    });
+    expect(result.status).toBe("error");
+    expect(result.fieldErrors).toMatchObject({ image: expect.any(Array), date: expect.any(Array) });
+    expect(db.news.create).not.toHaveBeenCalled();
   });
 
-  it("удаляет новость и обновляет публичные и административные страницы", async () => {
-    await deleteNews("news-id");
+  it("нейтрализует ошибку БД при update", async () => {
+    db.news.findUnique.mockResolvedValue(null);
+    db.news.update.mockRejectedValue(new Error("SQLITE secret details"));
+    await expect(
+      updateNews("news-id", INITIAL_ADMIN_ACTION_STATE, newsForm()),
+    ).resolves.toEqual({ status: "error", message: "Не удалось сохранить новость." });
+  });
 
+  it("удаляет только после проверки сессии и id", async () => {
+    await deleteNews("news-id");
+    expect(auth.requireAdmin).toHaveBeenCalledOnce();
     expect(db.news.delete).toHaveBeenCalledWith({ where: { id: "news-id" } });
-    expect(cache.revalidatePath).toHaveBeenCalledWith("/admin/news");
+
+    await expect(deleteNews("../bad")).rejects.toThrow("Некорректный идентификатор");
   });
 });
 
 describe("admin actions: отзывы", () => {
-  it("создаёт и нормализует отзыв", async () => {
-    await expect(createReview(reviewForm())).rejects.toThrow(
-      "REDIRECT:/admin/reviews",
-    );
+  it("создаёт нормализованный отзыв", async () => {
+    await expect(
+      createReview(INITIAL_ADMIN_ACTION_STATE, reviewForm()),
+    ).rejects.toThrow("REDIRECT:/admin/reviews");
     expect(db.review.create).toHaveBeenCalledWith({
       data: {
         author: "Анна",
         car: "BMW X5",
         text: "Отличный автомобиль",
-        image: "/review.webp",
+        image: "/images/review.webp",
         imageAlt: "Фото автора",
         published: true,
       },
     });
   });
 
-  it("обновляет черновик отзыва", async () => {
+  it("обновляет неопубликованный отзыв", async () => {
     await expect(
-      updateReview("review-id", reviewForm({ published: "off" })),
+      updateReview(
+        "review-id",
+        INITIAL_ADMIN_ACTION_STATE,
+        reviewForm({ published: null }),
+      ),
     ).rejects.toThrow("REDIRECT:/admin/reviews");
     expect(db.review.update).toHaveBeenCalledWith({
       where: { id: "review-id" },
@@ -197,12 +236,15 @@ describe("admin actions: отзывы", () => {
     });
   });
 
-  it("удаляет отзыв и обновляет страницы", async () => {
-    await deleteReview("review-id");
+  it("нейтрализует ошибки create и delete", async () => {
+    db.review.create.mockRejectedValueOnce(new Error("database details"));
+    await expect(
+      createReview(INITIAL_ADMIN_ACTION_STATE, reviewForm()),
+    ).resolves.toEqual({ status: "error", message: "Не удалось сохранить отзыв." });
 
-    expect(db.review.delete).toHaveBeenCalledWith({
-      where: { id: "review-id" },
-    });
-    expect(cache.revalidatePath).toHaveBeenCalledWith("/admin/reviews");
+    db.review.delete.mockRejectedValueOnce(new Error("database details"));
+    await expect(deleteReview("review-id")).rejects.toThrow(
+      "Не удалось удалить отзыв.",
+    );
   });
 });

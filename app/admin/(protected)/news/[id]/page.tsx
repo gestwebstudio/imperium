@@ -1,9 +1,7 @@
 import { notFound } from "next/navigation";
+import { updateNews } from "@/app/admin/actions";
 import { NewsForm } from "@/components/admin/NewsForm";
-import { prisma } from "@/lib/db";
-import { updateNews } from "../../actions";
-
-export const dynamic = "force-dynamic";
+import { getAdminNewsById } from "@/lib/admin-dal";
 
 export default async function EditNewsPage({
   params,
@@ -11,7 +9,7 @@ export default async function EditNewsPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const news = await prisma.news.findUnique({ where: { id } });
+  const news = await getAdminNewsById(id);
   if (!news) notFound();
 
   return (

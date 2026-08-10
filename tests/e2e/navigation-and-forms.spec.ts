@@ -50,6 +50,8 @@ test("headroom учитывает верхний порог, а Services Mega и
   await page.goto("/");
 
   const header = page.locator(".site-header");
+  await expect(header).toBeVisible();
+  await page.waitForTimeout(100);
   await page.evaluate(() => window.scrollTo(0, 100));
   await expect(header).not.toHaveClass(/is-hidden/);
 
@@ -95,9 +97,16 @@ test("MobileMenu сохраняет body overflow, корректную сема
     "tabindex",
     "-1",
   );
-  await expect(dialog.locator("nav > ul.mobile-menu__list")).toHaveCount(1);
+  await expect(dialog.locator("nav > ul.mobile-menu__list")).toHaveCount(2);
   await expect(dialog.locator("nav > ol")).toHaveCount(0);
-  await expect(dialog.locator(".mobile-menu__list")).toHaveCSS("gap", "8px");
+  await expect(dialog.locator(".mobile-menu__list--primary")).toHaveCSS(
+    "gap",
+    "8px",
+  );
+  await expect(dialog.locator(".mobile-menu__list--secondary")).toHaveCSS(
+    "margin-top",
+    "40px",
+  );
   const close = dialog.getByRole("button", { name: "Закрыть меню" });
   await expect(close).toHaveClass(/ui-button--no-ripple/);
   await expect(close.locator(":scope > .ui-button__ripple-layer")).toHaveCount(0);
@@ -122,7 +131,10 @@ test("MobileMenu сохраняет body overflow, корректную сема
   await page.setViewportSize({ width: 1024, height: 768 });
   await trigger.click();
   await expect(dialog).toBeVisible();
-  await expect(dialog.locator(".mobile-menu__list")).toHaveCSS("gap", "16px");
+  await expect(dialog.locator(".mobile-menu__list--primary")).toHaveCSS(
+    "gap",
+    "16px",
+  );
   await menu.locator(".mobile-menu__backdrop").click({ position: { x: 10, y: 300 } });
   await expect(dialog).toBeHidden();
   await expect.poll(() => page.evaluate(() => document.body.style.overflow)).toBe(

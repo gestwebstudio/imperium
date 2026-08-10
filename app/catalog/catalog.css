@@ -57,6 +57,13 @@
 }
 .catalog-head__title { display: flex; align-items: flex-start; gap: 10px; }
 .catalog-head__title > .badge { margin-top: 1px; }
+.catalog-head__count-skeleton {
+  width: 42px;
+  height: 34px;
+  flex: none;
+  margin-top: 1px;
+  border-radius: 999px;
+}
 .catalog-head__tools { display: flex; align-items: center; gap: 20px; }
 
 /* Кнопка «Фильтры» и шапка/бэкдроп drawer — только на мобилке (≤1200) */

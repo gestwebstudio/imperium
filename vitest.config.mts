@@ -24,8 +24,8 @@ export default defineConfig({
       reporter: ["text", "html", "lcov"],
       reportsDirectory: "./coverage",
       include: [
-        "lib/{cars,cn,slug,typography,news,reviews,auth}.ts",
-        "middleware.ts",
+        "lib/{cars,cn,slug,typography,news,reviews,admin-auth,admin-rate-limit,admin-validation,admin-dal,security-headers}.ts",
+        "proxy.ts",
         "components/ui/{Button,Comparison,Wishlist,VehicleActionsContext,primitives,TypographyGuard,useInfiniteCarousel}.tsx",
         "components/ui/useInfiniteCarousel.ts",
         "components/car/Specs.tsx",

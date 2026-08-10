@@ -10,14 +10,7 @@ const db = vi.hoisted(() => ({
   },
 }));
 
-const cookieStore = vi.hoisted(() => ({
-  get: vi.fn(),
-}));
-
 vi.mock("@/lib/db", () => ({ prisma: db }));
-vi.mock("next/headers", () => ({ cookies: vi.fn(async () => cookieStore) }));
-
-import { ADMIN_COOKIE, adminPassword, isAuthed } from "@/lib/auth";
 import { getNewsArticle, getNewsList, getNewsSlugs } from "@/lib/news";
 import { getReviews } from "@/lib/reviews";
 
@@ -122,29 +115,5 @@ describe("новости и отзывы", () => {
       where: { published: true },
       orderBy: { createdAt: "asc" },
     });
-  });
-});
-
-describe("серверная авторизация", () => {
-  it("читает пароль администратора из окружения", () => {
-    vi.stubEnv("ADMIN_PASSWORD", "secret");
-    expect(adminPassword()).toBe("secret");
-
-    vi.stubEnv("ADMIN_PASSWORD", "");
-    expect(adminPassword()).toBe("");
-  });
-
-  it("авторизует только при непустом совпадающем cookie", async () => {
-    vi.stubEnv("ADMIN_PASSWORD", "secret");
-    cookieStore.get.mockReturnValue({ value: "secret" });
-    await expect(isAuthed()).resolves.toBe(true);
-    expect(cookieStore.get).toHaveBeenCalledWith(ADMIN_COOKIE);
-
-    cookieStore.get.mockReturnValue({ value: "wrong" });
-    await expect(isAuthed()).resolves.toBe(false);
-
-    vi.stubEnv("ADMIN_PASSWORD", "");
-    cookieStore.get.mockReturnValue({ value: "" });
-    await expect(isAuthed()).resolves.toBe(false);
   });
 });

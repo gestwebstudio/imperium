@@ -1,9 +1,7 @@
 import { notFound } from "next/navigation";
+import { updateReview } from "@/app/admin/actions";
 import { ReviewForm } from "@/components/admin/ReviewForm";
-import { prisma } from "@/lib/db";
-import { updateReview } from "../../actions";
-
-export const dynamic = "force-dynamic";
+import { getAdminReviewById } from "@/lib/admin-dal";
 
 export default async function EditReviewPage({
   params,
@@ -11,7 +9,7 @@ export default async function EditReviewPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const review = await prisma.review.findUnique({ where: { id } });
+  const review = await getAdminReviewById(id);
   if (!review) notFound();
 
   return (

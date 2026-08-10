@@ -1,10 +1,25 @@
 import type { Metadata } from "next";
+import { Onest, Wix_Madefor_Display } from "next/font/google";
 import "./globals.css";
 import { SiteChrome } from "@/components/layout/SiteChrome";
 import { TypographyGuard } from "@/components/ui/TypographyGuard";
 import { VehicleActionsProvider } from "@/components/ui/VehicleActionsContext";
 import { AppToastProvider } from "@/components/ui/AppToastProvider";
 import { getAllCars } from "@/lib/cars";
+
+const onest = Onest({
+  subsets: ["cyrillic", "latin"],
+  weight: ["400", "500", "600", "700", "900"],
+  variable: "--font-onest-local",
+  display: "swap",
+});
+
+const wixMadeforDisplay = Wix_Madefor_Display({
+  subsets: ["cyrillic", "latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-wix-local",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Imperium Motors — Автосалон",
@@ -20,19 +35,7 @@ export default function RootLayout({
   const validVehicleIds = getAllCars().map((car) => car.id);
 
   return (
-    <html lang="ru">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin=""
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;900&family=Wix+Madefor+Display:wght@400;500;600;700;800&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="ru" className={`${onest.variable} ${wixMadeforDisplay.variable}`}>
       <body>
         <VehicleActionsProvider validVehicleIds={validVehicleIds}>
           <SiteChrome>{children}</SiteChrome>

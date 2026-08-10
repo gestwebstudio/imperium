@@ -19,10 +19,21 @@ type PhotoLightboxProps = {
   alt: string;
 };
 
+const LIGHTBOX_NUM_VISIBLE = 9;
+const LIGHTBOX_RESPONSIVE_OPTIONS = [
+  { breakpoint: "1200px", numVisible: 7 },
+  { breakpoint: "960px", numVisible: 5 },
+  { breakpoint: "640px", numVisible: 4 },
+  { breakpoint: "480px", numVisible: 3 },
+];
+
+const mod = (value: number, length: number) =>
+  ((value % length) + length) % length;
+
 /**
  * Полноэкранный просмотр фото (PrimeReact Galleria в модалке HeroUI).
  * Переиспользуемый: открывается императивно через ref — ref.current.open(index).
- * Полоса миниатюр — квадратная, тянется мышью, скроллбар скрыт (см. photo-lightbox.css).
+ * Responsive-окном миниатюр и touch-свайпом управляет PrimeReact Galleria.
  */
 export const PhotoLightbox = forwardRef<PhotoLightboxHandle, PhotoLightboxProps>(
   function PhotoLightbox({ photos, alt }, ref) {
@@ -33,74 +44,46 @@ export const PhotoLightbox = forwardRef<PhotoLightboxHandle, PhotoLightboxProps>
       ref,
       () => ({
         open: (index: number) => {
-          setActiveIndex(index);
+          setActiveIndex(
+            photos.length > 0
+              ? Math.min(Math.max(index, 0), photos.length - 1)
+              : 0,
+          );
           state.open();
         },
       }),
-      [state],
+      [photos.length, state],
     );
 
-    // Перетаскивание полосы миниатюр мышью (скроллбар скрыт в CSS).
-    // Скролл конечный: у краёв просто останавливается — видно, что фото ограничены.
+    // Активное и соседние изображения прогреваются заранее: при циклическом
+    // переключении Galleria не показывает пустой кадр, даже если дальние
+    // миниатюры браузер ещё не успел lazy-load'ить.
     useEffect(() => {
-      if (!state.isOpen) return;
-      const cleanups: Array<() => void> = [];
-      const raf = requestAnimationFrame(() => {
-        const viewports = document.querySelectorAll<HTMLElement>(
-          ".car-photo-viewer__thumbnail-viewport",
-        );
-        viewports.forEach((el) => {
-          let down = false;
-          let moved = false;
-          let startX = 0;
-          let startScroll = 0;
-          const onDown = (e: PointerEvent) => {
-            down = true;
-            moved = false;
-            startX = e.clientX;
-            startScroll = el.scrollLeft;
-            el.classList.add("is-grabbing");
-          };
-          const onMove = (e: PointerEvent) => {
-            if (!down) return;
-            const dx = e.clientX - startX;
-            if (Math.abs(dx) > 4) moved = true;
-            el.scrollLeft = startScroll - dx;
-          };
-          const onUp = () => {
-            down = false;
-            el.classList.remove("is-grabbing");
-          };
-          // Гасим клик по миниатюре, если это было перетаскивание
-          const onClickCapture = (e: MouseEvent) => {
-            if (moved) {
-              e.preventDefault();
-              e.stopPropagation();
-              moved = false;
-            }
-          };
-          el.addEventListener("pointerdown", onDown);
-          window.addEventListener("pointermove", onMove);
-          window.addEventListener("pointerup", onUp);
-          el.addEventListener("click", onClickCapture, true);
-          cleanups.push(() => {
-            el.removeEventListener("pointerdown", onDown);
-            window.removeEventListener("pointermove", onMove);
-            window.removeEventListener("pointerup", onUp);
-            el.removeEventListener("click", onClickCapture, true);
-          });
-        });
+      if (!state.isOpen || photos.length === 0) return;
+
+      const indexes = new Set([
+        activeIndex,
+        mod(activeIndex - 1, photos.length),
+        mod(activeIndex + 1, photos.length),
+      ]);
+
+      indexes.forEach((index) => {
+        const image = new Image();
+        image.src = photos[index].src;
       });
-      return () => {
-        cancelAnimationFrame(raf);
-        cleanups.forEach((fn) => fn());
-      };
-    }, [state.isOpen]);
+    }, [activeIndex, photos, state.isOpen]);
 
     const itemTemplate = (photo: LightboxPhoto) => (
       <figure className="car-photo-viewer__media">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={photo.src} alt={photo.alt ?? alt} draggable={false} />
+        <img
+          src={photo.src}
+          alt={photo.alt ?? alt}
+          draggable={false}
+          decoding="async"
+          loading="eager"
+          fetchPriority="high"
+        />
       </figure>
     );
 
@@ -111,6 +94,8 @@ export const PhotoLightbox = forwardRef<PhotoLightboxHandle, PhotoLightboxProps>
         src={photo.src}
         alt=""
         draggable={false}
+        decoding="async"
+        loading="lazy"
       />
     );
 
@@ -132,13 +117,16 @@ export const PhotoLightbox = forwardRef<PhotoLightboxHandle, PhotoLightboxProps>
                 onItemChange={({ index }) => setActiveIndex(index)}
                 item={itemTemplate}
                 thumbnail={thumbnailTemplate}
-                numVisible={photos.length}
+                numVisible={LIGHTBOX_NUM_VISIBLE}
+                responsiveOptions={LIGHTBOX_RESPONSIVE_OPTIONS}
                 showItemNavigators={photos.length > 1}
-                showThumbnailNavigators={false}
+                showThumbnailNavigators={photos.length > 1}
                 showThumbnails={photos.length > 1}
                 circular={photos.length > 1}
                 itemPrevIcon={<ArrowIcon />}
                 itemNextIcon={<ArrowIcon />}
+                prevThumbnailIcon={<ArrowIcon />}
+                nextThumbnailIcon={<ArrowIcon />}
                 className="car-photo-viewer car-photo-viewer--lightbox"
                 pt={{
                   content: { className: "car-photo-viewer__content" },
@@ -164,6 +152,16 @@ export const PhotoLightbox = forwardRef<PhotoLightboxHandle, PhotoLightboxProps>
                   },
                   thumbnailContainer: {
                     className: "car-photo-viewer__thumbnail-container",
+                  },
+                  previousThumbnailButton: {
+                    className:
+                      "car-photo-viewer__thumbnail-nav car-photo-viewer__thumbnail-nav--prev",
+                    "aria-label": "Предыдущие миниатюры",
+                  },
+                  nextThumbnailButton: {
+                    className:
+                      "car-photo-viewer__thumbnail-nav car-photo-viewer__thumbnail-nav--next",
+                    "aria-label": "Следующие миниатюры",
                   },
                   thumbnailItemsContainer: {
                     className: "car-photo-viewer__thumbnail-viewport",

@@ -1,5 +1,5 @@
+import { createReview } from "@/app/admin/actions";
 import { ReviewForm } from "@/components/admin/ReviewForm";
-import { createReview } from "../../actions";
 
 export default function NewReviewPage() {
   return (
