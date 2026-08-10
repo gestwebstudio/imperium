@@ -1711,10 +1711,6 @@
   .car-atelier .image-service-card:first-child {
     min-height: 432px;
   }
-  .car > .cars-section,
-  .car > .contacts {
-    display: none;
-  }
 }
 
 @media (max-width: 640px) {
@@ -1953,37 +1949,104 @@
 }
 
 @media (max-width: 390px) {
+  /* Характеристики — 2 колонки (column-major, балансировка), без разделителя.
+     Макет 1165:13411. JS отдаёт 3 колонки-обёртки, поэтому раскрываем их
+     через display:contents и балансируем строки multicol'ом. */
   .car-specs__list {
+    display: block;
+    column-count: 2;
     column-gap: 20px;
   }
-  .car-specs__column + .car-specs__column::before {
-    left: -10px;
+  .car-specs__column {
+    display: contents;
   }
+  .car-specs__row {
+    height: auto;
+    min-height: 0;
+    margin-bottom: 6px;
+    break-inside: avoid;
+  }
+  .car-specs__column + .car-specs__column::before {
+    display: none;
+  }
+
+  /* Комплектация — 2 колонки с разделителем; табы в один ряд с гор. скроллом.
+     Макет 1165:13450. Разделитель — column-rule multicol'а. */
   .car-equipment__grid {
-    column-gap: 16px;
+    display: block;
+    column-count: 2;
+    column-gap: 32px;
+    column-rule: 1px solid var(--color-stone-beige-300, #CAC2BB);
+    min-height: 0;
+  }
+  .car-equipment__column {
+    display: contents;
+  }
+  .car-equipment__feature {
+    margin-bottom: 16px;
+    break-inside: avoid;
   }
   .car-equipment__column + .car-equipment__column::before {
-    left: -8px;
+    display: none;
   }
-  .car-specs__value,
-  .car-equipment__value {
-    font-size: 12px;
-    line-height: 16px;
+  .car-equipment__tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .car-equipment__tabs::-webkit-scrollbar {
+    display: none;
   }
   .car-equipment__value {
     overflow-wrap: normal;
+  }
+
+  /* Цена — одна колонка: цена + кнопки в ряд сверху, офферы стопкой снизу.
+     Макет 1165:13502. */
+  .car-price {
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: none;
+    height: auto;
+    min-height: 0;
+    gap: 16px;
+    padding: 16px;
+  }
+  .car-price__section {
+    height: auto;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 14px;
+  }
+  .car-price__value {
+    min-height: 0;
+  }
+  .car-price__buttons {
+    flex-direction: row;
+    gap: 8px;
+  }
+  .car-price__buttons .btn {
+    flex: 1 1 0;
+    height: 28px;
+    min-height: 28px;
+    padding-inline: 12px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .car-price__offers {
+    height: auto;
+    padding: 10px 20px;
+    gap: 12px;
+  }
+  .car-price__row {
+    gap: 4px;
   }
   .car-price__value .price-block__value {
     font-size: 24px;
     line-height: 30px;
     white-space: nowrap;
   }
-  .car-price {
-    gap: 8px;
-  }
-  .car-price__offers {
-    padding-inline: 16px;
-  }
+
   .car-assur__card {
     padding: 16px;
   }
@@ -2377,8 +2440,8 @@
   }
 }
 
-/* Контакты: в макетах карточки автомобиля это три разные
-   композиции — 1536/1200 и горизонтальная версия 960. */
+/* Контакты берут общий адаптив блока (bare-селекторы .contacts__* в home.css).
+   Здесь задаём только поле страницы (гаттер), как .home > .contacts. */
 @media (min-width: 961px) and (max-width: 1536px) {
   .car > .contacts {
     padding-inline: clamp(
@@ -2387,243 +2450,11 @@
       60px
     );
   }
-  .car > .contacts .contacts__grid {
-    grid-template-columns:
-      minmax(0, 1fr)
-      clamp(
-        499px,
-        calc(499px + (100vw - 1200px) * .2470238),
-        582px
-      );
-    gap: clamp(
-      38px,
-      calc(40px - (100vw - 1200px) * .0059524),
-      40px
-    );
-  }
-  .car > .contacts .contacts__title {
-    gap: 0;
-  }
-  .car > .contacts .contacts__title .l1,
-  .car > .contacts .contacts__title .l2 {
-    font-size: clamp(
-      50px,
-      calc(50px + (100vw - 1200px) * .047619),
-      66px
-    );
-    line-height: 70px;
-    text-transform: none;
-  }
-  .car > .contacts .contacts__title .l2 {
-    margin-top: clamp(
-      -3px,
-      calc(-3px + (100vw - 1200px) * .0446429),
-      12px
-    );
-  }
-  .car > .contacts .contacts__sub {
-    width: clamp(
-      598px,
-      calc(598px + (100vw - 1200px) * .5892857),
-      796px
-    );
-    max-width: none;
-    margin-top: clamp(
-      13px,
-      calc(13px + (100vw - 1200px) * .0565476),
-      32px
-    );
-    font-size: 18px;
-    line-height: 24px;
-  }
-  .car > .contacts .contacts__head {
-    margin-bottom: clamp(
-      47px,
-      calc(57px - (100vw - 1200px) * .0297619),
-      57px
-    );
-  }
-  .car > .contacts .contacts__gallery {
-    width: clamp(
-      585px,
-      calc(585px + (100vw - 1200px) * .6279762),
-      796px
-    );
-    grid-template-columns:
-      clamp(
-        298px,
-        calc(298px + (100vw - 1200px) * .3214286),
-        406px
-      )
-      minmax(0, 1fr);
-    grid-template-rows:
-      clamp(
-        256px,
-        calc(256px + (100vw - 1200px) * .2767857),
-        349px
-      )
-      clamp(
-        254px,
-        calc(254px + (100vw - 1200px) * .2708333),
-        345px
-      );
-    column-gap: clamp(
-      14px,
-      calc(14px + (100vw - 1200px) * .014881),
-      19px
-    );
-    row-gap: clamp(
-      21px,
-      calc(21px + (100vw - 1200px) * .0208333),
-      28px
-    );
-  }
-  .car > .contacts .contacts__gallery img {
-    height: 100%;
-    aspect-ratio: auto;
-    border-radius: clamp(
-      24px,
-      calc(24px + (100vw - 1200px) * .0238095),
-      32px
-    );
-  }
-  .car > .contacts .contacts__info {
-    height: clamp(
-      810px,
-      calc(810px + (100vw - 1200px) * .5684524),
-      1001px
-    );
-    min-height: 0;
-    margin-top: 0;
-    padding: clamp(
-      30px,
-      calc(30px + (100vw - 1200px) * .0297619),
-      40px
-    );
-    gap: clamp(
-      40px,
-      calc(40px + (100vw - 1200px) * .047619),
-      56px
-    );
-  }
-  .car > .contacts .contacts__row .label {
-    font-size: 18px;
-    line-height: 24px;
-  }
-  .car > .contacts .contacts__row .value {
-    font-size: 24px;
-    line-height: 30px;
-  }
-  .car > .contacts .contacts__row .note {
-    margin-top: 4px;
-    font-size: 18px;
-    line-height: 24px;
-  }
-  .car > .contacts .contacts__rows > .ui-button {
-    height: clamp(
-      36px,
-      calc(36px + (100vw - 1200px) * .0238095),
-      44px
-    );
-    padding-inline: clamp(
-      14px,
-      calc(14px + (100vw - 1200px) * .0119048),
-      18px
-    );
-    font-size: clamp(
-      16px,
-      calc(16px + (100vw - 1200px) * .0059524),
-      18px
-    );
-    line-height: clamp(
-      20px,
-      calc(20px + (100vw - 1200px) * .0119048),
-      24px
-    );
-  }
 }
 
 @media (min-width: 769px) and (max-width: 960px) {
   .car > .contacts {
     padding-inline: 40px;
-  }
-  .car > .contacts .contacts__grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 28px;
-  }
-  .car > .contacts .contacts__title {
-    gap: 0;
-  }
-  .car > .contacts .contacts__title .l1,
-  .car > .contacts .contacts__title .l2 {
-    font-size: 50px;
-    line-height: 70px;
-    text-transform: none;
-  }
-  .car > .contacts .contacts__title .l2 {
-    margin-top: -3px;
-  }
-  .car > .contacts .contacts__sub {
-    width: 100%;
-    max-width: none;
-    margin-top: 13px;
-    font-size: 18px;
-    line-height: 24px;
-  }
-  .car > .contacts .contacts__head {
-    margin-bottom: 40px;
-  }
-  .car > .contacts .contacts__gallery {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-rows: 186px;
-    gap: 14px;
-  }
-  .car > .contacts .contacts__gallery img,
-  .car > .contacts .contacts__gallery .tall {
-    width: 100%;
-    height: 186px;
-    aspect-ratio: auto;
-    grid-column: auto;
-    grid-row: auto;
-    border-radius: 24px;
-  }
-  .car > .contacts .contacts__info {
-    height: 372px;
-    min-height: 372px;
-    margin-top: 0;
-    padding: 30px;
-    flex-direction: row;
-    gap: 40px;
-    border-radius: 22px;
-  }
-  .car > .contacts .contacts__rows {
-    flex: 0 0 390px;
-    gap: 24px;
-  }
-  .car > .contacts .contacts__row .label {
-    font-size: 16px;
-    line-height: 20px;
-  }
-  .car > .contacts .contacts__row .value {
-    font-size: 20px;
-    line-height: 28px;
-  }
-  .car > .contacts .contacts__row .note {
-    margin-top: 4px;
-    font-size: 16px;
-    line-height: 20px;
-  }
-  .car > .contacts .contacts__rows > .ui-button {
-    height: 36px;
-    padding-inline: 14px;
-    font-size: 16px;
-    line-height: 20px;
-  }
-  .car > .contacts .contacts__map {
-    height: 312px;
-    min-height: 0;
-    border-radius: 26px;
   }
 }
 
@@ -3251,25 +3082,6 @@
   font-size: var(--type-price-24-font-size);
   line-height: var(--type-price-24-line-height);
 }
-.car > .contacts .contacts__title .l1,
-.car > .contacts .contacts__title .l2 {
-  font-size: var(--type-display-66-font-size);
-  line-height: var(--type-display-66-line-height);
-}
-.car > .contacts .contacts__sub,
-.car > .contacts .contacts__row .label,
-.car > .contacts .contacts__row .note,
-.car > .contacts .contacts__rows > .ui-button {
-  font-size: var(--type-text-18-font-size);
-  line-height: var(--type-text-18-line-height);
-}
-.car > .contacts .contacts__row .label {
-  font-weight: var(--font-weight-regular);
-}
-.car > .contacts .contacts__row .value {
-  font-size: var(--type-text-24-font-size);
-  line-height: var(--type-text-24-line-height);
-}
 
 @media (max-width: 1200px) {
   .car-title__head {
@@ -3318,25 +3130,6 @@
     font-size: var(--type-price-20-font-size);
     line-height: var(--type-price-20-line-height);
   }
-  .car > .contacts .contacts__title .l1,
-  .car > .contacts .contacts__title .l2 {
-    font-size: var(--type-display-50-font-size);
-    line-height: var(--type-display-50-line-height);
-  }
-  .car > .contacts .contacts__sub,
-  .car > .contacts .contacts__row .label,
-  .car > .contacts .contacts__row .note {
-    font-size: var(--type-text-18-font-size);
-    line-height: var(--type-text-18-line-height);
-  }
-  .car > .contacts .contacts__row .value {
-    font-size: var(--type-text-24-font-size);
-    line-height: var(--type-text-24-line-height);
-  }
-  .car > .contacts .contacts__rows > .ui-button {
-    font-size: var(--type-text-16-font-size);
-    line-height: var(--type-text-16-line-height);
-  }
 }
 
 @media (max-width: 960px) {
@@ -3360,20 +3153,6 @@
   .car-atelier .image-service-card__text {
     font-size: var(--type-text-16-font-size);
     line-height: var(--type-text-16-line-height);
-  }
-  .car > .contacts .contacts__sub {
-    font-size: var(--type-text-18-font-size);
-    line-height: var(--type-text-18-line-height);
-  }
-  .car > .contacts .contacts__row .label,
-  .car > .contacts .contacts__row .note,
-  .car > .contacts .contacts__rows > .ui-button {
-    font-size: var(--type-text-16-font-size);
-    line-height: var(--type-text-16-line-height);
-  }
-  .car > .contacts .contacts__row .value {
-    font-size: var(--type-text-20-font-size);
-    line-height: var(--type-text-20-line-height);
   }
 }
 
