@@ -764,6 +764,10 @@ body.comparison-route .site-header {
 .mobile-submenu__inner {
   min-height: 0;
   overflow: hidden;
+}
+/* Паддинг/флекс — на вложенном списке, а не на схлопывающемся grid-элементе,
+   иначе трек 0fr не уходит в 0 и остаётся лишняя высота (неравные отступы). */
+.mobile-submenu__list {
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -963,7 +967,7 @@ body.comparison-route .site-header {
     font-size: 10px;
     line-height: 14px;
   }
-  .mobile-submenu__inner {
+  .mobile-submenu__list {
     gap: 10px;
     padding-top: 12px;
     padding-left: 20px;

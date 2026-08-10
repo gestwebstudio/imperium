@@ -483,6 +483,7 @@ export function MobileMenu() {
                           inert={isOpen ? undefined : true}
                         >
                           <div className="mobile-submenu__inner">
+                           <div className="mobile-submenu__list">
                             {item.links.map((link) => {
                               const active = pathname === link.href;
                               return (
@@ -500,6 +501,7 @@ export function MobileMenu() {
                                 </Link>
                               );
                             })}
+                           </div>
                           </div>
                         </div>
                       </li>
