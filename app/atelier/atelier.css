@@ -71,8 +71,8 @@
   background: rgba(213, 204, 196, 0.4);
 }
 .atelier-cta__media {
-  flex: 0 0 805px;
-  width: 805px;
+  flex: 0 0 clamp(435px, calc(64.3px + 38.58vw), 805px);
+  width: clamp(435px, calc(64.3px + 38.58vw), 805px);
   height: 384px;
   border-radius: var(--radius-media);
   overflow: hidden;
@@ -215,10 +215,48 @@
     aspect-ratio: 875 / 416;
     margin-top: 40px;
   }
-  .atelier-cta { flex-direction: column; gap: 32px; }
-  .atelier-cta__media { flex: none; width: 100%; height: auto; aspect-ratio: 805 / 384; }
-  .atelier-cta__body { align-items: flex-start; text-align: left; }
+}
+
+/* ===== Баннер «Дизайн с Александром Велесом»: адаптив как у блока
+   «Александр Велес» (/veles). Фото fluid, с 960 — стопка: текст,
+   затем кнопки, затем фото снизу. Тайтл/паддинги уменьшаются по тем
+   же брейкам. Числа медиа (aspect-ratio) — из макетов баннера велеса. ===== */
+/* 960: стопка — текст сверху, кнопки, фото снизу */
+@media (max-width: 960px) {
+  .atelier-cta { flex-direction: column; align-items: stretch; gap: 34px; }
+  .atelier-cta__media { order: 2; flex: none; width: 100%; height: auto; aspect-ratio: 800 / 384; }
+  .atelier-cta__body { order: 1; align-items: flex-start; text-align: left; gap: 24px; }
   .atelier-cta__text { align-items: flex-start; }
+  .atelier-cta__title .reg { font-size: 40px; line-height: 48px; }
+  .atelier-cta__title .bold { font-size: 50px; line-height: 56px; }
+}
+/* 768: падинг 30, фото 628×318 */
+@media (max-width: 768px) {
+  .atelier-cta { padding: 30px; }
+  .atelier-cta__media { aspect-ratio: 628 / 318; }
+}
+/* 640: тайтл 32/40, фото 520×262 */
+@media (max-width: 640px) {
+  .atelier-cta__title .reg { font-size: 32px; line-height: 40px; }
+  .atelier-cta__title .bold { font-size: 40px; line-height: 48px; }
+  .atelier-cta__media { aspect-ratio: 520 / 262; }
+}
+/* 480: падинг 26, тайтл 28/36, описание 16/20, фото 388×205 */
+@media (max-width: 480px) {
+  .atelier-cta { padding: 26px; }
+  .atelier-cta__body { gap: 16px; }
+  .atelier-cta__title .reg { font-size: 28px; line-height: 36px; }
+  .atelier-cta__title .bold { font-size: 36px; line-height: 44px; }
+  .atelier-cta__sub { font-size: 16px; line-height: 20px; }
+  .atelier-cta__media { aspect-ratio: 388 / 205; }
+}
+/* 430: падинг 20, тайтл 24/32, фото 310×166 */
+@media (max-width: 430px) {
+  .atelier-cta { padding: 20px; gap: 40px; }
+  .atelier-cta__body { gap: 12px; }
+  .atelier-cta__title .reg { font-size: 24px; line-height: 32px; }
+  .atelier-cta__title .bold { font-size: 32px; line-height: 40px; }
+  .atelier-cta__media { aspect-ratio: 310 / 166; }
 }
 @media (max-width: 768px) {
   .projects-row > * { flex-basis: calc((100% - 20px) / 2); }
