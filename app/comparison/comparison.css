@@ -6,7 +6,7 @@
   padding: var(--crumbs-page-top, var(--page-top, 155px))
     clamp(40px, calc(40px + (100vw - 1200px) * .059524), 60px)
     clamp(56px, 4.167vw, 80px);
-  overflow-x: clip;
+  overflow-x: visible;
 }
 
 .comparison-head {

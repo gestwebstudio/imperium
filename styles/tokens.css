@@ -159,7 +159,7 @@
   --page-top: calc(var(--header-h) + var(--crumbs-gap-top));
   /* Верхняя позиция контейнера с крошками. Матрица соответствует эталонной
      странице сравнения и переопределяется на её контрольных брейкпоинтах. */
-  --crumbs-page-top: var(--page-top);
+  --crumbs-page-top: 106px;
   --section-space: clamp(72px, 8.333vw, 160px);
   --section-space-lg: clamp(88px, 10.416vw, 200px);
   --surface-padding: clamp(20px, 2.083vw, 40px);
@@ -194,20 +194,20 @@
 @media (min-width: 1920px) { :root { --crumbs-gap-top: 60px; } }
 /* --page-top пересчитается сам (calc в :root выше). */
 
-@media (min-width: 1201px) {
+@media (min-width: 481px) {
   :root {
-    --crumbs-page-top: clamp(
-      124px,
-      calc(124px + (100vw - 1536px) * .083333),
-      156px
-    );
+    --crumbs-page-top: clamp(106px, calc(22px + 17.5vw), 134px);
   }
 }
-@media (max-width: 768px) {
-  :root { --crumbs-page-top: calc(var(--page-top) + 10px); }
+@media (min-width: 1201px) {
+  :root {
+    --crumbs-page-top: clamp(124px, calc(169.714px - 2.976vw), 134px);
+  }
 }
-@media (max-width: 480px) {
-  :root { --crumbs-page-top: 106px; }
+@media (min-width: 1537px) {
+  :root {
+    --crumbs-page-top: clamp(124px, calc(-4px + 8.333vw), 156px);
+  }
 }
 
 /* Нижний зазор крошек «крошки → ближайший элемент снизу» — одинаково на всех

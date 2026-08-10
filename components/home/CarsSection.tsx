@@ -116,6 +116,7 @@ export function CarsSection({
                       inert={isMiddleCopy ? undefined : true}
                     >
                       <CarCard
+                        variant="carousel"
                         vehicleId={isUpcoming ? "lexus-gx-executive" : car.id}
                         href={isUpcoming ? undefined : `/catalog/${car.slug}`}
                         actionSlot={

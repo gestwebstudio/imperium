@@ -2331,30 +2331,30 @@
 
 @media (min-width: 961px) and (max-width: 1200px) {
   .car-atelier {
-    height: 596px;
+    height: clamp(446px, calc(-154px + 62.5vw), 596px);
     gap: 0;
   }
   .car-atelier .image-service-card,
   .car-atelier .image-service-card:first-child {
-    height: 596px;
-    min-height: 596px;
+    height: clamp(446px, calc(-154px + 62.5vw), 596px);
+    min-height: clamp(446px, calc(-154px + 62.5vw), 596px);
     padding: 20px;
     gap: 30px;
     border-radius: 30px;
     background: transparent;
   }
   .car-atelier .image-service-card__img {
-    height: 354px;
-    flex-basis: 354px;
+    height: clamp(244px, calc(-196px + 45.8333vw), 354px);
+    flex-basis: clamp(244px, calc(-196px + 45.8333vw), 354px);
     border-radius: 30px;
   }
   .car-atelier .image-service-card__title {
-    font-size: 36px;
-    line-height: 44px;
+    font-size: clamp(24px, calc(-24px + 5vw), 36px);
+    line-height: clamp(30px, calc(-26px + 5.8333vw), 44px);
   }
   .car-atelier .image-service-card__text {
-    font-size: 18px;
-    line-height: 24px;
+    font-size: clamp(16px, calc(8px + .8333vw), 18px);
+    line-height: clamp(20px, calc(4px + 1.6667vw), 24px);
   }
 }
 
@@ -2460,7 +2460,7 @@
 
 /* На широком экране без отдельного фрейма сохраняем исходную
    крупную версию кита вместо растягивания 1536-макета. */
-@media (min-width: 1537px) {
+@media (min-width: 1537px) and (max-width: 1920px) {
   .car > .cars-section {
     height: 574px;
     margin-top: 126px;
@@ -2472,13 +2472,26 @@
   .car > .cars-section .car-card__brand img {
     height: 39px;
   }
+  .car-atelier {
+    height: clamp(591px, calc(235px + 23.1771vw), 680px);
+    gap: clamp(0px, calc(-96px + 6.25vw), 24px);
+  }
+  .car-atelier .image-service-card,
+  .car-atelier .image-service-card:first-child {
+    height: 100%;
+    min-height: 0;
+  }
+  .car-atelier .image-service-card__img {
+    height: clamp(373px, calc(113px + 16.9271vw), 438px);
+    flex-basis: clamp(373px, calc(113px + 16.9271vw), 438px);
+  }
   .car-atelier .image-service-card__title {
-    font-size: 36px;
-    line-height: 44px;
+    font-size: clamp(30px, calc(6px + 1.5625vw), 36px);
+    line-height: clamp(38px, calc(14px + 1.5625vw), 44px);
   }
   .car-atelier .image-service-card__text {
-    font-size: 18px;
-    line-height: 24px;
+    font-size: clamp(16px, calc(8px + .5208vw), 18px);
+    line-height: clamp(20px, calc(4px + 1.0417vw), 24px);
   }
 }
 
@@ -3355,4 +3368,77 @@
     height: auto;
     min-height: 364px;
   }
+}
+
+/* Between the 960 and 1200 Figma anchors these service surfaces stay in the
+   same composition. Grow their geometry and type continuously instead of
+   inheriting the complete 1200 preset one pixel after the 960 frame. */
+@media (min-width: 961px) and (max-width: 1200px) {
+  .car-assur__card {
+    min-height: clamp(118px, calc(-66px + 19.1667vw), 164px);
+    padding: clamp(20px, calc(-20px + 4.1667vw), 30px);
+    gap: clamp(8px, calc(-8px + 1.6667vw), 12px);
+  }
+
+  .car-help {
+    min-height: clamp(170px, calc(-14px + 19.1667vw), 216px);
+    padding: clamp(20px, calc(-20px + 4.1667vw), 30px);
+  }
+
+  .car-assur__title,
+  .car-help__title,
+  .car-atelier .image-service-card__title {
+    font-size: clamp(24px, calc(-24px + 5vw), 36px);
+    line-height: clamp(30px, calc(-26px + 5.8333vw), 44px);
+  }
+
+  .car-assur__text,
+  .car-atelier .image-service-card__text {
+    font-size: clamp(14px, calc(-2px + 1.6667vw), 18px);
+    line-height: clamp(18px, calc(-6px + 2.5vw), 24px);
+  }
+
+  .car-help__desc,
+  .car-help__btn {
+    font-size: clamp(14px, calc(6px + .8333vw), 16px);
+    line-height: clamp(18px, calc(10px + .8333vw), 20px);
+  }
+
+  .car-help__btn {
+    height: clamp(28px, calc(-4px + 3.3333vw), 36px);
+    min-height: clamp(28px, calc(-4px + 3.3333vw), 36px);
+    padding-block: clamp(5px, calc(-7px + 1.25vw), 8px);
+    padding-inline: clamp(12px, calc(4px + .8333vw), 14px);
+  }
+}
+
+@media (min-width: 1201px) and (max-width: 1536px) {
+  .car-assur__title,
+  .car-help__title {
+    font-size: clamp(30px, calc(57.4286px - 1.7857vw), 36px);
+    line-height: clamp(38px, calc(65.4286px - 1.7857vw), 44px);
+  }
+
+  .car-assur__text {
+    font-size: clamp(16px, calc(25.1429px - .5952vw), 18px);
+    line-height: clamp(20px, calc(38.2857px - 1.1905vw), 24px);
+  }
+}
+
+/* Public surfaces use the breakpoint-aware project radii. Component-specific
+   media rules may still change geometry, but no longer maintain a parallel
+   list of local 16/20/24/30/36px surface radii. */
+.car-gallery__slot,
+.car-gallery-modal__photo,
+.car-atelier .image-service-card__img {
+  border-radius: var(--radius-media);
+}
+
+.car-specs,
+.car-equipment,
+.car-price,
+.car-assur__card,
+.car-help,
+.car-atelier .image-service-card {
+  border-radius: var(--radius-card);
 }

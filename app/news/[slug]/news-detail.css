@@ -104,7 +104,7 @@
   }
 
   .news-detail__media {
-    border-radius: 24px;
+    border-radius: var(--radius-media);
   }
 
   .news-detail__body {

@@ -2,12 +2,12 @@
    Site Header — плавающая плашка Liquid Glass
    ============================================================ */
 .site-header {
-  --site-header-height: 78px;
-  --site-header-logo-width: 336px;
-  --site-header-logo-height: 32px;
-  --site-header-control-size: 46px;
-  --site-header-icon-size: 24px;
-  --header-gutter: 20px;
+  --site-header-height: clamp(58px, calc(34px + 5vw), 66px);
+  --site-header-logo-width: clamp(170px, calc(122.42px + 20.84vw), 201px);
+  --site-header-logo-height: calc(var(--site-header-logo-width) / 10.5);
+  --site-header-control-size: clamp(36px, calc(12px + 5vw), 44px);
+  --site-header-icon-size: 18px;
+  --header-gutter: var(--page-gutter);
   position: fixed;
   top: 0;
   left: 0;
@@ -16,6 +16,12 @@
   padding: 18px var(--header-gutter) 0;
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
+}
+
+@media (min-width: 481px) {
+  .site-header {
+    --site-header-logo-width: clamp(201px, calc(-21px + 46.25vw), 275px);
+  }
 }
 /* Headroom: уезжает вверх при скролле вниз */
 .site-header.is-hidden { transform: translateY(calc(-100% - 8px)); }
@@ -50,9 +56,9 @@ body.comparison-route .site-header {
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding: 16px 40px;
+  padding: 11px 11px 11px clamp(18px, 5vw, 30px);
 }
-.site-header__nav { display: flex; align-items: center; gap: 38px; }
+.site-header__nav { display: none; align-items: center; gap: clamp(24px, 2vw, 38px); }
 .site-header__nav a {
   display: inline-flex;
   align-items: center;
@@ -68,23 +74,45 @@ body.comparison-route .site-header {
 .site-header__nav a:hover { color: var(--color-heritage-green-500, #294434); }
 .site-header__nav svg { width: 15px; height: 15px; }
 .site-header__logo {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  position: static;
+  order: 1;
   display: block;
   width: var(--site-header-logo-width);
   height: var(--site-header-logo-height);
+  transform: none;
 }
 .site-header__logo img {
-  width: var(--site-header-logo-width);
-  height: var(--site-header-logo-height);
+  width: 100%;
+  height: 100%;
   display: block;
 }
-.site-header__actions { display: flex; align-items: center; gap: 16px; }
+.site-header__actions { display: none; align-items: center; gap: 16px; }
 
-/* Бургер скрыт на десктопе и заменяет основную навигацию ниже 1200. */
-.site-header__burger { display: none; }
+/* Mobile-first: burger is the baseline; desktop controls are enabled only
+   after the complete navigation can fit without squeezing. */
+.site-header__burger {
+  position: relative;
+  order: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--site-header-control-size);
+  height: var(--site-header-control-size);
+  flex: none;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  background: var(--color-white, #FFFFFF);
+  color: var(--color-carbon-black-500, #1B1E1D);
+  isolation: isolate;
+}
+.site-header__burger img {
+  display: block;
+  width: clamp(10px, calc(2px + 2.5vw), 16px);
+  height: auto;
+}
 .header-call {
   --header-call-expanded-width: 195px;
   box-sizing: border-box;
@@ -230,19 +258,33 @@ body.comparison-route .site-header {
   }
 }
 
-/* ===== Десктоп-навигация: тиры по макету (1200 / 1536 / 1920) =====
-   База (.site-header) = тир 1920: высота 78, лого 32, контрол 46, навигация 20/28. */
-
-/* Тир 1536 (1536–1919): высота 66, лого 273×26,
-   контролы CTA M 36, навигация 16/20. */
-@media (max-width: 1919px) {
+/* Desktop is a structural mode. Its dimensions interpolate through the
+   1200/1536/1920 Figma anchors instead of switching tiers abruptly. */
+@media (min-width: 1200px) {
   .site-header {
-    --header-gutter: 60px;
+    --header-gutter: clamp(40px, calc(-31.429px + 5.952vw), 60px);
     --site-header-height: 66px;
-    --site-header-logo-width: 273px;
-    --site-header-logo-height: 26px;
+    --site-header-logo-width: clamp(241px, calc(126.714px + 9.524vw), 273px);
+    --site-header-logo-height: clamp(23px, calc(12.286px + .893vw), 26px);
     --site-header-control-size: 36px;
     --site-header-icon-size: 18px;
+  }
+  .site-header__bar > .liquid-glass__content {
+    padding: 16px 40px;
+  }
+  .site-header__nav,
+  .site-header__actions {
+    display: flex;
+  }
+  .site-header__logo {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    order: initial;
+    transform: translate(-50%, -50%);
+  }
+  .site-header__burger {
+    display: none;
   }
   .site-header__nav a,
   .site-header__nav-trigger {
@@ -256,98 +298,24 @@ body.comparison-route .site-header {
   }
 }
 
-/* Тир 1200 (1200–1535): десктопная шапка, поля 40, лого 241×23. */
-@media (max-width: 1535px) {
+@media (min-width: 1536px) {
   .site-header {
-    --header-gutter: 40px;
-    --site-header-logo-width: 241px;
-    --site-header-logo-height: 23px;
+    --header-gutter: clamp(20px, calc(220px - 10.4167vw), 60px);
+    --site-header-height: clamp(66px, calc(18px + 3.125vw), 78px);
+    --site-header-logo-width: clamp(273px, calc(21px + 16.406vw), 336px);
+    --site-header-logo-height: clamp(26px, calc(2px + 1.5625vw), 32px);
+    --site-header-control-size: clamp(36px, calc(-4px + 2.604vw), 46px);
+    --site-header-icon-size: clamp(18px, calc(-6px + 1.5625vw), 24px);
   }
-}
-
-/* Бургер-режим включается ниже десктопного тира 1200. */
-@media (max-width: 1199px) {
-  .site-header {
-    --header-gutter: 40px;
-    --site-header-height: 66px;
-    --site-header-logo-width: 275px;
-    --site-header-logo-height: 26px;
-    --site-header-control-size: 44px;
-  }
-  .site-header__nav { display: none; }
-  .site-header__actions { display: none; }
-  .site-header__logo {
-    position: static;
-    order: 1;
-    width: 275px;
-    height: 26px;
-    transform: none;
-  }
-  .site-header__logo img {
-    width: 275px;
-    height: 26px;
-  }
-  .site-header__bar > .liquid-glass__content {
-    display: flex;
-    justify-content: space-between;
-    gap: 24px;
-    padding: 11px 11px 11px 30px;
-  }
-
-  .site-header__burger {
-    position: relative;
-    order: 2;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    width: var(--site-header-control-size);
-    height: var(--site-header-control-size);
-    flex: none;
-    padding: 0;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    background: var(--color-white, #FFFFFF);
-    color: var(--color-carbon-black-500, #1B1E1D);
-    isolation: isolate;
-  }
-  .site-header__burger img {
-    display: block;
-    width: 16px;
-    height: 10.667px;
+  .site-header__nav a,
+  .site-header__nav-trigger {
+    font-size: clamp(16px, 1.0417vw, 20px);
+    line-height: clamp(20px, 1.4583vw, 28px);
   }
 }
 
 @media (max-width: 1199px) {
-  .header-copy-alert {
-    display: none;
-  }
-}
-
-@media (max-width: 640px) {
-  .site-header {
-    --header-gutter: 30px;
-  }
-}
-
-@media (max-width: 480px) {
-  .site-header {
-    --header-gutter: 20px;
-    --site-header-height: 58px;
-    --site-header-logo-width: 201px;
-    --site-header-logo-height: 20px;
-    --site-header-control-size: 36px;
-  }
-  .site-header__logo,
-  .site-header__logo img {
-    width: 201px;
-    height: 20px;
-  }
-  .site-header__burger img {
-    width: 10px;
-    height: 6.667px;
-  }
+  .header-copy-alert { display: none; }
 }
 
 /* В макете 1920 CTA использует размер L, на 1536/1200 — китовый M. */
@@ -381,37 +349,42 @@ body.comparison-route .site-header {
   background: var(--color-carbon-black-500, #1B1E1D);
   color: var(--color-stone-beige-200, #E4DFDB);
   border-radius: var(--radius-page, 50px) var(--radius-page, 50px) 0 0;
-  margin-top: clamp(72px, 5.208vw, 100px);
-  padding: 60px 60px 40px;
+  margin-top: var(--section-space);
+  padding: clamp(40px, 12.5vw, 44px) var(--page-gutter) clamp(24px, 7.5vw, 28px);
   overflow: hidden;
 }
 .site-footer__inner { max-width: 1800px; margin: 0 auto; }
 
-.footer-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 40px 98px; }
-.footer-cols { display: flex; gap: 98px; }
-.footer-aside { display: flex; flex: 1; justify-content: space-between; align-items: flex-start; gap: 40px; }
+.footer-top { display: flex; flex-direction: column; align-items: stretch; gap: clamp(36px, 8vw, 40px); }
+.footer-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px clamp(16px, 8vw, 40px); }
+.footer-aside { display: flex; flex-direction: column; align-items: stretch; gap: 24px; }
 .footer-col { display: flex; flex-direction: column; gap: 16px; }
 .footer-col__title {
   font-family: var(--font-text, "Onest", sans-serif);
   font-weight: var(--font-weight-regular, 400);
-  font-size: 20px;
-  line-height: 28px;
+  font-size: clamp(16px, calc(10.67px + 1.667vw), 20px);
+  line-height: clamp(20px, calc(9.33px + 3.333vw), 28px);
   color: var(--color-stone-beige-200, #E4DFDB);
   opacity: 0.5;
 }
-.footer-col__list { display: flex; flex-direction: column; gap: 12px; }
+.footer-col__list { display: flex; flex-direction: column; gap: clamp(10px, 2.5vw, 12px); }
 .footer-col__list a {
   font-family: var(--font-text, "Onest", sans-serif);
   font-weight: var(--font-weight-regular, 400);
-  font-size: 18px;
-  line-height: 24px;
+  font-size: clamp(14px, calc(8.67px + 1.667vw), 18px);
+  line-height: clamp(18px, calc(10px + 2.5vw), 24px);
   color: var(--color-stone-beige-200, #E4DFDB);
   text-decoration: none;
 }
 .footer-col__list a:hover { opacity: 0.7; }
 
 .footer-contacts { display: flex; flex-direction: column; gap: 24px; }
-.footer-phone__label { font-size: 20px; line-height: 28px; opacity: 0.5; margin-bottom: 16px; }
+.footer-phone__label {
+  margin-bottom: 16px;
+  font-size: clamp(16px, calc(10.67px + 1.667vw), 20px);
+  line-height: clamp(20px, calc(9.33px + 3.333vw), 28px);
+  opacity: 0.5;
+}
 .footer-phone {
   position: relative;
   display: inline-flex;
@@ -421,8 +394,8 @@ body.comparison-route .site-header {
 .footer-phone__value {
   font-family: var(--font-text, "Onest", sans-serif);
   font-weight: var(--font-weight-semibold, 600);
-  font-size: 24px;
-  line-height: 30px;
+  font-size: clamp(20px, calc(14.67px + 1.667vw), 24px);
+  line-height: clamp(26px, calc(20.67px + 1.667vw), 30px);
   color: var(--color-stone-beige-200, #E4DFDB);
   text-decoration: none;
 }
@@ -471,10 +444,10 @@ body.comparison-route .site-header {
   transform: translateY(0);
 }
 .footer-phone__hint.is-error { color: var(--color-red-500, #BB4545); }
-.footer-socials { display: flex; gap: 16px; }
+.footer-socials { display: flex; gap: clamp(12px, 3.5vw, 16px); }
 .footer-social {
-  width: 42px;
-  height: 42px;
+  width: clamp(32px, calc(18.67px + 4.167vw), 42px);
+  height: clamp(32px, calc(18.67px + 4.167vw), 42px);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -482,11 +455,11 @@ body.comparison-route .site-header {
 .footer-social img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .footer-social:hover { filter: brightness(0.94); }
 
-.footer-legal { text-align: right; display: flex; flex-direction: column; gap: 16px; }
+.footer-legal { display: flex; flex-direction: column; gap: clamp(12px, 3vw, 16px); text-align: left; }
 .footer-legal p, .footer-legal a {
   margin: 0;
-  font-size: 18px;
-  line-height: 24px;
+  font-size: clamp(14px, calc(8.67px + 1.667vw), 18px);
+  line-height: clamp(18px, calc(10px + 2.5vw), 24px);
   color: rgba(228, 223, 219, 0.4); /* #E4DFDB @ 40% — как в макете */
   text-decoration: none;
 }
@@ -496,104 +469,102 @@ body.comparison-route .site-header {
 .footer-legal .footer-disclaimer {
   max-width: 365px;
   margin-top: 8px;
-  margin-left: auto;
+  margin-left: 0;
   font-size: 10px;
   line-height: 14px;
   color: var(--color-white, #FFFFFF);
   opacity: 0.3;
 }
 
-.footer-tagline { margin: 178px 0 0; font-size: 20px; line-height: 28px; color: var(--color-white, #FFFFFF); opacity: 0.3; max-width: 474px; }
+.footer-tagline {
+  max-width: 474px;
+  margin: clamp(40px, 10vw, 48px) 0 0;
+  font-size: clamp(14px, calc(6px + 2.5vw), 20px);
+  line-height: clamp(18px, calc(4.67px + 4.167vw), 28px);
+  color: var(--color-white, #FFFFFF);
+  opacity: 0.3;
+}
 .footer-logo { margin-top: 1px; }
 .footer-logo img { width: 100%; height: auto; display: block; }
 
-/* ===== Футер: адаптив по макетам Figma (1143:12794 / 1147:4873 … 1153:7811).
-   Все паддинги, гэпы, размеры шрифтов, шаги ссылок и иконки — из get_metadata. ===== */
-
-/* 1536: контакты+легал уходят в правую колонку стопкой; колонки gap 56 */
-@media (max-width: 1536px) {
-  .footer-cols { gap: 56px; }
-  .footer-contacts { gap: 16px; }
-  .footer-tagline { margin-top: 80px; }
-  .footer-logo { margin-top: 4px; }
+/* Progressive enhancement: the footer grows from its compact two-column
+   mobile navigation into the wider tablet and desktop compositions. */
+@media (min-width: 481px) {
+  .site-footer {
+    padding-top: clamp(44px, calc(20px + 5vw), 48px);
+    padding-bottom: clamp(28px, calc(8px + 4.167vw), 32px);
+  }
+  .footer-cols { gap: clamp(28px, 6.25vw, 32px) 40px; }
+  .footer-tagline { margin-top: clamp(44px, calc(20px + 5vw), 48px); }
 }
 
-/* 961–1536: правый блок (контакты + легал) — колонка, прижата к правому краю
-   (в макете contact+social на x=58 в 300-блоке, соцсети на x=86 — всё вправо). */
-@media (min-width: 961px) and (max-width: 1536px) {
-  .footer-aside { flex-direction: column; flex: 0 0 auto; gap: 24px; align-items: flex-end; }
-  .footer-contacts { align-items: flex-end; }
-  /* «Телефон» и номер выровнены влево относительно друг друга (группа прижата вправо) */
+@media (min-width: 641px) {
+  .site-footer {
+    padding-top: clamp(48px, calc(32px + 2.5vw), 56px);
+    padding-bottom: clamp(32px, calc(24px + 1.25vw), 36px);
+  }
+  .footer-cols {
+    display: flex;
+    justify-content: space-between;
+    gap: clamp(32px, 5vw, 48px);
+  }
+  .footer-col { gap: clamp(12px, 1.56vw, 16px); }
+  .footer-col__list { gap: clamp(8px, 1.25vw, 12px); }
+  .footer-aside {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+  }
+  .footer-tagline { margin-top: clamp(48px, 7.5vw, 64px); }
+}
+
+/* The side-by-side footer needs room for four navigation columns and an
+   unbroken phone number; below this content-derived boundary it stays stacked. */
+@media (min-width: 1100px) {
+  .footer-top {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px clamp(32px, 4.1vw, 56px);
+  }
+  .footer-cols { flex: 1 1 auto; gap: clamp(32px, 3.65vw, 56px); }
+  .footer-aside {
+    width: clamp(248px, 30vw, 365px);
+    min-width: 0;
+    flex: 0 1 clamp(248px, 30vw, 365px);
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 24px;
+  }
+  .footer-contacts,
+  .footer-legal {
+    width: 100%;
+    min-width: 0;
+  }
+  .footer-contacts { align-items: flex-end; gap: 16px; }
   .footer-contacts > div:first-child { text-align: left; }
-  /* копирайт/правовые — вправо */
   .footer-legal { text-align: right; }
+  .footer-legal .footer-disclaimer { margin-left: auto; }
+  .footer-tagline { margin-top: clamp(64px, 5.21vw, 80px); }
 }
 
-/* 1200: колонки gap 32; тайтлы колонок и лейбл телефона 18/24 */
-@media (max-width: 1366px) {
-  .footer-cols { gap: 32px; }
-  .footer-col__title { font-size: 18px; line-height: 24px; }
-  .footer-phone__label { font-size: 18px; line-height: 24px; }
-}
-
-/* 960: nav на всю ширину, инфо-ряд (контакты | копирайт) под ним; шрифты меньше */
-@media (max-width: 960px) {
-  .site-footer { padding: 56px 48px 36px; }
-  .footer-top { flex-direction: column; align-items: stretch; gap: 40px; }
-  .footer-cols { justify-content: space-between; gap: 32px; }
-  .footer-col__list a { font-size: 16px; line-height: 20px; }
-  .footer-phone__value { font-size: 20px; line-height: 28px; }
-  .footer-social { width: 38px; height: 38px; }
-  .footer-socials { gap: 14px; }
-  .footer-aside { flex-direction: row; justify-content: space-between; align-items: flex-start; gap: 40px; }
-  .footer-legal { gap: 12px; }
-  .footer-legal p, .footer-legal a { font-size: 16px; line-height: 20px; }
-  .footer-tagline { font-size: 18px; line-height: 24px; margin-top: 64px; }
-  .footer-logo { margin-top: 4px; }
-}
-
-/* 768: колонки gap 48, шаг ссылок 28 (gap 8), тайтл→список 12 */
-@media (max-width: 768px) {
-  .site-footer { padding: 56px 40px 32px; }
-  .footer-cols { gap: 48px; }
-  .footer-col { gap: 12px; }
-  .footer-col__list { gap: 8px; }
-  .footer-tagline { margin-top: 56px; }
-}
-
-/* 640: колонки в сетку 2×2 (gap 32/40), инфо стопкой, всё слева */
-@media (max-width: 640px) {
-  .site-footer { padding: 48px 40px 32px; }
-  .footer-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 40px; }
-  .footer-col { gap: 16px; }
-  .footer-col__list { gap: 12px; }
-  .footer-aside { flex-direction: column; align-items: stretch; gap: 24px; }
-  .footer-contacts { gap: 16px; }
-  .footer-phone { gap: 8px; }
-  .footer-social { width: 36px; height: 36px; }
-  .footer-legal { text-align: left; max-width: 100%; }
-  .footer-legal .footer-disclaimer { margin-left: 0; }
-  .footer-tagline { margin-top: 48px; }
-}
-
-/* 480: 2×2 (row gap 28), тайтл 16/20, ссылки 14/18 */
-@media (max-width: 480px) {
-  .site-footer { padding: 44px 32px 28px; }
-  .footer-cols { gap: 28px 40px; }
-  .footer-col__title { font-size: 16px; line-height: 20px; }
-  .footer-phone__label { font-size: 16px; line-height: 20px; }
-  .footer-col__list a { font-size: 14px; line-height: 18px; }
-  .footer-legal p, .footer-legal a { font-size: 14px; line-height: 18px; }
-  .footer-social { width: 34px; height: 34px; }
-  .footer-tagline { font-size: 16px; line-height: 20px; margin-top: 44px; }
-}
-
-/* 390: колонки gap 16, паддинг 20 */
-@media (max-width: 430px) {
-  .site-footer { padding: 40px 20px 24px; }
-  .footer-cols { gap: 28px 16px; }
-  .footer-social { width: 32px; height: 32px; }
-  .footer-tagline { font-size: 14px; line-height: 18px; margin-top: 40px; }
+@media (min-width: 1537px) {
+  .site-footer {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+  .footer-top { gap: 40px clamp(56px, 5.1vw, 98px); }
+  .footer-cols { gap: clamp(56px, 5.1vw, 98px); }
+  .footer-aside {
+    flex: 1 1 auto;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+  }
+  .footer-contacts { align-items: flex-start; gap: 24px; }
+  .footer-tagline { margin-top: clamp(80px, calc(-312px + 25.52vw), 178px); }
 }
 
 /* ============================================================
@@ -1078,9 +1049,16 @@ body.comparison-route .site-header {
 .site-header__nav-trigger.is-open svg {
   transform: rotate(180deg);
 }
-/* Тиры навигации для «Услуги» — после базы (иначе базовые 20px перебивают по порядку). */
-@media (max-width: 1919px) {
+/* Размер trigger наследует ту же fluid-шкалу, что и остальные desktop-ссылки. */
+@media (min-width: 1200px) {
   .site-header__nav-trigger { font-size: 16px; line-height: 20px; }
+}
+
+@media (min-width: 1536px) {
+  .site-header__nav-trigger {
+    font-size: clamp(16px, 1.0417vw, 20px);
+    line-height: clamp(20px, 1.4583vw, 28px);
+  }
 }
 
 .services-mega {
@@ -1164,8 +1142,8 @@ body.comparison-route .site-header {
 .services-mega__link:hover .services-mega__link-icon {
   transform: translate(2px, -2px);
 }
-/* На бургер-режиме (<= 1200px) навигации нет — прячем и панель */
-@media (max-width: 1200px) {
+/* На бургер-режиме (< 1200px) навигации нет — прячем и панель. */
+@media (max-width: 1199px) {
   .services-mega {
     display: none;
   }
