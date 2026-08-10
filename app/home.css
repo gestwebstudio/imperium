@@ -682,9 +682,9 @@
     top: 124px;
     left: 20px;
     right: 20px;
-    align-items: center;
+    align-items: flex-start;
     gap: 4px;
-    text-align: center;
+    text-align: left;
   }
   .hero__h1-reg,
   .hero__h1-bold {
