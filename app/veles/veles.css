@@ -7,7 +7,7 @@
 
 /* ---------------- Hero — общий блок трейд-ина (.ti-hero*), без ряда преимуществ.
    Здесь только нижний отступ (нет наезжающих карточек, как на трейд-ине). ---------------- */
-.veles-hero .ti-hero__inner { padding-bottom: 60px; }
+.veles-hero .ti-hero__inner { padding-bottom: 40px; }
 
 .veles-hero {
   position: relative;
@@ -17,15 +17,16 @@
 }
 .veles-hero__inner {
   position: relative;
-  min-height: 479px;
+  min-height: 0;
   padding-top: var(--crumbs-page-top, var(--page-top, 155px));
-  padding-bottom: 60px;
+  padding-bottom: 40px;
 }
 .veles-hero__top {
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-  gap: clamp(40px, 6vw, 116px);
+  gap: clamp(24px, 4vw, 40px);
 }
 .veles-hero__title {
   margin: 0;
@@ -38,12 +39,12 @@
 .veles-hero__title .reg { font-weight: var(--font-weight-regular, 400); font-size: var(--fs-66); line-height: 1.06; }
 .veles-hero__title .bold { font-weight: var(--font-weight-extrabold, 800); font-size: var(--fs-66); line-height: 1.06; }
 .veles-hero__aside {
-  width: min(100%, 730px);
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: 24px;
-  text-align: right;
+  text-align: left;
 }
 .veles-hero__sub {
   margin: 0;
@@ -63,7 +64,7 @@
   align-items: stretch;
   gap: 0;
   padding: 40px;
-  border-radius: 45px;
+  border-radius: var(--radius-card);
   background: rgba(213, 204, 196, 0.4);
   overflow: hidden;
 }
@@ -90,10 +91,10 @@
 .veles-cta__media {
   position: relative;
   z-index: 1;
-  flex: 0 0 805px;
-  width: 805px;
+  flex: 0 0 clamp(435px, calc(64.3px + 38.58vw), 805px);
+  width: clamp(435px, calc(64.3px + 38.58vw), 805px);
   height: 384px;
-  border-radius: 30px;
+  border-radius: var(--radius-media);
   overflow: hidden;
 }
 .veles-cta__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -138,7 +139,7 @@
 }
 .veles-steps {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: 24px;
 }
 .veles-step {
@@ -148,7 +149,7 @@
   flex-direction: column;
   gap: 12px;
   padding: 30px;
-  border-radius: 30px;
+  border-radius: var(--radius-card);
   background: var(--color-white, #FFFFFF);
 }
 .veles-step__badge {
@@ -193,7 +194,7 @@
   gap: 24px;
   min-height: 216px;
   padding: 30px;
-  border-radius: 30px;
+  border-radius: var(--radius-card);
   background:
     url("/images/services/tradein3.webp") center center / cover no-repeat,
     var(--color-heritage-green-500, #294434);
@@ -224,26 +225,29 @@
 /* ---------------- Контакты — с главной ---------------- */
 .veles .contacts { margin-top: 289px; margin-bottom: 100px; }
 
-/* ---------------- Адаптив (базовый) ---------------- */
-@media (max-width: 1200px) {
-  .veles-hero__inner { min-height: 0; padding-bottom: 40px; }
-  .veles-hero__top { flex-direction: column; gap: 24px; }
-  .veles-hero__aside { width: 100%; align-items: flex-start; text-align: left; }
+/* Progressive layout expansion. */
+@media (min-width: 769px) {
+  .veles-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-@media (max-width: 768px) {
-  .veles-steps { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 1201px) {
+  .veles-hero .ti-hero__inner { padding-bottom: 60px; }
+  .veles-hero__inner { min-height: 479px; padding-bottom: 60px; }
+  .veles-hero__top { flex-direction: row; gap: clamp(40px, 6vw, 116px); }
+  .veles-hero__aside {
+    width: min(100%, 730px);
+    align-items: flex-end;
+    text-align: right;
+  }
 }
 
 /* ===== Баннер «Александр Велес»: адаптив по макетам Figma (числа из get_metadata) ===== */
 /* 1536: фото 598×384 (блок в ряд) */
 @media (max-width: 1536px) {
-  .veles-cta__media { flex-basis: 598px; width: 598px; }
   .veles-cta__wm--big { left: 22px; }
   .veles-cta__wm--top { left: 675px; }
 }
 /* 1200: фото 435×384, описание max 549 */
-@media (max-width: 1200px) {
-  .veles-cta__media { flex-basis: 435px; width: 435px; }
+@media (max-width: 1366px) {
   .veles-cta__sub { max-width: 549px; }
   .veles-cta__wm--big { left: -178px; }
   .veles-cta__wm--top { left: 475px; width: 840px; height: 141px; }

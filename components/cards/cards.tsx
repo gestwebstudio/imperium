@@ -193,7 +193,7 @@ export function NewsCard({
 export type CarCardProps = {
   size?: "m" | "l";
   /** Явный layout-вариант для контекстов с особыми размерами карточки. */
-  variant?: "default" | "comparison";
+  variant?: "default" | "comparison" | "carousel";
   vehicleId?: string;
   brandLogo: string;
   brandName?: string;

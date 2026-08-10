@@ -380,6 +380,130 @@
   }
 }
 
+/* 1536 → 1920 is one continuous desktop composition. The old base styles
+   appeared at 1537px and moved the car, card and controls by hundreds of
+   pixels in a single step. These values interpolate the two approved frames. */
+@media (min-width: 1537px) and (max-width: 1920px) {
+  .hero__inner {
+    height: clamp(958px, calc(70px + 57.8125vw), 1180px);
+  }
+
+  .hero__top {
+    top: clamp(144px, calc(64px + 5.2083vw), 164px);
+    left: 60px;
+    right: 60px;
+  }
+
+  .hero__h1-reg,
+  .hero__h1-bold {
+    font-size: clamp(66px, calc(-22px + 5.7292vw), 88px);
+    line-height: clamp(70px, calc(-50px + 7.8125vw), 100px);
+  }
+
+  .hero__unique {
+    width: clamp(414.8px, calc(2000px - 82.5521vw), 732px);
+    padding-top: clamp(0px, calc(-104px + 6.7708vw), 26px);
+  }
+
+  .hero__unique-title,
+  .hero__unique-sub {
+    font-size: clamp(30px, calc(22px + .5208vw), 32px);
+    line-height: clamp(40px, calc(24px + 1.0417vw), 44px);
+  }
+
+  .hero__car {
+    top: clamp(324px, calc(8px + 20.5729vw), 403px);
+    left: clamp(491px, calc(-5px + 32.2917vw), 615px);
+    width: clamp(873px, calc(-115px + 64.3229vw), 1120px);
+    height: clamp(462px, calc(270px + 12.5vw), 510px);
+  }
+
+  .hero__watermark {
+    top: clamp(341px, calc(253px + 5.7292vw), 363px);
+    left: clamp(227px, calc(-809px + 67.4479vw), 486px);
+    font-size: clamp(66px, calc(-22px + 5.7292vw), 88px);
+    line-height: clamp(70px, calc(-50px + 7.8125vw), 100px);
+  }
+
+  .hero__lower {
+    top: clamp(475px, calc(63px + 26.8229vw), 578px);
+    left: 60px;
+    right: 60px;
+    height: clamp(387px, calc(-141px + 34.375vw), 519px);
+  }
+
+  .hero__card-stage {
+    width: clamp(346.5px, calc(112.5px + 15.2344vw), 405px);
+    max-width: none;
+  }
+
+  .hero__card .car-card {
+    height: clamp(387px, calc(23px + 23.6979vw), 478px);
+    max-width: none;
+    padding: clamp(20px, calc(-4px + 1.5625vw), 26px);
+    overflow: hidden;
+  }
+
+  .hero__card .car-card__top,
+  .hero__card .car-card__brand,
+  .hero__card .car-card__brand img {
+    min-height: 0;
+    height: clamp(20px, calc(-56px + 4.9479vw), 39px);
+  }
+
+  .hero__card .car-card__title {
+    font-size: clamp(20px, calc(4px + 1.0417vw), 24px);
+    line-height: clamp(26px, calc(10px + 1.0417vw), 30px);
+  }
+
+  .hero__card .car-card__photo,
+  .hero__card .car-card__photo img {
+    height: clamp(149px, calc(29px + 7.8125vw), 179px);
+    max-height: clamp(149px, calc(29px + 7.8125vw), 179px);
+  }
+
+  .hero__card .car-card__action {
+    min-height: clamp(46px, calc(-2px + 3.125vw), 58px);
+  }
+
+  .hero__stats-stage {
+    top: clamp(271px, calc(-105px + 24.4792vw), 365px);
+    left: clamp(384px, calc(68px + 20.5729vw), 463px);
+    width: clamp(1032px, calc(-168px + 78.125vw), 1332px);
+    height: 154px;
+  }
+
+  .hero__stats,
+  .stat {
+    height: 154px;
+  }
+
+  .stat {
+    gap: clamp(4px, calc(-12px + 1.0417vw), 8px);
+    padding-inline: 22px;
+  }
+
+  .stat__value {
+    font-size: clamp(32px, calc(0px + 2.0833vw), 40px);
+    line-height: clamp(40px, calc(16px + 1.5625vw), 46px);
+  }
+
+  .stat__label {
+    font-size: clamp(20px, calc(4px + 1.0417vw), 24px);
+    line-height: clamp(28px, calc(20px + .5208vw), 30px);
+  }
+
+  .stat__div {
+    height: 60px;
+  }
+
+  .hero__slider {
+    top: clamp(888px, calc(20px + 56.5104vw), 1105px);
+    left: 60px;
+    right: 65px;
+  }
+}
+
 @media (max-width: 1200px) {
   .hero {
     border-radius: 0 0 50px 50px;
@@ -415,6 +539,69 @@
   .stat__label { font-size: 16px; line-height: 20px; }
   .stat__div { height: 36px; }
   .hero__slider { top: 780px; left: 40px; right: 40px; }
+}
+
+/* The compact desktop Hero card is one component range from 961px upward.
+   Global mobile CarCard rules used to enlarge it to 480px until 1199px and
+   then collapse it to 338px at 1200px, although the Hero layout did not
+   change there. */
+@media (min-width: 961px) and (max-width: 1199px) {
+  .hero__card .car-card {
+    height: 338px;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 20px;
+    overflow: hidden;
+  }
+
+  .hero__card .car-card__content {
+    gap: 16px;
+  }
+
+  .hero__card .car-card__info {
+    gap: 6px;
+  }
+
+  .hero__card .indicator--l {
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .hero__card .tag--card.tag--l {
+    padding: 3px 8px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .hero__card .car-card__tags .tag:nth-child(n + 3) {
+    display: none;
+  }
+
+  .hero__card .car-card__tags::after {
+    content: "+1";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 8px;
+    border-radius: 26px;
+    background: rgba(143, 133, 121, .2);
+    color: var(--color-heritage-green-500, #294434);
+    font-family: var(--font-text, "Onest", sans-serif);
+    font-size: 14px;
+    line-height: 18px;
+    white-space: nowrap;
+  }
+
+  .hero__card .car-card__photo,
+  .hero__card .car-card__photo img {
+    height: 110px;
+    max-height: 110px;
+  }
+
+  .hero__card .car-card__action {
+    min-height: 42px;
+    gap: 8px;
+  }
 }
 
 /* 960–640: the same composition is retained while the card becomes the
@@ -855,9 +1042,15 @@
   width: 100%;
 }
 .brands-row {
+  --brands-card-width: clamp(
+    128px,
+    max(calc(9.375vw + 98px), 18vw),
+    340px
+  );
+  --brands-gap: clamp(12px, calc(.75vw + 9.6px), 24px);
   width: 100%;
   display: flex;
-  gap: 24px;
+  gap: var(--brands-gap);
   overflow-x: auto;
   overscroll-behavior-inline: contain;
   scroll-behavior: smooth;
@@ -866,7 +1059,7 @@
 }
 .brands-row::-webkit-scrollbar { display: none; }
 .brands-row > * {
-  flex: 0 0 calc((100% - 96px) / 5);
+  flex: 0 0 var(--brands-card-width);
   min-width: 0;
   scroll-snap-align: start;
 }
@@ -903,12 +1096,7 @@
 }
 .brands-carousel__nav.btn:active { transform: translateY(-50%); }
 .brands-carousel__nav--next .btn__icon { transform: rotate(180deg); }
-@media (max-width: 1200px) {
-  .brands-row > * { flex-basis: calc((100% - 48px) / 3); }
-}
 @media (max-width: 768px) {
-  .brands-row { gap: 16px; }
-  .brands-row > * { flex-basis: calc((100% - 16px) / 2); }
   .brands-carousel__nav { display: none; }
 }
 
@@ -928,9 +1116,10 @@
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 .cars-row {
+  --cars-card-gap: clamp(12px, 1.25vw, 24px);
   width: 100%;
   display: flex;
-  gap: 24px;
+  gap: var(--cars-card-gap);
   overflow-x: auto;
   overscroll-behavior-inline: contain;
   scroll-behavior: smooth;
@@ -939,10 +1128,24 @@
 }
 .cars-row::-webkit-scrollbar { display: none; }
 .cars-row > * {
-  flex: 0 0 calc((100% - 72px) / 4);
-  min-width: 300px;
+  flex: 0 0 clamp(248px, 78vw, 272px);
+  min-width: 0;
   max-width: 432px;
+  container: cars-carousel-item / inline-size;
   scroll-snap-align: start;
+}
+
+/* Mobile is the baseline. Once there is room for several usable cards, their
+   preferred width follows the container continuously; a partially visible
+   next card is intentional carousel affordance. */
+@media (min-width: 769px) {
+  .cars-row > * {
+    flex-basis: clamp(
+      272px,
+      calc((100% - 3 * var(--cars-card-gap)) / 4),
+      432px
+    );
+  }
 }
 .cars-carousel__item > .car-card {
   height: 100%;
@@ -1011,24 +1214,6 @@
   margin: 0;
 }
 
-@media (min-width: 961px) and (max-width: 1199px) {
-  .cars-row--loading > .cars-carousel__item:nth-child(n + 4) {
-    display: none;
-  }
-}
-
-@media (max-width: 960px) {
-  .cars-row--loading > .cars-carousel__item:nth-child(n + 3) {
-    display: none;
-  }
-}
-
-@media (max-width: 768px) {
-  .cars-row--loading > .cars-carousel__item:nth-child(n + 2) {
-    display: none;
-  }
-}
-
 /* ---------------- Body types (bento) ---------------- */
 .body-types__inner,
 .body-types__grid { display: contents; }
@@ -1074,7 +1259,7 @@
   position: relative;
   display: block;
   overflow: hidden;
-  border-radius: 32px;
+  border-radius: var(--radius-card);
   background: rgba(255, 255, 255, 0.6);
   min-height: 391px;
   text-decoration: none;
@@ -1115,7 +1300,7 @@
   min-height: 167px;
   overflow: hidden;
   background: rgba(228, 223, 219, 0.4);
-  border-radius: 30px;
+  border-radius: var(--radius-card);
   padding: 30px 40px;
   color: var(--color-heritage-green-500, #294434);
   text-decoration: none;
@@ -1298,7 +1483,7 @@
   scroll-snap-align: start;
 }
 .about__testi-img { overflow: hidden; border-radius: var(--radius-media); }
-.about__testi-img img { width: 100%; height: 100%; border-radius: var(--radius-media); display: block; object-fit: cover; }
+.about__testi-img img { width: 100%; height: 100%; border-radius: inherit; display: block; object-fit: cover; }
 .about__testi-body { display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
 .about__testi-title { font-family: var(--font-display, "Wix Madefor Display", sans-serif); font-size: clamp(32px, 3.4vw, 48px); line-height: 1.17; color: var(--color-carbon-black-500, #1B1E1D); }
 .about__testi-title .reg { font-weight: 400; }
@@ -1326,6 +1511,7 @@
     --testi-padding-block: clamp(40px, calc(40px + (100vw - 1200px) * .1011905), 74px);
     --testi-height: clamp(763px, calc(763px + (100vw - 1200px) * .4821429), 925px);
     --testi-body-gap: 136px;
+    --testi-radius: 36px;
     --testi-title-size: clamp(36px, calc(36px + (100vw - 1200px) * .0357143), 48px);
     --testi-title-line: clamp(44px, calc(44px + (100vw - 1200px) * .0357143), 56px);
     --testi-author-size: var(--type-text-18-font-size, 18px);
@@ -1362,7 +1548,7 @@
     position: relative;
     min-width: 0;
     min-height: 0;
-    border-radius: var(--radius-media);
+    border-radius: var(--testi-radius);
   }
 
   .about__testi-img img {
@@ -1430,6 +1616,7 @@
     --testi-padding-block: 40px;
     --testi-height: clamp(667px, calc(667px + (100vw - 960px) * .4), 763px);
     --testi-body-gap: clamp(66px, calc(66px + (100vw - 960px) * .2916667), 136px);
+    --testi-radius: clamp(26px, calc(26px + (100vw - 960px) * .0416667), 36px);
     --testi-title-size: clamp(32px, calc(32px + (100vw - 960px) * .0166667), 36px);
     --testi-title-line: clamp(40px, calc(40px + (100vw - 960px) * .0166667), 44px);
     --testi-text-size: var(--type-text-24-font-size, 24px);
@@ -1446,6 +1633,7 @@
   .about__testimonial {
     --testi-height: 667px;
     --testi-body-gap: 66px;
+    --testi-radius: 26px;
     --testi-title-size: var(--type-display-32-font-size, 32px);
     --testi-title-line: var(--type-display-32-line-height, 40px);
     --testi-nav-size: 36px;
@@ -1460,6 +1648,7 @@
     --testi-inset: clamp(30px, calc(30px + (100vw - 640px) * .078125), 40px);
     --testi-padding-block: clamp(30px, calc(30px + (100vw - 640px) * .078125), 40px);
     --testi-height: clamp(666px, calc(666px + (100vw - 640px) * .421875), 720px);
+    --testi-radius: 20px;
     --testi-title-size: clamp(24px, calc(24px + (100vw - 640px) * .046875), 30px);
     --testi-title-line: clamp(32px, calc(32px + (100vw - 640px) * .046875), 38px);
     --testi-author-size: clamp(16px, calc(16px + (100vw - 640px) * .015625), 18px);
@@ -1541,6 +1730,20 @@
     --testi-image-width: 100%;
     --testi-image-height: auto;
     --testi-image-top: clamp(-135px, calc(-120px - (100vw - 390px) * .1666667), -120px);
+  }
+}
+
+/* Keep the testimonial frame continuous between the 1536 and 1920 anchors.
+   Its internal desktop composition remains unchanged; only the available
+   media height is interpolated so the section cannot collapse at 1537px. */
+@media (min-width: 1537px) and (max-width: 1920px) {
+  .about__testimonial {
+    height: clamp(925px, calc(901px + 1.5625vw), 931px);
+  }
+
+  .about__testimonial-track,
+  .about__testimonial-slide {
+    height: 100%;
   }
 }
 
@@ -1881,7 +2084,7 @@
   }
 }
 
-@media (min-width: 961px) and (max-width: 1536px) {
+@media (min-width: 961px) and (max-width: 1920px) {
   .body-types__inner {
     --bt-row: clamp(276px, calc(10.7143vw + 147.429px), 312px);
     --bt-gap: clamp(20px, calc(1.1905vw + 5.714px), 24px);
@@ -2225,6 +2428,21 @@
 @media (max-width: 960px) {
   .about__services { grid-template-columns: 1fr; }
   .service-card { height: auto; min-height: 167px; }
+  .about__identity {
+    height: auto;
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+  }
+  .about__wordmark-bg { display: none; }
+  .about__lead,
+  .image-service-card[class*="svc-card--"] {
+    position: relative;
+    inset: auto;
+    width: 100%;
+  }
+  .about__lead .bold { line-height: 1.08; }
 }
 
 /* ---------------- Contacts ---------------- */
@@ -2299,7 +2517,7 @@
   }
 }
 
-@media (min-width: 961px) and (max-width: 1536px) {
+@media (min-width: 961px) and (max-width: 1920px) {
   .home > .brands,
   .home > .cars-section--available,
   .home > .body-types,
@@ -2309,29 +2527,94 @@
     margin-top: clamp(96px, 9vw, 144px);
   }
 
-  .cars-row > * {
-    flex-basis: calc((100% - 48px) / 3);
-    max-width: none;
-  }
-
   .body-types__title { gap: 4px; }
   .body-types__head { min-height: 0; margin-bottom: 48px; }
   .body-types__aside { width: min(44%, 594px); padding-top: 72px; }
 
+  .about__identity {
+    --about-track-1: 50%;
+    --about-track-2: 0%;
+    --about-track-3: 0%;
+    --about-track-4: 50%;
+    --about-card-gutter: clamp(0px, calc(60px - 3.125vw), 12px);
+    --about-selection-lift: clamp(0px, calc(-652px + 42.4479vw), 163px);
+    --about-veles-lift: clamp(0px, calc(-40px + 2.6042vw), 10px);
+    height: auto;
+    margin-top: 120px;
+    display: grid;
+    grid-template-columns:
+      minmax(0, var(--about-track-1))
+      minmax(0, var(--about-track-2))
+      minmax(0, var(--about-track-3))
+      minmax(0, var(--about-track-4));
+    grid-template-rows: repeat(2, auto);
+    gap: 64px 0;
+  }
+  .about__wordmark-bg { display: none; }
+  .about__lead,
+  .image-service-card[class*="svc-card--"] {
+    position: relative;
+    inset: auto;
+    width: 100%;
+  }
+  .about__lead {
+    grid-column: 1 / 4;
+    grid-row: 1;
+    align-self: center;
+    padding-right: var(--about-card-gutter);
+  }
+  .about__lead .reg { font-size: clamp(38px, 3.4vw, 50px); line-height: 1.25; }
+  .about__lead .bold { font-size: clamp(48px, 4.4vw, 64px); line-height: 1.08; }
+  .svc-card--atelier {
+    grid-column: 4;
+    grid-row: 1;
+    width: calc(100% - var(--about-card-gutter));
+    margin-left: var(--about-card-gutter);
+  }
+  .svc-card--selection {
+    grid-column: 1;
+    grid-row: 2;
+    width: calc(100% - var(--about-card-gutter));
+    translate: 0 calc(-1 * var(--about-selection-lift));
+  }
+  .svc-card--veles {
+    grid-column: 2 / 5;
+    grid-row: 2;
+    width: calc(100% - var(--about-card-gutter));
+    margin-left: var(--about-card-gutter);
+    translate: 0 calc(-1 * var(--about-veles-lift));
+  }
   .about__testimonial { margin-top: 140px; }
 
   .contacts__title { gap: 6px; }
   .contacts__sub { margin-top: 24px; }
 }
 
-@media (min-width: 1200px) and (max-width: 1919px) {
-  .cars-row {
-    gap: 16px;
+/* Above the 1536 anchor the section rhythm grows toward the 1920 frame
+   instead of falling back to the old fixed desktop values in one step. */
+@media (min-width: 1537px) and (max-width: 1920px) {
+  .about__identity {
+    --about-track-1: clamp(666px, calc(936px - 14.0625vw), 720px);
+    --about-track-2: clamp(0px, calc(-216px + 14.0625vw), 54px);
+    --about-track-3: clamp(0px, calc(-1224px + 79.6875vw), 306px);
+    --about-track-4: clamp(720px, calc(504px + 14.0625vw), 774px);
   }
 
-  .cars-row > * {
-    flex-basis: calc((100% - 48px) / 4);
-    min-width: 0;
+  .home > .brands {
+    margin-top: max(130px, calc(200px - 3.6458vw));
+  }
+  .home > .cars-section--available,
+  .home > .cars-section--upcoming {
+    margin-top: clamp(144px, calc(80px + 4.1667vw), 160px);
+  }
+  .home > .body-types {
+    margin-top: clamp(144px, calc(-256px + 26.0417vw), 244px);
+  }
+  .home > .about {
+    margin-top: clamp(144px, calc(-116px + 16.9271vw), 209px);
+  }
+  .home > .contacts {
+    margin-top: clamp(144px, calc(-240px + 25vw), 240px);
   }
 }
 
@@ -2348,10 +2631,7 @@
   .cars-section__head {
     height: auto;
     min-height: 48px;
-  }
-  .cars-row > * {
-    flex-basis: calc((100% - 24px) / 2);
-    max-width: none;
+    margin-bottom: 24px;
   }
   .about__testimonial { margin-top: 80px; }
 
@@ -2377,10 +2657,6 @@
   .cars-section__head { align-items: flex-start; }
   .cars-section__head > .btn { display: none; }
   .cars-section__nav { display: none; }
-  .cars-row > * {
-    flex: 0 0 min(82vw, 320px);
-    min-width: 0;
-  }
   .contacts__left {
     min-width: 0;
   }
@@ -2417,13 +2693,6 @@
   .cars-section__title {
     gap: 10px;
   }
-  .cars-row {
-    gap: 16px;
-  }
-  .cars-row > * {
-    flex-basis: min(86vw, 320px);
-  }
-
   .body-types__head {
     gap: 24px;
     margin-bottom: 28px;
@@ -2463,6 +2732,10 @@
   }
   .service-card__text {
     margin-top: 8px;
+  }
+  .about__identity {
+    margin-top: 64px;
+    gap: 32px;
   }
   .about__testimonial {
     margin-top: 64px;
@@ -2762,225 +3035,327 @@
   object-position: center;
 }
 
-/* ============================================================
-   Блок услуг (Ателье / Подбор / Велес) — адаптив по макетам Figma:
-   1536 (1209:16461) · 1200 (16587) · 960 (16701) · 768 (16819) ·
-   640 (16953) · 480 (17097) · 390 (17229).
-   Блок один и тот же на главной, /atelier и /veles — правила
-   скоуплены под .about__identity, поэтому применяются на всех
-   трёх страницах. База 1920 — выше по файлу, её не трогаем.
-   Фото карточек задаётся размером (высота/аспект), тело — авто,
-   т.к. тексты на страницах разные (переиспользуемость).
-   ============================================================ */
-
-/* ---------- Коллаж-мозаика 1536 → 961 ----------
-   Лид + фоновый вордмарк + 3 карточки абсолютом. Позиции — в % от
-   контент-бокса (.about__identity = ширина home-wrap минус поля);
-   высота контейнера и фото привязаны к --content-w, поэтому мозаика
-   плавно масштабируется в диапазоне. */
-@media (max-width: 1536px) {
-  .about__identity {
-    --content-w: calc(100vw - 2 * var(--page-gutter, 60px));
-    height: calc(var(--content-w) * 1464 / 1416);
-    margin-top: 120px;
+/* The large desktop bento grows from the 1536 geometry to the 1920 frame.
+   Previously the row height, title and centre track all jumped at 1537px. */
+@media (min-width: 1537px) and (max-width: 1920px) {
+  .body-types__inner {
+    --bt-row: clamp(312px, calc(-4px + 20.5729vw), 391px);
+    --bt-gap: 24px;
+    --bt-gradient-height: 290px;
+    --bt-text-offset: clamp(30px, calc(-10px + 2.6042vw), 40px);
+    --bt-arrow-offset: clamp(30px, calc(-10px + 2.6042vw), 40px);
+    --bt-card-title-size: clamp(36px, calc(20px + 1.0417vw), 40px);
+    --bt-card-title-line: clamp(44px, calc(28px + 1.0417vw), 48px);
   }
-  .about__wordmark-bg { display: block; top: 35.5%; left: 0; width: 100%; }
 
-  .about__lead { top: 11.2%; left: 0; width: 57.3%; }
-  .about__lead .reg { font-size: 48px; line-height: 56px; }
-  .about__lead .bold { font-size: 50px; line-height: 56px; }
+  .body-types__head {
+    min-height: clamp(142px, calc(-134px + 17.9688vw), 211px);
+    margin-bottom: clamp(51px, calc(146px - 4.9479vw), 70px);
+  }
 
-  .about__identity .svc-card--atelier   { top: 4.1%;  left: 57.3%;  width: 42.7%; }
-  .about__identity .svc-card--selection { top: 40.6%; left: 0;      width: 39.2%; }
-  .about__identity .svc-card--veles     { top: 51.1%; left: 42.0%;  width: 58.0%; }
+  .body-types__title .l1,
+  .body-types__title .l2 {
+    font-size: clamp(66px, calc(-22px + 5.7292vw), 88px);
+    line-height: clamp(70px, calc(-50px + 7.8125vw), 100px);
+  }
 
-  /* внутренняя геометрия карточки — токены макета 1536 */
-  .about__identity .image-service-card {
+  .body-types__aside {
+    width: min(100%, 594px);
+    justify-self: end;
+    padding-top: clamp(0px, calc(-376px + 24.4792vw), 94px);
+  }
+
+  .bento {
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(0, clamp(456px, calc(-216px + 43.75vw), 624px))
+      minmax(0, 1fr);
+    grid-template-rows: repeat(2, var(--bt-row));
+    gap: var(--bt-gap);
+  }
+
+  .body-type-card--wide {
+    height: var(--bt-row);
     min-height: 0;
-    padding: 30px 20px;
-    gap: 30px;
-    /* радиус — из токенов кита (styles/tokens.css: --radius-current
-       сам отдаёт 30/26/22/16/14/12 по брейкпоинтам) */
-    border-radius: var(--radius-card);
+    margin-top: var(--bt-gap);
   }
-  .about__identity .image-service-card__img {
-    flex: 0 0 auto;
-    height: calc(var(--content-w) * 0.307);
-    aspect-ratio: auto;
-    border-radius: var(--radius-media);
-  }
-  .about__identity .image-service-card__body { gap: 12px; }
-  .about__identity .image-service-card__head { align-items: center; }
-  .about__identity .image-service-card__title { font-size: 36px; line-height: 44px; }
-  .about__identity .image-service-card__text  { width: 100%; font-size: 18px; line-height: 24px; }
-  .about__identity .image-service-card__arrow.btn { width: 44px; height: 44px; }
-  .about__identity .image-service-card__arrow .btn__icon { width: 16px; height: 16px; }
 }
 
-/* ---------- Коллаж 1200 (16587): та же мозаика, компактнее ---------- */
-@media (max-width: 1200px) {
-  .about__identity { height: calc(var(--content-w) * 1214 / 1120); }
-  .about__wordmark-bg { top: 27.5%; }
-
-  .about__lead { top: 10.6%; width: 54.9%; }
-  .about__lead .reg { font-size: 36px; line-height: 44px; }
-  .about__lead .bold { font-size: 40px; line-height: 48px; }
-
-  .about__identity .svc-card--atelier   { top: 3.3%;  left: 54.9%;  width: 45.1%; }
-  .about__identity .svc-card--selection { top: 38.6%; left: 0;      width: 40.9%; }
-  .about__identity .svc-card--veles     { top: 49.9%; left: 43.75%; width: 54.5%; }
-
-  .about__identity .image-service-card__head { align-items: flex-start; }
-  .about__identity .image-service-card__title { font-size: 32px; line-height: 40px; }
+/* ============================================================
+   Contacts — mobile-first fluid composition
+   The single-column state is the baseline. The mosaic is enabled only when
+   both columns can preserve their usable minimum width; all geometry between
+   the Figma anchors is continuous.
+   ============================================================ */
+.contacts__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(24px, 5vw, 40px);
+  align-items: stretch;
 }
 
-/* ---------- Ряд 960 (16701): лид сверху, «Ателье | Велес», «Подбор»
-   во всю ширину. Порядок карточек в макете Ателье→Велес→Подбор
-   (в DOM Ателье→Подбор→Велес) — раскладываем по grid-areas. ---------- */
-@media (max-width: 960px) {
-  .about__identity {
-    height: auto;
-    margin-top: 80px;
+.contacts__left,
+.contacts__info,
+.contacts__rows,
+.contacts__map {
+  min-width: 0;
+}
+
+.contacts__head {
+  margin-bottom: clamp(28px, 5vw, 40px);
+}
+
+.contacts__title {
+  gap: 0;
+}
+
+.contacts__title .l1,
+.contacts__title .l2 {
+  font-size: clamp(
+    var(--type-display-32-font-size),
+    calc(17.6px + 4.5vw),
+    var(--type-display-40-font-size)
+  );
+  line-height: clamp(
+    var(--type-display-32-line-height),
+    calc(25.6px + 4.5vw),
+    var(--type-display-40-line-height)
+  );
+  text-transform: none;
+}
+
+.contacts__sub {
+  max-width: 60rem;
+  margin-top: clamp(16px, 3vw, 24px);
+  font-size: var(--type-text-16-font-size);
+  line-height: var(--type-text-16-line-height);
+}
+
+.contacts__gallery {
+  display: flex;
+  grid-template-rows: none;
+  gap: clamp(12px, 2.5vw, 16px);
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.contacts__gallery::-webkit-scrollbar {
+  display: none;
+}
+
+.contacts__gallery img,
+.contacts__gallery .tall {
+  width: clamp(150px, 44vw, 172px);
+  height: auto;
+  aspect-ratio: 284 / 186;
+  flex: 0 0 auto;
+  grid-column: auto;
+  grid-row: auto;
+  scroll-snap-align: start;
+}
+
+.contacts__info {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 5vw, 40px);
+  min-height: 0;
+  padding: clamp(20px, 5vw, 30px);
+  border-radius: var(--radius-card);
+}
+
+.contacts__rows {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(18px, 4vw, 24px);
+}
+
+.contacts__row .label,
+.contacts__row .value {
+  font-size: var(--type-text-16-font-size);
+  line-height: var(--type-text-16-line-height);
+}
+
+.contacts__row .note {
+  font-size: var(--type-text-14-font-size);
+  line-height: var(--type-text-14-line-height);
+}
+
+.contacts__map {
+  width: 100%;
+  min-height: clamp(260px, 72vw, 320px);
+  flex: none;
+  border-radius: var(--radius-media);
+}
+
+@media (min-width: 431px) {
+  .contacts__gallery {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-      "lead lead"
-      "atelier veles"
-      "selection selection";
-    column-gap: 0;
-    row-gap: 24px;
-    align-items: start;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(12px, 1.8vw, 16px);
+    overflow: visible;
   }
-  .about__wordmark-bg { display: none; }
 
-  .about__lead { grid-area: lead; position: static; inset: auto; width: 100%; }
-
-  .about__identity .image-service-card[class*="svc-card--"] {
-    position: static;
-    inset: auto;
+  .contacts__gallery img,
+  .contacts__gallery .tall {
     width: 100%;
   }
-  .svc-card--atelier   { grid-area: atelier; }
-  .svc-card--veles     { grid-area: veles; }
-  .svc-card--selection { grid-area: selection; }
 
-  .about__identity .image-service-card__img {
-    height: auto;
-    aspect-ratio: 424 / 290;
+  .contacts__rows {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px clamp(20px, 3vw, 28px);
+    align-items: start;
   }
-  .about__identity .svc-card--selection .image-service-card__img { aspect-ratio: 888 / 292; }
-  .about__identity .image-service-card__title { font-size: 30px; line-height: 38px; }
-  .about__identity .svc-card--selection .image-service-card__title { font-size: 32px; line-height: 40px; }
-}
 
-/* ---------- Ряд 768 (16819): та же раскладка, токены поменьше ---------- */
-@media (max-width: 768px) {
-  .about__identity { row-gap: 16px; }
-
-  .about__identity .image-service-card {
-    padding: 20px;
-    gap: 20px;
+  .contacts__rows > .contacts__row:nth-child(1) {
+    grid-column: 1;
+    grid-row: 1;
   }
-  .about__identity .image-service-card__img { aspect-ratio: 328 / 190; }
-  .about__identity .svc-card--selection .image-service-card__img { aspect-ratio: 696 / 302; }
-  .about__identity .image-service-card__arrow.btn { width: 36px; height: 36px; }
-  .about__identity .image-service-card__arrow .btn__icon { width: 10px; height: 10px; }
-}
 
-/* ---------- Колонка 640 (16953): одна колонка; padding есть →
-   между карточками достаточно 4px (зазор дают внутренние отступы). ---------- */
-@media (max-width: 640px) {
-  .about__identity {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "lead"
-      "atelier"
-      "veles"
-      "selection";
-    row-gap: 4px;
-    margin-top: 64px;
+  .contacts__rows > .contacts__row:nth-child(2) {
+    grid-column: 1 / -1;
+    grid-row: 2;
   }
-  .about__lead { margin-bottom: 16px; }
-  .about__lead .reg { font-size: 30px; line-height: 38px; }
-  .about__lead .bold { font-size: 32px; line-height: 40px; }
 
-  .about__identity .image-service-card { gap: 20px; }
-  .about__identity .image-service-card__body { gap: 6px; }
-  .about__identity .image-service-card__img,
-  .about__identity .svc-card--selection .image-service-card__img {
-    aspect-ratio: 588 / 317;
+  .contacts__rows > .contacts__row:nth-child(3) {
+    grid-column: 2;
+    grid-row: 1;
   }
-  .about__identity .image-service-card__title,
-  .about__identity .svc-card--selection .image-service-card__title { font-size: 30px; line-height: 38px; }
+
+  .contacts__rows > .btn {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    justify-self: start;
+  }
 }
 
-/* ---------- Колонка 480 / 390 (17097 / 17229): без padding, фото
-   встык к тексту → между карточками зазор 24px. ---------- */
-@media (max-width: 480px) {
-  .about__identity { row-gap: 24px; margin-top: 48px; }
-  .about__lead { margin-bottom: 16px; }
-  .about__lead .reg { font-size: 24px; line-height: 30px; }
-  .about__lead .bold { font-size: 24px; line-height: 30px; }
+@media (min-width: 641px) {
+  .contacts__title .l1,
+  .contacts__title .l2 {
+    font-size: clamp(
+      var(--type-display-40-font-size),
+      calc(20px + 3.125vw),
+      var(--type-display-50-font-size)
+    );
+    line-height: clamp(
+      var(--type-display-40-line-height),
+      calc(32px + 2.5vw),
+      var(--type-display-50-line-height)
+    );
+  }
 
-  .about__identity .image-service-card {
-    padding: 0;
-    gap: 20px;
+  .contacts__info {
+    flex-direction: row;
   }
-  .about__identity .image-service-card__img,
-  .about__identity .svc-card--selection .image-service-card__img {
-    aspect-ratio: 440 / 252;
+
+  .contacts__rows,
+  .contacts__map {
+    flex: 1 1 0;
   }
-  .about__identity .image-service-card__title,
-  .about__identity .svc-card--selection .image-service-card__title { font-size: 24px; line-height: 30px; }
-  .about__identity .image-service-card__text { font-size: 16px; line-height: 20px; }
-  .about__identity .image-service-card__arrow.btn { width: 28px; height: 28px; }
-  .about__identity .image-service-card__arrow .btn__icon { width: 8px; height: 8px; }
+
+  .contacts__rows {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .contacts__map {
+    min-height: clamp(300px, 36vw, 340px);
+  }
 }
 
-@media (max-width: 390px) {
-  .about__identity .image-service-card__img,
-  .about__identity .svc-card--selection .image-service-card__img { aspect-ratio: 350 / 210; }
+/* 980px is the first width where a 460px media column, a 420px details
+   column and their gap fit without squeezing. This is a composition boundary,
+   not a device preset. */
+@media (min-width: 980px) {
+  .contacts__grid {
+    grid-template-columns:
+      minmax(460px, 1fr)
+      clamp(420px, 44%, 582px);
+    gap: clamp(24px, 2.604vw, 40px);
+  }
+
+  .contacts__left {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .contacts__gallery {
+    grid-template-columns: minmax(0, 1.092fr) minmax(0, 1fr);
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    min-height: clamp(610px, calc(50.91vw + 111px), 722px);
+    flex: 1 1 auto;
+    gap: clamp(16px, 1.5vw, 28px) clamp(16px, 1.25vw, 24px);
+  }
+
+  .contacts__gallery img {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+  }
+
+  .contacts__gallery .tall {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+
+  .contacts__info {
+    flex-direction: column;
+    gap: clamp(32px, 3.646vw, 56px);
+    padding: clamp(30px, 2.604vw, 40px);
+  }
+
+  .contacts__rows {
+    flex: none;
+  }
+
+  .contacts__map {
+    min-height: 320px;
+    flex: 1 1 auto;
+  }
+
+  .contacts__row .label,
+  .contacts__row .note {
+    font-size: clamp(
+      var(--type-text-16-font-size),
+      calc(10.278px + .595vw),
+      var(--type-text-18-font-size)
+    );
+    line-height: clamp(
+      var(--type-text-16-line-height),
+      calc(8.556px + 1.19vw),
+      var(--type-text-18-line-height)
+    );
+  }
+
+  .contacts__row .value {
+    font-size: clamp(
+      var(--type-text-20-font-size),
+      calc(13.056px + .694vw),
+      var(--type-text-24-font-size)
+    );
+    line-height: clamp(
+      var(--type-text-20-line-height),
+      calc(24.528px + .347vw),
+      var(--type-text-24-line-height)
+    );
+  }
 }
 
-/* ============================================================
-   Карусель авто (CarsSection) — размер заголовка и отступ
-   «заголовок → карточки» по макетам Figma (cars-carousel):
-   578:2321 / 1072:6476 / 932:5874 / 932:9282 / 1072:7483 /
-   1072:7760 / 1072:8037 / 1100:6098.
-   Заголовок: 48/56 (≥1201) · 36/44 (1200) · 32/40 (960·768) ·
-   28/34 (640) · 24/30 (≤480).
-   Отступ head→карточки: 34 (≥769) · 28 (≤768) · 24 (≤480).
-   Скоуп только .cars-section (блоки с авто: в наличии, в пути,
-   трейд-ин, лизинг, просмотренные, похожие). Общий t-page-title и
-   заголовки новостей/каталога/«как проходит» не трогаем.
-   ============================================================ */
-.cars-section .cars-section__title {
-  font-size: var(--type-display-48-font-size);
-  line-height: var(--type-display-48-line-height);
-}
-@media (max-width: 1200px) {
-  .cars-section .cars-section__title {
-    font-size: var(--type-display-36-font-size);
-    line-height: var(--type-display-36-line-height);
+@media (min-width: 1537px) {
+  .contacts__title .l1,
+  .contacts__title .l2 {
+    font-size: clamp(
+      var(--type-display-66-font-size),
+      calc(-22px + 5.729vw),
+      var(--type-display-88-font-size)
+    );
+    line-height: clamp(
+      var(--type-display-66-line-height),
+      calc(-50px + 7.813vw),
+      var(--type-display-88-line-height)
+    );
+    text-transform: uppercase;
   }
 }
-@media (max-width: 960px) {
-  .cars-section .cars-section__title {
-    font-size: var(--type-display-32-font-size);
-    line-height: var(--type-display-32-line-height);
-  }
-}
-@media (max-width: 640px) {
-  .cars-section .cars-section__title {
-    font-size: var(--type-display-28-font-size);
-    line-height: var(--type-display-28-line-height);
-  }
-}
-@media (max-width: 480px) {
-  .cars-section .cars-section__title {
-    font-size: var(--type-display-24-font-size);
-    line-height: var(--type-display-24-line-height);
-  }
-}
-@media (max-width: 768px) { .cars-section__head { margin-bottom: 28px; } }
-@media (max-width: 480px) { .cars-section__head { margin-bottom: 24px; } }
