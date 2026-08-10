@@ -447,7 +447,7 @@ body.comparison-route .site-header {
   margin: 0;
   font-size: 18px;
   line-height: 24px;
-  color: var(--color-stone-beige-200, #E4DFDB);
+  color: rgba(228, 223, 219, 0.4); /* #E4DFDB @ 40% — как в макете */
   text-decoration: none;
 }
 .footer-legal a:hover { opacity: 0.7; }
@@ -481,8 +481,12 @@ body.comparison-route .site-header {
 /* 961–1536: правый блок (контакты + легал) — колонка, прижата к правому краю
    (в макете contact+social на x=58 в 300-блоке, соцсети на x=86 — всё вправо). */
 @media (min-width: 961px) and (max-width: 1536px) {
-  .footer-aside { flex-direction: column; flex: 0 0 auto; gap: 24px; align-items: flex-end; text-align: right; }
+  .footer-aside { flex-direction: column; flex: 0 0 auto; gap: 24px; align-items: flex-end; }
   .footer-contacts { align-items: flex-end; }
+  /* «Телефон» и номер выровнены влево относительно друг друга (группа прижата вправо) */
+  .footer-contacts > div:first-child { text-align: left; }
+  /* копирайт/правовые — вправо */
+  .footer-legal { text-align: right; }
 }
 
 /* 1200: колонки gap 32; тайтлы колонок и лейбл телефона 18/24 */
