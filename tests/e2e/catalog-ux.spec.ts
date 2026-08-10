@@ -469,11 +469,11 @@ test("sticky sidebar помещается при низкой высоте и о
   for (const height of [900, 768, 700, 600]) {
     await page.setViewportSize({ width: 1280, height });
     await page.evaluate(() => window.scrollTo(0, 0));
-    await page.waitForTimeout(80);
-    const initialBottom = await sidebar.evaluate(
-      (node) => node.getBoundingClientRect().bottom,
-    );
-    expect(initialBottom).toBeLessThanOrEqual(height + 1);
+    await expect
+      .poll(() =>
+        sidebar.evaluate((node) => node.getBoundingClientRect().bottom),
+      )
+      .toBeLessThanOrEqual(height + 1);
 
     await page.evaluate(() => window.scrollTo(0, 400));
     await page.waitForTimeout(80);

@@ -1,7 +1,14 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Badge, CarCard } from "@/components";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
+import { Skeleton } from "@heroui/react";
+import { Badge, CarCard, CarCardSkeleton } from "@/components";
 import { FiltersIcon } from "@/components/icons";
 import { Button } from "@/components/ui/Button";
 import { Crumbs } from "@/components/ui/Crumbs";
@@ -115,6 +122,10 @@ export type CatalogClientProps = {
   hiddenFacets?: FacetKey[];
   /** Показывать ли фильтр. false → сайдбара нет, грид на колонку шире. */
   showFilters?: boolean;
+  /** Подготовлено для будущего API/1С; синхронные моки не включают loading. */
+  loading?: boolean;
+  error?: ReactNode;
+  onRetry?: () => void;
 };
 
 export function CatalogClient({
@@ -123,6 +134,9 @@ export function CatalogClient({
   crumbLabel = "Каталог",
   hiddenFacets,
   showFilters = true,
+  loading = false,
+  error,
+  onRetry,
 }: CatalogClientProps) {
   const options = useMemo(() => getFacetOptions(cars), [cars]);
 
@@ -403,9 +417,16 @@ export function CatalogClient({
       <header className="catalog-head">
         <div className="catalog-head__title">
           <h1 className="t-page-title">{title}</h1>
-          <Badge size="m" responsive color="info">
-            {sorted.length}
-          </Badge>
+          {loading ? (
+            <Skeleton
+              className="imperium-skeleton catalog-head__count-skeleton"
+              aria-hidden="true"
+            />
+          ) : (
+            <Badge size="m" responsive color="info">
+              {sorted.length}
+            </Badge>
+          )}
         </div>
         <div className="catalog-head__tools">
           {showFilters && (
@@ -433,8 +454,31 @@ export function CatalogClient({
       <div className="catalog-body">
         {filtersUseSheet ? <SheetPortal>{filterLayer}</SheetPortal> : filterLayer}
 
-        <div ref={resultsRef} className="catalog-results">
-          {sorted.length > 0 ? (
+        <div
+          ref={resultsRef}
+          className="catalog-results"
+          aria-busy={loading || undefined}
+        >
+          {loading ? (
+            <div
+              className={`catalog-grid catalog-grid--loading${showFilters ? "" : " catalog-grid--wide"}`}
+              role="status"
+              aria-label="Загружаем автомобили"
+            >
+              {Array.from({ length: showFilters ? 6 : 8 }, (_, index) => (
+                <CarCardSkeleton key={index} />
+              ))}
+            </div>
+          ) : error ? (
+            <div className="catalog-empty catalog-error" role="alert">
+              <p>{error}</p>
+              {onRetry && (
+                <Button size="m" variant="secondary-outlined" onClick={onRetry}>
+                  Повторить
+                </Button>
+              )}
+            </div>
+          ) : sorted.length > 0 ? (
             <div className={`catalog-grid${showFilters ? "" : " catalog-grid--wide"}`}>
               {displayedCars.map((car) => (
                 <CarCard

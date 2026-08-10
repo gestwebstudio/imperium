@@ -4,6 +4,7 @@ import { Testimonials } from "@/components/home/Testimonials";
 import { ButtonLink } from "@/components/ui/Button";
 import { Crumbs } from "@/components/ui/Crumbs";
 import { Badge } from "@/components/ui/primitives";
+import { LoadingIframe } from "@/components/ui/LoadingIframe";
 import type { LightboxPhoto } from "@/components/car/PhotoLightbox";
 import { getReviews } from "@/lib/reviews";
 
@@ -92,16 +93,15 @@ export async function AboutSalonPage() {
           </div>
 
           {/* Видео о салоне — VK Video, на месте ряда преимуществ. */}
-          <div className="about-salon__video">
-            <iframe
-              className="about-salon__video-frame"
-              src="https://vk.com/video_ext.php?oid=-240680187&id=456239017&hd=2"
-              title="Видео о салоне Imperium Motors"
-              allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
-              frameBorder="0"
-              allowFullScreen
-            />
-          </div>
+          <LoadingIframe
+            containerClassName="about-salon__video"
+            className="about-salon__video-frame"
+            src="https://vk.com/video_ext.php?oid=-240680187&id=456239017&hd=2"
+            title="Видео о салоне Imperium Motors"
+            allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+            frameBorder="0"
+            allowFullScreen
+          />
         </div>
       </section>
 

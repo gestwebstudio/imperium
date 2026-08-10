@@ -1,5 +1,5 @@
+import { createNews } from "@/app/admin/actions";
 import { NewsForm } from "@/components/admin/NewsForm";
-import { createNews } from "../../actions";
 
 export default function NewNewsPage() {
   return (

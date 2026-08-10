@@ -1,4 +1,5 @@
 import { ButtonLink } from "@/components/ui/Button";
+import { LoadingIframe } from "@/components/ui/LoadingIframe";
 
 // Виджет организации по oid — пин на здании с названием салона
 // («Империум Моторс / Автосалон»), а не карточка адреса.
@@ -64,14 +65,13 @@ export function Contacts({
             </ButtonLink>
           </div>
 
-          <div className="contacts__map">
-            <iframe
-              src={MAP_SRC}
-              title="Карта — Imperium Motors, Кутузовский проспект 48"
-              loading="lazy"
-              allowFullScreen
-            />
-          </div>
+          <LoadingIframe
+            containerClassName="contacts__map"
+            src={MAP_SRC}
+            title="Карта — Imperium Motors, Кутузовский проспект 48"
+            loading="lazy"
+            allowFullScreen
+          />
         </div>
       </div>
     </section>

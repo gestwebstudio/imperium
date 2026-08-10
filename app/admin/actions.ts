@@ -1,30 +1,51 @@
 "use server";
 
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db";
-import { ADMIN_COOKIE, adminPassword } from "@/lib/auth";
-import { slugify } from "@/lib/slug";
+import {
+  createAdminSession,
+  deleteAdminSession,
+  requireAdmin,
+  verifyAdminPassword,
+} from "@/lib/admin-auth";
+import {
+  canAttemptAdminLogin,
+  clearAdminLoginFailures,
+  getAdminClientIdentifier,
+  recordFailedAdminLogin,
+} from "@/lib/admin-rate-limit";
+import type { AdminActionState } from "@/lib/admin-action-state";
+import {
+  parseAdminId,
+  parseNewsForm,
+  parseReviewForm,
+  validationErrorState,
+} from "@/lib/admin-validation";
 
 /* ----------------------------- Авторизация ----------------------------- */
 
 export async function login(formData: FormData) {
-  const password = String(formData.get("password") ?? "");
-  if (!password || password !== adminPassword()) {
+  const passwordValue = formData.get("password");
+  const password = typeof passwordValue === "string" ? passwordValue : "";
+  const clientId = await getAdminClientIdentifier();
+
+  if (!(await canAttemptAdminLogin(clientId))) {
     redirect("/admin/login?error=1");
   }
-  (await cookies()).set(ADMIN_COOKIE, password, {
-    httpOnly: true,
-    sameSite: "lax",
-    path: "/",
-    maxAge: 60 * 60 * 24 * 7, // неделя
-  });
+
+  if (!(await verifyAdminPassword(password))) {
+    await recordFailedAdminLogin(clientId);
+    redirect("/admin/login?error=1");
+  }
+
+  await clearAdminLoginFailures(clientId);
+  await createAdminSession();
   redirect("/admin/news");
 }
 
 export async function logout() {
-  (await cookies()).delete(ADMIN_COOKIE);
+  await deleteAdminSession();
   redirect("/admin/login");
 }
 
@@ -37,84 +58,131 @@ function revalidatePublic() {
 
 /* ------------------------------- Новости ------------------------------- */
 
-async function uniqueSlug(base: string, ignoreId?: string): Promise<string> {
-  const root = slugify(base) || "news";
+async function uniqueSlug(root: string, ignoreId?: string): Promise<string> {
   let slug = root;
   let i = 2;
-  // eslint-disable-next-line no-constant-condition
-  while (true) {
+  while (i < 10_000) {
     const found = await prisma.news.findUnique({ where: { slug } });
     if (!found || found.id === ignoreId) return slug;
     slug = `${root}-${i++}`;
   }
+  throw new Error("Не удалось подобрать уникальный slug.");
 }
 
-function newsDataFromForm(formData: FormData) {
-  return {
-    title: String(formData.get("title") ?? "").trim(),
-    excerpt: String(formData.get("excerpt") ?? "").trim(),
-    body: String(formData.get("body") ?? "")
-      .replace(/\r\n/g, "\n")
-      .trim(),
-    image: String(formData.get("image") ?? "").trim(),
-    imageAlt: String(formData.get("imageAlt") ?? "").trim(),
-    date: new Date(String(formData.get("date") || Date.now())),
-    published: formData.get("published") === "on",
-  };
-}
+export async function createNews(
+  _previousState: AdminActionState,
+  formData: FormData,
+): Promise<AdminActionState> {
+  await requireAdmin();
+  const parsed = parseNewsForm(formData);
+  if (!parsed.success) return validationErrorState(parsed.error);
 
-export async function createNews(formData: FormData) {
-  const data = newsDataFromForm(formData);
-  const slug = await uniqueSlug(String(formData.get("slug") || data.title));
-  await prisma.news.create({ data: { ...data, slug } });
+  try {
+    const slug = await uniqueSlug(parsed.data.slug);
+    await prisma.news.create({ data: { ...parsed.data, slug } });
+  } catch {
+    return { status: "error", message: "Не удалось сохранить новость." };
+  }
+
   revalidatePublic();
   redirect("/admin/news");
 }
 
-export async function updateNews(id: string, formData: FormData) {
-  const data = newsDataFromForm(formData);
-  const slug = await uniqueSlug(String(formData.get("slug") || data.title), id);
-  await prisma.news.update({ where: { id }, data: { ...data, slug } });
+export async function updateNews(
+  id: string,
+  _previousState: AdminActionState,
+  formData: FormData,
+): Promise<AdminActionState> {
+  await requireAdmin();
+  const parsedId = parseAdminId(id);
+  if (!parsedId.success) return validationErrorState(parsedId.error);
+  const parsed = parseNewsForm(formData);
+  if (!parsed.success) return validationErrorState(parsed.error);
+
+  try {
+    const slug = await uniqueSlug(parsed.data.slug, parsedId.data);
+    await prisma.news.update({
+      where: { id: parsedId.data },
+      data: { ...parsed.data, slug },
+    });
+  } catch {
+    return { status: "error", message: "Не удалось сохранить новость." };
+  }
+
   revalidatePublic();
   redirect("/admin/news");
 }
 
 export async function deleteNews(id: string) {
-  await prisma.news.delete({ where: { id } });
+  await requireAdmin();
+  const parsedId = parseAdminId(id);
+  if (!parsedId.success) throw new Error("Некорректный идентификатор.");
+
+  try {
+    await prisma.news.delete({ where: { id: parsedId.data } });
+  } catch {
+    throw new Error("Не удалось удалить новость.");
+  }
+
   revalidatePublic();
   revalidatePath("/admin/news");
 }
 
 /* ------------------------------- Отзывы -------------------------------- */
 
-function reviewDataFromForm(formData: FormData) {
-  return {
-    author: String(formData.get("author") ?? "").trim(),
-    car: String(formData.get("car") ?? "").trim(),
-    text: String(formData.get("text") ?? "").trim(),
-    image: String(formData.get("image") ?? "").trim(),
-    imageAlt: String(formData.get("imageAlt") ?? "").trim(),
-    published: formData.get("published") === "on",
-  };
-}
+export async function createReview(
+  _previousState: AdminActionState,
+  formData: FormData,
+): Promise<AdminActionState> {
+  await requireAdmin();
+  const parsed = parseReviewForm(formData);
+  if (!parsed.success) return validationErrorState(parsed.error);
 
-export async function createReview(formData: FormData) {
-  await prisma.review.create({ data: reviewDataFromForm(formData) });
+  try {
+    await prisma.review.create({ data: parsed.data });
+  } catch {
+    return { status: "error", message: "Не удалось сохранить отзыв." };
+  }
+
   revalidatePublic();
   redirect("/admin/reviews");
 }
 
-export async function updateReview(id: string, formData: FormData) {
-  await prisma.review.update({
-    where: { id },
-    data: reviewDataFromForm(formData),
-  });
+export async function updateReview(
+  id: string,
+  _previousState: AdminActionState,
+  formData: FormData,
+): Promise<AdminActionState> {
+  await requireAdmin();
+  const parsedId = parseAdminId(id);
+  if (!parsedId.success) return validationErrorState(parsedId.error);
+  const parsed = parseReviewForm(formData);
+  if (!parsed.success) return validationErrorState(parsed.error);
+
+  try {
+    await prisma.review.update({
+      where: { id: parsedId.data },
+      data: parsed.data,
+    });
+  } catch {
+    return { status: "error", message: "Не удалось сохранить отзыв." };
+  }
+
   revalidatePublic();
   redirect("/admin/reviews");
 }
 
 export async function deleteReview(id: string) {
-  await prisma.review.delete({ where: { id } });
+  await requireAdmin();
+  const parsedId = parseAdminId(id);
+  if (!parsedId.success) throw new Error("Некорректный идентификатор.");
+
+  try {
+    await prisma.review.delete({ where: { id: parsedId.data } });
+  } catch {
+    throw new Error("Не удалось удалить отзыв.");
+  }
+
   revalidatePublic();
   revalidatePath("/admin/reviews");
 }

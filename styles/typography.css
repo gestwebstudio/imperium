@@ -2,8 +2,8 @@
 /* 108 local Figma Text Styles are mapped 1:1 below. Project responsive aliases are separated. */
 
 :root {
-  --font-display: "Wix Madefor Display", sans-serif;
-  --font-text: "Onest", sans-serif;
+  --font-display: var(--font-wix-local), "Wix Madefor Display", sans-serif;
+  --font-text: var(--font-onest-local), "Onest", sans-serif;
 
   /* Project-only fluid aliases (360 -> 1920); these are not Figma Text Styles. */
   --fs-88: clamp(2.5rem, 1.8077rem + 3.0769vw, 5.5rem);

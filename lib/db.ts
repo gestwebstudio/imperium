@@ -1,3 +1,4 @@
+import "server-only";
 import { PrismaClient } from "@prisma/client";
 
 // Singleton: в dev Next.js перезагружает модули — не плодим коннекты.

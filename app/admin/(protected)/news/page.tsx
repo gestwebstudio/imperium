@@ -1,11 +1,9 @@
 import Link from "next/link";
-import { prisma } from "@/lib/db";
-import { deleteNews } from "../actions";
-
-export const dynamic = "force-dynamic";
+import { deleteNews } from "@/app/admin/actions";
+import { getAdminNewsList } from "@/lib/admin-dal";
 
 export default async function AdminNewsList() {
-  const items = await prisma.news.findMany({ orderBy: { date: "desc" } });
+  const items = await getAdminNewsList();
 
   return (
     <>
@@ -30,29 +28,34 @@ export default async function AdminNewsList() {
             </tr>
           </thead>
           <tbody>
-            {items.map((n) => (
-              <tr key={n.id}>
+            {items.map((item) => (
+              <tr key={item.id}>
                 <td>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img className="admin-thumb" src={n.image} alt="" />
+                  <img className="admin-thumb" src={item.image} alt="" />
                 </td>
-                <td className="admin-table__title">{n.title}</td>
-                <td>{n.date.toISOString().slice(0, 10)}</td>
+                <td className="admin-table__title">{item.title}</td>
+                <td>{item.date.toISOString().slice(0, 10)}</td>
                 <td>
-                  <span className={`admin-pill admin-pill--${n.published ? "on" : "off"}`}>
-                    {n.published ? "Опубликовано" : "Черновик"}
+                  <span
+                    className={`admin-pill admin-pill--${item.published ? "on" : "off"}`}
+                  >
+                    {item.published ? "Опубликовано" : "Черновик"}
                   </span>
                 </td>
                 <td>
                   <div className="admin-table__actions">
                     <Link
-                      href={`/admin/news/${n.id}`}
+                      href={`/admin/news/${item.id}`}
                       className="admin-btn admin-btn--ghost"
                     >
                       Изменить
                     </Link>
-                    <form action={deleteNews.bind(null, n.id)}>
-                      <button type="submit" className="admin-btn admin-btn--danger">
+                    <form action={deleteNews.bind(null, item.id)}>
+                      <button
+                        type="submit"
+                        className="admin-btn admin-btn--danger"
+                      >
                         Удалить
                       </button>
                     </form>

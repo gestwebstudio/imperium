@@ -21,6 +21,7 @@ import { CarCard } from "@/components/cards/cards";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { Crumbs } from "@/components/ui/Crumbs";
 import { Badge } from "@/components/ui/primitives";
+import { CarCardSkeleton } from "@/components/ui/Skeletons";
 import { useVehicleActions } from "@/components/ui/VehicleActionsContext";
 import {
   type Car,
@@ -573,17 +574,18 @@ export function ComparisonClient({ cars }: { cars: Car[] }) {
         <section
           className="comparison-loading comparison-loading--skeleton"
           role="status"
+          aria-busy="true"
           aria-label="Загружаем сравнение автомобилей"
         >
           <span className="comparison-loading__sr">Загружаем сравнение…</span>
-          <div className="comparison-loading__products" aria-hidden="true">
+          <div className="comparison-loading__products">
             {Array.from({ length: MAX_VISIBLE_COMPARISON_CARS }, (_, index) => (
-              <div className="comparison-loading__card" key={index}>
-                <span className="comparison-loading__line comparison-loading__line--short" />
-                <span className="comparison-loading__line" />
-                <span className="comparison-loading__photo" />
-                <span className="comparison-loading__line comparison-loading__line--price" />
-              </div>
+              <CarCardSkeleton
+                className="comparison-loading__card"
+                key={index}
+                size="m"
+                variant="comparison"
+              />
             ))}
           </div>
         </section>

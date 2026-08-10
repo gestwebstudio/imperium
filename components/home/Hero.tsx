@@ -1,13 +1,36 @@
 "use client";
 
-import { Fragment, useCallback, useEffect, useState } from "react";
+import {
+  Fragment,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type MouseEvent as ReactMouseEvent,
+  type TouchEvent as ReactTouchEvent,
+} from "react";
 import { CarCard } from "@/components/cards/cards";
 import { ArrowIcon } from "@/components/icons";
 import { Button } from "@/components/ui/Button";
 
 const SLIDE_DURATION = 4000;
+const SWIPE_AXIS_LOCK_DISTANCE = 8;
+const SWIPE_DISTANCE = 42;
+const SWIPE_FLING_DISTANCE = 30;
+const SWIPE_FLING_VELOCITY = 0.35;
+const SWIPE_CLICK_GUARD_DURATION = 450;
 
 type SlideDirection = "next" | "previous";
+type SwipeAxis = "pending" | "horizontal" | "vertical";
+
+type SwipeGesture = {
+  startX: number;
+  startY: number;
+  lastX: number;
+  lastY: number;
+  startedAt: number;
+  axis: SwipeAxis;
+};
 
 const heroSlides = [
   {
@@ -47,6 +70,11 @@ export function Hero() {
   const [slideDirection, setSlideDirection] =
     useState<SlideDirection>("next");
   const [timerVersion, setTimerVersion] = useState(0);
+  const [autoplayPaused, setAutoplayPaused] = useState(false);
+  const autoplayTimerRef = useRef<number | null>(null);
+  const swipeGestureRef = useRef<SwipeGesture | null>(null);
+  const suppressClickRef = useRef(false);
+  const suppressClickTimerRef = useRef<number | null>(null);
 
   const changeSlide = useCallback(
     (
@@ -71,13 +99,39 @@ export function Hero() {
     [activeIndex],
   );
 
+  const clearAutoplayTimer = useCallback(() => {
+    if (autoplayTimerRef.current === null) return;
+
+    window.clearTimeout(autoplayTimerRef.current);
+    autoplayTimerRef.current = null;
+  }, []);
+
   useEffect(() => {
-    const timer = window.setTimeout(() => {
+    clearAutoplayTimer();
+
+    if (autoplayPaused) return;
+
+    autoplayTimerRef.current = window.setTimeout(() => {
+      autoplayTimerRef.current = null;
       changeSlide((activeIndex + 1) % heroSlides.length, "next", false);
     }, SLIDE_DURATION);
 
-    return () => window.clearTimeout(timer);
-  }, [activeIndex, changeSlide, timerVersion]);
+    return clearAutoplayTimer;
+  }, [
+    activeIndex,
+    autoplayPaused,
+    changeSlide,
+    clearAutoplayTimer,
+    timerVersion,
+  ]);
+
+  useEffect(() => {
+    return () => {
+      if (suppressClickTimerRef.current !== null) {
+        window.clearTimeout(suppressClickTimerRef.current);
+      }
+    };
+  }, []);
 
   function selectSlide(index: number) {
     changeSlide(
@@ -95,6 +149,114 @@ export function Hero() {
 
   function showNextSlide() {
     changeSlide((activeIndex + 1) % heroSlides.length, "next");
+  }
+
+  function pauseAutoplayForGesture() {
+    clearAutoplayTimer();
+    setAutoplayPaused(true);
+  }
+
+  function restartAutoplayAfterGesture() {
+    setAutoplayPaused(false);
+    setTimerVersion((current) => current + 1);
+  }
+
+  function guardClickAfterSwipe() {
+    suppressClickRef.current = true;
+
+    if (suppressClickTimerRef.current !== null) {
+      window.clearTimeout(suppressClickTimerRef.current);
+    }
+
+    suppressClickTimerRef.current = window.setTimeout(() => {
+      suppressClickRef.current = false;
+      suppressClickTimerRef.current = null;
+    }, SWIPE_CLICK_GUARD_DURATION);
+  }
+
+  function handleCardTouchStart(event: ReactTouchEvent<HTMLDivElement>) {
+    if (event.touches.length !== 1) return;
+
+    const touch = event.touches[0];
+    swipeGestureRef.current = {
+      startX: touch.clientX,
+      startY: touch.clientY,
+      lastX: touch.clientX,
+      lastY: touch.clientY,
+      startedAt: performance.now(),
+      axis: "pending",
+    };
+    pauseAutoplayForGesture();
+  }
+
+  function handleCardTouchMove(event: ReactTouchEvent<HTMLDivElement>) {
+    const gesture = swipeGestureRef.current;
+    if (!gesture || event.touches.length !== 1) return;
+
+    const touch = event.touches[0];
+    gesture.lastX = touch.clientX;
+    gesture.lastY = touch.clientY;
+
+    if (gesture.axis !== "pending") return;
+
+    const deltaX = Math.abs(gesture.lastX - gesture.startX);
+    const deltaY = Math.abs(gesture.lastY - gesture.startY);
+    if (Math.max(deltaX, deltaY) < SWIPE_AXIS_LOCK_DISTANCE) return;
+
+    if (deltaX > deltaY * 1.1) gesture.axis = "horizontal";
+    else if (deltaY > deltaX * 1.1) gesture.axis = "vertical";
+  }
+
+  function handleCardTouchEnd(event: ReactTouchEvent<HTMLDivElement>) {
+    const gesture = swipeGestureRef.current;
+    swipeGestureRef.current = null;
+
+    if (!gesture) return;
+
+    const touch = event.changedTouches[0];
+    const endX = touch?.clientX ?? gesture.lastX;
+    const endY = touch?.clientY ?? gesture.lastY;
+    const deltaX = endX - gesture.startX;
+    const deltaY = endY - gesture.startY;
+    const horizontalDistance = Math.abs(deltaX);
+    const duration = Math.max(1, performance.now() - gesture.startedAt);
+    const velocity = horizontalDistance / duration;
+    const isHorizontal =
+      gesture.axis !== "vertical" && horizontalDistance > Math.abs(deltaY) * 1.1;
+    const passedThreshold =
+      horizontalDistance >= SWIPE_DISTANCE ||
+      (horizontalDistance >= SWIPE_FLING_DISTANCE &&
+        velocity >= SWIPE_FLING_VELOCITY);
+
+    setAutoplayPaused(false);
+
+    if (isHorizontal && passedThreshold) {
+      guardClickAfterSwipe();
+      if (deltaX < 0) showNextSlide();
+      else showPreviousSlide();
+      return;
+    }
+
+    restartAutoplayAfterGesture();
+  }
+
+  function handleCardTouchCancel() {
+    if (!swipeGestureRef.current) return;
+
+    swipeGestureRef.current = null;
+    restartAutoplayAfterGesture();
+  }
+
+  function handleCardClickCapture(event: ReactMouseEvent<HTMLDivElement>) {
+    if (!suppressClickRef.current) return;
+
+    suppressClickRef.current = false;
+    if (suppressClickTimerRef.current !== null) {
+      window.clearTimeout(suppressClickTimerRef.current);
+      suppressClickTimerRef.current = null;
+    }
+    event.preventDefault();
+    event.stopPropagation();
   }
 
   function getSlideClass(baseClass: string, index: number) {
@@ -144,7 +306,14 @@ export function Hero() {
         </div>
 
         <div className="hero__lower">
-          <div className="hero__card-stage">
+          <div
+            className="hero__card-stage"
+            onTouchStart={handleCardTouchStart}
+            onTouchMove={handleCardTouchMove}
+            onTouchEnd={handleCardTouchEnd}
+            onTouchCancel={handleCardTouchCancel}
+            onClickCapture={handleCardClickCapture}
+          >
             {heroSlides.map((slide, index) => (
               <div
                 key={slide.id}

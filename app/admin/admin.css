@@ -199,6 +199,15 @@
   box-shadow: 0 0 0 3px rgba(41, 68, 52, 0.12);
 }
 .admin-field__hint { font-size: 12px; color: var(--admin-muted); }
+.admin-field__error,
+.admin-form__error {
+  color: #a3403a;
+  font-size: 13px;
+}
+.admin-form__error { margin: 0; }
+.admin-field [aria-invalid="true"] {
+  border-color: #a3403a;
+}
 .admin-check { flex-direction: row; align-items: center; gap: 10px; }
 .admin-check input { width: 18px; height: 18px; }
 .admin-check label { color: var(--admin-ink); font-weight: 400; }

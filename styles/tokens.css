@@ -52,8 +52,8 @@
   --color-shadow-fin: #B4AAA3;
 
   /* ---------- Typography: Families ---------- */
-  --font-display: "Wix Madefor Display", sans-serif; /* заголовки */
-  --font-text: "Onest", sans-serif;                  /* основной текст */
+  --font-display: var(--font-wix-local), "Wix Madefor Display", sans-serif; /* заголовки */
+  --font-text: var(--font-onest-local), "Onest", sans-serif;                /* основной текст */
 
   /* ---------- Typography: Weights ---------- */
   --font-weight-regular: 400;

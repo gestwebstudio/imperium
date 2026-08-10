@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { gsap } from "gsap";
 import { CloseIcon, PhoneIcon } from "@/components/icons";
 import {
@@ -11,13 +12,16 @@ import {
 } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
 
-const menuItems = [
-  { label: "Избранное", href: "/favorites" },
-  { label: "Сравнение", href: "/comparison" },
+const primaryMenuItems = [
   { label: "Каталог", href: "/catalog" },
   { label: "Услуги", href: "#" },
   { label: "О салоне", href: "/about" },
   { label: "Контакты", href: "/contacts" },
+] as const;
+
+const secondaryMenuItems = [
+  { label: "Избранное", href: "/favorites" },
+  { label: "Сравнение", href: "/comparison" },
 ] as const;
 
 function prefersReducedMotion() {
@@ -34,6 +38,7 @@ function getMotionFactor() {
 }
 
 export function MobileMenu() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -343,22 +348,70 @@ export function MobileMenu() {
                 </button>
               </div>
 
-              <nav className="mobile-menu__nav" aria-label="Основная навигация">
-                <ul className="mobile-menu__list">
-                  {menuItems.map((item, index) => (
-                    <li className="mobile-menu__item-wrap" key={item.label}>
-                      <Link
-                        className="mobile-menu__item"
-                        href={item.href}
-                        data-index={String(index + 1).padStart(2, "0")}
-                        onClick={close}
+              <nav className="mobile-menu__nav" aria-label="Меню сайта">
+                <ul
+                  className="mobile-menu__list mobile-menu__list--primary"
+                  aria-label="Основная навигация"
+                >
+                  {primaryMenuItems.map((item, index) => {
+                    const isCurrent =
+                      item.href !== "#" &&
+                      (pathname === item.href ||
+                        pathname.startsWith(`${item.href}/`));
+
+                    return (
+                      <li className="mobile-menu__item-wrap" key={item.label}>
+                        <Link
+                          className={cn(
+                            "mobile-menu__item",
+                            isCurrent && "is-current",
+                          )}
+                          href={item.href}
+                          data-index={String(index + 1).padStart(2, "0")}
+                          aria-current={isCurrent ? "page" : undefined}
+                          onClick={close}
+                        >
+                          <span className="mobile-menu__item-label">
+                            {item.label}
+                          </span>
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+
+                <ul
+                  className="mobile-menu__list mobile-menu__list--secondary"
+                  aria-label="Пользовательские разделы"
+                >
+                  {secondaryMenuItems.map((item, index) => {
+                    const isCurrent =
+                      pathname === item.href ||
+                      pathname.startsWith(`${item.href}/`);
+                    const displayIndex = primaryMenuItems.length + index + 1;
+
+                    return (
+                      <li
+                        className="mobile-menu__item-wrap mobile-menu__item-wrap--secondary"
+                        key={item.label}
                       >
-                        <span className="mobile-menu__item-label">
-                          {item.label}
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
+                        <Link
+                          className={cn(
+                            "mobile-menu__item mobile-menu__item--secondary",
+                            isCurrent && "is-current",
+                          )}
+                          href={item.href}
+                          data-index={String(displayIndex).padStart(2, "0")}
+                          aria-current={isCurrent ? "page" : undefined}
+                          onClick={close}
+                        >
+                          <span className="mobile-menu__item-label">
+                            {item.label}
+                          </span>
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </nav>
             </aside>

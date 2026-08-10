@@ -86,7 +86,7 @@ test("CTA M в UI Kit соответствует компоненту хедер
 });
 
 for (const width of [1200, 1536, 1920]) {
-  test(`раскрытый телефон сохраняет отступ 8px до иконки на ${width}px`, async ({
+  test(`раскрытый телефон сохраняет отступ 12px до иконки на ${width}px`, async ({
     page,
   }) => {
     await page.setViewportSize({ width, height: 900 });
@@ -98,7 +98,7 @@ for (const width of [1200, 1536, 1920]) {
     const number = call.locator(".header-call__number");
     const icon = call.locator(":scope > svg");
     await call.hover();
-    await expect(call).toHaveCSS("width", width === 1920 ? "191px" : "181px");
+    await expect(call).toHaveCSS("width", width === 1920 ? "195px" : "185px");
     await expect(number).toHaveCSS("transform", "matrix(1, 0, 0, 1, 0, 0)");
 
     const callBox = await call.boundingBox();
@@ -107,7 +107,7 @@ for (const width of [1200, 1536, 1920]) {
     expect(callBox).not.toBeNull();
     expect(numberBox).not.toBeNull();
     expect(iconBox).not.toBeNull();
-    expect(Math.abs(iconBox!.x - (numberBox!.x + numberBox!.width) - 8)).toBeLessThanOrEqual(1);
+    expect(Math.abs(iconBox!.x - (numberBox!.x + numberBox!.width) - 12)).toBeLessThanOrEqual(1);
     const leftInset = numberBox!.x - callBox!.x;
     const rightInset = callBox!.x + callBox!.width - (iconBox!.x + iconBox!.width);
     expect(Math.abs(leftInset - rightInset)).toBeLessThanOrEqual(1);

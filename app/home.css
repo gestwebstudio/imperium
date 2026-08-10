@@ -102,6 +102,7 @@
   width: 405px;
   max-width: 405px;
   display: grid;
+  touch-action: pan-y;
 }
 .hero__card {
   grid-area: 1 / 1;
@@ -254,9 +255,10 @@
 
 @media (max-width: 1536px) {
   .hero__inner {
+    --hero-content-offset-top: clamp(100px, calc(82px + 5.5vw), 128px);
     height: auto;
     min-height: 900px;
-    padding: 128px var(--page-gutter, 60px) 40px;
+    padding: var(--hero-content-offset-top) var(--page-gutter, 60px) 40px;
   }
   .hero__top { position: relative; inset: auto; }
   .hero__h1-reg,
@@ -325,7 +327,7 @@
     flex-direction: column;
     min-height: 0;
     height: auto;
-    padding: 104px var(--page-gutter, 60px) 32px;
+    padding: var(--hero-content-offset-top) var(--page-gutter, 60px) 32px;
   }
   .hero__top { order: 1; margin: 0; }
   .hero__h1-reg,
@@ -476,6 +478,57 @@
 }
 .cars-section__nav.btn:active { transform: translateY(-50%); }
 .cars-section__nav--next .btn__icon { transform: rotate(180deg); }
+
+.cars-row--loading {
+  overflow: hidden;
+  scroll-snap-type: none;
+}
+
+.cars-row--loading > .cars-carousel__item {
+  pointer-events: none;
+}
+
+.cars-row--loading .car-card-skeleton {
+  height: 100%;
+  max-width: none;
+}
+
+.cars-section__state {
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 32px;
+  border-radius: var(--radius-card, var(--radius-current, 30px));
+  background: rgba(255, 255, 255, .6);
+  color: var(--color-carbon-black-500, #1B1E1D);
+  font-family: var(--font-text, "Onest", sans-serif);
+  text-align: center;
+}
+
+.cars-section__state p {
+  margin: 0;
+}
+
+@media (min-width: 961px) and (max-width: 1199px) {
+  .cars-row--loading > .cars-carousel__item:nth-child(n + 4) {
+    display: none;
+  }
+}
+
+@media (max-width: 960px) {
+  .cars-row--loading > .cars-carousel__item:nth-child(n + 3) {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .cars-row--loading > .cars-carousel__item:nth-child(n + 2) {
+    display: none;
+  }
+}
 
 /* ---------------- Body types (bento) ---------------- */
 .body-types__inner,
@@ -1905,7 +1958,7 @@
 
 @media (max-width: 640px) {
   .hero__inner {
-    padding-top: 88px;
+    padding-top: var(--hero-content-offset-top);
     padding-bottom: 24px;
   }
   .hero__top {

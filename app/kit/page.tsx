@@ -30,6 +30,7 @@ import {
   BodyCard,
   NewsCard,
   CarCard,
+  CarCardSkeleton,
 } from "@/components";
 
 export const metadata: Metadata = {
@@ -837,6 +838,23 @@ export default function KitPage() {
                   price="28 990 000 ₽"
                   action={{ label: "Забронировать", variant: "secondary-outlined" }}
                 />
+              </div>
+            </div>
+          </div>
+
+          <div className="kit-block">
+            <div className="kit-head">
+              <h3>Car Card Skeleton</h3>
+              <code>&lt;CarCardSkeleton&gt;</code>
+            </div>
+            <div className="car-stage">
+              <div className="car-card-specimen car-card-specimen--l">
+                <div className="stage-label">L · HeroUI Skeleton</div>
+                <CarCardSkeleton size="l" />
+              </div>
+              <div className="car-card-specimen car-card-specimen--m">
+                <div className="stage-label">M · Comparison</div>
+                <CarCardSkeleton size="m" variant="comparison" />
               </div>
             </div>
           </div>

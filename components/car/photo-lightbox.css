@@ -7,15 +7,25 @@
   z-index: 1300;
   background: rgba(27, 30, 29, .88);
   backdrop-filter: blur(12px);
+  overscroll-behavior: contain;
 }
 .car-photo-viewer__container {
   box-sizing: border-box;
   width: 100vw;
   max-width: none;
   height: 100dvh;
-  padding: 24px;
+  padding:
+    max(24px, env(safe-area-inset-top))
+    max(24px, env(safe-area-inset-right))
+    max(24px, env(safe-area-inset-bottom))
+    max(24px, env(safe-area-inset-left));
 }
 .car-photo-viewer__dialog {
+  --lightbox-control-hit-size: 48px;
+  --lightbox-arrow-visual-size: 48px;
+  --lightbox-arrow-icon-size: 20px;
+  --lightbox-close-visual-size: 40px;
+  --lightbox-close-icon-size: 18px;
   position: relative;
   display: flex;
   width: 100%;
@@ -29,6 +39,8 @@
   background: var(--color-carbon-black-500, #1B1E1D);
 }
 .car-photo-viewer {
+  --lightbox-thumbnail-size: 76px;
+  --lightbox-thumbnail-viewport-width: 684px;
   position: relative;
   display: flex;
   min-width: 0;
@@ -45,32 +57,63 @@
   background: var(--color-carbon-black-500, #1B1E1D);
 }
 .car-photo-viewer__close {
+  --lightbox-control-visual-size: var(--lightbox-close-visual-size);
+  --lightbox-control-icon-size: var(--lightbox-close-icon-size);
   position: absolute;
   z-index: 4;
-  top: 20px;
-  right: 20px;
+  top: 16px;
+  right: 16px;
   display: inline-flex;
-  width: 40px;
-  height: 40px;
+  width: var(--lightbox-control-hit-size);
+  height: var(--lightbox-control-hit-size);
   padding: 0;
   align-items: center;
   justify-content: center;
   border: 0;
   border-radius: 50%;
-  background: var(--color-white, #FFFFFF);
+  background: transparent;
   color: var(--color-carbon-black-500, #1B1E1D);
   cursor: pointer;
+  isolation: isolate;
+  touch-action: manipulation;
+  transition: color .18s ease;
+}
+.car-photo-viewer__close::before,
+.car-photo-viewer__arrow::before {
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  width: var(--lightbox-control-visual-size);
+  height: var(--lightbox-control-visual-size);
+  border-radius: 50%;
+  background: var(--color-white, #FFFFFF);
+  content: "";
+  transform: translate(-50%, -50%);
+  transition: background-color .18s ease, box-shadow .18s ease, transform .18s ease;
 }
 .car-photo-viewer__close svg {
-  width: 18px;
-  height: 18px;
+  position: relative;
+  z-index: 1;
+  width: var(--lightbox-control-icon-size);
+  height: var(--lightbox-control-icon-size);
 }
-.car-photo-viewer__close:hover {
-  background: var(--color-stone-beige-200, #E4DFDB);
+.car-photo-viewer__close:focus-visible,
+.car-photo-viewer__arrow:focus-visible {
+  outline: 0;
 }
-.car-photo-viewer__close:focus-visible {
+.car-photo-viewer__close:focus-visible::before,
+.car-photo-viewer__arrow:focus-visible::before {
   outline: 2px solid var(--color-heritage-green-400, #4E7B60);
   outline-offset: 2px;
+}
+.car-photo-viewer__close:active::before,
+.car-photo-viewer__arrow:active::before {
+  transform: translate(-50%, -50%) scale(.94);
+}
+.car-photo-viewer__close:disabled,
+.car-photo-viewer__arrow:disabled {
+  cursor: default;
 }
 .car-photo-viewer__content {
   display: flex;
@@ -118,31 +161,29 @@
   user-select: none;
 }
 .car-photo-viewer__arrow {
+  --lightbox-control-visual-size: var(--lightbox-arrow-visual-size);
+  --lightbox-control-icon-size: var(--lightbox-arrow-icon-size);
   position: absolute;
   z-index: 2;
   top: 50%;
   display: inline-flex;
-  width: 48px;
-  height: 48px;
+  width: var(--lightbox-control-hit-size);
+  height: var(--lightbox-control-hit-size);
   padding: 0;
   align-items: center;
   justify-content: center;
   border: 0;
   border-radius: 50%;
-  background: var(--color-white, #FFFFFF);
+  background: transparent;
   color: var(--color-carbon-black-500, #1B1E1D);
-  box-shadow: 4px 4px 20px rgba(106, 98, 89, .12);
   cursor: pointer;
+  isolation: isolate;
+  touch-action: manipulation;
   transform: translateY(-50%);
-  transition: background-color .18s ease, color .18s ease;
+  transition: color .18s ease;
 }
-.car-photo-viewer__arrow:hover {
-  background: var(--color-heritage-green-500, #294434);
-  color: var(--color-white, #FFFFFF);
-}
-.car-photo-viewer__arrow:focus-visible {
-  outline: 2px solid var(--color-heritage-green-400, #4E7B60);
-  outline-offset: 2px;
+.car-photo-viewer__arrow::before {
+  box-shadow: 4px 4px 20px rgba(106, 98, 89, .12);
 }
 .car-photo-viewer__arrow--prev {
   left: 20px;
@@ -154,8 +195,10 @@
   transform: rotate(180deg);
 }
 .car-photo-viewer__arrow svg {
-  width: 20px;
-  height: 20px;
+  position: relative;
+  z-index: 1;
+  width: var(--lightbox-control-icon-size);
+  height: var(--lightbox-control-icon-size);
 }
 .car-photo-viewer__thumbnail-wrapper {
   flex: none;
@@ -164,52 +207,39 @@
 }
 .car-photo-viewer__thumbnail-container {
   display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 .car-photo-viewer__thumbnail-viewport {
   width: 100%;
-  overflow-x: auto;
+  max-width: var(--lightbox-thumbnail-viewport-width);
+  overflow-x: hidden;
   overflow-y: hidden;
-  cursor: grab;
-  scrollbar-width: none; /* Firefox — прячем полосу прокрутки */
-  -ms-overflow-style: none;
-}
-.car-photo-viewer__thumbnail-viewport::-webkit-scrollbar {
-  display: none; /* WebKit — прячем полосу прокрутки */
-}
-.car-photo-viewer__thumbnail-viewport.is-grabbing {
-  cursor: grabbing;
-  user-select: none;
-}
-.car-photo-viewer__thumbnail-viewport.is-grabbing
-  .car-photo-viewer__thumbnail {
-  pointer-events: none; /* без ложных ховеров во время перетаскивания */
 }
 .car-photo-viewer__thumbnail-track {
   display: flex;
-  justify-content: flex-start; /* прижаты влево, пустота справа если фото мало */
-  gap: 8px; /* одинаковый фиксированный отступ у всех */
+  touch-action: pan-y pinch-zoom;
 }
 .car-photo-viewer__thumbnail {
   box-sizing: border-box;
-  /* !important — перебиваем flex:1 0 % от PrimeReact (его стили грузятся позже) */
-  flex: 0 0 auto !important;
   display: flex;
-  width: 76px !important; /* квадрат: ширина = высота */
-  height: 76px;
-  padding: 3px;
+  min-width: 0;
+  height: var(--lightbox-thumbnail-size);
+  padding: 4px;
   align-items: center;
   justify-content: center;
   opacity: .56;
   cursor: pointer;
   transition: opacity .18s ease;
 }
-.car-photo-viewer__thumbnail:hover,
 .car-photo-viewer__thumbnail[data-p-active="true"] {
   opacity: 1;
 }
 .car-photo-viewer__thumbnail-content {
-  width: 100%;
-  height: 100%;
+  width: min(100%, calc(var(--lightbox-thumbnail-size) - 8px));
+  height: calc(var(--lightbox-thumbnail-size) - 8px);
   overflow: hidden;
   border: 2px solid transparent;
   border-radius: 12px;
@@ -230,6 +260,137 @@
   user-select: none;
 }
 
+.car-photo-viewer__thumbnail-nav {
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-stone-beige-100, #F3F0EE);
+  color: var(--color-carbon-black-500, #1B1E1D);
+  cursor: pointer;
+  transition: background-color .18s ease, color .18s ease;
+}
+.car-photo-viewer__thumbnail-nav.p-disabled {
+  display: none;
+}
+.car-photo-viewer__thumbnail-nav svg {
+  width: 16px;
+  height: 16px;
+}
+.car-photo-viewer__thumbnail-nav--next svg {
+  transform: rotate(180deg);
+}
+.car-photo-viewer__thumbnail-nav:focus-visible {
+  outline: 2px solid var(--color-heritage-green-400, #4E7B60);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .car-photo-viewer__close:hover::before {
+    background: var(--color-stone-beige-200, #E4DFDB);
+  }
+  .car-photo-viewer__arrow:hover::before,
+  .car-photo-viewer__thumbnail-nav:hover {
+    background: var(--color-heritage-green-500, #294434);
+  }
+  .car-photo-viewer__arrow:hover,
+  .car-photo-viewer__thumbnail-nav:hover {
+    color: var(--color-white, #FFFFFF);
+  }
+  .car-photo-viewer__thumbnail:hover {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 1200px) {
+  .car-photo-viewer__container {
+    padding:
+      max(20px, env(safe-area-inset-top))
+      max(20px, env(safe-area-inset-right))
+      max(20px, env(safe-area-inset-bottom))
+      max(20px, env(safe-area-inset-left));
+  }
+  .car-photo-viewer__dialog,
+  .car-photo-viewer,
+  .car-photo-viewer--lightbox {
+    border-radius: 22px;
+  }
+  .car-photo-viewer {
+    --lightbox-thumbnail-size: 68px;
+    --lightbox-thumbnail-viewport-width: 476px;
+  }
+  .car-photo-viewer__arrow--prev { left: 16px; }
+  .car-photo-viewer__arrow--next { right: 16px; }
+  .car-photo-viewer__thumbnail-wrapper { padding: 10px; }
+}
+
+@media (max-width: 1199px) {
+  .car-photo-viewer__dialog {
+    --lightbox-control-hit-size: 44px;
+    --lightbox-arrow-visual-size: clamp(30px, calc(20px + 3.333vw), 44px);
+    --lightbox-arrow-icon-size: clamp(12px, calc(3px + 2.5vw), 18px);
+    --lightbox-close-visual-size: clamp(30px, calc(20px + 3.333vw), 40px);
+    --lightbox-close-icon-size: clamp(12px, calc(3px + 2.5vw), 17px);
+  }
+  .car-photo-viewer__close {
+    top: 18px;
+    right: 18px;
+  }
+}
+
+@media (max-width: 960px) {
+  .car-photo-viewer__container {
+    padding:
+      max(16px, env(safe-area-inset-top))
+      max(16px, env(safe-area-inset-right))
+      max(16px, env(safe-area-inset-bottom))
+      max(16px, env(safe-area-inset-left));
+  }
+  .car-photo-viewer__dialog,
+  .car-photo-viewer,
+  .car-photo-viewer--lightbox {
+    border-radius: 20px;
+  }
+  .car-photo-viewer {
+    --lightbox-thumbnail-size: 64px;
+    --lightbox-thumbnail-viewport-width: 320px;
+  }
+  .car-photo-viewer__close {
+    top: 14px;
+    right: 14px;
+  }
+  .car-photo-viewer__arrow--prev { left: 14px; }
+  .car-photo-viewer__arrow--next { right: 14px; }
+  .car-photo-viewer__thumbnail-wrapper { padding: 9px; }
+}
+
+@media (max-width: 768px) {
+  .car-photo-viewer__container {
+    padding:
+      max(12px, env(safe-area-inset-top))
+      max(12px, env(safe-area-inset-right))
+      max(12px, env(safe-area-inset-bottom))
+      max(12px, env(safe-area-inset-left));
+  }
+  .car-photo-viewer__dialog,
+  .car-photo-viewer,
+  .car-photo-viewer--lightbox {
+    border-radius: 16px;
+  }
+  .car-photo-viewer {
+    --lightbox-thumbnail-size: 60px;
+    --lightbox-thumbnail-viewport-width: 300px;
+  }
+  .car-photo-viewer__arrow--prev { left: 10px; }
+  .car-photo-viewer__arrow--next { right: 10px; }
+  .car-photo-viewer__thumbnail-wrapper { padding: 8px; }
+}
+
 @media (max-width: 640px) {
   .car-photo-viewer__mask {
     backdrop-filter: blur(8px);
@@ -245,33 +406,146 @@
     border-radius: 0;
   }
   .car-photo-viewer {
+    --lightbox-thumbnail-size: 58px;
+    --lightbox-thumbnail-viewport-width: 232px;
     border-radius: 0;
   }
   .car-photo-viewer__close {
-    top: 12px;
-    right: 12px;
-    width: 36px;
-    height: 36px;
-  }
-  .car-photo-viewer__arrow {
-    width: 40px;
-    height: 40px;
+    top: max(4px, env(safe-area-inset-top));
+    right: max(4px, env(safe-area-inset-right));
   }
   .car-photo-viewer__arrow--prev {
-    left: 12px;
+    left: max(4px, env(safe-area-inset-left));
   }
   .car-photo-viewer__arrow--next {
-    right: 12px;
+    right: max(4px, env(safe-area-inset-right));
   }
   .car-photo-viewer__thumbnail-wrapper {
-    padding: 8px;
-  }
-  .car-photo-viewer__thumbnail {
-    width: 58px;
-    height: 58px;
-    padding: 2px;
+    padding-top: 7px;
+    padding-right: max(8px, env(safe-area-inset-right));
+    padding-bottom: max(7px, env(safe-area-inset-bottom));
+    padding-left: max(8px, env(safe-area-inset-left));
   }
   .car-photo-viewer__thumbnail-content {
     border-radius: 8px;
+  }
+  .car-photo-viewer__thumbnail-nav {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+  }
+}
+
+@media (max-width: 480px) {
+  .car-photo-viewer {
+    --lightbox-thumbnail-size: 54px;
+    --lightbox-thumbnail-viewport-width: 162px;
+  }
+  .car-photo-viewer__thumbnail-wrapper {
+    padding-top: 6px;
+    padding-bottom: max(6px, env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 360px) {
+  .car-photo-viewer {
+    --lightbox-thumbnail-size: 52px;
+    --lightbox-thumbnail-viewport-width: 156px;
+  }
+}
+
+@media (max-width: 359px) {
+  .car-photo-viewer__dialog {
+    --lightbox-control-hit-size: 42px;
+    --lightbox-arrow-visual-size: 30px;
+    --lightbox-arrow-icon-size: 12px;
+    --lightbox-close-visual-size: 30px;
+    --lightbox-close-icon-size: 12px;
+  }
+  .car-photo-viewer__close {
+    top: max(3px, env(safe-area-inset-top));
+    right: max(3px, env(safe-area-inset-right));
+  }
+  .car-photo-viewer__arrow--prev {
+    left: max(3px, env(safe-area-inset-left));
+  }
+  .car-photo-viewer__arrow--next {
+    right: max(3px, env(safe-area-inset-right));
+  }
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .car-photo-viewer__mask {
+    backdrop-filter: blur(8px);
+  }
+  .car-photo-viewer__container {
+    width: 100vw;
+    height: 100dvh;
+    padding: 0;
+  }
+  .car-photo-viewer__dialog,
+  .car-photo-viewer,
+  .car-photo-viewer--lightbox {
+    border-radius: 0;
+  }
+  .car-photo-viewer {
+    --lightbox-thumbnail-size: 52px;
+    --lightbox-thumbnail-viewport-width: 260px;
+  }
+  .car-photo-viewer__dialog {
+    --lightbox-control-hit-size: 44px;
+    --lightbox-arrow-visual-size: 32px;
+    --lightbox-arrow-icon-size: 13px;
+    --lightbox-close-visual-size: 32px;
+    --lightbox-close-icon-size: 13px;
+  }
+  .car-photo-viewer__close {
+    top: max(4px, env(safe-area-inset-top));
+    right: max(4px, env(safe-area-inset-right));
+  }
+  .car-photo-viewer__arrow::before {
+    background: rgba(255, 255, 255, .92);
+  }
+  .car-photo-viewer__arrow--prev {
+    left: max(4px, env(safe-area-inset-left));
+  }
+  .car-photo-viewer__arrow--next {
+    right: max(4px, env(safe-area-inset-right));
+  }
+  .car-photo-viewer__thumbnail-wrapper {
+    padding-top: 4px;
+    padding-right: max(8px, env(safe-area-inset-right));
+    padding-bottom: max(4px, env(safe-area-inset-bottom));
+    padding-left: max(8px, env(safe-area-inset-left));
+  }
+  .car-photo-viewer__thumbnail-nav {
+    width: 32px;
+    height: 32px;
+    flex-basis: 32px;
+  }
+}
+
+@media (orientation: landscape) and (min-width: 961px) and (max-height: 500px) {
+  .car-photo-viewer {
+    --lightbox-thumbnail-viewport-width: 364px;
+  }
+}
+
+@media (orientation: landscape) and (max-width: 640px) and (max-height: 500px) {
+  .car-photo-viewer {
+    --lightbox-thumbnail-viewport-width: 208px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .car-photo-viewer__close,
+  .car-photo-viewer__close::before,
+  .car-photo-viewer__arrow,
+  .car-photo-viewer__arrow::before,
+  .car-photo-viewer__thumbnail,
+  .car-photo-viewer__thumbnail-content,
+  .car-photo-viewer__thumbnail-nav,
+  .car-photo-viewer .p-galleria-thumbnail-items {
+    transition: none !important;
   }
 }

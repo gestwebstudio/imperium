@@ -1,11 +1,9 @@
 import Link from "next/link";
-import { prisma } from "@/lib/db";
-import { deleteReview } from "../actions";
-
-export const dynamic = "force-dynamic";
+import { deleteReview } from "@/app/admin/actions";
+import { getAdminReviewsList } from "@/lib/admin-dal";
 
 export default async function AdminReviewsList() {
-  const items = await prisma.review.findMany({ orderBy: { createdAt: "asc" } });
+  const items = await getAdminReviewsList();
 
   return (
     <>
@@ -30,36 +28,49 @@ export default async function AdminReviewsList() {
             </tr>
           </thead>
           <tbody>
-            {items.map((r) => (
-              <tr key={r.id}>
+            {items.map((item) => (
+              <tr key={item.id}>
                 <td>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img className="admin-thumb" src={r.image} alt="" />
+                  <img className="admin-thumb" src={item.image} alt="" />
                 </td>
                 <td className="admin-table__title">
-                  {r.author}
-                  <div style={{ color: "var(--admin-muted)", fontWeight: 400, fontSize: 13 }}>
-                    {r.car}
+                  {item.author}
+                  <div
+                    style={{
+                      color: "var(--admin-muted)",
+                      fontWeight: 400,
+                      fontSize: 13,
+                    }}
+                  >
+                    {item.car}
                   </div>
                 </td>
                 <td style={{ color: "var(--admin-muted)" }}>
-                  {r.text.length > 90 ? `${r.text.slice(0, 90)}…` : r.text}
+                  {item.text.length > 90
+                    ? `${item.text.slice(0, 90)}…`
+                    : item.text}
                 </td>
                 <td>
-                  <span className={`admin-pill admin-pill--${r.published ? "on" : "off"}`}>
-                    {r.published ? "Опубликовано" : "Скрыт"}
+                  <span
+                    className={`admin-pill admin-pill--${item.published ? "on" : "off"}`}
+                  >
+                    {item.published ? "Опубликовано" : "Скрыт"}
                   </span>
                 </td>
                 <td>
                   <div className="admin-table__actions">
                     <Link
-                      href={`/admin/reviews/${r.id}`}
+                      href={`/admin/reviews/${item.id}`}
                       className="admin-btn admin-btn--ghost"
                     >
                       Изменить
                     </Link>
-                    <form action={deleteReview.bind(null, r.id)}>
-                      <button type="submit" className="admin-btn admin-btn--danger">
+                    <form action={deleteReview.bind(null, item.id)}>
+                      <button
+                        type="submit"
+                        className="admin-btn admin-btn--danger"
+                      >
                         Удалить
                       </button>
                     </form>

@@ -49,8 +49,17 @@ test("главный слайдер, избранное и мобильное м
   await page.getByRole("button", { name: "Открыть меню" }).click();
   const menu = page.getByRole("dialog", { name: "Меню" });
   await expect(menu).toBeVisible();
-  const labels = await menu.locator(".mobile-menu__item-label").allTextContents();
-  expect(labels.slice(0, 2)).toEqual(["Избранное", "Сравнение"]);
+  const labels = (
+    await menu.locator(".mobile-menu__item-label").allTextContents()
+  ).map((label) => label.replaceAll("\u00a0", " "));
+  expect(labels).toEqual([
+    "Каталог",
+    "Услуги",
+    "О салоне",
+    "Контакты",
+    "Избранное",
+    "Сравнение",
+  ]);
   await page.keyboard.press("Escape");
   await expect(menu).toBeHidden();
 });
@@ -497,7 +506,12 @@ test("sticky сравнения использует тот же independent sel
     ],
   });
   await page.goto("/comparison");
-  await page.evaluate(() => window.scrollTo(0, 1150));
+  const productsShell = page.locator(".comparison-products-shell");
+  await expect(page.locator(".comparison-products .car-card")).toHaveCount(2);
+  await productsShell.evaluate((node) => {
+    const bottom = node.getBoundingClientRect().bottom + window.scrollY;
+    window.scrollTo(0, bottom + 20);
+  });
 
   const sticky = page.locator(".comparison-sticky");
   await expect(sticky).toBeVisible();
