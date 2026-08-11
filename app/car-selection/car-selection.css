@@ -16,15 +16,22 @@
   max-width: 660px; /* блок2 «Необходимые условия» — 821:456 */
 }
 
-/* Вертикальный ритм (макет: плашка→блок1 120, дальше между блоками 160).
-   На trade-in первым идёт «этапы», здесь — image-блок. */
-@media (min-width: 961px) {
-  /* блок1 сразу после hero: 58 наезд + 120 = 178 */
-  .car-selection > .ti-factors:not(.ti-cs-2) {
-    margin-top: 178px;
-  }
-  /* «этапы» здесь в середине → 160 (а не 178, как первым блоком на trade-in) */
-  .car-selection > .ti-steps {
-    margin-top: 160px;
-  }
+/* Порядок блоков иной, чем на trade-in: первым после плашек идёт image-блок
+   «Что входит», а «этапы» — в середине. Поэтому меняем назначение отступов
+   местами относительно trade-in: image-блок1 получает «первый зазор» (как «этапы»
+   на trade-in: 120/100/80/70), а «этапы» — общий ритм секций (--section-space). */
+.car-selection > .ti-factors:not(.ti-cs-2) {
+  margin-top: 120px; /* «первый зазор» после плашек */
+}
+.car-selection > .ti-steps {
+  margin-top: var(--section-space, 160px); /* общий ритм секций */
+}
+@media (max-width: 1535px) {
+  .car-selection > .ti-factors:not(.ti-cs-2) { margin-top: 100px; }
+}
+@media (max-width: 1199px) {
+  .car-selection > .ti-factors:not(.ti-cs-2) { margin-top: 80px; }
+}
+@media (max-width: 639px) {
+  .car-selection > .ti-factors:not(.ti-cs-2) { margin-top: 70px; }
 }

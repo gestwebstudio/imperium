@@ -19,10 +19,10 @@
 }
 /* Первая секция после hero — меньший зазор (по макету hero→steps = 120px) */
 .trade-in > .ti-steps {
-  margin-top: clamp(48px, 5vw, 60px);
+  margin-top: 120px;
 }
 .trade-in > .contacts {
-  margin-top: var(--section-space-lg, 200px);
+  margin-top: 200px;
 }
 
 /* ---------------- Hero ---------------- */
@@ -119,7 +119,7 @@
 .ti-hero__stats-wrap {
   position: relative;
   z-index: 3;
-  margin-top: -58px; /* половина карточки h116 (тиры 1920/1536) */
+  margin-top: -60px; /* наложение плашек на hero (1920/1536/1200/960) */
 }
 .ti-hero__stats {
   width: 100%;
@@ -168,7 +168,6 @@
   .ti-hero__title .bold { font-size: 40px; line-height: 48px; }
   .ti-hero__sub { font-size: 16px; line-height: 20px; }
   .ti-hero__inner { padding-bottom: 118px; }
-  .ti-hero__stats-wrap { margin-top: -51px; } /* половина карточки h102 */
   .ti-stat .liquid-glass__content { min-height: 102px; }
   .ti-stat__value { font-size: 18px; line-height: 24px; }
   .ti-stat__label { font-size: 16px; line-height: 20px; }
@@ -187,7 +186,6 @@
   }
   .ti-hero__cta { align-self: flex-start; }
   .ti-hero__cta.btn { height: 36px; padding: 0 14px; font-size: 16px; line-height: 20px; }
-  .ti-hero__stats-wrap { margin-top: -46px; } /* половина карточки h92 */
   .ti-stat .liquid-glass__content { min-height: 92px; }
 }
 
@@ -203,7 +201,7 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 17px;
   }
-  .ti-hero__stats-wrap { margin-top: -42px; } /* половина карточки h84 */
+  .ti-hero__stats-wrap { margin-top: -50px; } /* наложение плашек на hero (≤959) */
   .ti-stat .liquid-glass__content { min-height: 84px; padding: 22px 20px; }
   .ti-stat__value { font-size: 16px; line-height: 20px; }
   .ti-stat__label { font-size: 14px; line-height: 18px; }
@@ -218,7 +216,6 @@
 @media (max-width: 479px) {
   .ti-hero__title .reg { font-size: 36px; line-height: 44px; }
   .ti-hero__stats { grid-template-columns: minmax(0, 1fr); }
-  .ti-hero__stats-wrap { margin-top: -35px; } /* половина карточки h70 */
   .ti-stat .liquid-glass__content { min-height: 70px; }
 }
 
@@ -411,6 +408,8 @@
    зазор секций 120; блоки картинка+текст gap 50 (как база). */
 @media (max-width: 1535px) {
   .trade-in { --section-space: 120px; }
+  .trade-in > .ti-steps { margin-top: 100px; }
+  .trade-in > .contacts { margin-top: 160px; }
   .ti-step__title { font-size: 30px; line-height: 38px; }
   .ti-step__text { font-size: 16px; line-height: 20px; }
   .ti-block__title { font-size: 36px; line-height: 44px; }
@@ -423,6 +422,8 @@
    блок-заголовки 32/40; callout 20/28.
    Ряды карточек — gap 20. */
 @media (max-width: 1199px) {
+  .trade-in > .ti-steps { margin-top: 80px; }
+  .trade-in > .contacts { margin-top: 140px; }
   .ti-step__title { font-size: 24px; line-height: 28px; }
   .ti-block__title { font-size: 32px; line-height: 40px; }
   .ti-callout { font-size: 20px; line-height: 28px; }
@@ -432,6 +433,8 @@
 /* ≤959 (768): шаг 20/26; блок-заголовки 30/38; примечание 14/18.
    Блоки картинка+текст: картинка уже, текст шире; gap 50. */
 @media (max-width: 959px) {
+  .trade-in { --section-space: 100px; }
+  .trade-in > .contacts { margin-top: 120px; }
   .ti-step__title { font-size: 20px; line-height: 26px; }
   .ti-block__title { font-size: 30px; line-height: 38px; }
   .ti-accept__note { font-size: 14px; line-height: 18px; }
@@ -444,6 +447,8 @@
    блок-заголовки 24/32; баннер заголовок 28/34, подзаг 14/18.
    Блоки картинка+текст: картинка узкой полосой слева, gap 40. */
 @media (max-width: 767px) {
+  .trade-in { --section-space: 80px; }
+  .trade-in > .contacts { margin-top: 100px; }
   .ti-step__title { font-size: 18px; line-height: 22px; }
   .ti-step__text { font-size: 14px; line-height: 18px; }
   .ti-step { padding: 26px 26px 20px; }
@@ -457,7 +462,7 @@
    баннер заголовок 24/30. Блоки «что влияет» / «мы готовы принять» — беж-карточка
    без фото (по макету 480: stone-beige, radius 30, паддинг 20), картинка скрыта. */
 @media (max-width: 639px) {
-  .trade-in { --section-space: 80px; }
+  .trade-in > .ti-steps { margin-top: 70px; }
   .ti-steps__grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
   .ti-call__title { font-size: 24px; line-height: 30px; }
   .ti-factors,
