@@ -63,8 +63,6 @@
   margin-top: var(--section-space);
 }
 
-.about-salon > .contacts { margin-bottom: 0; }
-
 .about-salon__story-intro,
 .about-salon__section-head {
   display: grid;

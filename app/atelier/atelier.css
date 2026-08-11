@@ -6,7 +6,18 @@
 
 .atelier {
   /* контент-контейнер как у главной */
+  /* Вертикальный ритм блоков (тиры/брейки как на trade-in):
+     --g-first — hero→«О салоне», --g-rhythm — между секциями,
+     --g-contacts — перед контактами. Контакты→футер — глобальный (footer). */
+  --g-first: 120px;
+  --g-rhythm: 160px;
+  --g-contacts: 200px;
 }
+@media (max-width: 1535px) { .atelier { --g-first: 100px; --g-rhythm: 120px; --g-contacts: 160px; } }
+@media (max-width: 1199px) { .atelier { --g-first: 80px; --g-contacts: 140px; } }
+@media (max-width: 959px)  { .atelier { --g-rhythm: 100px; --g-contacts: 120px; } }
+@media (max-width: 767px)  { .atelier { --g-rhythm: 80px; --g-contacts: 100px; } }
+@media (max-width: 639px)  { .atelier { --g-first: 70px; } }
 
 /* Крошки — канонический компонент .ui-crumbs (стили глобальные, из кита). */
 
@@ -55,13 +66,13 @@
 .atelier-hero__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 /* ---------------- Второй блок — «О салоне» с главной (текст под ателье) ---------------- */
-.atelier-identity { margin-top: 93px; }
+.atelier-identity { margin-top: var(--g-first); }
 .atelier-identity .about__identity { margin-top: 0; }
 .atelier-identity .about__lead .reg { display: inline; }
 .atelier-identity .about__lead .bold { display: inline; }
 
 /* ---------------- Баннер «Дизайн с Александром Велесом» (945:2947) ---------------- */
-.atelier-cta-section { margin-top: 69px; }
+.atelier-cta-section { margin-top: var(--g-rhythm); }
 .atelier-cta {
   display: flex;
   align-items: stretch;
@@ -118,7 +129,7 @@
 }
 
 /* ---------------- Проекты (карусель, механика брендов) ---------------- */
-.atelier .projects { margin-top: 146px; }
+.atelier .projects { margin-top: var(--g-rhythm); }
 .projects__head {
   display: flex;
   align-items: center;
@@ -202,7 +213,7 @@
 .project-card__placeholder svg { width: 32px; height: 32px; display: block; }
 
 /* ---------------- Контакты — с главной ---------------- */
-.atelier .contacts { margin-top: 200px; margin-bottom: 100px; }
+.atelier .contacts { margin-top: var(--g-contacts); }
 
 /* ---------------- Адаптив (базовый; тонкий полиш — у второго агента) ---------------- */
 @media (max-width: 1280px) {

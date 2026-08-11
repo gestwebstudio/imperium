@@ -5,6 +5,22 @@
 
 /* Крошки — канонический .ui-crumbs (глобальные стили). */
 
+/* ---------------- Вертикальный ритм блоков (тиры/брейки как на trade-in) --------
+   --g-first    — первый зазор (hero → баннер «Велес»)
+   --g-rhythm   — общий ритм между секциями
+   --g-contacts — отступ последнего блока перед контактами
+   Контакты → футер остаётся глобальным (footer margin-top). ---------------- */
+.veles {
+  --g-first: 120px;
+  --g-rhythm: 160px;
+  --g-contacts: 200px;
+}
+@media (max-width: 1535px) { .veles { --g-first: 100px; --g-rhythm: 120px; --g-contacts: 160px; } }
+@media (max-width: 1199px) { .veles { --g-first: 80px; --g-contacts: 140px; } }
+@media (max-width: 959px)  { .veles { --g-rhythm: 100px; --g-contacts: 120px; } }
+@media (max-width: 767px)  { .veles { --g-rhythm: 80px; --g-contacts: 100px; } }
+@media (max-width: 639px)  { .veles { --g-first: 70px; } }
+
 /* ---------------- Hero — общий блок трейд-ина (.ti-hero*), без ряда преимуществ.
    Здесь только нижний отступ (нет наезжающих карточек, как на трейд-ине). ---------------- */
 .veles-hero .ti-hero__inner { padding-bottom: 40px; }
@@ -57,7 +73,7 @@
 /* ---------------- Баннер «Александр Велес» (Figma 1206:3512 / 1143:12393…12728).
    Все размеры из get_metadata. Фото слева (высота 384, ширина по брейкам),
    текст справа; с 960 — стопка. ---------------- */
-.veles-cta-section { margin-top: 100px; }
+.veles-cta-section { margin-top: var(--g-first); }
 .veles-cta {
   position: relative;
   display: flex;
@@ -128,11 +144,11 @@
 }
 
 /* ---------------- Второй блок (about__identity с ателье) ---------------- */
-.veles-identity { margin-top: 107px; }
+.veles-identity { margin-top: var(--g-rhythm); }
 .veles-identity .about__identity { margin-top: 0; }
 
 /* ---------------- Процесс работы (1006:2937 + 1006:2917) ---------------- */
-.veles-process { margin-top: 57px; }
+.veles-process { margin-top: var(--g-rhythm); }
 .veles-process__title {
   margin: 0 0 45px;
   color: var(--color-carbon-black-500, #1B1E1D);
@@ -184,7 +200,7 @@
 }
 
 /* ---------------- Баннер «Назначить встречу» (1006:2908) ---------------- */
-.veles-call-section { margin-top: 157px; }
+.veles-call-section { margin-top: var(--g-rhythm); }
 .veles-call {
   display: flex;
   flex-direction: column;
@@ -223,7 +239,7 @@
 }
 
 /* ---------------- Контакты — с главной ---------------- */
-.veles .contacts { margin-top: 289px; margin-bottom: 100px; }
+.veles .contacts { margin-top: var(--g-contacts); }
 
 /* Progressive layout expansion. */
 @media (min-width: 769px) {
