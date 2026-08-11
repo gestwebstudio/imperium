@@ -142,15 +142,14 @@
 }
 .projects-row::-webkit-scrollbar { display: none; }
 .projects-row > * {
-  flex: 0 0 calc((100% - 60px) / 4);
-  min-width: 280px;
-  max-width: 435px;
+  flex: 0 0 calc((100% - 20px) / 2);
+  min-width: 320px;
   scroll-snap-align: start;
 }
 
-/* карточка проекта (945:2959) */
+/* карточка проекта (945:2959) — соотношение 3:2 */
 .project-card {
-  height: 586px;
+  aspect-ratio: 3 / 2;
   border-radius: 8px;
   overflow: hidden;
   background: var(--color-white, #FFFFFF);
@@ -259,5 +258,5 @@
   .atelier-cta__media { aspect-ratio: 310 / 166; }
 }
 @media (max-width: 768px) {
-  .projects-row > * { flex-basis: calc((100% - 20px) / 2); }
+  .projects-row > * { flex-basis: 100%; }
 }

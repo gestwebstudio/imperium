@@ -1,5 +1,6 @@
 import { ServiceImageCard } from "@/components/cards/cards";
 import { Crumbs } from "@/components/ui/Crumbs";
+import { ButtonLink } from "@/components/ui/Button";
 import { LeadModal } from "@/components/ui/LeadModal";
 import { Contacts } from "@/components/home/Contacts";
 import { ProjectsRow } from "@/components/atelier/ProjectsRow";
@@ -130,13 +131,13 @@ export function AtelierPage() {
           <div className="atelier-cta__body">
             <div className="atelier-cta__text">
               <h2 className="atelier-cta__title">
-                <span className="reg">Дизайн автомобиля</span>
-                <span className="bold">с Александром Велесом</span>
+                <span className="reg">Авторский дизайн</span>
+                <span className="bold">Александра Велеса</span>
               </h2>
               <p className="atelier-cta__sub">
-                Когда хочется не просто улучшить автомобиль, а создать для него
-                уникальный образ. Дизайнер Александр Велес разрабатывает авторскую
-                концепцию экстерьера под ваш вкус и характер.
+                Когда автомобиль должен отражать вашу индивидуальность. Именитый
+                автодизайнер создает уникальную концепцию от эскиза до реализации
+                — без шаблонов и компромиссов
               </p>
             </div>
             <div className="atelier-cta__actions">
@@ -145,11 +146,13 @@ export function AtelierPage() {
                 triggerLabel="Обсудить работу"
                 triggerVariant="primary-surface"
               />
-              <LeadModal
-                {...ATELIER_MODAL}
-                triggerLabel="Обсудить работу"
-                triggerVariant="secondary-outlined"
-              />
+              <ButtonLink
+                href="/veles"
+                size="l"
+                variant="secondary-outlined"
+              >
+                Подробнее об услуге
+              </ButtonLink>
             </div>
           </div>
         </div>

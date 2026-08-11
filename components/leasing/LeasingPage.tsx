@@ -157,7 +157,7 @@ export function LeasingPage({ cars }: { cars: Car[] }) {
 
       {/* ---------- Премиальные модели ---------- */}
       <CarsSection
-        title="Премиальные модели для приобретения в лизинг"
+        title="Автомобили в лизинг"
         cars={cars}
       />
 

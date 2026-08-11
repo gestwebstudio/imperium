@@ -12,10 +12,10 @@ import {
 type Project = { id: string; title: string; image?: string };
 
 const PROJECTS: Project[] = [
-  { id: "s-class", title: "Перешив салона Mercedes-Benz S-Class" },
-  { id: "gls", title: "Перешивка салона Mercedes GLS — лучше завода" },
-  { id: "x7", title: "Комплексный проект: химчистка, диски и оклейка BMW X7" },
-  { id: "911", title: "Защита кузова Porsche 911 керамикой" },
+  { id: "interior", title: "Перешивка салона", image: "/images/cases/interior.webp" },
+  { id: "wrap", title: "Оклейка в другой цвет", image: "/images/cases/wrap.webp" },
+  { id: "bodykit", title: "Установка обвесов", image: "/images/cases/bodykit.webp" },
+  { id: "multimedia", title: "Замена мультимедиа", image: "/images/cases/multimedia.webp" },
 ];
 
 function ProjectCard({ title, image }: Project) {

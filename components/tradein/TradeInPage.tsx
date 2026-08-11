@@ -40,7 +40,7 @@ const STEPS = [
   {
     stage: "Этап 2",
     title: "Осмотр и диагностика",
-    text: "Автомобиль проходит экспертную проверку нашими экспертами: состояние кузова, салона, техническое состояние и юридическая чистота",
+    text: "Автомобиль проходит полную проверку нашими экспертами: состояние кузова, салона, техническое состояние и юридическая чистота",
   },
   {
     stage: "Этап 3",
@@ -168,7 +168,7 @@ export function TradeInPage({ cars }: { cars: Car[] }) {
 
       {/* ---------- Премиальные модели ---------- */}
       <CarsSection
-        title="Премиальные модели для приобретения с trade-in"
+        title="Выберите автомобиль с trade-in"
         cars={cars}
       />
 
@@ -176,8 +176,8 @@ export function TradeInPage({ cars }: { cars: Car[] }) {
       <section className="home-wrap ti-accept">
         <div className="ti-block__body ti-accept__body">
           <h2 className="ti-block__title">
-            <span className="reg">Мы готовы принять ваш</span>
-            <span className="bold">автомобиль в trade-in, если:</span>
+            <span className="reg">Условия приемки</span>
+            <span className="bold">автомобиля в trade-in</span>
           </h2>
           <ul className="ti-list">
             {CONDITIONS.map((c) => (
@@ -189,8 +189,7 @@ export function TradeInPage({ cars }: { cars: Car[] }) {
             <span className="bold">марками и годами выпуска</span>
           </p>
           <p className="ti-accept__note">
-            Принимаем любые автомобили при условии юридической чистоты и
-            технической исправности
+            Не уверены в документах? Проверим бесплатно перед осмотром
           </p>
         </div>
         <div className="ti-accept__media">
