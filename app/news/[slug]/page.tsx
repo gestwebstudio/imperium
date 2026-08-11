@@ -76,7 +76,11 @@ export default async function NewsArticlePage({
     <main className="news-detail">
       <Crumbs
         className="news-detail__crumbs"
-        items={[{ label: "Главная", href: "/" }, { label: "Новости" }]}
+        items={[
+          { label: "Главная", href: "/" },
+          { label: "Новости", href: "/news" },
+          { label: article.title },
+        ]}
       />
 
       <NewsArticleContent article={article} />
