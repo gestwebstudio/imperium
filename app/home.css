@@ -1503,6 +1503,18 @@
 .about__testi-nav svg { width: 14px; height: 14px; }
 .about__testi-nav .next svg { transform: rotate(180deg); }
 
+/* Неподвижный оверлей заголовка+стрелок над прокручиваемой дорожкой.
+   Переиспользует классы слайда → наследует адаптацию. Копии в слайдах
+   прячем (visibility: место резервируют, но не видны и не «едут»). */
+.about__testimonial { position: relative; }
+.about__testimonial-overlay { position: absolute; inset: 0; pointer-events: none; }
+.about__testimonial-overlay .about__testimonial-slide { width: 100%; height: 100%; }
+.about__testimonial-overlay .about__testi-img,
+.about__testimonial-overlay .about__testi-quote { visibility: hidden; }
+.about__testimonial-overlay .about__testi-nav { pointer-events: auto; }
+.about__testimonial-track .about__testi-title,
+.about__testimonial-track .about__testi-nav { visibility: hidden; }
+
 /* Отзывы — адаптации Figma 1115:2516 / 4787 / 5084 / 5344 /
    5618 / 5845 / 6051. Компонент общий для главной и страницы «О салоне». */
 @media (max-width: 1536px) {
@@ -1531,6 +1543,12 @@
     height: var(--testi-height);
     padding-block: var(--testi-padding-block);
     transform: translateX(-50%);
+  }
+
+  /* Оверлей выравниваем по контент-области (учитываем padding-block блока). */
+  .about__testimonial-overlay {
+    top: var(--testi-padding-block);
+    bottom: var(--testi-padding-block);
   }
 
   .about__testimonial-track,

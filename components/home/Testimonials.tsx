@@ -34,7 +34,11 @@ export function Testimonials({ reviews }: { reviews: Review[] }) {
                   <img src={review.image} alt={review.imageAlt} />
                 </div>
                 <div className="about__testi-body">
-                  <h3 className="about__testi-title">
+                  {/* Заголовок и стрелки продублированы в каждом слайде только
+                      для сохранения раскладки; визуально их скрывает CSS
+                      (.about__testimonial-track .about__testi-title/-nav),
+                      а видимые — в неподвижном оверлее ниже. */}
+                  <h3 className="about__testi-title" aria-hidden="true">
                     <span className="reg">Выбор, </span>
                     <span className="bold">которым делятся</span>
                   </h3>
@@ -45,20 +49,11 @@ export function Testimonials({ reviews }: { reviews: Review[] }) {
                     </div>
                     <p className="about__testi-text">{review.text}</p>
                   </div>
-                  <div className="about__testi-nav">
-                    <Button
-                      bare
-                      aria-label="Предыдущий отзыв"
-                      onClick={() => scroll(-1)}
-                    >
+                  <div className="about__testi-nav" aria-hidden="true">
+                    <Button bare tabIndex={-1}>
                       <ArrowIcon />
                     </Button>
-                    <Button
-                      bare
-                      className="next"
-                      aria-label="Следующий отзыв"
-                      onClick={() => scroll(1)}
-                    >
+                    <Button bare className="next" tabIndex={-1}>
                       <ArrowIcon />
                     </Button>
                   </div>
@@ -67,6 +62,45 @@ export function Testimonials({ reviews }: { reviews: Review[] }) {
             );
           }),
         )}
+      </div>
+
+      {/* Неподвижный оверлей: единственный заголовок + стрелки. Переиспользует
+          классы слайда, поэтому наследует всю адаптацию; цитата-клон (скрыта)
+          удерживает вертикальную позицию стрелок на всех брейках. */}
+      <div className="about__testimonial-overlay">
+        <article className="about__testimonial-slide">
+          <div className="about__testi-img" aria-hidden="true" />
+          <div className="about__testi-body">
+            <h3 className="about__testi-title">
+              <span className="reg">Выбор, </span>
+              <span className="bold">которым делятся</span>
+            </h3>
+            <div className="about__testi-quote" aria-hidden="true">
+              <div className="about__testi-author">
+                <b>{reviews[0].author}</b>
+                <span>{reviews[0].car}</span>
+              </div>
+              <p className="about__testi-text">{reviews[0].text}</p>
+            </div>
+            <div className="about__testi-nav">
+              <Button
+                bare
+                aria-label="Предыдущий отзыв"
+                onClick={() => scroll(-1)}
+              >
+                <ArrowIcon />
+              </Button>
+              <Button
+                bare
+                className="next"
+                aria-label="Следующий отзыв"
+                onClick={() => scroll(1)}
+              >
+                <ArrowIcon />
+              </Button>
+            </div>
+          </div>
+        </article>
       </div>
     </div>
   );
