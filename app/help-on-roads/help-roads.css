@@ -23,9 +23,6 @@
   .help-roads > section:has(.ti-call) {
     margin-top: clamp(72px, 6.25vw, 120px);
   }
-  .help-roads > .contacts {
-    margin-top: clamp(112px, 9.375vw, 180px);
-  }
 }
 
 /* ---------- Блок #2: два белых блока ---------- */
@@ -425,4 +422,27 @@
 /* Колонка «Событие» — заголовок по левому краю (перебиваем hr-pricing right) */
 .hr-pricing.hor-services .comparison-spec-table__column--price {
   text-align: left;
+}
+
+/* ---------- «Первый зазор» hero → 2-й блок как на trade-in (120/100/80/70) ----------
+   Плюрал (help-on-roads): hero → .hr-section.
+   Закрытая (help-on-road): hero → .hr-pricing.hor-services (таблица услуг).
+   Контакты плюрала идут через общий .trade-in > .contacts (200/160/140/120/100),
+   поэтому help-roads-переопределение контактов убрано выше.
+   Остальные зазоры страниц не меняются. */
+.help-roads > .hr-section,
+.help-roads > .hr-pricing.hor-services {
+  margin-top: 120px;
+}
+@media (max-width: 1535px) {
+  .help-roads > .hr-section,
+  .help-roads > .hr-pricing.hor-services { margin-top: 100px; }
+}
+@media (max-width: 1199px) {
+  .help-roads > .hr-section,
+  .help-roads > .hr-pricing.hor-services { margin-top: 80px; }
+}
+@media (max-width: 639px) {
+  .help-roads > .hr-section,
+  .help-roads > .hr-pricing.hor-services { margin-top: 70px; }
 }
