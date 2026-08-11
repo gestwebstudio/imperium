@@ -3298,6 +3298,8 @@
   .contacts__gallery .tall {
     grid-column: 1;
     grid-row: 1 / span 2;
+    height: 100%;
+    aspect-ratio: auto;
   }
 
   .contacts__info {
