@@ -295,26 +295,68 @@
   transform: scale(1.025);
 }
 
-/* ---------- Основной блок: заголовок + характеристики / цена ---------- */
+/* ---------- Основной блок: заголовок + характеристики / цена ----------
+   MOBILE-FIRST: база = одноколоночная раскладка (артборды 390…1535);
+   двухколоночная десктоп-раскладка со sticky-ценой включается с 1536.
+   Размещение технических блоков/цены/услуг в потоке одной колонки. */
 .car-main {
   display: grid;
-  grid-template-columns:
-    minmax(0, 1fr)
-    clamp(297px, calc(26.0417vw - 103px), 397px);
+  grid-template-columns: minmax(0, 1fr);
   grid-template-areas:
-    "title price"
-    "details price";
+    "title"
+    "technical"
+    "price"
+    "assurance"
+    "atelier";
   align-items: flex-start;
-  column-gap: clamp(40px, calc(.78125vw + 28px), 43px);
-  row-gap: 40px;
-  margin-top: 80px;
+  column-gap: 0;
+  row-gap: 0;
+  margin-top: 50px;
 }
-.car-details {
-  grid-area: details;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 80px;
+.car-details { display: contents; }
+.car-title { grid-area: title; }
+.car-details__technical { grid-area: technical; margin-top: 20px; }
+.car-price { grid-area: price; margin-top: 24px; }
+.car-assur { grid-area: assurance; margin-top: 50px; }
+.car-atelier { grid-area: atelier; margin-top: 50px; }
+
+@media (min-width: 481px) {
+  .car-assur,
+  .car-atelier { margin-top: 70px; }
+}
+@media (min-width: 641px) {
+  .car-main { margin-top: 60px; }
+}
+@media (min-width: 769px) {
+  .car-assur,
+  .car-atelier { margin-top: 80px; }
+}
+@media (min-width: 961px) {
+  .car-details__technical { margin-top: 30px; }
+}
+@media (min-width: 1536px) {
+  .car-main {
+    grid-template-columns:
+      minmax(0, 1fr)
+      clamp(297px, calc(26.0417vw - 103px), 397px);
+    grid-template-areas:
+      "title price"
+      "details price";
+    column-gap: clamp(40px, calc(.78125vw + 28px), 43px);
+    row-gap: 40px;
+    margin-top: 80px;
+  }
+  .car-details {
+    grid-area: details;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+  }
+  .car-details__technical { grid-area: auto; margin-top: 0; }
+  .car-price { grid-area: price; margin-top: 0; }
+  .car-assur { grid-area: auto; margin-top: 0; }
+  .car-atelier { grid-area: auto; margin-top: 0; }
 }
 .car-details__technical {
   display: flex;
@@ -343,24 +385,35 @@
 .car-title__badge { flex: none; white-space: nowrap; }
 .car-title__actions { flex: none; display: flex; align-items: center; gap: 16px; padding-top: 16px; }
 
-/* Карточка цены */
+/* Карточка цены — MOBILE-FIRST.
+   База = «стопка» (артборд 390): всё вертикально, кнопки в ряд из двух.
+   Тиры вверх: 480 grid 2к · 640/768 гориз+грид-офферы · 960/1200 гориз+flex-офферы ·
+   1536 вертикальная sticky-карточка (пара к 2-колоночной car-main). */
 .car-price {
   grid-area: price;
   box-sizing: border-box;
   width: 100%;
-  min-height: 422px;
   display: flex;
   flex-direction: column;
-  gap: 30px;
-  padding: 30px;
+  grid-template-columns: none;
+  position: static;
+  height: auto;
+  min-height: 0;
+  gap: 16px;
+  padding: 16px;
   border-radius: var(--radius-card, 30px);
   background: var(--color-white, #FFFFFF);
   box-shadow: 4px 4px 10px 0 rgba(106, 98, 89, .1);
-  position: sticky;
-  top: 18px;
 }
-.car-price__section { display: flex; flex-direction: column; gap: 10px; }
-.car-price__value { min-height: 70px; }
+.car-price__section {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 14px;
+  height: auto;
+}
+.car-price__value { min-height: 0; }
 .car-price__value .price-block__label {
   font-size: 14px;
   line-height: 18px;
@@ -369,10 +422,28 @@
   font-size: 28px;
   line-height: 36px;
 }
-.car-price__buttons { display: flex; flex-direction: column; gap: 8px; }
-.car-price__buttons .btn { flex: 0 1 auto; }
-.car-price__offers { display: flex; flex-direction: column; gap: 20px; }
-.car-price__row { display: flex; flex-direction: column; gap: 4px; }
+.car-price__buttons { display: flex; flex-direction: row; flex-wrap: nowrap; gap: 8px; }
+.car-price__buttons .btn,
+.car-price__buttons .ui-button { flex: 1 1 0; height: 28px; min-height: 28px; padding-inline: 12px; }
+.car-price__offers {
+  display: flex;
+  flex-direction: column;
+  grid-template-columns: none;
+  gap: 12px;
+  height: auto;
+  padding: 10px 20px;
+}
+.car-price__row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 4px;
+  padding: 0;
+  height: 40px;
+  width: 100%;
+}
+.car-price__row + .car-price__row { border-left: 0; }
 .car-price__row-head {
   display: flex;
   align-items: center;
@@ -392,11 +463,156 @@
 }
 .car-price__note {
   margin: 0;
-  padding-left: 15px;
+  padding-left: 0;
+  white-space: normal;
   font-family: var(--font-text, "Onest", sans-serif);
   font-size: 16px;
   line-height: 20px;
   color: var(--color-carbon-black-500, #1B1E1D);
+}
+
+/* ≥480 — grid 2 колонки (цена/кнопки | офферы) */
+@media (min-width: 480px) {
+  .car-price {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    height: 204px;
+    min-height: 204px;
+    padding: 20px 16px;
+    gap: 10px;
+  }
+  .car-price__section { gap: 10px; height: 164px; }
+  .car-price__value { min-height: 70px; }
+  .car-price__buttons { flex-direction: column; }
+  .car-price__buttons .btn,
+  .car-price__buttons .ui-button { flex: 0 1 auto; height: 36px; min-height: 36px; padding-inline: 14px; }
+  .car-price__offers { justify-content: center; height: 164px; }
+  .car-price__row { gap: 2px; }
+}
+
+/* ≥640 — горизонтальный бар, офферы 3-кол грид с разделителями */
+@media (min-width: 640px) {
+  .car-price {
+    display: flex;
+    grid-template-columns: none;
+    height: 180px;
+    min-height: 180px;
+    padding: 20px;
+    gap: 10px;
+  }
+  .car-price__section {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    height: 70px;
+  }
+  .car-price__buttons { flex-direction: row; }
+  .car-price__offers {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    justify-content: normal;
+    gap: 0;
+    height: 60px;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 20px;
+    background: rgba(228, 223, 219, .5);
+  }
+  .car-price__row { padding: 10px 20px; height: 60px; }
+  .car-price__row + .car-price__row {
+    border-left: 1px solid var(--color-stone-beige-300, #CAC2BB);
+  }
+  .car-price__note { white-space: nowrap; }
+}
+
+/* ≥768 — то же, боковой паддинг цены 24 */
+@media (min-width: 768px) {
+  .car-price { padding: 20px 24px; }
+}
+
+/* ≥960 — офферы свободной flex-строкой (1-й фикс 289px), высота 160 */
+@media (min-width: 960px) {
+  .car-price { height: 160px; min-height: 160px; padding: 20px 30px; }
+  .car-price__offers {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    grid-template-columns: none;
+    gap: 30px;
+    height: 40px;
+    padding: 10px 30px;
+    overflow: visible;
+    border-radius: 0;
+    background: none;
+  }
+  .car-price__row {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+    height: 20px;
+    padding: 0;
+    width: auto;
+    min-width: 0;
+  }
+  .car-price__row + .car-price__row { border-left: 0; }
+  .car-price__row:first-child { flex: 0 0 289px; }
+  .car-price__row:nth-child(2) { flex: 1 1 0; }
+  .car-price__row:last-child { flex: 0 0 auto; }
+  .car-price__row-head,
+  .car-price__note { flex: none; white-space: nowrap; }
+}
+
+/* ≥1200 — офферы равномерной flex-строкой */
+@media (min-width: 1200px) {
+  .car-price__offers { padding: 10px 20px; }
+  .car-price__row:first-child { flex: 1 1 0; }
+}
+
+/* ≥1536 — вертикальная sticky-карточка (пара к 2-колоночной car-main) */
+@media (min-width: 1536px) {
+  .car-price {
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: none;
+    position: sticky;
+    top: 18px;
+    height: auto;
+    min-height: 422px;
+    padding: 30px;
+    gap: 30px;
+  }
+  .car-price__section {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 10px;
+    height: auto;
+  }
+  .car-price__buttons { flex-direction: column; }
+  .car-price__offers {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: auto;
+    padding: 0;
+    overflow: visible;
+    border-radius: 0;
+    background: none;
+  }
+  .car-price__row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    height: auto;
+    padding: 0;
+    width: 100%;
+  }
+  .car-price__row:first-child,
+  .car-price__row:nth-child(2),
+  .car-price__row:last-child { flex: 0 1 auto; }
+  .car-price__row-head { flex: 0 1 auto; white-space: normal; }
+  .car-price__note { flex: 0 1 auto; padding-left: 15px; white-space: normal; }
 }
 
 /* ---------- Модальные окна действий ---------- */
@@ -1130,15 +1346,6 @@
   }
 }
 @media (max-width: 1200px) {
-  .car-main {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "title"
-      "price"
-      "details";
-    row-gap: 48px;
-  }
-  .car-price { width: 100%; min-height: 0; position: static; }
   .car-specs__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .car-equipment__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); height: auto; }
 }
@@ -1152,7 +1359,6 @@
   .car-title__name { line-height: 1.14; }
   .car-title__actions { padding-top: 0; }
   .car-specs__list { grid-template-columns: minmax(0, 1fr); }
-  .car-price__buttons { flex-wrap: wrap; }
   .car-equipment__grid { grid-template-columns: minmax(0, 1fr); }
   .car-assur__cards { flex-direction: column; }
   .car-atelier { grid-template-columns: minmax(0, 1fr); }
@@ -1225,10 +1431,6 @@
     font-size: var(--fs-14);
     line-height: 18px;
   }
-  .car-main {
-    row-gap: 32px;
-    margin-top: 36px;
-  }
   .car-title {
     gap: 16px;
   }
@@ -1238,12 +1440,6 @@
   .car-title__badge {
     font-size: var(--fs-14);
     line-height: 18px;
-  }
-  .car-price {
-    gap: 22px;
-  }
-  .car-price__section {
-    gap: 16px;
   }
   .car-details {
     gap: 40px;
@@ -1314,9 +1510,6 @@
     width: 100%;
     justify-content: flex-end;
   }
-  .car-price__buttons {
-    flex-direction: column;
-  }
   .car-action-modal__header {
     padding: 26px 62px 0 20px;
   }
@@ -1364,33 +1557,12 @@
   .car-gallery {
     --gal-w: calc(70vw + 33px);
   }
-  .car-main {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "title"
-      "technical"
-      "price"
-      "assurance"
-      "atelier";
-    column-gap: 0;
-    row-gap: 0;
-    margin-top: 60px;
-  }
   .car-title {
-    grid-area: title;
     flex-direction: row;
   }
   .car-title__name {
     font-size: 48px;
     line-height: 56px;
-  }
-  .car-details {
-    display: contents;
-  }
-  .car-details__technical {
-    grid-area: technical;
-    gap: 24px;
-    margin-top: 30px;
   }
   .car-specs__list,
   .car-equipment__grid {
@@ -1405,60 +1577,6 @@
   }
   .car-equipment {
     min-height: 372px;
-  }
-  .car-price {
-    grid-area: price;
-    position: static;
-    width: 100%;
-    height: 160px;
-    min-height: 160px;
-    margin-top: 24px;
-    padding: 20px 30px;
-    gap: 10px;
-    border-radius: 30px;
-  }
-  .car-price__section {
-    height: 70px;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-  }
-  .car-price__buttons {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap: 8px;
-  }
-  .car-price__offers {
-    height: 40px;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0;
-    overflow: hidden;
-    border-radius: 20px;
-    background: rgba(228, 223, 219, .5);
-  }
-  .car-price__row {
-    height: 40px;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 20px;
-  }
-  .car-price__row + .car-price__row {
-    border-left: 1px solid var(--color-stone-beige-300, #CAC2BB);
-  }
-  .car-price__note {
-    padding-left: 0;
-    white-space: nowrap;
-  }
-  .car-assur {
-    grid-area: assurance;
-    margin-top: 80px;
-  }
-  .car-atelier {
-    grid-area: atelier;
-    margin-top: 80px;
   }
   .car-assur__cards {
     flex-direction: row;
@@ -1672,22 +1790,6 @@
     font-size: 14px;
     line-height: 18px;
   }
-  .car-price {
-    height: 180px;
-    min-height: 180px;
-    padding: 20px 24px;
-  }
-  .car-price__offers {
-    height: 60px;
-  }
-  .car-price__row {
-    height: 60px;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    gap: 2px;
-    padding: 10px 20px;
-  }
   .car-assur {
     margin-top: 70px;
   }
@@ -1800,12 +1902,6 @@
   .car-equipment__column + .car-equipment__column::before {
     left: -20px;
   }
-  .car-price {
-    height: 180px;
-    min-height: 180px;
-    padding: 20px;
-    gap: 10px;
-  }
   .car-assur__cards {
     gap: 18px;
   }
@@ -1873,48 +1969,6 @@
   }
   .car-specs__column {
     gap: 12px;
-  }
-  .car-price {
-    height: 204px;
-    min-height: 204px;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    padding: 20px 16px;
-    gap: 10px;
-  }
-  .car-price__section {
-    height: 164px;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: flex-start;
-    gap: 10px;
-  }
-  .car-price__buttons {
-    flex-direction: column;
-    gap: 8px;
-  }
-  .car-price__offers {
-    height: 164px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 12px;
-    padding: 10px 20px;
-  }
-  .car-price__row {
-    width: 100%;
-    height: 40px;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    gap: 2px;
-    padding: 0;
-  }
-  .car-price__row + .car-price__row {
-    border-left: 0;
-  }
-  .car-price__note {
-    white-space: normal;
   }
   .car-assur {
     margin-top: 50px;
@@ -2962,60 +3016,6 @@
   .car-equipment {
     height: 580px;
     min-height: 580px;
-  }
-}
-
-/* Цена, 960–1200: в Figma предложения собраны в одну свободную
-   строку без разделителей, а не в три равные ячейки. */
-@media (min-width: 769px) and (max-width: 1200px) {
-  .car-price__offers {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 30px;
-  }
-  .car-price__row {
-    width: auto;
-    height: 20px;
-    min-width: 0;
-    padding: 0;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 10px;
-  }
-  .car-price__row + .car-price__row {
-    border-left: 0;
-  }
-  .car-price__row-head,
-  .car-price__note {
-    flex: none;
-    white-space: nowrap;
-  }
-  .car-price__row:nth-child(2) {
-    flex: 1 1 0;
-  }
-  .car-price__row:last-child {
-    flex: 0 0 auto;
-  }
-}
-
-@media (min-width: 961px) and (max-width: 1200px) {
-  .car-price__offers {
-    padding: 10px 20px;
-  }
-  .car-price__row:first-child,
-  .car-price__row:nth-child(2) {
-    flex: 1 1 0;
-  }
-}
-
-@media (min-width: 769px) and (max-width: 960px) {
-  .car-price__offers {
-    padding: 10px 30px;
-  }
-  .car-price__row:first-child {
-    flex: 0 0 289px;
   }
 }
 
