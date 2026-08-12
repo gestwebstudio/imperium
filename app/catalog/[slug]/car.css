@@ -520,9 +520,6 @@
     padding: 0;
   }
   .car-price__row { padding: 10px 20px; height: 60px; }
-  .car-price__row + .car-price__row {
-    border-left: 1px solid var(--color-stone-beige-300, #CAC2BB);
-  }
   .car-price__note { white-space: nowrap; }
 }
 
@@ -546,6 +543,7 @@
   .car-price__row {
     flex-direction: row;
     align-items: flex-start;
+    justify-content: flex-start;
     gap: 10px;
     height: 20px;
     padding: 0;
