@@ -9,7 +9,7 @@
 }
 
 .news-detail__crumbs {
-  margin-bottom: 34px;
+  margin-bottom: var(--crumbs-gap-bottom);
 }
 
 .news-detail__article {
@@ -95,10 +95,6 @@
 }
 
 @media (max-width: 600px) {
-  .news-detail__crumbs {
-    margin-bottom: 24px;
-  }
-
   .news-detail__article {
     gap: 24px;
   }

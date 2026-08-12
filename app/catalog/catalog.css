@@ -44,7 +44,7 @@
 }
 
 /* ---------- Хлебные крошки (китовый Crumbs поверх HeroUI) ---------- */
-.cat-crumbs { margin-bottom: 10px; }
+.cat-crumbs { margin-bottom: var(--crumbs-gap-bottom); }
 
 /* ---------- Шапка: заголовок + бейдж + сортировка ---------- */
 .catalog-head {
@@ -758,7 +758,7 @@
     gap: 12px;
   }
   .cat-crumbs {
-    margin-bottom: 10px;
+    margin-bottom: var(--crumbs-gap-bottom);
   }
   .cat-filters {
     width: 100%;
@@ -866,7 +866,7 @@
   }
 
   .cat-crumbs {
-    margin-bottom: 10px;
+    margin-bottom: var(--crumbs-gap-bottom);
   }
 
   .catalog-head {
@@ -1202,7 +1202,7 @@
     gap: 10px;
   }
 
-  .cat-crumbs { margin-bottom: 6px; }
+  .cat-crumbs { margin-bottom: var(--crumbs-gap-bottom); }
 }
 
 @media (max-width: 480px) {
@@ -1314,7 +1314,7 @@
 }
 
 @media (max-width: 390px) {
-  .cat-crumbs { margin-bottom: 2px; }
+  .cat-crumbs { margin-bottom: var(--crumbs-gap-bottom); }
 
   .catalog-head__title {
     align-items: center;

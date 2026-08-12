@@ -5,7 +5,7 @@
 
 .car { padding-bottom: 0; }
 .car-wrap { max-width: var(--layout-max, 1920px); margin: 0 auto; padding: 0 var(--page-gutter, 60px); }
-.car-wrap--top { padding-top: var(--crumbs-page-top, var(--page-top, 155px)); padding-bottom: var(--crumbs-gap-bottom); }
+.car-wrap--top { padding-top: var(--crumbs-page-top, var(--page-top, 155px)); padding-bottom: 0; }
 .car > .cars-section { height: 574px; margin-top: 126px; }
 .car > .contacts { margin-top: 200px; }
 
@@ -21,7 +21,7 @@
   flex-wrap: wrap;
   height: 18px;
 }
-.cat-crumbs { margin-bottom: 0; }
+.cat-crumbs { margin-bottom: var(--crumbs-gap-bottom); }
 .cat-crumbs li { display: inline-flex; align-items: center; gap: 4px; height: 18px; }
 .cat-crumbs__item {
   font-family: var(--font-text, "Onest", sans-serif);
@@ -1113,7 +1113,6 @@
 }
 /* ---------- Адаптив ---------- */
 @media (max-width: 1200px) {
-  .car-wrap--top { padding-bottom: var(--crumbs-gap-bottom); }
   .cat-crumbs,
   .cat-crumbs ol,
   .cat-crumbs li { height: auto; }
@@ -1364,7 +1363,6 @@
   }
   .car-gallery {
     --gal-w: calc(70vw + 33px);
-    margin-top: 20px;
   }
   .car-main {
     grid-template-columns: minmax(0, 1fr);
@@ -1722,7 +1720,6 @@
   }
   .car-gallery {
     --gal-w: 471px;
-    margin-top: 20px;
   }
   .car-gallery__track {
     gap: 26px;
