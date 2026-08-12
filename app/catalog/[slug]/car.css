@@ -1347,12 +1347,16 @@
 }
 .car-help__btn:hover { filter: brightness(.95); }
 
-/* ---------- Ателье / Велес ---------- */
+/* ---------- Ателье / Велес ----------
+   MOBILE-FIRST: база = 1 колонка (карточки стопкой ≤480); 2 колонки с 481. */
 .car-atelier {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: 24px;
   align-items: stretch;
+}
+@media (min-width: 481px) {
+  .car-atelier { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 .car-atelier .image-service-card {
   width: 100%;
@@ -1410,7 +1414,6 @@
   .car-title__name { line-height: 1.14; }
   .car-title__actions { padding-top: 0; }
   .car-assur__cards { flex-direction: column; }
-  .car-atelier { grid-template-columns: minmax(0, 1fr); }
 }
 
 @media (max-width: 640px) {
@@ -1785,7 +1788,6 @@
     min-height: 166px;
   }
   .car-atelier {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
     margin-top: 70px;
   }
   .car-atelier .image-service-card,
@@ -1944,7 +1946,6 @@
     min-height: 158px;
   }
   .car-atelier {
-    grid-template-columns: minmax(0, 1fr);
     gap: 10px;
     margin-top: 50px;
   }
@@ -3414,5 +3415,17 @@
    тирам): равная высота двух карточек держится сама через flex-row
    align-items:stretch. Плашка «Помощь» свой min-height сохраняет (там фон). */
 .car-assur__card {
+  min-height: 0;
+}
+
+/* Ателье/Велес — контейнер и карточки по контенту. Раньше тиры ставили
+   фиксированную height карточке (446/432/327/310…) и контейнеру, из-за чего
+   длинный текст (Велес) обрезался снизу; на 390 (sub-pixel) бралась height:310.
+   Теперь высота тянется за текстом; равная высота двух карточек в ряд держится
+   через align-items:stretch грида. Высота фото (__img) остаётся своей. */
+.car-atelier,
+.car-atelier .image-service-card,
+.car-atelier .image-service-card:first-child {
+  height: auto;
   min-height: 0;
 }
