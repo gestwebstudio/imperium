@@ -44,10 +44,16 @@
 }
 
 /* ---------- Галерея (бесконечная карусель) ---------- */
+/* MOBILE-FIRST: --gal-w — ширина центрального кадра; растёт снизу вверх.
+   База = мобильная (почти во всю ширину, но не шире 471). */
 .car-gallery {
-  --gal-w: min(1222px, 79.5573vw);
+  --gal-w: min(471px, calc(100vw - 8px));
   --gal-h: calc(var(--gal-w) * 722 / 1222);
 }
+@media (min-width: 641px) { .car-gallery { --gal-w: calc(56.25vw + 111px); } }
+@media (min-width: 769px) { .car-gallery { --gal-w: calc(84.375vw - 105px); } }
+@media (min-width: 961px) { .car-gallery { --gal-w: calc(70vw + 33px); } }
+@media (min-width: 1201px) { .car-gallery { --gal-w: min(1222px, 79.5573vw); } }
 .car-gallery__viewport {
   position: relative;
   width: 100%;
@@ -90,8 +96,8 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 44px;
-  height: 44px;
+  width: 28px;
+  height: 28px;
   border: none;
   border-radius: 50%;
   background: var(--color-white, #FFFFFF);
@@ -106,24 +112,45 @@
 }
 .car-gallery__arrow:hover { filter: brightness(.96); }
 .car-gallery__arrow svg { width: 14px; height: 14px; fill: currentColor; }
-.car-gallery__arrow--prev { left: calc(50% - var(--gal-w) / 2 + 20px); }
-.car-gallery__arrow--next { right: calc(50% - var(--gal-w) / 2 + 20px); }
+/* Позиция стрелок и кнопки — ВСЕГДА относительно центрального кадра
+   (calc(50% − gal-w/2 + inset)), а не края контейнера: иначе на ширинах,
+   где видны боковые кадры, они уезжают в пустое поле сбоку. */
+.car-gallery__arrow--prev { left: calc(50% - var(--gal-w) / 2 + 16px); }
+.car-gallery__arrow--next { right: calc(50% - var(--gal-w) / 2 + 16px); }
 .car-gallery__arrow--next svg { transform: rotate(180deg); }
+@media (min-width: 769px) {
+  .car-gallery__arrow--prev { left: calc(50% - var(--gal-w) / 2 + 20px); }
+  .car-gallery__arrow--next { right: calc(50% - var(--gal-w) / 2 + 20px); }
+}
+@media (min-width: 961px) {
+  .car-gallery__arrow { width: 44px; height: 44px; }
+}
 .car-gallery__all {
   position: absolute;
-  top: 20px;
-  right: calc(50% - var(--gal-w) / 2 + 20px);
+  top: 10px;
+  right: calc(50% - var(--gal-w) / 2 + 10px);
   z-index: 2;
-  padding: 10px 18px;
+  min-height: 28px;
+  padding: 5px 12px;
   border: none;
   border-radius: 30px;
   background: var(--color-white, #FFFFFF);
   color: var(--color-carbon-black-500, #1B1E1D);
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: 18px;
-  line-height: 24px;
+  font-size: 14px;
+  line-height: 18px;
   cursor: pointer;
   box-shadow: 4px 4px 20px 0 rgba(106, 98, 89, .12);
+}
+@media (min-width: 961px) {
+  .car-gallery__all {
+    top: 20px;
+    right: calc(50% - var(--gal-w) / 2 + 20px);
+    min-height: auto;
+    padding: 10px 18px;
+    font-size: 18px;
+    line-height: 24px;
+  }
 }
 
 /* ---------- Полная галерея (HeroUI Modal + Tabs) ---------- */
@@ -1376,9 +1403,6 @@
     flex-wrap: wrap;
   }
 }
-@media (max-width: 960px) {
-  .car-gallery { --gal-w: 86vw; }
-}
 @media (max-width: 768px) {
   .car-details { gap: 48px; }
   .car-details__technical { gap: 20px; }
@@ -1429,32 +1453,6 @@
   }
   .car-gallery-modal__photo {
     border-radius: 18px;
-  }
-  .car-gallery {
-    --gal-w: calc(100vw - (var(--page-gutter, 16px) * 2));
-  }
-  .car-gallery__track {
-    gap: 12px;
-  }
-  .car-gallery__slot {
-    border-radius: var(--radius-media, 24px);
-  }
-  .car-gallery__arrow {
-    width: 40px;
-    height: 40px;
-  }
-  .car-gallery__arrow--prev {
-    left: 12px;
-  }
-  .car-gallery__arrow--next {
-    right: 12px;
-  }
-  .car-gallery__all {
-    top: 12px;
-    right: 12px;
-    padding: 8px 12px;
-    font-size: var(--fs-14);
-    line-height: 18px;
   }
   .car-title {
     gap: 16px;
@@ -1579,9 +1577,6 @@
     padding-top: var(--crumbs-page-top, var(--page-top, 134px));
     padding-bottom: 0;
   }
-  .car-gallery {
-    --gal-w: calc(70vw + 33px);
-  }
   .car-title {
     flex-direction: row;
   }
@@ -1624,27 +1619,6 @@
 }
 
 @media (max-width: 960px) {
-  .car-gallery {
-    --gal-w: calc(84.375vw - 105px);
-  }
-  .car-gallery__arrow {
-    width: 28px;
-    height: 28px;
-  }
-  .car-gallery__arrow--prev {
-    left: 20px;
-  }
-  .car-gallery__arrow--next {
-    right: 20px;
-  }
-  .car-gallery__all {
-    top: 10px;
-    right: 10px;
-    min-height: 28px;
-    padding: 5px 12px;
-    font-size: 14px;
-    line-height: 18px;
-  }
   .car-title__name {
     font-size: 48px;
     line-height: 56px;
@@ -1716,15 +1690,6 @@
 @media (max-width: 768px) {
   .car-wrap {
     padding-inline: clamp(30px, 5.2083vw, 40px);
-  }
-  .car-gallery {
-    --gal-w: calc(56.25vw + 111px);
-  }
-  .car-gallery__arrow--prev {
-    left: 16px;
-  }
-  .car-gallery__arrow--next {
-    right: 16px;
   }
   .car-title {
     flex-direction: row;
@@ -1836,25 +1801,6 @@
   .car-wrap--top {
     padding-bottom: 0;
   }
-  .car-gallery {
-    --gal-w: 471px;
-  }
-  .car-gallery__track {
-    gap: 26px;
-  }
-  .car-gallery__slot {
-    border-radius: 24px;
-  }
-  .car-gallery__arrow {
-    width: 28px;
-    height: 28px;
-  }
-  .car-gallery__all {
-    top: 10px;
-    right: 10px;
-    min-height: 28px;
-    padding: 5px 12px;
-  }
   .car-main {
     margin-top: 50px;
   }
@@ -1956,9 +1902,6 @@
 @media (max-width: 480px) {
   .car-wrap {
     padding-inline: clamp(16px, 4.1667vw, 20px);
-  }
-  .car-gallery {
-    --gal-w: min(471px, calc(100vw - 8px));
   }
   .car-title {
     align-items: flex-start;
