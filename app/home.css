@@ -2672,7 +2672,9 @@
 }
 
 @media (max-width: 768px) {
-  .cars-section__head { align-items: flex-start; }
+  /* Кнопка «Все» здесь скрыта, поэтому резерв высоты под неё не нужен —
+     блок обнимает заголовок. */
+  .cars-section__head { align-items: flex-start; min-height: 0; }
   .cars-section__head > .btn { display: none; }
   .cars-section__nav { display: none; }
   .contacts__left {
