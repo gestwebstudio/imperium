@@ -1031,17 +1031,14 @@
   line-height: 40px;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
+/* MOBILE-FIRST: база = 2 колонки (multicol, балансировка строк), без
+   разделителя. 3-колоночный grid включается с 480 (см. ниже). */
 .car-specs__list {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 36px;
+  display: block;
+  column-count: 2;
+  column-gap: 12px;
 }
-.car-specs__column {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 9px;
-}
+.car-specs__column { display: contents; }
 .car-specs__column + .car-specs__column::before {
   content: "";
   position: absolute;
@@ -1050,6 +1047,7 @@
   left: -18px;
   width: 1px;
   background: var(--color-stone-beige-300, #CAC2BB);
+  display: none;
 }
 .car-specs__row {
   box-sizing: border-box;
@@ -1058,6 +1056,8 @@
   align-items: baseline;
   gap: 4px;
   padding: 8px 0;
+  margin-bottom: 6px;
+  break-inside: avoid;
 }
 .car-specs__label {
   flex: 1 1 auto;
@@ -1136,18 +1136,16 @@
 .car-equipment__tabs .btn {
   flex: none;
 }
+/* MOBILE-FIRST: база = 2 колонки (multicol) с разделителем (column-rule).
+   3-колоночный grid включается с 480 (см. ниже). */
 .car-equipment__grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 36px;
-  min-height: 248px;
+  display: block;
+  column-count: 2;
+  column-gap: 12px;
+  column-rule: 1px solid var(--color-stone-beige-300, #CAC2BB);
+  min-height: 0;
 }
-.car-equipment__column {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
+.car-equipment__column { display: contents; }
 .car-equipment__column + .car-equipment__column::before {
   content: "";
   position: absolute;
@@ -1156,11 +1154,14 @@
   left: -18px;
   width: 1px;
   background: var(--color-stone-beige-300, #CAC2BB);
+  display: none;
 }
 .car-equipment__feature {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  margin-bottom: 16px;
+  break-inside: avoid;
 }
 .car-equipment__label {
   font-family: var(--font-text, "Onest", sans-serif);
@@ -1175,6 +1176,41 @@
   font-size: 16px;
   line-height: 20px;
   color: var(--color-carbon-black-500, #1B1E1D);
+}
+
+/* ≥480 — 3-колоночный grid (характеристики и комплектация).
+   База выше = 2 колонки multicol; здесь возвращаем grid, колонки-обёртки,
+   вертикальные разделители и убираем multicol-интервалы строк. */
+@media (min-width: 480px) {
+  .car-specs__list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 36px;
+  }
+  .car-specs__column {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+  .car-specs__column + .car-specs__column::before { display: block; }
+  .car-specs__row { margin-bottom: 0; }
+
+  .car-equipment__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-rule: none;
+    gap: 36px;
+    min-height: 248px;
+  }
+  .car-equipment__column {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .car-equipment__column + .car-equipment__column::before { display: block; }
+  .car-equipment__feature { margin-bottom: 0; }
 }
 
 /* ---------- Страховка / Гарантия / Помощь на дорогах ---------- */
@@ -1340,10 +1376,6 @@
     flex-wrap: wrap;
   }
 }
-@media (max-width: 1200px) {
-  .car-specs__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .car-equipment__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); height: auto; }
-}
 @media (max-width: 960px) {
   .car-gallery { --gal-w: 86vw; }
 }
@@ -1353,8 +1385,6 @@
   .car-title { flex-direction: column; }
   .car-title__name { line-height: 1.14; }
   .car-title__actions { padding-top: 0; }
-  .car-specs__list { grid-template-columns: minmax(0, 1fr); }
-  .car-equipment__grid { grid-template-columns: minmax(0, 1fr); }
   .car-assur__cards { flex-direction: column; }
   .car-atelier { grid-template-columns: minmax(0, 1fr); }
 }
@@ -1559,10 +1589,6 @@
     font-size: 48px;
     line-height: 56px;
   }
-  .car-specs__list,
-  .car-equipment__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
   .car-specs__column {
     gap: 0;
   }
@@ -1733,11 +1759,6 @@
   .car-equipment__title {
     font-size: 20px;
     line-height: 28px;
-  }
-  .car-specs__list,
-  .car-equipment__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 36px;
   }
   .car-specs__column {
     gap: 5px;
