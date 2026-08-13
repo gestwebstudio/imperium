@@ -751,31 +751,31 @@
 /* ============================================================
    Breadcrumbs — HeroUI structure styled with project tokens
    ============================================================ */
+/* Крошки (rebuild): mobile-first fluid. Текст 10 (390) → 14 (480+),
+   шеврон 8 → 12. Нижний зазор — единый токен --crumbs-gap-bottom (20),
+   задан в tokens.css (.ui-crumbs,.cat-crumbs). Левый отступ = гутер
+   контейнера страницы (--gutter). Верхнюю позицию задаёт --crumbs-page-top. */
 .ui-crumbs,
 .ui-crumbs ol {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 4px;
-  height: 18px;
   margin: 0;
   padding: 0;
   list-style: none;
-}
-.ui-crumbs {
-  margin-bottom: 10px;
 }
 .ui-crumbs li {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  height: 18px;
 }
 .ui-crumbs__item {
   padding: 0;
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: 14px;
+  font-size: clamp(10px, calc(10px + (100vw - 390px) * 0.044444), 14px);
   font-weight: var(--font-weight-regular, 400);
-  line-height: 18px;
+  line-height: 1.4;
   color: var(--color-foreground-muted, #71717A);
   text-decoration: none;
   white-space: nowrap;
@@ -797,46 +797,10 @@
 .ui-crumbs__item--current { cursor: default; }
 .ui-crumbs .breadcrumbs__separator {
   flex: none;
-  width: 12px;
-  height: 12px;
+  width: clamp(8px, calc(8px + (100vw - 390px) * 0.044444), 12px);
+  height: clamp(8px, calc(8px + (100vw - 390px) * 0.044444), 12px);
   color: var(--color-foreground-muted, #71717A);
   transform: rotate(180deg);
-}
-
-@media (max-width: 640px) {
-  .ui-crumbs {
-    margin-bottom: 6px;
-  }
-}
-
-@media (max-width: 390px) {
-  .ui-crumbs,
-  .ui-crumbs ol,
-  .ui-crumbs li {
-    gap: 2px;
-    height: 14px;
-  }
-  .ui-crumbs {
-    margin-bottom: 2px;
-  }
-  .ui-crumbs.ui-crumbs--compact-mobile {
-    margin-bottom: 2px;
-  }
-}
-
-/* Размер шрифта и разделителя крошек на мобильном тире (макет 390: текст
-   10/14, шеврон 8×8). Граница 479, чтобы ловить дробную ширину вьюпорта
-   (390.4 при dpr≈2), где max-width:390 промахивался. Отступы крошек не
-   трогаем (они выше, на max-width:390). */
-@media (max-width: 479px) {
-  .ui-crumbs .ui-crumbs__item {
-    font-size: 10px;
-    line-height: 14px;
-  }
-  .ui-crumbs .breadcrumbs__separator {
-    width: 8px;
-    height: 8px;
-  }
 }
 
 

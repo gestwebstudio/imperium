@@ -297,6 +297,10 @@ body.comparison-route .site-header { position: absolute; transform: none; }
     --site-header-logo-height: calc(var(--site-header-logo-width) / 10.5);
     --site-header-control-size: clamp(36px, calc(36px + (100vw - 1536px) * 0.026042), 46px);
     --site-header-icon-size: clamp(18px, calc(18px + (100vw - 1536px) * 0.015625), 24px);
+    /* Шапка шире контента: её боковой отступ падает 60→20 на 1536→1920
+       (у контента --gutter капается на 60). Потому переопределяем тут. */
+    padding-left: clamp(20px, calc(60px - (100vw - 1536px) * 0.104167), 60px);
+    padding-right: clamp(20px, calc(60px - (100vw - 1536px) * 0.104167), 60px);
   }
   .site-header__nav a,
   .site-header__nav-trigger {
