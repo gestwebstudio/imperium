@@ -475,16 +475,31 @@
   margin: 0;
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
   font-weight: var(--font-weight-semibold, 600);
-  font-size: 36px;
-  line-height: 44px;
+  font-size: 24px; /* база = мобилка 24/30; 640→28/34, 768→30/38, 960→36/44 */
+  line-height: 30px;
 }
 .ti-call__sub {
   margin: 0;
   max-width: 686px;
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: 16px;
-  line-height: 20px;
+  font-size: 14px; /* база = мобилка 14/18; 768→16/20 */
+  line-height: 18px;
   color: var(--color-heritage-green-100, #E1EAE5);
+}
+
+/* ===== Адаптации баннера «Позвоните нам» (MOBILE-FIRST, база = 390) ===== */
+/* 640: заголовок 28/34. */
+@media (min-width: 640px) {
+  .ti-call__title { font-size: 28px; line-height: 34px; }
+}
+/* 768: заголовок 30/38; подзаголовок 16/20. */
+@media (min-width: 768px) {
+  .ti-call__title { font-size: 30px; line-height: 38px; }
+  .ti-call__sub { font-size: 16px; line-height: 20px; }
+}
+/* 960: заголовок 36/44. */
+@media (min-width: 960px) {
+  .ti-call__title { font-size: 36px; line-height: 44px; }
 }
 
 /* ===== Адаптации секций ниже hero (desktop-first) ===== */
@@ -501,23 +516,14 @@
   .trade-in > .contacts { margin-top: 140px; }
 }
 
-/* ≤959 (768): зазор секций 100; баннер заголовок 30/38. */
+/* ≤959 (768): зазор секций 100. */
 @media (max-width: 959px) {
   .trade-in { --section-space: 100px; }
   .trade-in > .contacts { margin-top: 120px; }
-  .ti-call__title { font-size: 30px; line-height: 38px; }
 }
 
-/* ≤767 (640): .t-page-title переключается на 28/34 при 640;
-   баннер заголовок 28/34, подзаг 14/18. */
+/* ≤767 (640): .t-page-title переключается на 28/34 при 640; зазор секций 80. */
 @media (max-width: 767px) {
   .trade-in { --section-space: 80px; }
   .trade-in > .contacts { margin-top: 100px; }
-  .ti-call__title { font-size: 28px; line-height: 34px; }
-  .ti-call__sub { font-size: 14px; line-height: 18px; }
-}
-
-/* ≤639 (480/390): баннер заголовок 24/30. */
-@media (max-width: 639px) {
-  .ti-call__title { font-size: 24px; line-height: 30px; }
 }
