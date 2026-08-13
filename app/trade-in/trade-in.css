@@ -300,12 +300,18 @@
 }
 
 /* ---------------- Два блока с фото (что влияет / мы готовы принять) ---------------- */
+/* MOBILE-FIRST: база = мобильный тир [0,639] — беж-карточка без фото
+   (по макету 480: stone-beige, паддинг 20), 1 колонка. 640 → фото+текст
+   (беж убирается, фото показывается), 900 → две колонки. */
 .ti-factors,
 .ti-accept {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: clamp(32px, 4vw, 50px);
+  gap: 40px;
   align-items: stretch;
+  background: var(--color-stone-beige-200, #E4DFDB);
+  border-radius: var(--radius-card);
+  padding: 20px;
 }
 @media (min-width: 900px) {
   .ti-factors,
@@ -314,7 +320,7 @@
   }
 }
 .ti-factors__media,
-.ti-accept__media { min-width: 0; }
+.ti-accept__media { min-width: 0; display: none; } /* база — фото скрыто; 640 показывает */
 .ti-factors__media img,
 .ti-accept__media img {
   width: 100%;
@@ -339,8 +345,8 @@
   display: flex;
   flex-direction: column;
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
-  font-size: 48px;
-  line-height: 56px;
+  font-size: 24px; /* база = мобилка 24/32; 768→30/38, 960→32/40, 1200→36/44, 1536→48/56 */
+  line-height: 32px;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 .ti-block__title .reg { font-weight: var(--font-weight-regular, 400); }
@@ -360,8 +366,8 @@
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 .ti-list li + li { margin-top: 0; }
-/* Список «Мы готовы принять» — на 1536/1920 крупнее (18/24). */
-.ti-accept .ti-list li { font-size: 18px; line-height: 24px; }
+/* Список «Мы готовы принять» — база 16/20; на 1536 крупнее (18/24). */
+.ti-accept .ti-list li { font-size: 16px; line-height: 20px; }
 
 /* Выделение (зелёное, 30px) — прижато к низу колонки, с декоративной кавычкой */
 .ti-callout {
@@ -372,21 +378,22 @@
   display: flex;
   flex-direction: column;
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: 30px;
-  line-height: 40px;
+  font-size: 18px; /* база = мобилка 18/24; 480→20/28, 1200→24/30, 1536→30/40 */
+  line-height: 24px;
   color: var(--color-heritage-green-400, #4E7B60);
 }
-.ti-callout .reg { font-weight: var(--font-weight-regular, 400); white-space: nowrap; }
-.ti-callout .bold { font-weight: var(--font-weight-bold, 700); white-space: nowrap; }
+/* база (390) — переносы по словам; 480+ возвращает nowrap */
+.ti-callout .reg { font-weight: var(--font-weight-regular, 400); white-space: normal; }
+.ti-callout .bold { font-weight: var(--font-weight-bold, 700); white-space: normal; }
 
 /* Декоративная кавычка (icon-serv.svg, warm-taupe-200). В «что влияет» — слева,
    в «мы готовы принять» — справа и зеркально. Позади текста (z-index -1). */
 .ti-callout::before {
   content: "";
   position: absolute;
-  top: -46px;
-  width: 120px;
-  height: 100px;
+  top: -32px; /* база = мобилка 80×66; 960 возвращает 120×100, top -46 */
+  width: 80px;
+  height: 66px;
   background: url("/images/icon-serv.svg") no-repeat center / contain;
   opacity: 0.4;
   z-index: -1;
@@ -399,9 +406,51 @@
   margin: 0;
   max-width: 468px;
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: 18px;
-  line-height: 24px;
+  font-size: 14px; /* база = мобилка 14/18; 960→16/20, 1536→18/24 */
+  line-height: 18px;
   color: var(--color-warm-taupe-400, #8F8579);
+}
+
+/* ===== Адаптации «что влияет / готовы принять» (MOBILE-FIRST, база = 390) ===== */
+/* 480: callout 20/28, без переносов по словам. */
+@media (min-width: 480px) {
+  .ti-callout { font-size: 20px; line-height: 28px; }
+  .ti-callout .reg,
+  .ti-callout .bold { white-space: nowrap; }
+}
+/* 640: беж-карточка убирается → «фото + текст» (фото показывается); gap fluid. */
+@media (min-width: 640px) {
+  .ti-factors,
+  .ti-accept {
+    gap: clamp(32px, 4vw, 50px);
+    background: transparent;
+    border-radius: 0;
+    padding: 0;
+  }
+  .ti-factors__media,
+  .ti-accept__media { display: block; }
+}
+/* 768: блок-заголовки 30/38. */
+@media (min-width: 768px) {
+  .ti-block__title { font-size: 30px; line-height: 38px; }
+}
+/* 960: блок-заголовки 32/40; примечание 16/20; кавычка крупнее (120×100). */
+@media (min-width: 960px) {
+  .ti-block__title { font-size: 32px; line-height: 40px; }
+  .ti-accept__note { font-size: 16px; line-height: 20px; }
+  .ti-callout::before { width: 120px; height: 100px; top: -46px; }
+}
+/* 1200: блок-заголовки 36/44; callout 24/30. */
+@media (min-width: 1200px) {
+  .ti-block__title { font-size: 36px; line-height: 44px; }
+  .ti-callout { font-size: 24px; line-height: 30px; }
+}
+/* 1536: блок-заголовки 48/56; список «принять» 18/24; callout 30/40; примечание 18/24. */
+@media (min-width: 1536px) {
+  .ti-block__title { font-size: 48px; line-height: 56px; }
+  .ti-accept .ti-list li { font-size: 18px; line-height: 24px; }
+  .ti-callout { font-size: 30px; line-height: 40px; }
+  .ti-accept__note { font-size: 18px; line-height: 24px; }
 }
 
 /* ---------------- Позвоните нам (баннер) ---------------- */
@@ -440,72 +489,35 @@
 
 /* ===== Адаптации секций ниже hero (desktop-first) ===== */
 
-/* 1200–1535: общий .t-page-title даёт 36/44;
-   блок-заголовки 36/44; список «принять» 16/20; callout 24/30; примечание 16/20;
-   зазор секций 120; блоки картинка+текст gap 50 (как база).
-   (Шаги вынесены в mobile-first-блок выше.) */
+/* 1200–1535: общий .t-page-title даёт 36/44; зазор секций 120.
+   (Шаги и блоки «что влияет / принять» вынесены в mobile-first-блоки выше.) */
 @media (max-width: 1535px) {
   .trade-in { --section-space: 120px; }
   .trade-in > .contacts { margin-top: 160px; }
-  .ti-block__title { font-size: 36px; line-height: 44px; }
-  .ti-accept .ti-list li { font-size: 16px; line-height: 20px; }
-  .ti-callout { font-size: 24px; line-height: 30px; }
-  .ti-accept__note { font-size: 16px; line-height: 20px; }
 }
 
-/* 960–1199: .t-page-title переключается на 32/40 при 960;
-   блок-заголовки 32/40; callout 20/28. */
+/* 960–1199: .t-page-title переключается на 32/40 при 960. */
 @media (max-width: 1199px) {
   .trade-in > .contacts { margin-top: 140px; }
-  .ti-block__title { font-size: 32px; line-height: 40px; }
-  .ti-callout { font-size: 20px; line-height: 28px; }
 }
 
-/* ≤959 (768): блок-заголовки 30/38; примечание 14/18.
-   Блоки картинка+текст: картинка уже, текст шире; gap 50. */
+/* ≤959 (768): зазор секций 100; баннер заголовок 30/38. */
 @media (max-width: 959px) {
   .trade-in { --section-space: 100px; }
   .trade-in > .contacts { margin-top: 120px; }
-  .ti-block__title { font-size: 30px; line-height: 38px; }
-  .ti-accept__note { font-size: 14px; line-height: 18px; }
   .ti-call__title { font-size: 30px; line-height: 38px; }
-  /* Кавычка мельче */
-  .ti-callout::before { width: 80px; height: 66px; top: -32px; }
 }
 
 /* ≤767 (640): .t-page-title переключается на 28/34 при 640;
-   блок-заголовки 24/32; баннер заголовок 28/34, подзаг 14/18.
-   Блоки картинка+текст: картинка узкой полосой слева, gap 40. */
+   баннер заголовок 28/34, подзаг 14/18. */
 @media (max-width: 767px) {
   .trade-in { --section-space: 80px; }
   .trade-in > .contacts { margin-top: 100px; }
-  .ti-block__title { font-size: 24px; line-height: 32px; }
   .ti-call__title { font-size: 28px; line-height: 34px; }
   .ti-call__sub { font-size: 14px; line-height: 18px; }
 }
 
-/* ≤639 (480/390): .t-page-title остаётся 28/34 до 390 и затем 24/30;
-   баннер заголовок 24/30. Блоки «что влияет» / «мы готовы принять» — беж-карточка
-   без фото (по макету 480: stone-beige, radius 30, паддинг 20), картинка скрыта. */
+/* ≤639 (480/390): баннер заголовок 24/30. */
 @media (max-width: 639px) {
   .ti-call__title { font-size: 24px; line-height: 30px; }
-  .ti-factors,
-  .ti-accept {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 40px;
-    background: var(--color-stone-beige-200, #E4DFDB);
-    border-radius: var(--radius-card);
-    padding: 20px;
-  }
-  .ti-factors__media,
-  .ti-accept__media { display: none; }
-}
-
-/* ≤479 (390): у беж-карточки радиус 16; callout 18/24 и переносится по словам. */
-@media (max-width: 479px) {
-  .ti-factors,
-  .ti-accept { border-radius: var(--radius-card); }
-  .ti-callout { font-size: 18px; line-height: 24px; }
-  .ti-callout .reg,
-  .ti-callout .bold { white-space: normal; }
 }
