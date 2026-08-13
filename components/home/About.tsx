@@ -1,10 +1,10 @@
 import { ServiceImageCard } from "@/components/cards/cards";
 import { ServiceCards } from "@/components/ServiceCards";
 import { Testimonials } from "@/components/home/Testimonials";
-import { getReviews } from "@/lib/reviews";
+import { getPublicReviews } from "@/lib/reviews";
 
 export async function About() {
-  const reviews = await getReviews();
+  const reviews = await getPublicReviews();
   return (
     <section className="home-wrap about">
       <ServiceCards />

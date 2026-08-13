@@ -45,14 +45,21 @@ export const GalleryModal = forwardRef<GalleryModalHandle, GalleryModalProps>(
         Все фото
       </Button>
 
-      <Modal state={state}>
-        <Modal.Backdrop variant="blur" className="car-gallery-modal__backdrop">
+      <Modal.Backdrop
+        isOpen={state.isOpen}
+        onOpenChange={state.setOpen}
+        variant="blur"
+        className="car-gallery-modal__backdrop"
+      >
           <Modal.Container
             placement="center"
             scroll="inside"
             className="car-gallery-modal__container"
           >
-            <Modal.Dialog className="car-gallery-modal__dialog">
+            <Modal.Dialog
+              className="car-gallery-modal__dialog"
+              aria-label="Фотографии автомобиля"
+            >
               <Modal.CloseTrigger
                 className="car-gallery-modal__close"
                 aria-label="Закрыть галерею"
@@ -107,8 +114,7 @@ export const GalleryModal = forwardRef<GalleryModalHandle, GalleryModalProps>(
               </Modal.Body>
             </Modal.Dialog>
           </Modal.Container>
-        </Modal.Backdrop>
-      </Modal>
+      </Modal.Backdrop>
     </>
   );
 });

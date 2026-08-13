@@ -108,15 +108,19 @@ export function LeadModal({
         </Button>
       )}
 
-      <Modal state={state}>
-        <Modal.Backdrop variant="blur" className="lead-modal__backdrop">
+      <Modal.Backdrop
+        isOpen={state.isOpen}
+        onOpenChange={state.setOpen}
+        variant="blur"
+        className="lead-modal__backdrop"
+      >
           <Modal.Container
             placement="center"
             scroll="inside"
             size="md"
             className="lead-modal__container"
           >
-            <Modal.Dialog className="lead-modal__dialog">
+            <Modal.Dialog className="lead-modal__dialog" aria-label={title}>
               <Modal.CloseTrigger
                 className="lead-modal__close"
                 aria-label="Закрыть окно"
@@ -242,8 +246,7 @@ export function LeadModal({
               )}
             </Modal.Dialog>
           </Modal.Container>
-        </Modal.Backdrop>
-      </Modal>
+      </Modal.Backdrop>
     </>
   );
 }

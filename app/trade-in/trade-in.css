@@ -222,6 +222,23 @@
   .ti-stat .liquid-glass__content { min-height: 70px; }
 }
 
+@media (max-width: 389px) {
+  .ti-hero__title {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .ti-hero__title .reg {
+    font-size: calc(30px + 6px * var(--fluid-progress));
+    line-height: calc(38px + 6px * var(--fluid-progress));
+  }
+
+  .ti-hero__title .bold {
+    font-size: calc(32px + 8px * var(--fluid-progress));
+    line-height: calc(40px + 8px * var(--fluid-progress));
+  }
+}
+
 /* Общий заголовок секции (H4 SemiBold 48/56) */
 .ti-section-title {
   margin: 0 0 clamp(28px, 3vw, 45px);
@@ -477,4 +494,21 @@
   .ti-callout { font-size: 18px; line-height: 24px; }
   .ti-callout .reg,
   .ti-callout .bold { white-space: normal; }
+}
+
+/* На промежуточном планшетном диапазоне сохраняем двухколоночную композицию,
+   но разрешаем тексту сжиматься и переноситься внутри своей колонки. */
+@media (min-width: 640px) and (max-width: 959px) {
+  .ti-factors__body,
+  .ti-accept__body,
+  .ti-callout {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .ti-callout .reg,
+  .ti-callout .bold {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
 }

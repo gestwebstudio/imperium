@@ -1824,6 +1824,98 @@
   }
 }
 
+/* CarsSection uses a fluid, container-driven card variant. The component
+   keeps the approved CarCard design while its geometry follows the actual
+   carousel item width instead of jumping at viewport breakpoints. */
+.car-card--l.car-card--carousel {
+  container-type: normal;
+  max-width: none;
+  gap: clamp(20px, calc(9.8px + 3.75cqi), 26px);
+  padding: clamp(20px, calc(9.8px + 3.75cqi), 26px);
+}
+.car-card--carousel .car-card__content { gap: clamp(16px, calc(9.2px + 2.5cqi), 20px); }
+.car-card--carousel .car-card__brand,
+.car-card--carousel .car-card__brand img { height: clamp(20px, calc(13.2px + 2.5cqi), 24px); }
+.car-card--carousel .car-card__actions {
+  --car-action-icon-size: clamp(18px, calc(7.8px + 3.75cqi), 24px);
+  --car-action-gap: 16px;
+}
+.car-card--carousel .wishlist,
+.car-card--carousel .compare,
+.car-card--carousel .ui-button.wishlist > svg,
+.car-card--carousel .ui-button.compare > svg {
+  width: var(--car-action-icon-size);
+  height: var(--car-action-icon-size);
+}
+.car-card--carousel .car-card__info { gap: clamp(6px, calc(-.8px + 2.5cqi), 10px); }
+.car-card--carousel .car-card__title {
+  font-size: clamp(18px, calc(7.8px + 3.75cqi), 24px);
+  line-height: clamp(22px, calc(8.4px + 5cqi), 30px);
+}
+.car-card--carousel .indicator--l {
+  font-size: clamp(14px, calc(7.2px + 2.5cqi), 18px);
+  line-height: clamp(18px, calc(7.8px + 3.75cqi), 24px);
+}
+.car-card--carousel .car-card__tags { padding-top: 0; }
+.car-card--carousel .tag--card.tag--l {
+  padding: clamp(3px, calc(-.4px + 1.25cqi), 5px) clamp(8px, calc(1.2px + 2.5cqi), 12px);
+  font-size: clamp(14px, calc(7.2px + 2.5cqi), 18px);
+  line-height: clamp(18px, calc(7.8px + 3.75cqi), 24px);
+}
+.car-card--carousel .car-card__photo { height: clamp(110px, calc(-7.3px + 43.125cqi), 179px); }
+.car-card--carousel .car-card__photo img { max-height: clamp(110px, calc(-7.3px + 43.125cqi), 179px); }
+.car-card--carousel .car-card__action { gap: clamp(8px, calc(-19.2px + 10cqi), 24px); }
+.car-card--carousel .price-block--l .price-block__label {
+  font-size: clamp(12px, calc(5.2px + 2.5cqi), 16px);
+  line-height: clamp(16px, calc(9.2px + 2.5cqi), 20px);
+}
+.car-card--carousel .price-block--l .price-block__value {
+  font-size: min(clamp(20px, calc(6.4px + 5cqi), 28px), 8cqi);
+  line-height: clamp(26px, calc(9px + 6.25cqi), 36px);
+}
+.car-card--carousel .car-card__action .btn--m {
+  height: clamp(28px, calc(.8px + 10cqi), 44px);
+  padding-inline: clamp(12px, calc(-1.6px + 5cqi), 20px);
+  font-size: clamp(14px, calc(7.2px + 2.5cqi), 18px);
+  line-height: clamp(18px, calc(7.8px + 3.75cqi), 24px);
+}
+.car-card--carousel .car-card__action .btn--m .btn__icon {
+  width: clamp(12px, calc(5.2px + 2.5cqi), 16px);
+  height: clamp(12px, calc(5.2px + 2.5cqi), 16px);
+}
+
+@container cars-carousel-item (max-width: 300px) {
+  .car-card--carousel .car-card__tags .tag:nth-child(n + 3) { display: none; }
+  .car-card--carousel .car-card__tags::after {
+    content: "+1";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: rgb(143 133 121 / 20%);
+    color: var(--color-heritage-green-500, #294434);
+    font-family: var(--font-text, "Onest", sans-serif);
+    font-size: 14px;
+    line-height: 18px;
+    white-space: nowrap;
+  }
+  .car-card--carousel .car-card__details-link.btn--m {
+    width: 28px;
+    height: 28px;
+    flex: 0 0 28px;
+    padding: 0;
+  }
+  .car-card--carousel .car-card__details-link > .btn__label { display: none; }
+  .car-card--carousel .car-card__details-link > .btn__icon:has(.car-card__details-icon) {
+    display: inline-flex;
+    width: 8px;
+    height: 8px;
+  }
+  .car-card--carousel .car-card__details-icon { display: block; }
+}
+
 /* Comparison is an explicit kit variant rather than a page-level collection
    of overrides. Layout containers control only the available card width. */
 .car-card--comparison {

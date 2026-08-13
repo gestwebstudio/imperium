@@ -112,6 +112,17 @@
 }
 .atelier-cta__actions { display: flex; gap: 10px; }
 
+@media (max-width: 479px) {
+  .atelier-cta__actions {
+    flex-wrap: wrap;
+  }
+
+  .atelier-cta__actions > * {
+    min-width: 0;
+    flex: 1 1 100%;
+  }
+}
+
 /* ---------------- Проекты (карусель, механика брендов) ---------------- */
 .atelier .projects { margin-top: 146px; }
 .projects__head {

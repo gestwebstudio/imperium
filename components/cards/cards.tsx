@@ -193,7 +193,7 @@ export function NewsCard({
 export type CarCardProps = {
   size?: "m" | "l";
   /** Явный layout-вариант для контекстов с особыми размерами карточки. */
-  variant?: "default" | "comparison";
+  variant?: "default" | "comparison" | "carousel";
   vehicleId?: string;
   brandLogo: string;
   brandName?: string;
@@ -214,6 +214,7 @@ export type CarCardProps = {
   onFavoriteChange?: (active: boolean) => void;
   href?: string;
   className?: string;
+  imageLoading?: "eager" | "lazy";
 };
 export function CarCard({
   size = "l",
@@ -234,6 +235,7 @@ export function CarCard({
   onFavoriteChange,
   href,
   className,
+  imageLoading = "lazy",
 }: CarCardProps) {
   return (
     <div
@@ -258,7 +260,12 @@ export function CarCard({
           <div className="car-card__top">
             <div className="car-card__brand">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={brandLogo} alt={brandName} />
+              <img
+                src={brandLogo}
+                alt={brandName}
+                loading={imageLoading}
+                decoding="async"
+              />
             </div>
             <div className="car-card__actions">
               <Wishlist
@@ -289,7 +296,13 @@ export function CarCard({
 
         <div className="car-card__photo">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={photo} alt={photoAlt ?? title} />
+          <img
+            src={photo}
+            alt={photoAlt ?? title}
+            loading={imageLoading}
+            decoding="async"
+            fetchPriority={imageLoading === "eager" ? "high" : "auto"}
+          />
         </div>
       </div>
 

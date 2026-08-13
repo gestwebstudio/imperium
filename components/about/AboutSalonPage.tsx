@@ -6,7 +6,7 @@ import { Crumbs } from "@/components/ui/Crumbs";
 import { Badge } from "@/components/ui/primitives";
 import { LoadingIframe } from "@/components/ui/LoadingIframe";
 import type { LightboxPhoto } from "@/components/car/PhotoLightbox";
-import { getReviews } from "@/lib/reviews";
+import { getPublicReviews } from "@/lib/reviews";
 
 // Фото салона. В блоке видно первые 3, остальные — только в открытой галерее
 // (позже сюда добавятся ещё кадры от заказчика).
@@ -58,7 +58,7 @@ const PRINCIPLES = [
 ] as const;
 
 export async function AboutSalonPage() {
-  const reviews = await getReviews();
+  const reviews = await getPublicReviews();
   return (
     <main className="about-salon">
       {/* Первый блок — на общем hero трейд-ина (.ti-hero*), но без ряда преимуществ;

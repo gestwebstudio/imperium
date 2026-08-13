@@ -5,7 +5,6 @@ import { SiteChrome } from "@/components/layout/SiteChrome";
 import { TypographyGuard } from "@/components/ui/TypographyGuard";
 import { VehicleActionsProvider } from "@/components/ui/VehicleActionsContext";
 import { AppToastProvider } from "@/components/ui/AppToastProvider";
-import { getAllCars } from "@/lib/cars";
 
 const onest = Onest({
   subsets: ["cyrillic", "latin"],
@@ -32,12 +31,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const validVehicleIds = getAllCars().map((car) => car.id);
-
   return (
     <html lang="ru" className={`${onest.variable} ${wixMadeforDisplay.variable}`}>
       <body>
-        <VehicleActionsProvider validVehicleIds={validVehicleIds}>
+        <VehicleActionsProvider>
           <SiteChrome>{children}</SiteChrome>
           <AppToastProvider />
           <TypographyGuard />

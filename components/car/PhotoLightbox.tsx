@@ -100,13 +100,19 @@ export const PhotoLightbox = forwardRef<PhotoLightboxHandle, PhotoLightboxProps>
     );
 
     return (
-      <Modal state={state}>
-        <Modal.Backdrop className="car-photo-viewer__mask">
+      <Modal.Backdrop
+        isOpen={state.isOpen}
+        onOpenChange={state.setOpen}
+        className="car-photo-viewer__mask"
+      >
           <Modal.Container
             placement="center"
             className="car-photo-viewer__container"
           >
-            <Modal.Dialog className="car-photo-viewer__dialog">
+            <Modal.Dialog
+              className="car-photo-viewer__dialog"
+              aria-label="Просмотр фотографий автомобиля"
+            >
               <Modal.CloseTrigger
                 className="car-photo-viewer__close"
                 aria-label="Закрыть фотографию"
@@ -179,8 +185,7 @@ export const PhotoLightbox = forwardRef<PhotoLightboxHandle, PhotoLightboxProps>
               />
             </Modal.Dialog>
           </Modal.Container>
-        </Modal.Backdrop>
-      </Modal>
+      </Modal.Backdrop>
     );
   },
 );

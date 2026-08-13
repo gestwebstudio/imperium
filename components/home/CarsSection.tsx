@@ -116,7 +116,8 @@ export function CarsSection({
                       inert={isMiddleCopy ? undefined : true}
                     >
                       <CarCard
-                        vehicleId={isUpcoming ? "lexus-gx-executive" : car.id}
+                        variant="carousel"
+                        vehicleId={car.id}
                         href={isUpcoming ? undefined : `/catalog/${car.slug}`}
                         actionSlot={
                           isUpcoming ? (
@@ -134,28 +135,18 @@ export function CarsSection({
                             />
                           ) : undefined
                         }
-                        brandLogo={
-                          isUpcoming
-                            ? "/images/logo_cards/lexus.webp"
-                            : car.brandLogo
-                        }
-                        brandName={isUpcoming ? "Lexus" : car.brand}
-                        title={isUpcoming ? "GX Executive" : car.name}
+                        brandLogo={car.brandLogo}
+                        brandName={car.brand}
+                        title={car.name}
                         status={
                           isUpcoming
                             ? { type: "warning", label: "Ожидаем поступления" }
                             : car.status
                         }
-                        tags={
-                          isUpcoming
-                            ? ["2026", "Бензин", "Полный привод"]
-                            : carTags(car)
-                        }
-                        photo={isUpcoming ? "/images/cars/mask.webp" : car.photo}
-                        photoAlt={isUpcoming ? "Автомобиль ожидается" : car.name}
-                        price={
-                          isUpcoming ? "15 490 000 ₽" : formatPrice(car.price)
-                        }
+                        tags={carTags(car)}
+                        photo={car.photo}
+                        photoAlt={car.name}
+                        price={formatPrice(car.price)}
                         action={{
                           label: isUpcoming ? "Забронировать" : "Подробнее",
                           variant: isUpcoming

@@ -148,7 +148,22 @@
 
   /* ---------- Responsive layout ---------- */
   --layout-max: 1920px;
-  --page-gutter: clamp(16px, 3.125vw, 60px);
+  /*
+   * Fluid anchor scale.
+   *
+   * Every Figma width is the lower anchor of its range. Components may use
+   * --fluid-progress to interpolate between their values at --fluid-from and
+   * --fluid-to. Below 390px the same scale runs backwards from the 390px
+   * composition, so 360/320 layouts shrink instead of being clipped.
+   */
+  --fluid-from: 320;
+  --fluid-to: 390;
+  --fluid-progress: clamp(
+    0,
+    calc((100vw - var(--fluid-from) * 1px) / 1px / (var(--fluid-to) - var(--fluid-from))),
+    1
+  );
+  --page-gutter: clamp(16px, calc(16px + 4px * var(--fluid-progress)), 20px);
   /* Высота фикс. шапки. Меняешь шапку — меняешь ТОЛЬКО это (в т.ч. в медиа ниже). */
   --header-h: 76px;
   /* Зазор «шапка → хлебные крошки». */
@@ -176,38 +191,109 @@
   /* Готовые текстовые стили и адаптивные расширения — в styles/typography.css. */
 }
 
+@media (min-width: 390px) {
+  :root {
+    --fluid-from: 390;
+    --fluid-to: 480;
+    --page-gutter: 20px;
+  }
+}
+
+@media (min-width: 480px) {
+  :root {
+    --fluid-from: 480;
+    --fluid-to: 640;
+    --page-gutter: calc(20px + 10px * var(--fluid-progress));
+  }
+}
+
+@media (min-width: 640px) {
+  :root {
+    --fluid-from: 640;
+    --fluid-to: 768;
+    --page-gutter: calc(30px + 10px * var(--fluid-progress));
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --fluid-from: 768;
+    --fluid-to: 960;
+    --page-gutter: 40px;
+  }
+}
+
+@media (min-width: 960px) {
+  :root {
+    --fluid-from: 960;
+    --fluid-to: 1200;
+    --page-gutter: 40px;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 639px) {
+  :root { --crumbs-page-top: calc(106px + 28px * var(--fluid-progress)); }
+}
+@media (min-width: 640px) and (max-width: 959px) {
+  :root { --crumbs-page-top: 134px; }
+}
+@media (min-width: 960px) and (max-width: 1199px) {
+  :root { --crumbs-page-top: 134px; }
+}
+@media (min-width: 1200px) {
+  :root {
+    --fluid-from: 1200;
+    --fluid-to: 1536;
+    --page-gutter: calc(40px + 20px * var(--fluid-progress));
+  }
+}
+
+@media (min-width: 1536px) {
+  :root {
+    --fluid-from: 1536;
+    --fluid-to: 1920;
+    --page-gutter: 60px;
+  }
+}
+
 /* Radius collection: точное соответствие контрольным брейкпоинтам Figma. */
-@media (min-width: 390px)  { :root { --radius-current: var(--radius-390); } }
-@media (min-width: 480px)  { :root { --radius-current: var(--radius-480); } }
-@media (min-width: 640px)  { :root { --radius-current: var(--radius-640); } }
-@media (min-width: 768px)  { :root { --radius-current: var(--radius-768); } }
-@media (min-width: 960px)  { :root { --radius-current: var(--radius-960); } }
-@media (min-width: 1200px) { :root { --radius-current: var(--radius-1200); } }
+@media (min-width: 390px)  { :root { --radius-current: calc(12px + 0px * var(--fluid-progress)); } }
+@media (min-width: 480px)  { :root { --radius-current: calc(12px + 2px * var(--fluid-progress)); } }
+@media (min-width: 640px)  { :root { --radius-current: calc(14px + 2px * var(--fluid-progress)); } }
+@media (min-width: 768px)  { :root { --radius-current: calc(16px + 6px * var(--fluid-progress)); } }
+@media (min-width: 960px)  { :root { --radius-current: calc(22px + 4px * var(--fluid-progress)); } }
+@media (min-width: 1200px) { :root { --radius-current: calc(26px + 4px * var(--fluid-progress)); } }
 @media (min-width: 1536px) { :root { --radius-current: var(--radius-1536); } }
 @media (min-width: 1920px) { :root { --radius-current: var(--radius-1920); } }
 
-/* Высота фикс. шапки по брейкам (реальная: 76/84/96). Меняешь шапку — только тут. */
+/* Header and breadcrumb rhythm follow the same lower-anchor ranges. */
+@media (min-width: 480px) {
+  :root { --header-h: calc(76px + 8px * var(--fluid-progress)); }
+}
 @media (min-width: 640px)  { :root { --header-h: 84px; } }
-@media (min-width: 1201px) { :root { --header-h: 96px; } }
-/* Зазор «шапка → крошки»: 40 (≤768) / 50 (960–1536) / 60 (1920). */
-@media (min-width: 960px)  { :root { --crumbs-gap-top: 50px; } }
-@media (min-width: 1920px) { :root { --crumbs-gap-top: 60px; } }
-/* --page-top пересчитается сам (calc в :root выше). */
-
-@media (min-width: 1201px) {
+@media (min-width: 960px) {
   :root {
-    --crumbs-page-top: clamp(
-      124px,
-      calc(124px + (100vw - 1536px) * .083333),
-      156px
-    );
+    --header-h: calc(84px + 12px * var(--fluid-progress));
+    --crumbs-gap-top: 50px;
   }
 }
-@media (max-width: 768px) {
-  :root { --crumbs-page-top: calc(var(--page-top) + 10px); }
+@media (min-width: 1200px) { :root { --header-h: 96px; } }
+@media (min-width: 1536px) {
+  :root { --crumbs-gap-top: calc(50px + 10px * var(--fluid-progress)); }
 }
-@media (max-width: 480px) {
+/* --page-top пересчитается сам (calc в :root выше). */
+
+@media (min-width: 1200px) and (max-width: 1535px) {
+  :root { --crumbs-page-top: calc(134px - 10px * var(--fluid-progress)); }
+}
+@media (min-width: 1536px) {
+  :root { --crumbs-page-top: calc(124px + 32px * var(--fluid-progress)); }
+}
+@media (min-width: 390px) and (max-width: 479px) {
   :root { --crumbs-page-top: 106px; }
+}
+@media (max-width: 389px) {
+  :root { --crumbs-page-top: calc(92px + 14px * var(--fluid-progress)); }
 }
 
 /* Нижний зазор крошек «крошки → ближайший элемент снизу» — одинаково на всех

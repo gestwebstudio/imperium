@@ -19,6 +19,55 @@ async function storedActions(page: Page) {
   return page.evaluate((key) => JSON.parse(localStorage.getItem(key) ?? "{}"), STORAGE_KEY);
 }
 
+test("Hero не ломает геометрию в диапазоне 960–1200", async ({ page }) => {
+  await page.goto("/");
+
+  const widths = [959, 960, 1000, 1024, 1100, 1150, 1199, 1200, 1201];
+  const measurements: Array<{
+    width: number;
+    heroHeight: number;
+    documentWidth: number;
+    cardStatsOverlap: number;
+  }> = [];
+
+  for (const width of widths) {
+    await page.setViewportSize({ width, height: 900 });
+    measurements.push(
+      await page.locator(".hero").evaluate((hero) => {
+        const card = hero.querySelector(".hero__card:not([aria-hidden='true']) .car-card");
+        const stats = hero.querySelector(".hero__stats-stage");
+        const cardRect = card?.getBoundingClientRect();
+        const statsRect = stats?.getBoundingClientRect();
+        const overlapWidth = cardRect && statsRect
+          ? Math.max(0, Math.min(cardRect.right, statsRect.right) - Math.max(cardRect.left, statsRect.left))
+          : 0;
+        const overlapHeight = cardRect && statsRect
+          ? Math.max(0, Math.min(cardRect.bottom, statsRect.bottom) - Math.max(cardRect.top, statsRect.top))
+          : 0;
+
+        return {
+          width: window.innerWidth,
+          heroHeight: hero.getBoundingClientRect().height,
+          documentWidth: document.documentElement.scrollWidth,
+          cardStatsOverlap: overlapWidth * overlapHeight,
+        };
+      }),
+    );
+  }
+
+  expect(measurements.every((item) => item.documentWidth <= item.width)).toBe(
+    true,
+  );
+  expect(measurements.every((item) => item.cardStatsOverlap === 0)).toBe(true);
+  expect(measurements[2].heroHeight).toBeGreaterThan(measurements[1].heroHeight);
+  expect(measurements[3].heroHeight).toBeGreaterThan(measurements[2].heroHeight);
+  expect(measurements[4].heroHeight).toBeGreaterThan(measurements[3].heroHeight);
+  expect(measurements[5].heroHeight).toBeGreaterThan(measurements[4].heroHeight);
+  expect(measurements[6].heroHeight).toBeGreaterThan(measurements[5].heroHeight);
+  expect(Math.abs(measurements[1].heroHeight - measurements[0].heroHeight)).toBeLessThan(8);
+  expect(Math.abs(measurements[8].heroHeight - measurements[7].heroHeight)).toBeLessThan(8);
+});
+
 test("главный слайдер, избранное и мобильное меню работают", async ({ page }) => {
   await page.goto("/");
   await expect(

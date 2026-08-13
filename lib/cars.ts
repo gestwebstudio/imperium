@@ -343,14 +343,7 @@ export function getCarSlugs(): string[] {
 }
 
 /** Теги карточки: год · мощность · привод (по ТЗ — «бензин» заменён на л.с.). */
-export function carTags(car: Car): string[] {
-  return [String(car.year), `${car.power} л.с.`, `${car.drive} привод`];
-}
-
-/** Форматирование цены: 12 340 000 ₽ (без зависимости от локали рантайма). */
-export function formatPrice(value: number): string {
-  return `${String(value).replace(/\B(?=(\d{3})+(?!\d))/g, " ")} ₽`;
-}
+export { carTags, formatPrice } from "@/lib/car-display";
 
 /* ------------------------------ Фильтры ------------------------------ */
 

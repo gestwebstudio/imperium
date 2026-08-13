@@ -10,6 +10,7 @@ import {
   type ReactNode,
   type SetStateAction,
 } from "react";
+import { fetchCarsByIds } from "@/lib/client/cars";
 
 const STORAGE_KEY = "imperium-vehicle-actions";
 
@@ -47,17 +48,12 @@ function updateMembership(
   });
 }
 
-function parseStoredIds(
-  value: unknown,
-  validVehicleIds?: ReadonlySet<string> | null,
-): string[] {
+function parseStoredIds(value: unknown): string[] {
   if (!Array.isArray(value)) return [];
   return [
     ...new Set(
       value.filter(
-        (id): id is string =>
-          typeof id === "string" &&
-          (!validVehicleIds || validVehicleIds.has(id)),
+        (id): id is string => typeof id === "string" && id.length > 0,
       ),
     ),
   ];
@@ -82,23 +78,59 @@ export function VehicleActionsProvider({
   );
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        const parsed = JSON.parse(stored) as unknown;
-        if (parsed && typeof parsed === "object") {
-          const actions = parsed as Partial<StoredVehicleActions>;
-          setFavorites(parseStoredIds(actions.favorites, validVehicleIdSet));
-          setComparisons(
-            parseStoredIds(actions.comparisons, validVehicleIdSet),
-          );
+    const requestController = new AbortController();
+
+    async function restoreStoredActions() {
+      let nextFavorites: string[] = [];
+      let nextComparisons: string[] = [];
+
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+          const parsed = JSON.parse(stored) as unknown;
+          if (parsed && typeof parsed === "object") {
+            const actions = parsed as Partial<StoredVehicleActions>;
+            nextFavorites = parseStoredIds(actions.favorites);
+            nextComparisons = parseStoredIds(actions.comparisons);
+          }
+        }
+      } catch {
+        // Storage can be unavailable or malformed; start from empty sets.
+      }
+
+      if (validVehicleIdSet) {
+        nextFavorites = nextFavorites.filter((id) => validVehicleIdSet.has(id));
+        nextComparisons = nextComparisons.filter((id) =>
+          validVehicleIdSet.has(id),
+        );
+      } else {
+        const storedIds = [...new Set([...nextFavorites, ...nextComparisons])];
+        if (storedIds.length > 0) {
+          try {
+            const cars = await fetchCarsByIds(
+              storedIds,
+              requestController.signal,
+            );
+            const resolvedIds = new Set(cars.map((car) => car.id));
+            nextFavorites = nextFavorites.filter((id) => resolvedIds.has(id));
+            nextComparisons = nextComparisons.filter((id) =>
+              resolvedIds.has(id),
+            );
+          } catch {
+            if (requestController.signal.aborted) return;
+            // A temporary data-source error must not delete the user's IDs.
+          }
         }
       }
-    } catch {
-      // Storage can be unavailable or contain stale data; start from empty sets.
-    } finally {
+
+      if (requestController.signal.aborted) return;
+      setFavorites(nextFavorites);
+      setComparisons(nextComparisons);
       setStorageReady(true);
     }
+
+    void restoreStoredActions();
+    return () => requestController.abort();
   }, [validVehicleIdSet]);
 
   useEffect(() => {

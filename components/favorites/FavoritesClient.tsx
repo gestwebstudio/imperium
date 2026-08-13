@@ -3,7 +3,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "@heroui/react";
 import type { Car } from "@/lib/cars";
-import { carTags, formatPrice, getCarsByIds } from "@/lib/cars";
+import { carTags, formatPrice } from "@/lib/car-display";
+import { fetchCarsByIds } from "@/lib/client/cars";
 import { HeartStrokeIcon } from "@/components/icons";
 import { Badge } from "@/components/ui/primitives";
 import { Button, ButtonLink } from "@/components/ui/Button";
@@ -35,8 +36,9 @@ export function FavoritesClient() {
     if (!storageReady) return;
 
     const requestVersion = ++requestVersionRef.current;
+    const requestController = new AbortController();
     setLoadError(false);
-    getCarsByIds(favoriteIds)
+    fetchCarsByIds(favoriteIds, requestController.signal)
       .then((cars) => {
         if (requestVersion !== requestVersionRef.current) return;
         setLoadedCars((current) => {
@@ -46,11 +48,18 @@ export function FavoritesClient() {
         });
       })
       .catch(() => {
-        if (requestVersion === requestVersionRef.current) setLoadError(true);
+        if (
+          !requestController.signal.aborted &&
+          requestVersion === requestVersionRef.current
+        ) {
+          setLoadError(true);
+        }
       })
       .finally(() => {
         if (requestVersion === requestVersionRef.current) setCarsReady(true);
       });
+
+    return () => requestController.abort();
   }, [favoriteIdsKey, loadAttempt, storageReady]);
 
   function showRemovalUndo(car: Car, active: boolean) {

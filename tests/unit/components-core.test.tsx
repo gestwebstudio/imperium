@@ -315,6 +315,39 @@ describe("избранное и сравнение", () => {
     await waitFor(() => expect(screen.getByTestId("counts")).toHaveTextContent("0:0:true"));
   });
 
+  it("сверяет сохранённые ID через слой данных, не получая весь каталог в layout", async () => {
+    localStorage.setItem(
+      "imperium-vehicle-actions",
+      JSON.stringify({
+        favorites: ["car-1", "removed-car"],
+        comparisons: ["car-2", "removed-car"],
+      }),
+    );
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ cars: [{ id: "car-1" }, { id: "car-2" }] }),
+    });
+    const originalFetch = globalThis.fetch;
+    vi.stubGlobal("fetch", fetchMock);
+
+    render(
+      <VehicleActionsProvider>
+        <ActionsProbe />
+      </VehicleActionsProvider>,
+    );
+
+    await waitFor(() =>
+      expect(screen.getByTestId("counts")).toHaveTextContent("1:1:true"),
+    );
+    expect(screen.getByTestId("favorites")).toHaveTextContent("car-1");
+    expect(screen.getByTestId("comparisons")).toHaveTextContent("car-2");
+    expect(fetchMock).toHaveBeenCalledWith(
+      "/api/cars/by-ids",
+      expect.objectContaining({ method: "POST" }),
+    );
+    vi.stubGlobal("fetch", originalFetch);
+  });
+
   it("требует Provider для обязательного hook и допускает optional hook", () => {
     function Required() {
       useVehicleActions();
@@ -492,6 +525,15 @@ describe("единая система loading states", () => {
     expect(markup.match(/class="car-card car-card-skeleton /g)).toHaveLength(4);
     expect(markup).not.toContain("Предыдущие автомобили");
     expect(markup).not.toContain("Следующие автомобили");
+  });
+
+  it("не блокирует действия у циклических копий CarsSection", () => {
+    const markup = renderToString(
+      <CarsSection title="Автомобили" cars={getCars().slice(0, 2)} />,
+    );
+
+    expect(markup).toContain("data-carousel-cycle-start");
+    expect(markup).not.toContain("disabled=\"\"");
   });
 
   it("готовит Catalog к API loading и skeleton счётчика", () => {

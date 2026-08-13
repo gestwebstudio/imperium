@@ -13,14 +13,14 @@ import {
 import { cn } from "@/lib/cn";
 
 type SubLink = { label: string; href: string };
-type SectionKey = "catalog" | "brands" | "services";
+type SectionKey = "catalog" | "services";
 type NavItem =
   | { type: "link"; label: string; href: string }
   | { type: "section"; key: SectionKey; label: string; links: SubLink[] };
 
 /**
- * Основная навигация мобильного меню. «Каталог», «Бренды» и «Услуги» —
- * раскрывающиеся разделы (accordion). Ссылки берём из футера (кузова/бренды).
+ * Основная навигация мобильного меню. «Каталог» и «Услуги» —
+ * раскрывающиеся разделы (accordion).
  */
 const primaryNav: NavItem[] = [
   {
@@ -35,16 +35,6 @@ const primaryNav: NavItem[] = [
       { label: "Купе", href: "/coupe" },
       { label: "Минивэны", href: "/minivan" },
       { label: "Кабриолеты", href: "/cabriolet" },
-    ],
-  },
-  {
-    type: "section",
-    key: "brands",
-    label: "Бренды",
-    links: [
-      { label: "BMW", href: "/bmw" },
-      { label: "Mercedes-Benz", href: "/mercedes" },
-      { label: "Lexus", href: "/lexus" },
     ],
   },
   {
@@ -329,7 +319,7 @@ export function MobileMenu() {
   }, [close, visible]);
 
   useEffect(() => {
-    const media = window.matchMedia("(min-width: 1201px)");
+    const media = window.matchMedia("(min-width: 1200px)");
     const onChange = (event: MediaQueryListEvent) => {
       if (event.matches) close();
     };
@@ -419,7 +409,7 @@ export function MobileMenu() {
               </div>
 
               <nav className="mobile-menu__nav" aria-label="Основная навигация">
-                <ul className="mobile-menu__list">
+                <ul className="mobile-menu__list mobile-menu__list--primary">
                   {primaryNav.map((item) => {
                     primaryIndex += 1;
                     const dataIndex = String(primaryIndex).padStart(2, "0");
@@ -509,28 +499,34 @@ export function MobileMenu() {
                   })}
                 </ul>
 
-                <div
-                  className="mobile-menu__secondary"
-                  aria-label="Дополнительно"
+                <ul
+                  className="mobile-menu__list mobile-menu__list--secondary"
+                  aria-label="Дополнительная навигация"
                 >
                   {secondaryNav.map((link) => {
                     const active = pathname === link.href;
                     return (
-                      <Link
+                      <li
+                        className="mobile-menu__item-wrap mobile-menu__item-wrap--secondary"
                         key={link.href}
-                        className={cn(
-                          "mobile-menu__secondary-link",
-                          active && "is-active",
-                        )}
-                        href={link.href}
-                        aria-current={active ? "page" : undefined}
-                        onClick={close}
                       >
-                        {link.label}
-                      </Link>
+                        <Link
+                          className={cn(
+                            "mobile-menu__item mobile-menu__item--secondary",
+                            active && "is-current",
+                          )}
+                          href={link.href}
+                          aria-current={active ? "page" : undefined}
+                          onClick={close}
+                        >
+                          <span className="mobile-menu__item-label">
+                            {link.label}
+                          </span>
+                        </Link>
+                      </li>
                     );
                   })}
-                </div>
+                </ul>
               </nav>
             </aside>
           </div>,

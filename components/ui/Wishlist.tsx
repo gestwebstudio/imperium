@@ -19,6 +19,7 @@ export type WishlistProps = {
   /** Текст тултипа после добавления в избранное. */
   activeTip?: string;
   className?: string;
+  disabled?: boolean;
 };
 
 /** Кнопка «в избранное» — сердечко-тоггл (контур → залитое красное). */
@@ -30,6 +31,7 @@ export function Wishlist({
   tip,
   activeTip = "Убрать из избранного",
   className,
+  disabled = false,
 }: WishlistProps) {
   const [internal, setInternal] = useState(defaultActive);
   const vehicleActions = useVehicleActionsOptional();
@@ -70,7 +72,7 @@ export function Wishlist({
       aria-pressed={isActive}
       aria-label={resolvedTip}
       aria-busy={storagePending || undefined}
-      disabled={storagePending}
+      disabled={storagePending || disabled}
       onClick={toggle}
     >
       <HeartStrokeIcon className="icon-stroke" />

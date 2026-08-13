@@ -333,6 +333,7 @@ export function Hero() {
                 inert={index === activeIndex ? undefined : true}
               >
                 <CarCard
+                  imageLoading="eager"
                   vehicleId={slide.id}
                   href={`/catalog/${slide.id}`}
                   brandLogo="/images/logo_cards/porsche.webp"

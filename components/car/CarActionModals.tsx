@@ -78,18 +78,22 @@ function CarActionModal({
         {triggerLabel}
       </Button>
 
-      <Modal state={state}>
-        <Modal.Backdrop
-          variant="blur"
-          className="car-action-modal__backdrop"
-        >
+      <Modal.Backdrop
+        isOpen={state.isOpen}
+        onOpenChange={state.setOpen}
+        variant="blur"
+        className="car-action-modal__backdrop"
+      >
           <Modal.Container
             placement="center"
             scroll="inside"
             size="md"
             className="car-action-modal__container"
           >
-            <Modal.Dialog className="car-action-modal__dialog">
+            <Modal.Dialog
+              className="car-action-modal__dialog"
+              aria-label={title}
+            >
               <Modal.CloseTrigger
                 className="car-action-modal__close"
                 aria-label="Закрыть окно"
@@ -290,8 +294,7 @@ function CarActionModal({
               )}
             </Modal.Dialog>
           </Modal.Container>
-        </Modal.Backdrop>
-      </Modal>
+      </Modal.Backdrop>
     </>
   );
 }

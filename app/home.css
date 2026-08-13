@@ -109,6 +109,7 @@
   width: 405px;
   max-width: 405px;
   display: grid;
+  container: hero-card-stage / inline-size;
   touch-action: pan-y;
 }
 .hero__card {
@@ -419,7 +420,7 @@
 
 /* 960–640: the same composition is retained while the card becomes the
    horizontal kit composition shown in the tablet frames. */
-@media (max-width: 960px) {
+@media (max-width: 1199px) {
   .hero {
     border-radius: 0 0 var(--radius-current, 22px) var(--radius-current, 22px);
   }
@@ -666,7 +667,7 @@
 /* 480/390: the mobile Figma composition intentionally removes the large
    vehicle, watermark and stats, while retaining the same live CarCard and
    carousel controls. */
-@media (max-width: 480px) {
+@media (max-width: 639px) {
   .hero {
     border-radius: 0 0 12px 12px;
   }
@@ -810,7 +811,7 @@
   .hero__track { gap: 8px; }
 }
 
-@media (max-width: 480px) and (prefers-reduced-motion: reduce) {
+@media (max-width: 639px) and (prefers-reduced-motion: reduce) {
   .hero__unique-track {
     animation: none;
     transform: none;
@@ -818,7 +819,7 @@
   }
 }
 
-@media (max-width: 430px) {
+@media (max-width: 479px) {
   .hero__lower {
     left: 21px;
     right: 21px;
@@ -838,6 +839,323 @@
   .hero__card .car-card__details-icon { display: block; }
 }
 
+/* ============================================================
+   Hero fluid anchor overrides
+   Existing Figma values remain the anchors. This layer makes each range grow
+   from its smaller frame to the next one and lets the 390px frame contract on
+   narrower screens instead of preserving an oversized fixed composition.
+   ============================================================ */
+@media (max-width: 389px) {
+  .hero__top {
+    position: static;
+    display: block;
+  }
+
+  .hero__inner {
+    height: calc(680px + 85px * var(--fluid-progress));
+  }
+
+  .hero__headline {
+    top: calc(108px + 16px * var(--fluid-progress));
+    left: var(--page-gutter);
+    right: var(--page-gutter);
+  }
+
+  .hero__h1-reg,
+  .hero__h1-bold {
+    font-size: calc(31px + 5px * var(--fluid-progress));
+    line-height: calc(38px + 6px * var(--fluid-progress));
+  }
+
+  .hero__unique {
+    top: calc(270px + 32px * var(--fluid-progress));
+    left: calc(-8px - 3px * var(--fluid-progress));
+    width: calc(100% + 11px);
+  }
+
+  .hero__unique-title,
+  .hero__unique-sub {
+    font-size: calc(17px + 3px * var(--fluid-progress));
+    line-height: calc(24px + 4px * var(--fluid-progress));
+  }
+
+  .hero__lower {
+    top: calc(310px + 36px * var(--fluid-progress));
+    left: var(--page-gutter);
+    right: var(--page-gutter);
+  }
+
+  .hero__card-stage,
+  .hero__card {
+    width: 100%;
+  }
+
+  .hero__card {
+    grid-area: auto;
+  }
+
+  .hero__card .car-card {
+    width: 100%;
+    max-width: none;
+  }
+
+  .hero__card .car-card {
+    gap: calc(12px + 4px * var(--fluid-progress));
+    padding: calc(14px + 2px * var(--fluid-progress));
+  }
+
+  .hero__card .car-card__title {
+    font-size: calc(16px + 2px * var(--fluid-progress));
+    line-height: calc(20px + 2px * var(--fluid-progress));
+  }
+
+  .hero__card .car-card__photo {
+    height: calc(122px + 27px * var(--fluid-progress));
+  }
+
+  .hero__card .car-card__photo img {
+    max-height: calc(122px + 27px * var(--fluid-progress));
+  }
+
+  .hero__card .price-block__value {
+    font-size: min(calc(18px + 2px * var(--fluid-progress)), 8cqi);
+    line-height: calc(24px + 2px * var(--fluid-progress));
+  }
+
+  .hero__slider {
+    top: calc(640px + 83px * var(--fluid-progress));
+    left: var(--page-gutter);
+    right: var(--page-gutter);
+  }
+}
+
+@media (min-width: 390px) and (max-width: 479px) {
+  .hero__inner { height: calc(765px + 125px * var(--fluid-progress)); }
+  .hero__h1-reg,
+  .hero__h1-bold {
+    font-size: calc(36px + 4px * var(--fluid-progress));
+    line-height: calc(44px + 4px * var(--fluid-progress));
+  }
+  .hero__unique { top: calc(302px + 17px * var(--fluid-progress)); }
+  .hero__lower { top: calc(346px + 17px * var(--fluid-progress)); }
+  .hero__card .car-card {
+    gap: calc(16px + 8px * var(--fluid-progress));
+    padding: calc(16px + 10px * var(--fluid-progress));
+  }
+  .hero__card .car-card__title {
+    font-size: calc(18px + 6px * var(--fluid-progress));
+    line-height: calc(22px + 8px * var(--fluid-progress));
+  }
+  .hero__card .car-card__photo { height: calc(149px + 30px * var(--fluid-progress)); }
+  .hero__card .car-card__photo img { max-height: calc(149px + 30px * var(--fluid-progress)); }
+  .hero__slider { top: calc(723px + 121px * var(--fluid-progress)); }
+}
+
+@media (min-width: 480px) and (max-width: 639px) {
+  .hero__inner { height: calc(890px + 109px * var(--fluid-progress)); }
+  .hero__headline {
+    left: var(--page-gutter);
+    right: var(--page-gutter);
+  }
+  .hero__unique { top: calc(319px + 13px * var(--fluid-progress)); }
+  .hero__lower {
+    top: calc(363px + 31px * var(--fluid-progress));
+    left: var(--page-gutter);
+    right: var(--page-gutter);
+  }
+  .hero__card .car-card__photo,
+  .hero__card .car-card__photo img {
+    height: calc(179px + 35px * var(--fluid-progress));
+    max-height: calc(179px + 35px * var(--fluid-progress));
+  }
+  .hero__slider {
+    top: calc(844px + 109px * var(--fluid-progress));
+    left: var(--page-gutter);
+    right: var(--page-gutter);
+  }
+}
+
+@media (min-width: 640px) and (max-width: 767px) {
+  .hero__top,
+  .hero__lower,
+  .hero__slider {
+    left: var(--page-gutter);
+    right: var(--page-gutter);
+  }
+  .hero__car {
+    top: calc(378px - 54px * var(--fluid-progress));
+    left: calc(30px - 8px * var(--fluid-progress));
+    width: calc(573px + 120px * var(--fluid-progress));
+    height: calc(313px + 54px * var(--fluid-progress));
+  }
+  .hero__watermark {
+    top: calc(378px - 47px * var(--fluid-progress));
+    left: calc(-349px + 10px * var(--fluid-progress));
+  }
+  .hero__card .car-card {
+    grid-template-columns: calc(318px + 68px * var(--fluid-progress)) minmax(0, 1fr);
+  }
+  .hero__card .car-card__photo img {
+    width: calc(295px + 69px * var(--fluid-progress));
+    height: calc(124px + 30px * var(--fluid-progress));
+  }
+  .hero__stats-stage {
+    width: calc(580px + 89px * var(--fluid-progress));
+    height: calc(82px + 4px * var(--fluid-progress));
+  }
+}
+
+@media (min-width: 768px) and (max-width: 959px) {
+  .hero__inner { height: calc(1109px + 72px * var(--fluid-progress)); }
+  .hero__h1-reg,
+  .hero__h1-bold {
+    font-size: calc(40px + 10px * var(--fluid-progress));
+    line-height: calc(48px + 8px * var(--fluid-progress));
+  }
+  .hero__unique { width: calc(260px + 176px * var(--fluid-progress)); }
+  .hero__unique-title,
+  .hero__unique-sub {
+    font-size: calc(20px + 4px * var(--fluid-progress));
+    line-height: calc(28px + 2px * var(--fluid-progress));
+  }
+  .hero__car {
+    top: calc(324px + 25px * var(--fluid-progress));
+    left: calc(22px + 59px * var(--fluid-progress));
+    width: calc(693px + 82px * var(--fluid-progress));
+    height: calc(367px + 43px * var(--fluid-progress));
+  }
+  .hero__lower { top: calc(821px + 72px * var(--fluid-progress)); }
+  .hero__card .car-card {
+    grid-template-columns: calc(386px + 22px * var(--fluid-progress)) minmax(0, 1fr);
+  }
+  .hero__stats-stage { width: calc(669px + 173px * var(--fluid-progress)); }
+  .hero__slider { top: calc(1055px + 72px * var(--fluid-progress)); }
+}
+
+/* 960–1199 keeps the tablet composition from the 960px anchor. The elements
+   grow inside that composition; the desktop composition starts only at 1200. */
+@media (min-width: 960px) and (max-width: 1199px) {
+  .hero__inner {
+    height: calc(1181px + 70px * var(--fluid-progress));
+  }
+  .hero__top {
+    top: 124px;
+    left: var(--page-gutter);
+    right: var(--page-gutter);
+  }
+  .hero__h1-reg,
+  .hero__h1-bold {
+    font-size: 50px;
+    line-height: 56px;
+  }
+  .hero__unique {
+    width: 436px;
+    padding-top: 11px;
+  }
+  .hero__unique-title,
+  .hero__unique-sub {
+    font-size: 24px;
+    line-height: 30px;
+  }
+  .hero__car {
+    top: 349px;
+    left: calc(81px + 44px * var(--fluid-progress));
+    width: calc(775px + 145px * var(--fluid-progress));
+    height: calc(410px + 77px * var(--fluid-progress));
+  }
+  .hero__watermark {
+    top: 355px;
+    left: calc(-239px + 44px * var(--fluid-progress));
+    font-size: calc(66px + 8px * var(--fluid-progress));
+    line-height: calc(70px + 8px * var(--fluid-progress));
+  }
+  .hero__lower {
+    top: calc(893px + 70px * var(--fluid-progress));
+    left: var(--page-gutter);
+    right: var(--page-gutter);
+  }
+  .hero__card-stage {
+    width: 100%;
+    max-width: none;
+  }
+  .hero__card .car-card {
+    grid-template-columns: calc(408px + 100px * var(--fluid-progress)) minmax(0, 1fr);
+    grid-template-rows: calc(112px + 16px * var(--fluid-progress)) 42px;
+    column-gap: 24px;
+    row-gap: 24px;
+    height: calc(218px + 16px * var(--fluid-progress));
+    padding: calc(20px + 2px * var(--fluid-progress));
+  }
+  .hero__card .car-card__photo {
+    height: calc(173px + 16px * var(--fluid-progress));
+  }
+  .hero__card .car-card__photo img {
+    width: calc(364px + 90px * var(--fluid-progress));
+    height: calc(154px + 24px * var(--fluid-progress));
+  }
+  .hero__stats-stage {
+    top: -114px;
+    width: calc(842px + 162px * var(--fluid-progress));
+    height: 74px;
+  }
+  .hero__slider {
+    top: calc(1127px + 70px * var(--fluid-progress));
+    left: var(--page-gutter);
+    right: var(--page-gutter);
+  }
+}
+
+@container hero-card-stage (max-width: 360px) {
+  .hero__card .car-card {
+    display: flex;
+    height: auto;
+    gap: 24px;
+  }
+  .hero__card .car-card__main,
+  .hero__card .car-card__content {
+    display: flex;
+  }
+  .hero__card .car-card__photo {
+    width: 100%;
+    height: clamp(110px, 43cqi, 173px);
+  }
+  .hero__card .car-card__photo img {
+    width: auto;
+    height: auto;
+    max-height: clamp(110px, 43cqi, 173px);
+  }
+  .hero__card .car-card__action {
+    gap: clamp(8px, 4cqi, 24px);
+  }
+}
+
+@media (min-width: 1536px) and (max-width: 1919px) {
+  .hero__inner { height: calc(958px + 222px * var(--fluid-progress)); }
+  .hero__top { top: calc(144px + 20px * var(--fluid-progress)); }
+  .hero__h1-reg,
+  .hero__h1-bold {
+    font-size: calc(66px + 22px * var(--fluid-progress));
+    line-height: calc(70px + 30px * var(--fluid-progress));
+  }
+  .hero__car {
+    top: calc(324px + 79px * var(--fluid-progress));
+    left: calc(491px + 124px * var(--fluid-progress));
+    width: calc(873px + 247px * var(--fluid-progress));
+    height: calc(462px + 48px * var(--fluid-progress));
+  }
+  .hero__lower {
+    top: calc(475px + 103px * var(--fluid-progress));
+    height: calc(387px + 132px * var(--fluid-progress));
+  }
+  .hero__card-stage { width: calc(346.5px + 58.5px * var(--fluid-progress)); }
+  .hero__stats-stage {
+    top: calc(271px + 94px * var(--fluid-progress));
+    left: calc(384px + 79px * var(--fluid-progress));
+    width: calc(1032px + 300px * var(--fluid-progress));
+  }
+  .hero__slider { top: calc(888px + 217px * var(--fluid-progress)); }
+}
+
 /* Desktop rhythm from the 1920px Figma frame. */
 .home > .brands { margin-top: clamp(88px, 6.771vw, 130px); }
 .home > .cars-section--available { margin-top: var(--section-space, 160px); }
@@ -855,9 +1173,11 @@
   width: 100%;
 }
 .brands-row {
+  --brands-card-width: clamp(128px, max(calc(9.375vw + 98px), 18vw), 340px);
+  --brands-gap: clamp(12px, calc(.75vw + 9.6px), 24px);
   width: 100%;
   display: flex;
-  gap: 24px;
+  gap: var(--brands-gap);
   overflow-x: auto;
   overscroll-behavior-inline: contain;
   scroll-behavior: smooth;
@@ -866,7 +1186,7 @@
 }
 .brands-row::-webkit-scrollbar { display: none; }
 .brands-row > * {
-  flex: 0 0 calc((100% - 96px) / 5);
+  flex: 0 0 var(--brands-card-width);
   min-width: 0;
   scroll-snap-align: start;
 }
@@ -903,12 +1223,7 @@
 }
 .brands-carousel__nav.btn:active { transform: translateY(-50%); }
 .brands-carousel__nav--next .btn__icon { transform: rotate(180deg); }
-@media (max-width: 1200px) {
-  .brands-row > * { flex-basis: calc((100% - 48px) / 3); }
-}
 @media (max-width: 768px) {
-  .brands-row { gap: 16px; }
-  .brands-row > * { flex-basis: calc((100% - 16px) / 2); }
   .brands-carousel__nav { display: none; }
 }
 
@@ -928,10 +1243,11 @@
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 .cars-row {
+  --cars-card-gap: clamp(12px, 1.25vw, 24px);
   width: 100%;
   display: flex;
-  gap: 24px;
-  overflow-x: auto;
+  gap: var(--cars-card-gap);
+  overflow: auto hidden;
   overscroll-behavior-inline: contain;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
@@ -939,10 +1255,16 @@
 }
 .cars-row::-webkit-scrollbar { display: none; }
 .cars-row > * {
-  flex: 0 0 calc((100% - 72px) / 4);
-  min-width: 300px;
+  flex: 0 0 min(100%, 320px);
+  min-width: 0;
   max-width: 432px;
+  container: cars-carousel-item / inline-size;
   scroll-snap-align: start;
+}
+@media (min-width: 960px) {
+  .cars-row > * {
+    flex-basis: clamp(320px, 22.5vw, 432px);
+  }
 }
 .cars-carousel__item > .car-card {
   height: 100%;
@@ -951,6 +1273,7 @@
 .cars-carousel {
   position: relative;
   width: 100%;
+  contain: inline-size;
 }
 .cars-section__nav {
   position: absolute;
@@ -1098,7 +1421,7 @@
 .body-type-card__arrow svg { width: 16px; height: 16px; }
 .body-type-card--wide { margin-top: 24px; min-height: 464px; }
 
-@media (max-width: 960px) {
+@media (max-width: 1199px) {
   .body-types__head { min-height: 0; margin-bottom: 40px; flex-wrap: wrap; }
   .body-types__title { gap: 0; }
   .bento { grid-template-columns: 1fr; grid-template-rows: none; }
@@ -1885,7 +2208,7 @@
   }
 }
 
-@media (min-width: 961px) and (max-width: 1536px) {
+@media (min-width: 1200px) and (max-width: 1536px) {
   .body-types__inner {
     --bt-row: clamp(276px, calc(10.7143vw + 147.429px), 312px);
     --bt-gap: clamp(20px, calc(1.1905vw + 5.714px), 24px);
@@ -2032,7 +2355,7 @@
   }
 }
 
-@media (min-width: 961px) and (max-width: 1200px) {
+@media (min-width: 1200px) and (max-width: 1366px) {
   .bento__c .body-type-card__arrow {
     top: 136px;
     right: auto;
@@ -2040,7 +2363,7 @@
   }
 }
 
-@media (min-width: 641px) and (max-width: 960px) {
+@media (min-width: 641px) and (max-width: 1199px) {
   .body-types__inner {
     --bt-radius: 20px;
     --bt-text-offset: 20px;
@@ -2099,7 +2422,7 @@
   }
 }
 
-@media (min-width: 769px) and (max-width: 960px) {
+@media (min-width: 769px) and (max-width: 1199px) {
   .body-types__inner {
     gap: 50px;
   }
@@ -2226,7 +2549,7 @@
   .about__testimonial-track { scroll-behavior: auto; }
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1199px) {
   .about__services { grid-template-columns: 1fr; }
   .service-card { height: auto; min-height: 167px; }
   .about__identity {
@@ -2318,7 +2641,7 @@
   }
 }
 
-@media (min-width: 961px) and (max-width: 1536px) {
+@media (min-width: 1200px) and (max-width: 1919px) {
   .home > .brands,
   .home > .cars-section--available,
   .home > .body-types,
@@ -2328,14 +2651,16 @@
     margin-top: clamp(96px, 9vw, 144px);
   }
 
-  .cars-row > * {
-    flex-basis: calc((100% - 48px) / 3);
-    max-width: none;
-  }
-
   .body-types__title { gap: 4px; }
   .body-types__head { min-height: 0; margin-bottom: 48px; }
-  .body-types__aside { width: min(44%, 594px); padding-top: 72px; }
+  .body-types__aside {
+    width: min(44%, 594px);
+    padding-top: clamp(
+      56px,
+      calc(56px + (100vw - 1200px) * .047619),
+      72px
+    );
+  }
 
   .about__identity {
     height: auto;
@@ -2367,17 +2692,10 @@
 }
 
 @media (min-width: 1200px) and (max-width: 1919px) {
-  .cars-row {
-    gap: 16px;
-  }
-
-  .cars-row > * {
-    flex-basis: calc((100% - 48px) / 4);
-    min-width: 0;
-  }
+  .cars-row { gap: var(--cars-card-gap); }
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1199px) {
   .home > .brands,
   .home > .cars-section--available,
   .home > .body-types,
@@ -2391,10 +2709,6 @@
     height: auto;
     min-height: 48px;
     margin-bottom: 24px;
-  }
-  .cars-row > * {
-    flex-basis: calc((100% - 24px) / 2);
-    max-width: none;
   }
   .about__testimonial { margin-top: 80px; }
 
@@ -2420,6 +2734,7 @@
   .cars-section__head { align-items: flex-start; }
   .cars-section__head > .btn { display: none; }
   .cars-section__nav { display: none; }
+  .cars-carousel { overflow: hidden; }
   .cars-row > * {
     flex: 0 0 min(82vw, 320px);
     min-width: 0;
@@ -2739,7 +3054,7 @@
 }
 
 /* 960 (2 колонки) */
-@media (max-width: 960px) {
+@media (max-width: 1199px) {
   .bento__a .body-type-card__img { left: -2.07%; top: -38.02%; width: 102.07%; height: 152.52%; }
   .bento__b .body-type-card__img { left: -8.05%; top: -40.00%; width: 117.01%; height: 190.08%; }
   /* внедорожник (боковой профиль): в макете object-contain — RR виден целиком */
@@ -2750,7 +3065,7 @@
 }
 /* 960: минивэн, кроссовер и седан в макете отзеркалены по горизонтали
    (трансформ scaleY(-1) rotate(180)) — на 960 все машины смотрят влево. */
-@media (min-width: 769px) and (max-width: 960px) {
+@media (min-width: 769px) and (max-width: 1199px) {
   .bento__d .body-type-card__img,
   .bento__e .body-type-card__img,
   .body-type-card--wide .body-type-card__img { transform: scaleX(-1); }

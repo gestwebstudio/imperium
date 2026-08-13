@@ -813,29 +813,6 @@ body.comparison-route .site-header {
   color: var(--color-heritage-green-500, #294434);
 }
 
-/* Нижняя вторичная группа: меньшая типографика, без номеров, после 40px. */
-.mobile-menu__secondary {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 40px;
-}
-.mobile-menu__secondary-link {
-  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
-  font-weight: var(--font-weight-regular, 400);
-  font-size: clamp(20px, calc(16px + 1.2vw), 28px);
-  line-height: 1.1;
-  letter-spacing: -.02em;
-  text-transform: none;
-  color: var(--color-carbon-black-500, #1B1E1D);
-  text-decoration: none;
-  transition: color 160ms ease;
-}
-.mobile-menu__secondary-link:hover,
-.mobile-menu__secondary-link:focus-visible,
-.mobile-menu__secondary-link.is-active {
-  color: var(--color-heritage-green-500, #294434);
-}
 .mobile-menu__item::after {
   content: attr(data-index);
   position: absolute;
@@ -858,13 +835,13 @@ body.comparison-route .site-header {
   min-height: 44px;
   align-items: center;
   padding-block: 0;
+  font-weight: var(--font-weight-regular, 400);
   font-size: var(--type-display-40-font-size, 40px);
   line-height: var(--type-display-40-line-height, 48px);
   text-transform: none;
 }
 .mobile-menu__item--secondary::after {
-  top: 50%;
-  transform: translateY(-50%);
+  display: none;
 }
 .mobile-menu__item:hover,
 .mobile-menu__item:focus-visible,
@@ -1020,10 +997,7 @@ body.comparison-route .site-header {
     font-size: 15px;
     line-height: 19px;
   }
-  .mobile-menu__secondary {
-    gap: 10px;
-    margin-top: 32px;
-  }
+  .mobile-menu__list--secondary { margin-top: 40px; }
 }
 
 @media (max-height: 700px) {
@@ -1164,9 +1138,136 @@ body.comparison-route .site-header {
 .services-mega__link:hover .services-mega__link-icon {
   transform: translate(2px, -2px);
 }
-/* На бургер-режиме (<= 1200px) навигации нет — прячем и панель */
-@media (max-width: 1200px) {
+/* На бургер-режиме (<1200px) навигации нет — прячем и панель. */
+@media (max-width: 1199px) {
   .services-mega {
     display: none;
   }
+}
+
+/* ============================================================
+   Fluid anchor corrections
+   Mobile is the baseline. The 390px Figma state shrinks below its anchor;
+   larger states interpolate to the next approved frame.
+   ============================================================ */
+@media (max-width: 1199px) {
+  .site-header {
+    --header-gutter: var(--page-gutter);
+  }
+}
+
+@media (max-width: 389px) {
+  .site-header {
+    --site-header-logo-width: calc(170px + 31px * var(--fluid-progress));
+    --site-header-logo-height: calc(17px + 3px * var(--fluid-progress));
+    --site-header-control-size: calc(32px + 4px * var(--fluid-progress));
+  }
+
+  .site-header__logo,
+  .site-header__logo img {
+    width: var(--site-header-logo-width);
+    height: var(--site-header-logo-height);
+  }
+
+  .site-header__bar > .liquid-glass__content {
+    gap: calc(12px + 12px * var(--fluid-progress));
+    padding-left: var(--page-gutter);
+  }
+}
+
+@media (min-width: 390px) and (max-width: 479px) {
+  .site-header {
+    --site-header-logo-width: calc(201px + 0px * var(--fluid-progress));
+  }
+}
+
+@media (min-width: 480px) and (max-width: 639px) {
+  .site-header {
+    --site-header-height: calc(58px + 8px * var(--fluid-progress));
+    --site-header-logo-width: calc(201px + 74px * var(--fluid-progress));
+    --site-header-logo-height: calc(20px + 6px * var(--fluid-progress));
+    --site-header-control-size: calc(36px + 8px * var(--fluid-progress));
+  }
+
+  .site-header__logo,
+  .site-header__logo img {
+    width: var(--site-header-logo-width);
+    height: var(--site-header-logo-height);
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1535px) {
+  .site-header {
+    --header-gutter: var(--page-gutter);
+    --site-header-logo-width: calc(241px + 32px * var(--fluid-progress));
+    --site-header-logo-height: calc(23px + 3px * var(--fluid-progress));
+  }
+}
+
+@media (min-width: 1536px) and (max-width: 1919px) {
+  .site-header {
+    --header-gutter: var(--page-gutter);
+    --site-header-height: calc(66px + 12px * var(--fluid-progress));
+    --site-header-logo-width: calc(273px + 63px * var(--fluid-progress));
+    --site-header-logo-height: calc(26px + 6px * var(--fluid-progress));
+    --site-header-control-size: calc(36px + 10px * var(--fluid-progress));
+    --site-header-icon-size: calc(18px + 6px * var(--fluid-progress));
+  }
+}
+
+/* Footer grows progressively through the same anchor scale. Its structural
+   changes stay discrete, while padding, gaps and text sizes are fluid. */
+@media (max-width: 389px) {
+  .site-footer { padding-inline: var(--page-gutter); }
+  .footer-cols { gap: calc(22px + 6px * var(--fluid-progress)) calc(12px + 4px * var(--fluid-progress)); }
+  .footer-phone__value { font-size: calc(17px + 3px * var(--fluid-progress)); }
+}
+
+@media (min-width: 390px) and (max-width: 479px) {
+  .site-footer {
+    padding: calc(40px + 4px * var(--fluid-progress)) var(--page-gutter)
+      calc(24px + 4px * var(--fluid-progress));
+  }
+  .footer-cols {
+    gap: 28px calc(16px + 24px * var(--fluid-progress));
+  }
+}
+
+@media (min-width: 480px) and (max-width: 639px) {
+  .site-footer {
+    padding: calc(44px + 4px * var(--fluid-progress)) var(--page-gutter)
+      calc(28px + 4px * var(--fluid-progress));
+  }
+  .footer-cols {
+    gap: calc(28px + 4px * var(--fluid-progress)) 40px;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 959px) {
+  .site-footer { padding-inline: var(--page-gutter); }
+  .footer-top { min-width: 0; }
+  .footer-cols,
+  .footer-aside { min-width: 0; }
+}
+
+@media (min-width: 960px) and (max-width: 1199px) {
+  .site-footer { padding-inline: var(--page-gutter); }
+  .footer-top {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 40px;
+  }
+  .footer-cols {
+    justify-content: space-between;
+    min-width: 0;
+  }
+  .footer-aside {
+    flex: 1 1 auto;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    min-width: 0;
+  }
+  .footer-contacts { align-items: flex-start; }
+  .footer-legal { text-align: right; }
 }

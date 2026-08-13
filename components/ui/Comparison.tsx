@@ -16,6 +16,7 @@ export type ComparisonProps = {
   /** Текст тултипа после добавления в сравнение. */
   activeTip?: string;
   className?: string;
+  disabled?: boolean;
 };
 
 /** Кнопка «в сравнение» — тоггл (List-Add → зелёный List-Check). */
@@ -27,6 +28,7 @@ export function Comparison({
   tip,
   activeTip = "Убрать из сравнения",
   className,
+  disabled = false,
 }: ComparisonProps) {
   const [internal, setInternal] = useState(defaultActive);
   const vehicleActions = useVehicleActionsOptional();
@@ -67,7 +69,7 @@ export function Comparison({
       aria-pressed={isActive}
       aria-label={resolvedTip}
       aria-busy={storagePending || undefined}
-      disabled={storagePending}
+      disabled={storagePending || disabled}
       onClick={toggle}
     >
       <ListAddIcon className="icon-add" />

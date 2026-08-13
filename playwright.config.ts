@@ -1,6 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
 const port = 3001;
+const useProductionServer = process.env.PLAYWRIGHT_PRODUCTION === "1";
 
 export default defineConfig({
   testDir: "./tests/e2e",
@@ -23,9 +24,23 @@ export default defineConfig({
         viewport: { width: 1440, height: 1000 },
       },
     },
+    ...(process.env.CI
+      ? [
+          {
+            name: "webkit-smoke",
+            testMatch: ["smoke.spec.ts", "navigation-and-forms.spec.ts"],
+            use: {
+              ...devices["Desktop Safari"],
+              viewport: { width: 1440, height: 1000 },
+            },
+          },
+        ]
+      : []),
   ],
   webServer: {
-    command: `npm run dev -- --hostname localhost --port ${port}`,
+    command: useProductionServer
+      ? `npm run start -- --hostname localhost --port ${port}`
+      : `npm run dev -- --hostname localhost --port ${port}`,
     url: `http://localhost:${port}`,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,

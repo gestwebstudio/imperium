@@ -1,6 +1,28 @@
 import "@testing-library/jest-dom/vitest";
 import { cleanup } from "@testing-library/react";
 import { afterEach, vi } from "vitest";
+import {
+  isKnownFluidTokenDiagnostic,
+  type JSDOMError,
+} from "./support/jsdom-errors";
+
+type JSDOMVirtualConsole = {
+  removeAllListeners(event: string): void;
+  on(event: string, listener: (error: JSDOMError) => void): void;
+};
+
+/* jsdom's parser does not understand the modern CSS math used by the fluid
+   token layer. Its geometry is covered in real Chromium by Playwright, so
+   suppress only that known parser diagnostic and keep all other errors. */
+const virtualConsole = (
+  window as typeof window & { _virtualConsole?: JSDOMVirtualConsole }
+)._virtualConsole;
+if (virtualConsole) {
+  virtualConsole.removeAllListeners("jsdomError");
+  virtualConsole.on("jsdomError", (error) => {
+    if (!isKnownFluidTokenDiagnostic(error)) console.error(error);
+  });
+}
 
 afterEach(() => {
   cleanup();

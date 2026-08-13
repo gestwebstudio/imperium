@@ -12,7 +12,7 @@ const db = vi.hoisted(() => ({
 
 vi.mock("@/lib/db", () => ({ prisma: db }));
 import { getNewsArticle, getNewsList, getNewsSlugs } from "@/lib/news";
-import { getReviews } from "@/lib/reviews";
+import { getPublicReviews, getReviews } from "@/lib/reviews";
 
 const publishedNews = {
   id: "news-1",
@@ -115,5 +115,16 @@ describe("новости и отзывы", () => {
       where: { published: true },
       orderBy: { createdAt: "asc" },
     });
+  });
+
+  it("не роняет публичную страницу при временной ошибке отзывов", async () => {
+    const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+    db.review.findMany.mockRejectedValue(new Error("database unavailable"));
+
+    await expect(getPublicReviews()).resolves.toEqual([]);
+    expect(consoleError).toHaveBeenCalledWith(
+      "Failed to load public reviews",
+      expect.any(Error),
+    );
   });
 });

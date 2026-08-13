@@ -11,7 +11,7 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 35
     env:
       DATABASE_URL: file:./ci.db
       ADMIN_PASSWORD_HASH: $2b$12$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy
@@ -35,6 +35,14 @@ jobs:
 
       - name: Production build
         run: npm run build
+
+      - name: Install browser engines
+        run: npx playwright install --with-deps chromium webkit
+
+      - name: Production end-to-end tests
+        run: npm run test:e2e
+        env:
+          PLAYWRIGHT_PRODUCTION: "1"
 
       - name: Production dependency audit
         run: npm audit --audit-level=high

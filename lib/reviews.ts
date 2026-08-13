@@ -25,3 +25,13 @@ export async function getReviews(): Promise<Review[]> {
     imageAlt: r.imageAlt,
   }));
 }
+
+/** Public pages stay usable when the reviews store is temporarily unavailable. */
+export async function getPublicReviews(): Promise<Review[]> {
+  try {
+    return await getReviews();
+  } catch (error) {
+    console.error("Failed to load public reviews", error);
+    return [];
+  }
+}
