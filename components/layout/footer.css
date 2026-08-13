@@ -1,0 +1,295 @@
+/* ============================================================
+   Site Footer — РЕРАЙТ (ветка rebuild)
+   Mobile-first, fluid по 8 артбордам: 390 / 480 / 640 / 768 / 960 /
+   1200 / 1536 / 1920. База (без медиа) = артборд 390.
+   Боковой отступ = var(--gutter) (тот же, что у контента/шапки:
+   20/20/30/40/40/40/60/60). Радиус верхних углов = var(--radius-page).
+   Числа/типографика — из Figma text-styles (Onest 14/16/18/20/24),
+   разметка и логика (копирование телефона, дисклеймер, ссылки) сохранены.
+
+   Композиция по тирам:
+   - 390–640  : top в колонку; nav = сетка 2×2; aside = колонка
+                (контакты → копирайт), всё влево.
+   - 768–960  : top в колонку; nav = ряд из 4 колонок; aside = ряд
+                (контакты слева | копирайт справа).
+   - 1200–1536: top в ряд (nav слева | aside-сайдбар 300 справа);
+                aside = колонка (контакты над копирайтом), вправо.
+   - 1920     : top в ряд; nav слева; aside = ряд (контакты | копирайт),
+                прижат вправо.
+   ============================================================ */
+
+/* ---------- База = 390 ---------- */
+.site-footer {
+  background: var(--color-carbon-black-500, #1B1E1D);
+  color: var(--color-stone-beige-200, #E4DFDB);
+  border-radius: var(--radius-page) var(--radius-page) 0 0;
+  /* Отступ футера от контента над ним. Независимый от секционного
+     --section-space: те же числа (72 → 160, резина по vw), но правка
+     межсекционных отступов футер не двигает и наоборот. */
+  margin-top: clamp(72px, 8.333vw, 160px);
+  padding: 40px var(--gutter) 24px;
+  overflow: hidden;
+}
+.site-footer__inner { max-width: 1800px; margin: 0 auto; }
+
+/* top = nav (footer-cols) + aside */
+.footer-top {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 32px;
+}
+
+/* nav: сетка 2×2 */
+.footer-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 16px;
+  row-gap: 28px;
+}
+.footer-col { display: flex; flex-direction: column; gap: 16px; }
+.footer-col__title {
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-regular, 400);
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--color-stone-beige-200, #E4DFDB);
+  opacity: 0.5;
+}
+.footer-col__list { display: flex; flex-direction: column; gap: 12px; }
+.footer-col__list a {
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-regular, 400);
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--color-stone-beige-200, #E4DFDB);
+  text-decoration: none;
+}
+.footer-col__list a:hover { opacity: 0.7; }
+
+/* aside = контакты + правовой блок */
+.footer-aside { display: flex; flex-direction: column; gap: 24px; }
+
+.footer-contacts { display: flex; flex-direction: column; gap: 16px; }
+.footer-phone__label {
+  margin-bottom: 16px;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-regular, 400);
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--color-stone-beige-200, #E4DFDB);
+  opacity: 0.5;
+}
+.footer-phone {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.footer-phone__value {
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--color-stone-beige-200, #E4DFDB);
+  text-decoration: none;
+}
+/* Кнопка-иконка «Скопировать» (fluid 18 → 24) */
+.footer-phone__copy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(18px, calc(18px + (100vw - 390px) * 0.0074), 24px);
+  height: clamp(18px, calc(18px + (100vw - 390px) * 0.0074), 24px);
+  flex: none;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  opacity: 0.8;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+.footer-phone__copy:hover { opacity: 1; }
+.footer-phone__copy svg { width: 100%; height: 100%; display: block; }
+/* Подсказка «Номер скопирован» */
+.footer-phone__hint {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 10px);
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: var(--color-white, #FFFFFF);
+  color: var(--color-carbon-black-500, #1B1E1D);
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-medium, 500);
+  font-size: var(--fs-14, 14px);
+  line-height: 20px;
+  white-space: nowrap;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 25%);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.18s;
+}
+.footer-phone__hint.is-visible { opacity: 1; visibility: visible; transform: translateY(0); }
+.footer-phone__hint.is-error { color: var(--color-red-500, #BB4545); }
+
+/* Соцсети (fluid: размер 32 → 42, зазор 12 → 16) */
+.footer-socials { display: flex; gap: clamp(12px, calc(12px + (100vw - 390px) * 0.004938), 16px); }
+.footer-social {
+  width: clamp(32px, calc(32px + (100vw - 390px) * 0.012346), 42px);
+  height: clamp(32px, calc(32px + (100vw - 390px) * 0.012346), 42px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.footer-social img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.footer-social:hover { filter: brightness(0.94); }
+
+/* Правовой блок: копирайт + правовые доки + дисклеймер */
+.footer-legal { display: flex; flex-direction: column; gap: 12px; text-align: left; }
+.footer-legal p,
+.footer-legal a {
+  margin: 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-regular, 400);
+  font-size: 14px;
+  line-height: 18px;
+  color: rgba(228, 223, 219, 0.4); /* #E4DFDB @ 40% — как в макете */
+  text-decoration: none;
+}
+.footer-legal a:hover { opacity: 0.7; }
+/* Дисклеймер (ст. 435/437) — в макете его нет, взят со старого футера:
+   мелкий текст под правовыми, по выравниванию блока. */
+.footer-legal .footer-disclaimer {
+  max-width: 365px;
+  margin-top: 4px;
+  font-size: 10px;
+  line-height: 14px;
+  color: var(--color-white, #FFFFFF);
+  opacity: 0.3;
+}
+
+/* Слоган + большой логотип */
+.footer-tagline {
+  margin: 40px 0 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-regular, 400);
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--color-white, #FFFFFF);
+  opacity: 0.3;
+}
+.footer-logo { margin-top: 4px; }
+.footer-logo img { width: 100%; height: auto; display: block; }
+
+/* ---------- 480 ---------- */
+@media (min-width: 480px) {
+  .site-footer { padding-top: 44px; padding-bottom: 28px; }
+  .footer-top { gap: 36px; }
+  .footer-cols { column-gap: 40px; }
+  .footer-phone__value { font-size: 20px; line-height: 28px; }
+  .footer-tagline { margin-top: 44px; font-size: 16px; line-height: 20px; }
+}
+
+/* ---------- 640 ---------- */
+@media (min-width: 640px) {
+  .site-footer { padding-top: 48px; padding-bottom: 32px; }
+  .footer-top { gap: 40px; }
+  .footer-cols { row-gap: 32px; }
+  .footer-col__title { font-size: 18px; line-height: 24px; }
+  .footer-phone__label { font-size: 18px; line-height: 24px; }
+  .footer-col__list a,
+  .footer-legal p,
+  .footer-legal a { font-size: 16px; line-height: 20px; }
+  .footer-tagline { margin-top: 48px; font-size: 18px; line-height: 24px; }
+}
+
+/* ---------- 768 : nav = ряд из 4 колонок; aside = ряд ---------- */
+@media (min-width: 768px) {
+  .site-footer { padding-top: 56px; }
+  .footer-top { gap: 36px; }
+  .footer-cols {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+  }
+  .footer-col { flex: 0 1 auto; }
+  .footer-aside {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+  }
+  .footer-contacts { align-items: flex-start; }
+  .footer-legal { align-items: flex-end; text-align: right; }
+  .footer-legal .footer-disclaimer { margin-left: auto; }
+  .footer-tagline { margin-top: 56px; }
+}
+
+/* ---------- 960 ---------- */
+@media (min-width: 960px) {
+  .site-footer { padding-bottom: 36px; }
+  .footer-top { gap: 40px; }
+  .footer-tagline { margin-top: 64px; }
+}
+
+/* ---------- 1200 : top = ряд (nav | aside-сайдбар 300) ---------- */
+@media (min-width: 1200px) {
+  .site-footer { padding-top: 60px; padding-bottom: 40px; }
+  .footer-top {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+  }
+  .footer-cols {
+    flex: 0 1 auto;
+    justify-content: flex-start;
+    gap: 32px;
+  }
+  .footer-aside {
+    flex: 0 0 300px;
+    width: 300px;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 24px;
+  }
+  .footer-contacts { align-items: flex-end; }
+  .footer-col__title { font-size: 18px; line-height: 24px; }
+  .footer-col__list a,
+  .footer-legal p,
+  .footer-legal a { font-size: 18px; line-height: 24px; }
+  .footer-phone__value { font-size: 24px; line-height: 30px; }
+  .footer-tagline { margin-top: 80px; font-size: 20px; line-height: 28px; }
+}
+
+/* ---------- 1536 ---------- */
+@media (min-width: 1536px) {
+  .footer-cols { gap: 56px; }
+  .footer-col__title { font-size: 20px; line-height: 28px; }
+  .footer-phone__label { font-size: 20px; line-height: 28px; }
+  /* Зазор nav → слоган плавно 80 (1536) → 178 (1920). */
+  .footer-tagline {
+    margin-top: clamp(80px, calc(80px + (100vw - 1536px) * 0.255208), 178px);
+  }
+}
+
+/* ---------- 1920 : aside = ряд (контакты | копирайт), прижат вправо ---------- */
+@media (min-width: 1920px) {
+  .footer-cols { gap: 98px; }
+  .footer-aside {
+    flex: 0 0 auto;
+    width: auto;
+    margin-left: auto;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 80px;
+  }
+  .footer-contacts { align-items: flex-start; gap: 24px; }
+  .footer-legal { align-items: flex-end; text-align: right; }
+  .footer-tagline { margin-top: 178px; }
+}

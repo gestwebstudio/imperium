@@ -1,5 +1,5 @@
 import Link from "next/link";
-import "./layout.css";
+import "./footer.css";
 import { ButtonLink } from "@/components/ui/Button";
 import { FooterPhone } from "@/components/layout/FooterPhone";
 
@@ -52,12 +52,12 @@ const SOCIALS = [
     icon: "/icons/tg.svg",
     href: "https://telegram.me/Vladislav_imperium_motors",
   },
+  { label: "MAX", icon: "/icons/max.svg" },
   {
     label: "WhatsApp",
     icon: "/icons/wa.svg",
     href: "https://wa.me/79250158725",
   },
-  { label: "MAX", icon: "/icons/max.svg" },
 ] as const;
 
 export function Footer() {
