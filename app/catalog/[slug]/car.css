@@ -37,8 +37,6 @@
 .cat-crumbs__item--current { color: var(--color-carbon-black-500, #1B1E1D); cursor: default; }
 .cat-crumbs .breadcrumbs__separator {
   flex: none;
-  width: 12px;
-  height: 12px;
   color: var(--color-warm-taupe-300, #B2A79B);
   transform: rotate(180deg);
 }
@@ -3470,4 +3468,11 @@
     font-size: var(--type-display-16-font-size);
     line-height: var(--type-display-16-line-height);
   }
+
+  /* Галерея (макет 390): центральное фото 331 (видны боковые кадры),
+     гэп дорожки 16, стрелки — 10px внутри краёв фото. */
+  .car-gallery { --gal-w: calc(100vw - 59px); }
+  .car-gallery__track { gap: 16px; }
+  .car-gallery__arrow--prev { left: calc(50% - var(--gal-w) / 2 + 10px); }
+  .car-gallery__arrow--next { right: calc(50% - var(--gal-w) / 2 + 10px); }
 }

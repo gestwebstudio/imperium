@@ -822,6 +822,13 @@
   .ui-crumbs.ui-crumbs--compact-mobile {
     margin-bottom: 2px;
   }
+}
+
+/* Размер шрифта и разделителя крошек на мобильном тире (макет 390: текст
+   10/14, шеврон 8×8). Граница 479, чтобы ловить дробную ширину вьюпорта
+   (390.4 при dpr≈2), где max-width:390 промахивался. Отступы крошек не
+   трогаем (они выше, на max-width:390). */
+@media (max-width: 479px) {
   .ui-crumbs .ui-crumbs__item {
     font-size: 10px;
     line-height: 14px;
