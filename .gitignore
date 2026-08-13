@@ -21,3 +21,6 @@ npm-debug.log*
 # database (Prisma SQLite)
 /prisma/*.db
 /prisma/*.db-journal
+
+# Временная копия старой вёрстки как референс для рерайта (удалить в конце)
+/reference/

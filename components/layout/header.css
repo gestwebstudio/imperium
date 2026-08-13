@@ -1,0 +1,328 @@
+/* ============================================================
+   Site Header (rebuild) — плавающая плашка Liquid Glass.
+   Mobile-first, fluid по 8 артбордам: 390 480 640 768 960 1200 1536 1920.
+   Боковой отступ = общий --gutter. Верх до шапки = 18px фикс.
+   Числа из макета Figma (Header frames 921:* / 1265:3405 / 1047:8829 / 1046:5644).
+   Стекло/бургер/услуги переиспользуют GlassSurface/MobileMenu/ServicesMega.
+   ============================================================ */
+.site-header {
+  /* База = мобильный тир (390–480). Крупные значения возвращаются через min-width. */
+  --site-header-height: 58px;          /* 58 (390-480) → 66 (640-1536) → 78 (1920) */
+  --site-header-logo-width: 201px;     /* 201 (390-480) → 275 (640-960) → 241/273/336 (десктоп) */
+  --site-header-logo-height: calc(var(--site-header-logo-width) / 10.5);
+  --site-header-control-size: 36px;    /* бургер/кнопка: 36 (390-480) → 44 (640-960) → 46 (1920) */
+  --site-header-icon-size: 18px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-header, 50);
+  padding: 18px var(--gutter) 0;       /* верх 18 фикс, бока = общий gutter */
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+/* Headroom: уезжает вверх при скролле вниз */
+.site-header.is-hidden { transform: translateY(calc(-100% - 8px)); }
+/* На страницах со своим закреплённым контентом шапка уходит с началом документа. */
+.site-header.is-flowing { position: absolute; transform: none; }
+body.comparison-route .site-header { position: absolute; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .site-header { transition: none; }
+}
+
+.site-header__bar {
+  max-width: 1880px;
+  margin: 0 auto;
+  min-height: var(--site-header-height);
+}
+.liquid-glass.site-header__bar {
+  background: rgb(228 223 219 / 30%);
+}
+.site-header__bar > .liquid-glass__content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 11px 11px 11px clamp(18px, 5vw, 30px);
+}
+
+/* Навигация (Услуги ▾ / О салоне / Контакты) — только десктоп (≥1200). */
+.site-header__nav { display: none; align-items: center; gap: clamp(24px, 2vw, 38px); }
+.site-header__nav a,
+.site-header__nav-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-medium, 500);
+  font-size: 20px;
+  line-height: 28px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+  text-decoration: none;
+  white-space: nowrap;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+.site-header__nav a:hover,
+.site-header__nav-trigger:hover { color: var(--color-heritage-green-500, #294434); }
+.site-header__nav svg,
+.site-header__nav-trigger svg { width: 15px; height: 15px; }
+
+/* Логотип: мобилка — слева (order 1), десктоп — по центру (абсолют). */
+.site-header__logo {
+  position: static;
+  order: 1;
+  display: block;
+  width: var(--site-header-logo-width);
+  height: var(--site-header-logo-height);
+  transform: none;
+}
+.site-header__logo img { width: 100%; height: 100%; display: block; }
+
+.site-header__actions { display: none; align-items: center; gap: 16px; }
+
+/* Бургер — базовый (мобилка); на десктопе скрыт. */
+.site-header__burger {
+  position: relative;
+  order: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--site-header-control-size);
+  height: var(--site-header-control-size);
+  flex: none;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  background: var(--color-white, #FFFFFF);
+  color: var(--color-carbon-black-500, #1B1E1D);
+  isolation: isolate;
+}
+.site-header__burger img {
+  display: block;
+  width: clamp(10px, calc(2px + 2.5vw), 16px);
+  height: auto;
+}
+
+/* Кнопка телефона (десктоп): номер выезжает по наведению/фокусу. */
+.header-call {
+  --header-call-expanded-width: 195px;
+  box-sizing: border-box;
+  width: var(--site-header-control-size);
+  height: var(--site-header-control-size);
+  flex: none;
+  overflow: hidden;
+  padding: 0;
+  border: none;
+  border-radius: 90px;
+  cursor: pointer;
+  background: var(--color-stone-beige-100, #F3F0EE);
+  color: var(--color-heritage-green-500, #294434);
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  transition:
+    width 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 150ms ease;
+}
+.ui-button.header-call > .header-call__number {
+  position: absolute;
+  right: calc(
+    (var(--site-header-control-size) - var(--site-header-icon-size)) / 2 +
+      var(--site-header-icon-size) + 12px
+  );
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateX(8px);
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: 16px;
+  line-height: 20px;
+  white-space: nowrap;
+  transition:
+    max-width 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 160ms ease,
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.ui-button.header-call > svg {
+  position: absolute;
+  top: 50%;
+  right: calc((var(--site-header-control-size) - var(--site-header-icon-size)) / 2);
+  width: var(--site-header-icon-size);
+  height: var(--site-header-icon-size);
+  flex: none;
+  transform: translateY(-50%);
+}
+.header-call:hover { filter: brightness(0.97); }
+
+/* Плашка «Номер скопирован» */
+.header-copy-alert.alert {
+  position: absolute;
+  top: calc(18px + var(--site-header-height) + 10px);
+  right: max(var(--gutter), calc((100vw - 1880px) / 2 + 40px));
+  z-index: 2;
+  width: 340px;
+  min-height: 56px;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 10px 10px 16px;
+  border-radius: 20px;
+  background: var(--color-white, #FFFFFF);
+  box-shadow: 0 10px 30px rgb(27 30 29 / 14%);
+  color: var(--color-carbon-black-500, #1B1E1D);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition:
+    opacity 180ms ease,
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 180ms;
+}
+.header-copy-alert .alert__indicator {
+  flex: none;
+  padding: 0;
+  color: var(--color-heritage-green-400, #4E7B60);
+}
+.header-copy-alert .alert__indicator [data-slot="alert-default-icon"] {
+  width: 20px;
+  height: 20px;
+}
+.header-copy-alert .alert__content { justify-content: center; }
+.header-copy-alert .alert__title {
+  color: var(--color-carbon-black-500, #1B1E1D);
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: var(--fs-14, 14px);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 20px;
+  white-space: nowrap;
+}
+.header-copy-alert .header-copy-alert__close.button {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  min-height: 28px;
+  flex: none;
+  margin-left: auto;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-stone-beige-100, #F3F0EE);
+  color: var(--color-warm-taupe-500, #6A6259);
+  cursor: pointer;
+}
+.header-copy-alert .header-copy-alert__close.button > svg { width: 12px; height: 12px; }
+.header-copy-alert.is-visible {
+  pointer-events: auto;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.header-copy-alert.is-error .alert__indicator { color: var(--color-red-500, #BB4545); }
+
+/* ===== Fluid-тиры (min-width, наши артборды) ===== */
+
+/* 480→640: высота 58→66, лого 201→275, бургер 36→44. */
+@media (min-width: 480px) {
+  .site-header {
+    --site-header-height: clamp(58px, calc(58px + (100vw - 480px) * 0.05), 66px);
+    --site-header-logo-width: clamp(201px, calc(201px + (100vw - 480px) * 0.4625), 275px);
+    --site-header-control-size: clamp(36px, calc(36px + (100vw - 480px) * 0.05), 44px);
+  }
+}
+/* 640–1199: высота 66, лого 275, бургер 44 (постоянны). */
+@media (min-width: 640px) {
+  .site-header {
+    --site-header-height: 66px;
+    --site-header-logo-width: 275px;
+    --site-header-control-size: 44px;
+  }
+}
+
+/* 1200: десктопная раскладка — nav слева, лого по центру, кнопки справа. */
+@media (min-width: 1200px) {
+  .site-header {
+    --site-header-height: 66px;
+    --site-header-logo-width: clamp(241px, calc(241px + (100vw - 1200px) * 0.095238), 273px);
+    --site-header-logo-height: calc(var(--site-header-logo-width) / 10.5);
+    --site-header-control-size: 36px;
+    --site-header-icon-size: 18px;
+  }
+  .site-header__bar > .liquid-glass__content { padding: 16px 40px; }
+  .site-header__nav,
+  .site-header__actions { display: flex; }
+  .site-header__logo {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    order: initial;
+    transform: translate(-50%, -50%);
+  }
+  .site-header__burger { display: none; }
+  .site-header__nav a,
+  .site-header__nav-trigger { font-size: 16px; line-height: 20px; }
+  .site-header__actions { gap: 12px; }
+  .header-call {
+    --header-call-expanded-width: 185px;
+    background: var(--color-warm-taupe-100, #F2EEEA);
+  }
+  .header-call:focus-visible { width: var(--header-call-expanded-width); }
+  .header-call:focus-visible .header-call__number {
+    max-width: 160px;
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@media (min-width: 1200px) and (hover: hover) and (pointer: fine) {
+  .header-call:hover { width: var(--header-call-expanded-width); }
+  .header-call:hover .header-call__number {
+    max-width: 160px;
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@media (max-width: 1199px) {
+  .header-copy-alert { display: none; }
+}
+
+/* 1536→1920: высота 66→78, лого 273→336, бургер-контрол 36→46, иконка 18→24, nav 16/20→20/28. */
+@media (min-width: 1536px) {
+  .site-header {
+    --site-header-height: clamp(66px, calc(66px + (100vw - 1536px) * 0.03125), 78px);
+    --site-header-logo-width: clamp(273px, calc(273px + (100vw - 1536px) * 0.164063), 336px);
+    --site-header-logo-height: calc(var(--site-header-logo-width) / 10.5);
+    --site-header-control-size: clamp(36px, calc(36px + (100vw - 1536px) * 0.026042), 46px);
+    --site-header-icon-size: clamp(18px, calc(18px + (100vw - 1536px) * 0.015625), 24px);
+  }
+  .site-header__nav a,
+  .site-header__nav-trigger {
+    font-size: clamp(16px, calc(16px + (100vw - 1536px) * 0.010417), 20px);
+    line-height: clamp(20px, calc(20px + (100vw - 1536px) * 0.020833), 28px);
+  }
+}
+
+/* 1920: CTA «Каталог» — размер L (по макету 1920). */
+@media (min-width: 1920px) {
+  .site-header__cta.btn--primary-cta {
+    --cta-control-size: 46px;
+    --cta-pressed-size: 148px;
+    --cta-arrow-shift: -11px;
+    --cta-icon-size: 16px;
+    --cta-label-shift: 8px;
+    height: 46px;
+    padding: 0 0 0 22px;
+    gap: 12px;
+    font-size: 18px;
+    line-height: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-call,
+  .header-call__number,
+  .header-copy-alert { transition-duration: .01ms; }
+}

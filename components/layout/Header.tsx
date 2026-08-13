@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type MouseEvent } from "react";
 import Link from "next/link";
 import { Alert, Button as HeroButton } from "@heroui/react";
+import "./header.css";
 import "./layout.css";
 import {
   PhoneIcon,
