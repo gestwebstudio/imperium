@@ -17,9 +17,10 @@
 .trade-in > section:has(.ti-call) {
   margin-top: var(--section-space, 160px);
 }
-/* Первая секция после hero — меньший зазор (по макету hero→steps = 120px) */
+/* Первая секция после hero (hero→steps). MOBILE-FIRST: база = мобилка 70;
+   640→80, 1200→100, 1536→120 (см. блок адаптаций шагов ниже). */
 .trade-in > .ti-steps {
-  margin-top: 120px;
+  margin-top: 70px;
 }
 .trade-in > .contacts {
   margin-top: 200px;
@@ -231,15 +232,15 @@
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 
-/* ---------------- Как проходит trade-in ---------------- */
+/* ---------------- Как проходит trade-in (MOBILE-FIRST, база = 390) ---------------- */
 .ti-steps__grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px;
+  grid-template-columns: minmax(0, 1fr); /* база = 1 колонка; 640 → 2 */
+  gap: 20px;                             /* база = мобилка; 1200 → 24 */
 }
 .ti-step {
   position: relative;
-  padding: 30px;
+  padding: 26px 26px 20px; /* база = мобилка; 768 → 30 */
   border-radius: var(--radius-card, 30px);
   background: var(--color-white, #FFFFFF);
   display: flex;
@@ -255,17 +256,47 @@
   margin: 0;
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
   font-weight: var(--font-weight-semibold, 600);
-  font-size: 36px;
-  line-height: 44px;
+  font-size: 18px; /* база = мобилка 18/22; 768→20/26, 960→24/28, 1200→30/38, 1536→36/44 */
+  line-height: 22px;
   color: var(--color-heritage-green-500, #294434);
 }
 .ti-step__text {
   margin: 0;
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: 18px;
-  line-height: 24px;
+  font-size: 14px; /* база = мобилка 14/18; 768→16/20, 1536→18/24 */
+  line-height: 18px;
   color: var(--color-warm-taupe-500, #6A6259);
   opacity: 0.7;
+}
+
+/* ===== Адаптации «Как проходит trade-in» (MOBILE-FIRST, база = 390) =====
+   Каждый @media — дельта, возвращающая крупные значения вверх. */
+/* 640: шаги в 2 колонки; hero→steps 80. */
+@media (min-width: 640px) {
+  .ti-steps__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .trade-in > .ti-steps { margin-top: 80px; }
+}
+/* 768: шаг 20/26 + текст 16/20; паддинг карточки 30. */
+@media (min-width: 768px) {
+  .ti-step { padding: 30px; }
+  .ti-step__title { font-size: 20px; line-height: 26px; }
+  .ti-step__text { font-size: 16px; line-height: 20px; }
+}
+/* 960: шаг 24/28. */
+@media (min-width: 960px) {
+  .ti-step__title { font-size: 24px; line-height: 28px; }
+}
+/* 1200: сетка gap 24; шаг 30/38; hero→steps 100. */
+@media (min-width: 1200px) {
+  .ti-steps__grid { gap: 24px; }
+  .ti-step__title { font-size: 30px; line-height: 38px; }
+  .trade-in > .ti-steps { margin-top: 100px; }
+}
+/* 1536: шаг 36/44 + текст 18/24; hero→steps 120. */
+@media (min-width: 1536px) {
+  .ti-step__title { font-size: 36px; line-height: 44px; }
+  .ti-step__text { font-size: 18px; line-height: 24px; }
+  .trade-in > .ti-steps { margin-top: 120px; }
 }
 
 /* ---------------- Два блока с фото (что влияет / мы готовы принять) ---------------- */
@@ -409,39 +440,32 @@
 
 /* ===== Адаптации секций ниже hero (desktop-first) ===== */
 
-/* 1200–1535: общий .t-page-title даёт 36/44; шаг 30/38 + текст 16/20;
+/* 1200–1535: общий .t-page-title даёт 36/44;
    блок-заголовки 36/44; список «принять» 16/20; callout 24/30; примечание 16/20;
-   зазор секций 120; блоки картинка+текст gap 50 (как база). */
+   зазор секций 120; блоки картинка+текст gap 50 (как база).
+   (Шаги вынесены в mobile-first-блок выше.) */
 @media (max-width: 1535px) {
   .trade-in { --section-space: 120px; }
-  .trade-in > .ti-steps { margin-top: 100px; }
   .trade-in > .contacts { margin-top: 160px; }
-  .ti-step__title { font-size: 30px; line-height: 38px; }
-  .ti-step__text { font-size: 16px; line-height: 20px; }
   .ti-block__title { font-size: 36px; line-height: 44px; }
   .ti-accept .ti-list li { font-size: 16px; line-height: 20px; }
   .ti-callout { font-size: 24px; line-height: 30px; }
   .ti-accept__note { font-size: 16px; line-height: 20px; }
 }
 
-/* 960–1199: .t-page-title переключается на 32/40 при 960; шаг 24/28;
-   блок-заголовки 32/40; callout 20/28.
-   Ряды карточек — gap 20. */
+/* 960–1199: .t-page-title переключается на 32/40 при 960;
+   блок-заголовки 32/40; callout 20/28. */
 @media (max-width: 1199px) {
-  .trade-in > .ti-steps { margin-top: 80px; }
   .trade-in > .contacts { margin-top: 140px; }
-  .ti-step__title { font-size: 24px; line-height: 28px; }
   .ti-block__title { font-size: 32px; line-height: 40px; }
   .ti-callout { font-size: 20px; line-height: 28px; }
-  .ti-steps__grid { gap: 20px; }
 }
 
-/* ≤959 (768): шаг 20/26; блок-заголовки 30/38; примечание 14/18.
+/* ≤959 (768): блок-заголовки 30/38; примечание 14/18.
    Блоки картинка+текст: картинка уже, текст шире; gap 50. */
 @media (max-width: 959px) {
   .trade-in { --section-space: 100px; }
   .trade-in > .contacts { margin-top: 120px; }
-  .ti-step__title { font-size: 20px; line-height: 26px; }
   .ti-block__title { font-size: 30px; line-height: 38px; }
   .ti-accept__note { font-size: 14px; line-height: 18px; }
   .ti-call__title { font-size: 30px; line-height: 38px; }
@@ -449,27 +473,21 @@
   .ti-callout::before { width: 80px; height: 66px; top: -32px; }
 }
 
-/* ≤767 (640): .t-page-title переключается на 28/34 при 640; шаг 18/22 + текст 14/18, паддинг 26/20;
+/* ≤767 (640): .t-page-title переключается на 28/34 при 640;
    блок-заголовки 24/32; баннер заголовок 28/34, подзаг 14/18.
    Блоки картинка+текст: картинка узкой полосой слева, gap 40. */
 @media (max-width: 767px) {
   .trade-in { --section-space: 80px; }
   .trade-in > .contacts { margin-top: 100px; }
-  .ti-step__title { font-size: 18px; line-height: 22px; }
-  .ti-step__text { font-size: 14px; line-height: 18px; }
-  .ti-step { padding: 26px 26px 20px; }
   .ti-block__title { font-size: 24px; line-height: 32px; }
   .ti-call__title { font-size: 28px; line-height: 34px; }
   .ti-call__sub { font-size: 14px; line-height: 18px; }
 }
 
-/* ≤639 (480/390): зазор секций 80; .t-page-title остаётся 28/34 до 390 и затем 24/30;
-   шаги в одну колонку;
+/* ≤639 (480/390): .t-page-title остаётся 28/34 до 390 и затем 24/30;
    баннер заголовок 24/30. Блоки «что влияет» / «мы готовы принять» — беж-карточка
    без фото (по макету 480: stone-beige, radius 30, паддинг 20), картинка скрыта. */
 @media (max-width: 639px) {
-  .trade-in > .ti-steps { margin-top: 70px; }
-  .ti-steps__grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
   .ti-call__title { font-size: 24px; line-height: 30px; }
   .ti-factors,
   .ti-accept {
