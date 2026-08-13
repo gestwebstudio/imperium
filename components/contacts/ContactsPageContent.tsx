@@ -1,6 +1,6 @@
 "use client";
 
-import { Contacts } from "@/components/home/Contacts";
+import { Contacts } from "@/components/contacts/Contacts";
 import { Crumbs } from "@/components/ui/Crumbs";
 
 export function ContactsPageContent() {

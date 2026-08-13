@@ -5,7 +5,7 @@ import { Podbor } from "@/components/catalog/Podbor";
 import { BodyTypesNav } from "@/components/collection/BodyTypesNav";
 import { BrandsRow } from "@/components/home/BrandsRow";
 import { CarsSection } from "@/components/home/CarsSection";
-import { Contacts } from "@/components/home/Contacts";
+import { Contacts } from "@/components/contacts/Contacts";
 
 /**
  * SEO-страница-подборка (по кузову/бренду). Похожа на каталог, но с урезанным

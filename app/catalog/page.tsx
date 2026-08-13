@@ -6,7 +6,7 @@ import { CatalogClient } from "@/components/catalog/CatalogClient";
 import { TradeLeasing } from "@/components/catalog/TradeLeasing";
 import { Podbor } from "@/components/catalog/Podbor";
 import { CarsSection } from "@/components/home/CarsSection";
-import { Contacts } from "@/components/home/Contacts";
+import { Contacts } from "@/components/contacts/Contacts";
 
 export const metadata: Metadata = {
   title: "Каталог — Imperium Motors",

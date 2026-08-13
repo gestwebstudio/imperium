@@ -765,6 +765,10 @@
   padding: 0;
   list-style: none;
 }
+/* Нижний зазор крошек «крошки → элемент снизу» — единый источник (20).
+   Идёт ПОСЛЕ сброса margin:0 выше, поэтому побеждает без спецификации-хаков
+   и работает на всех страницах. Дублирующие .<page> .ui-crumbs больше не нужны. */
+.ui-crumbs { margin-bottom: var(--crumbs-gap-bottom); }
 .ui-crumbs li {
   display: inline-flex;
   align-items: center;

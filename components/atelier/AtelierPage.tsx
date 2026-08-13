@@ -2,7 +2,7 @@ import { ServiceImageCard } from "@/components/cards/cards";
 import { Crumbs } from "@/components/ui/Crumbs";
 import { ButtonLink } from "@/components/ui/Button";
 import { LeadModal } from "@/components/ui/LeadModal";
-import { Contacts } from "@/components/home/Contacts";
+import { Contacts } from "@/components/contacts/Contacts";
 import { ProjectsRow } from "@/components/atelier/ProjectsRow";
 
 const ATELIER_MODAL = {

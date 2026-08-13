@@ -1,0 +1,272 @@
+/* ============================================================
+   Блок «Контакты» (cblock) — РЕРАЙТ (ветка rebuild)
+   Mobile-first, fluid по 8 артбордам: 390 / 480 / 640 / 768 / 960 /
+   1200 / 1536 / 1920. База (без медиа) = артборд 390.
+   Боковой отступ контейнера = var(--gutter) (= падинги Figma 1-в-1:
+   20/20/30/40/40/40/60/60). Радиусы = var(--radius-card|media).
+   Namespace cblock__* — изолирован от легаси .contacts__* (home.css).
+   Секционный класс .contacts на корне сохранён для отступов страниц.
+
+   Композиция по тирам:
+   - 390        : стек. Галерея — гориз. скролл (snap). Строки в столбик.
+   - 480–640    : стек. Строки: [Телефон | Часы] + Адрес во всю ширину.
+                  640: галерея 3-в-ряд (сетка). Карта под контактами.
+   - 768–960    : стек (заголовок → 3 фото → карточка). Внутри карточки —
+                  контакты | карта (в ряд). Строки в столбик.
+   - 1200–1920  : 2 колонки: [заголовок+подзаголовок+коллаж] | [карточка].
+                  Коллаж = высокое фото + 2 в столбик. В карточке — контакты
+                  над картой, карта тянется на остаток высоты.
+   ============================================================ */
+
+/* ---------- Контейнер ---------- */
+.cblock {
+  width: 100%;
+  max-width: var(--layout-max, 1920px);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  box-sizing: border-box;
+}
+
+/* ---------- База = 390 (стек) ---------- */
+.cblock__grid { display: flex; flex-direction: column; gap: 30px; }
+.cblock__left { display: flex; flex-direction: column; gap: 30px; min-width: 0; }
+
+.cblock__title {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-size: 32px;
+  line-height: 40px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.cblock__title .l1 { font-weight: 400; }
+.cblock__title .l2 { font-weight: 800; }
+.cblock__sub {
+  margin: 16px 0 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+
+/* Галерея — мобильный горизонтальный скролл со snap */
+.cblock__gallery {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.cblock__gallery::-webkit-scrollbar { display: none; }
+.cblock__gallery img {
+  flex: 0 0 142px;
+  width: 142px;
+  aspect-ratio: 142 / 104;
+  height: auto;
+  object-fit: cover;
+  border-radius: var(--radius-media);
+  scroll-snap-align: start;
+  display: block;
+}
+
+/* Карточка (surface): контакты + карта */
+.cblock__info {
+  box-sizing: border-box;
+  background: rgba(228, 223, 219, 0.4); /* stone-beige-200 @ 40% */
+  border-radius: var(--radius-card);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.cblock__rows { display: flex; flex-direction: column; gap: 24px; align-items: flex-start; }
+.cblock__row { display: flex; flex-direction: column; gap: 4px; }
+.cblock__row .label {
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--color-warm-taupe-400, #8F8579);
+}
+.cblock__row .value {
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.cblock__row .note {
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--color-warm-taupe-400, #8F8579);
+}
+
+.cblock__map {
+  width: 100%;
+  height: 165px;
+  border-radius: var(--radius-media);
+  overflow: hidden;
+  background: var(--color-stone-beige-200, #E4DFDB);
+}
+.cblock__map .loading-iframe__frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+/* Кнопка «Построить маршрут»: база = S (28), M от 640, L от 1536 */
+.cblock__cta.btn { align-self: flex-start; }
+
+/* ---------- 480 : строки в 2 колонки; галерея 3-в-ряд (скролл только на 390) ---------- */
+@media (min-width: 480px) {
+  .cblock__title { font-size: 36px; line-height: 44px; }
+  .cblock__info { gap: 40px; }
+
+  .cblock__gallery {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    overflow: visible;
+  }
+  .cblock__gallery img {
+    flex: none;
+    width: 100%;
+    aspect-ratio: 141 / 104;
+  }
+  /* [Телефон | Часы] сверху, Адрес во всю ширину снизу */
+  .cblock__rows {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+  .cblock__rows > .cblock__row:nth-child(1) { grid-column: 1; grid-row: 1; }
+  .cblock__rows > .cblock__row:nth-child(2) { grid-column: 1 / -1; grid-row: 2; }
+  .cblock__rows > .cblock__row:nth-child(3) { grid-column: 2; grid-row: 1; }
+  .cblock__cta.btn { grid-column: 1; grid-row: 3; justify-self: start; }
+}
+
+/* ---------- 640 : галерея 3-в-ряд, крупнее ---------- */
+@media (min-width: 640px) {
+  .cblock__title { font-size: 40px; line-height: 48px; }
+  .cblock__sub { font-size: 16px; line-height: 20px; }
+  .cblock__row .label,
+  .cblock__row .note { font-size: 16px; line-height: 20px; }
+  .cblock__row .value { font-size: 18px; line-height: 24px; }
+
+  .cblock__gallery {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    overflow: visible;
+  }
+  .cblock__gallery img {
+    flex: none;
+    width: 100%;
+    aspect-ratio: 184 / 117;
+  }
+
+  .cblock__info { padding: 30px; }
+  .cblock__map { height: 203px; }
+
+  /* Кнопка → M */
+  .cblock__cta.btn { height: 36px; padding: 0 14px; font-size: 16px; line-height: 20px; }
+}
+
+/* ---------- 768 : карточка в ряд (контакты | карта) ---------- */
+@media (min-width: 768px) {
+  .cblock__title { font-size: 50px; line-height: 56px; }
+  .cblock__gallery img { aspect-ratio: 220 / 151; }
+
+  /* строки снова в столбик */
+  .cblock__rows {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: flex-start;
+  }
+  .cblock__cta.btn { align-self: flex-start; }
+
+  .cblock__info { flex-direction: row; align-items: stretch; gap: 40px; }
+  .cblock__rows { flex: 0 0 auto; }
+  .cblock__map {
+    flex: 1;
+    height: auto;
+    min-height: 240px;
+    align-self: stretch;
+  }
+}
+
+/* ---------- 960 ---------- */
+@media (min-width: 960px) {
+  .cblock__grid { gap: 32px; }
+  .cblock__left { gap: 32px; }
+  .cblock__sub { margin-top: 24px; }
+  .cblock__gallery img { aspect-ratio: 284 / 186; }
+  .cblock__row .value { font-size: 20px; line-height: 28px; }
+}
+
+/* ---------- 1200 : 2 колонки, коллаж ---------- */
+@media (min-width: 1200px) {
+  .cblock__grid {
+    display: grid;
+    grid-template-columns: 585fr 499fr;
+    column-gap: 36px;
+    align-items: stretch;
+  }
+  .cblock__left { gap: 34px; }
+  /* На десктопе строки заголовка цельные (в макете тянутся шире коллажа). */
+  .cblock__title { white-space: nowrap; }
+  .cblock__sub { font-size: 18px; line-height: 24px; }
+  .cblock__row .label,
+  .cblock__row .note { font-size: 18px; line-height: 24px; }
+  .cblock__row .value { font-size: 24px; line-height: 30px; }
+
+  /* Коллаж: высокое фото (слева, на 2 ряда) + 2 фото в столбик */
+  .cblock__gallery {
+    display: grid;
+    grid-template-columns: 1.09fr 1fr;
+    gap: 21px 14px;
+    overflow: visible;
+  }
+  .cblock__gallery img { width: 100%; height: 100%; aspect-ratio: auto; }
+  .cblock__gallery img:not(.tall) { aspect-ratio: 273 / 256; }
+  .cblock__gallery .tall { grid-column: 1; grid-row: 1 / span 2; height: 100%; }
+
+  /* Карточка снова в столбик; карта тянется на остаток высоты */
+  .cblock__info { flex-direction: column; align-items: stretch; gap: 40px; padding: 30px; }
+  .cblock__rows { flex: 0 0 auto; }
+  .cblock__map { flex: 1; height: auto; min-height: 260px; align-self: auto; }
+
+  /* Кнопка остаётся M на 1200 */
+}
+
+/* ---------- 1536 ---------- */
+@media (min-width: 1536px) {
+  .cblock__grid { grid-template-columns: 796fr 582fr; column-gap: 40px; }
+  .cblock__left { gap: 48px; }
+  .cblock__sub { margin-top: 32px; }
+  .cblock__title { font-size: 66px; line-height: 70px; }
+  .cblock__row .value { font-size: 24px; line-height: 30px; }
+  .cblock__info { padding: 40px; gap: 56px; }
+  .cblock__gallery { gap: 28px 19px; }
+  .cblock__gallery img:not(.tall) { aspect-ratio: 371 / 349; }
+
+  /* Кнопка → L */
+  .cblock__cta.btn { height: 44px; padding: 0 18px; font-size: 18px; line-height: 24px; }
+}
+
+/* ---------- 1920 ---------- */
+@media (min-width: 1920px) {
+  .cblock__grid { grid-template-columns: 973fr 734fr; column-gap: 93px; }
+  .cblock__title { font-size: 88px; line-height: 100px; }
+  .cblock__row .value { font-size: 30px; line-height: 40px; }
+  .cblock__gallery { gap: 28px 24px; }
+  .cblock__gallery img:not(.tall) { aspect-ratio: 454 / 349; }
+}

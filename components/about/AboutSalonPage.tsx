@@ -1,5 +1,5 @@
 import { AboutGallery } from "@/components/about/AboutGallery";
-import { Contacts } from "@/components/home/Contacts";
+import { Contacts } from "@/components/contacts/Contacts";
 import { Testimonials } from "@/components/home/Testimonials";
 import { ButtonLink } from "@/components/ui/Button";
 import { Crumbs } from "@/components/ui/Crumbs";

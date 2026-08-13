@@ -2,7 +2,7 @@ import { Badge } from "@/components";
 import { ServiceImageCard } from "@/components/cards/cards";
 import { Crumbs } from "@/components/ui/Crumbs";
 import { LeadModal } from "@/components/ui/LeadModal";
-import { Contacts } from "@/components/home/Contacts";
+import { Contacts } from "@/components/contacts/Contacts";
 
 /* Страница «Индивидуальный дизайн авто» (Александр Велес) — макет Figma 1006:2197. */
 

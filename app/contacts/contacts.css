@@ -7,7 +7,7 @@
   width: 100%;
   max-width: var(--layout-max, 1920px);
   margin: 0 auto;
-  padding: 0 var(--page-gutter, 60px);
+  padding: 0 var(--gutter);
 }
 
 @media (max-width: 640px) {

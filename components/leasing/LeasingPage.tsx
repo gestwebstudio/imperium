@@ -4,7 +4,7 @@ import { GlassSurface } from "@/components/ui/GlassSurface";
 import { Crumbs } from "@/components/ui/Crumbs";
 import { LeadModal } from "@/components/ui/LeadModal";
 import { CarsSection } from "@/components/home/CarsSection";
-import { Contacts } from "@/components/home/Contacts";
+import { Contacts } from "@/components/contacts/Contacts";
 
 const LEASING_MODAL = {
   title: "Расчёт лизинга",

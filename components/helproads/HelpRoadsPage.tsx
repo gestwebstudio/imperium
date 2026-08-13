@@ -2,7 +2,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { PhoneIcon } from "@/components/icons";
 import { Crumbs } from "@/components/ui/Crumbs";
 import { HelpRoadsPricing } from "@/components/helproads/HelpRoadsPricing";
-import { Contacts } from "@/components/home/Contacts";
+import { Contacts } from "@/components/contacts/Contacts";
 
 /* Страница «Помощь на дорогах» — макет Figma 841:6808.
    Все блоки, кроме второго, переиспользуют разметку/кит Trade-in. Второй — свой. */

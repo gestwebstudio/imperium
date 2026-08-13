@@ -3,7 +3,7 @@ import { Badge } from "@/components";
 import { GlassSurface } from "@/components/ui/GlassSurface";
 import { Crumbs } from "@/components/ui/Crumbs";
 import { LeadModal } from "@/components/ui/LeadModal";
-import { Contacts } from "@/components/home/Contacts";
+import { Contacts } from "@/components/contacts/Contacts";
 
 const ORDER_MODAL = {
   title: "Заказ автомобиля",

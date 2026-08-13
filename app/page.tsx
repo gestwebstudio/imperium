@@ -5,7 +5,7 @@ import { BrandsRow } from "@/components/home/BrandsRow";
 import { CarsSection } from "@/components/home/CarsSection";
 import { BodyTypes } from "@/components/home/BodyTypes";
 import { About } from "@/components/home/About";
-import { Contacts } from "@/components/home/Contacts";
+import { Contacts } from "@/components/contacts/Contacts";
 
 export default function HomePage() {
   const cars = getCars();

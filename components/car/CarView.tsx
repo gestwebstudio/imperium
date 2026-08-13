@@ -6,7 +6,7 @@ import { Crumbs } from "@/components/ui/Crumbs";
 import { Badge, PriceBlock } from "@/components/ui/primitives";
 import { type Car, formatPrice, getCarSpecs, getCars } from "@/lib/cars";
 import { CarsSection } from "@/components/home/CarsSection";
-import { Contacts } from "@/components/home/Contacts";
+import { Contacts } from "@/components/contacts/Contacts";
 import { Gallery } from "./Gallery";
 import type { GalleryPhoto } from "./GalleryModal";
 import { Specs } from "./Specs";
