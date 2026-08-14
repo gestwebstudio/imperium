@@ -223,6 +223,10 @@
   position: absolute;
   top: -14px;
   left: 30px;
+  /* Макет: бейдж 16/20 (не L-размер 18/24), паддинг 4/8 — высота ≈28. */
+  padding: 4px 8px;
+  font-size: 16px;
+  line-height: 20px;
 }
 .ti-step__title {
   margin: 0;
