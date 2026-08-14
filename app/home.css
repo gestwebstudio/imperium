@@ -1225,54 +1225,76 @@
   margin: 0;
 }
 
-/* ---------------- Body types (bento) ---------------- */
-.body-types__inner,
-.body-types__grid { display: contents; }
+/* ================================================================
+   Body types «Найдите свой формат» — MOBILE-FIRST по макетам Figma
+   (1163:5190 = 1920; 1115:6091…6285 = 1536→390). Брейки/гуттеры — наши
+   (--gutter). Картинки — свой кроп на каждый артборд (папки 390…1920,
+   уже точно размера карточки) → object-fit: cover, без трансформов.
+   База (<1200): 2 колонки, только заголовок. 1200+: 3 колонки
+   (внедорожник на 2 ряда, седан на всю ширину), появляются подзаголовки.
+   ================================================================ */
+.body-types {
+  max-width: var(--layout-max, 1920px);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
 
+/* Шапка: база — стопка [заголовок, описание слева]; 960+ — ряд справа. */
 .body-types__head {
   display: flex;
-  min-height: 211px;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: flex-start;
-  gap: 40px;
-  margin-bottom: 51px;
+  gap: 16px;
+  margin-bottom: 30px;
 }
-.body-types__title { display: flex; flex-direction: column; gap: 11px; }
+.body-types__title { display: flex; flex-direction: column; }
 .body-types__title .l1,
 .body-types__title .l2 {
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
-  font-size: var(--fs-88);
-  line-height: 1.136;
-  text-transform: uppercase;
+  font-size: 36px;
+  line-height: 40px;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 .body-types__title .l1 { font-weight: 400; }
 .body-types__title .l2 { font-weight: 800; }
 .body-types__aside {
-  width: 594px;
-  padding-top: 94px;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: 16px;
-  text-align: right;
+  text-align: left;
 }
-.body-types__sub { font-family: var(--font-text, "Onest", sans-serif); font-size: var(--fs-18); line-height: 1.33; color: var(--color-carbon-black-500, #1B1E1D); }
+.body-types__sub {
+  margin: 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.body-types__consultation { display: none; } /* появляется на ≥1536 */
 
-.bento { display: grid; grid-template-columns: 564fr 624fr 564fr; grid-template-rows: 391px 391px; gap: 24px; }
-.bento__a { grid-column: 1; grid-row: 1; }
-.bento__b { grid-column: 1; grid-row: 2; }
-.bento__c { grid-column: 2; grid-row: 1 / span 2; }
-.bento__d { grid-column: 3; grid-row: 1; }
-.bento__e { grid-column: 3; grid-row: 2; }
+/* Сетка: база — 2 колонки × 3 ряда, явное размещение, зазор 10. */
+.body-types__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.bento__a { grid-column: 1; grid-row: 1; } /* Купе */
+.bento__d { grid-column: 2; grid-row: 1; } /* Минивэны */
+.bento__e { grid-column: 1; grid-row: 2; } /* Кроссоверы */
+.bento__b { grid-column: 2; grid-row: 2; } /* Кабриолеты */
+.body-type-card--wide { grid-column: 1; grid-row: 3; } /* Седаны */
+.bento__c { grid-column: 2; grid-row: 3; } /* Внедорожники */
 
+/* Карточка */
 .body-type-card {
   position: relative;
   display: block;
   overflow: hidden;
-  border-radius: var(--radius-card);
+  border-radius: 16px;
   background: rgba(255, 255, 255, 0.6);
-  min-height: 391px;
+  aspect-ratio: 170 / 113;
   text-decoration: none;
   color: #fff;
 }
@@ -1280,27 +1302,110 @@
 .body-type-card.ui-button > .body-type-card__grad { position: absolute; z-index: 1; }
 .body-type-card.ui-button > .body-type-card__text,
 .body-type-card.ui-button > .body-type-card__arrow { position: absolute; z-index: 2; }
-.body-type-card__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.body-type-card__grad { position: absolute; left: 0; right: 0; top: 0; height: 290px; background: linear-gradient(to bottom, rgba(26, 24, 22, 0.75), rgba(26, 24, 22, 0)); }
-.body-type-card__text { position: absolute; left: 40px; top: 30px; right: 96px; z-index: 1; }
-.body-type-card__title { font-family: var(--font-display, "Wix Madefor Display", sans-serif); font-weight: 600; font-size: var(--fs-40); line-height: 1.2; color: #fff; }
-.body-type-card__sub { margin-top: 14px; font-family: var(--font-text, "Onest", sans-serif); font-weight: 400; font-size: var(--fs-18); line-height: 1.33; color: #fff; max-width: 484px; }
+.body-type-card__img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; }
+.body-type-card__grad { position: absolute; left: 0; right: 0; top: 0; height: 103px; background: linear-gradient(to bottom, rgba(26, 24, 22, 0.75), rgba(26, 24, 22, 0)); }
+.body-type-card__text { position: absolute; left: 14px; top: 10px; right: 14px; z-index: 1; }
+.body-type-card__title { font-family: var(--font-display, "Wix Madefor Display", sans-serif); font-weight: 600; font-size: 16px; line-height: 20px; color: #fff; white-space: nowrap; }
+.body-type-card__sub { display: none; margin-top: 10px; font-family: var(--font-text, "Onest", sans-serif); font-weight: 400; font-size: 18px; line-height: 24px; color: #fff; max-width: 484px; }
 .body-type-card__arrow {
-  position: absolute; top: 40px; right: 40px; z-index: 1;
-  width: 44px; height: 44px; border-radius: 30px;
+  position: absolute; top: 14px; right: 14px; z-index: 1;
+  width: 28px; height: 28px; border-radius: 30px;
   border: 1px solid #fff; color: #fff;
-  display: inline-flex; align-items: center; justify-content: center;
+  display: none; /* 390 — без стрелки; 480+ включаем */
+  align-items: center; justify-content: center;
 }
-.body-type-card__arrow svg { width: 16px; height: 16px; }
-.body-type-card--wide { margin-top: 24px; min-height: 464px; }
+.body-type-card__arrow svg { width: 8px; height: 8px; }
 
-@media (max-width: 960px) {
-  .body-types__head { min-height: 0; margin-bottom: 40px; flex-wrap: wrap; }
-  .body-types__title { gap: 0; }
-  .bento { grid-template-columns: 1fr; grid-template-rows: none; }
-  .bento__a, .bento__b, .bento__c, .bento__d, .bento__e { grid-column: 1; grid-row: auto; }
-  .body-type-card--wide { margin-top: 0; }
-  .body-types__aside { width: 100%; padding-top: 0; text-align: left; align-items: flex-start; }
+/* 480: заголовок 40/44; стрелка появляется (28); карточка 215/156 */
+@media (min-width: 480px) {
+  .body-types__title .l1,
+  .body-types__title .l2 { font-size: 40px; line-height: 44px; }
+  .body-type-card { aspect-ratio: 215 / 156; }
+  .body-type-card__text { left: 16px; top: 15px; right: 52px; }
+  .body-type-card__title { font-size: 18px; line-height: 22px; }
+  .body-type-card__arrow { display: inline-flex; top: 15px; right: 16px; }
+}
+/* 640: заголовок 42/48; описание↔заголовок 20; карточка 285/188; стрелка 36 */
+@media (min-width: 640px) {
+  .body-types__head { gap: 20px; }
+  .body-types__title .l1,
+  .body-types__title .l2 { font-size: 42px; line-height: 48px; }
+  .body-type-card { aspect-ratio: 285 / 188; border-radius: 20px; }
+  .body-type-card__grad { height: 136px; }
+  .body-type-card__text { left: 20px; top: 20px; right: 66px; }
+  .body-type-card__title { font-size: 24px; line-height: 30px; }
+  .body-type-card__arrow { width: 36px; height: 36px; top: 20px; right: 20px; }
+  .body-type-card__arrow svg { width: 12px; height: 12px; }
+}
+/* 768: заголовок 50/56; карточка 339/199; отступ шапки 40 */
+@media (min-width: 768px) {
+  .body-types__head { margin-bottom: 40px; }
+  .body-types__title .l1,
+  .body-types__title .l2 { font-size: 50px; line-height: 56px; }
+  .body-type-card { aspect-ratio: 339 / 199; }
+  .body-type-card__title { font-size: 28px; line-height: 34px; }
+}
+/* 960: шапка в ряд [заголовок | описание справа]; карточка 435/219 */
+@media (min-width: 960px) {
+  .body-types__head { flex-direction: row; justify-content: space-between; align-items: flex-end; gap: 40px; margin-bottom: 48px; }
+  .body-types__aside { width: min(48%, 594px); align-items: flex-end; text-align: right; }
+  .body-type-card { aspect-ratio: 435 / 219; }
+}
+/* 1200: 3 колонки, подзаголовки; внедорожник на 2 ряда; седан на всю ширину */
+@media (min-width: 1200px) {
+  .body-types__head { margin-bottom: 70px; }
+  .body-types__grid {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 276px 276px auto;
+    gap: 20px;
+  }
+  .bento__a { grid-column: 1; grid-row: 1; }
+  .bento__c { grid-column: 2; grid-row: 1 / span 2; }
+  .bento__d { grid-column: 3; grid-row: 1; }
+  .bento__b { grid-column: 1; grid-row: 2; }
+  .bento__e { grid-column: 3; grid-row: 2; }
+  .body-type-card--wide { grid-column: 1 / span 3; grid-row: 3; }
+  .body-type-card { aspect-ratio: auto; border-radius: 26px; }
+  .body-type-card--wide { height: 276px; }
+  .body-type-card__grad { height: 212px; }
+  .body-type-card__text { left: 25px; top: 25px; right: 76px; }
+  .body-type-card__title { white-space: normal; font-size: 32px; line-height: 40px; }
+  .body-type-card__sub { display: block; }
+  .body-type-card__arrow { width: 36px; height: 36px; top: 25px; right: 25px; }
+  .body-type-card__arrow svg { width: 14px; height: 14px; }
+  /* Седан: стрелка снизу слева, под текстом */
+  .body-type-card--wide .body-type-card__arrow { top: auto; bottom: 25px; left: 25px; right: auto; }
+}
+/* 1536: заголовок 62/70; кнопка «Консультация»; ряды 312; стрелка 44 */
+@media (min-width: 1536px) {
+  .body-types__title .l1,
+  .body-types__title .l2 { font-size: 62px; line-height: 70px; }
+  .body-types__head { margin-bottom: 70px; }
+  .body-types__consultation { display: inline-flex; }
+  .body-types__grid { grid-template-rows: 312px 312px auto; gap: 24px; }
+  .body-type-card { border-radius: 30px; }
+  .body-type-card--wide { height: 312px; }
+  .body-type-card__grad { height: 290px; }
+  .body-type-card__text { left: 30px; top: 30px; right: 96px; }
+  .body-type-card__title { font-size: 36px; line-height: 44px; }
+  .body-type-card__arrow { width: 44px; height: 44px; top: 30px; right: 30px; }
+  .body-type-card__arrow svg { width: 16px; height: 16px; }
+  .body-type-card--wide .body-type-card__arrow { top: auto; bottom: 30px; left: 30px; }
+}
+/* 1920: заголовок 88/100 UPPERCASE; средняя колонка шире; ряды 391, седан 464 */
+@media (min-width: 1920px) {
+  .body-types__title .l1,
+  .body-types__title .l2 { font-size: 88px; line-height: 100px; text-transform: uppercase; }
+  .body-types__head { margin-bottom: 51px; }
+  .body-types__grid {
+    grid-template-columns: 564fr 624fr 564fr;
+    grid-template-rows: 391px 391px auto;
+  }
+  .body-type-card--wide { height: 464px; }
+  .body-type-card__text { left: 40px; top: 30px; }
+  .body-type-card__title { font-size: 40px; line-height: 48px; }
+  .body-type-card__arrow { top: 40px; right: 40px; }
+  .body-type-card--wide .body-type-card__arrow { bottom: 40px; left: 40px; }
 }
 
 /* ---------------- About / услуги / отзыв ---------------- */
@@ -1846,679 +1951,6 @@
   }
 }
 
-/* ===== Каталог на главной: макеты Figma 1115:* (1536 / 1200 / 960 / 768).
-   Диапазон начинается с 641px, поэтому существующая мобильная версия не меняется. ===== */
-@media (min-width: 641px) and (max-width: 1536px) {
-  .body-types__inner {
-    --bt-inset: clamp(40px, calc(5.9524vw - 31.429px), 60px);
-    position: relative;
-    left: 50%;
-    display: flex;
-    width: calc(100vw - (2 * var(--bt-inset)));
-    transform: translateX(-50%);
-    flex-direction: column;
-  }
-
-  .body-types__head {
-    min-height: 0;
-    margin: 0;
-  }
-
-  .body-types__title {
-    gap: 2px;
-  }
-
-  .body-types__title .l1,
-  .body-types__title .l2 {
-    font-size: clamp(50px, calc(4.7619vw - 7.143px), 66px);
-    line-height: clamp(56px, calc(4.1667vw + 6px), 70px);
-    text-transform: none;
-  }
-
-  .body-types__aside {
-    width: auto;
-    padding: 0;
-  }
-
-  .body-types__sub {
-    width: 100%;
-    font-size: var(--type-text-18-font-size, 18px);
-    line-height: var(--type-text-18-line-height, 24px);
-  }
-
-  .body-types__consultation {
-    display: none;
-  }
-
-  .body-type-card {
-    min-height: 0;
-    border-radius: var(--bt-radius, 20px);
-  }
-
-  .body-type-card__img {
-    inset: auto;
-    max-width: none;
-  }
-
-  .body-type-card__grad {
-    height: var(--bt-gradient-height, 80%);
-  }
-
-  .body-type-card__text {
-    top: var(--bt-text-offset, 20px);
-    right: calc(var(--bt-text-offset, 20px) + var(--bt-arrow-size, 36px) + 16px);
-    left: var(--bt-text-offset, 20px);
-  }
-
-  .body-type-card__title {
-    font-size: var(--bt-card-title-size, 28px);
-    line-height: var(--bt-card-title-line, 34px);
-  }
-
-  .body-type-card__sub {
-    margin-top: 10px;
-    font-size: var(--bt-card-sub-size, 16px);
-    line-height: var(--bt-card-sub-line, 20px);
-  }
-
-  .body-type-card__arrow {
-    top: var(--bt-arrow-offset, 20px);
-    right: var(--bt-arrow-offset, 20px);
-    width: var(--bt-arrow-size, 36px);
-    height: var(--bt-arrow-size, 36px);
-  }
-
-  .body-type-card__arrow svg {
-    width: var(--bt-arrow-icon, 10px);
-    height: var(--bt-arrow-icon, 10px);
-  }
-}
-
-/* ===== Каталог на главной: мобильные макеты Figma 1115:6250 / 1115:6285. ===== */
-@media (max-width: 640px) {
-  .body-types__inner {
-    --bt-mobile-inset: clamp(20px, calc(6.25vw - 10px), 30px);
-    --bt-mobile-card-title: clamp(16px, calc(2.2222vw + 7.3333px), 18px);
-    --bt-mobile-card-line: clamp(20px, calc(2.2222vw + 11.3333px), 22px);
-    --bt-mobile-card-x: clamp(14px, calc(2.2222vw + 5.3333px), 16px);
-    --bt-mobile-card-y: clamp(10px, calc(5.5556vw - 11.6667px), 15px);
-    position: relative;
-    left: 50%;
-    display: flex;
-    width: calc(100vw - (2 * var(--bt-mobile-inset)));
-    transform: translateX(-50%);
-    flex-direction: column;
-    gap: 30px;
-  }
-
-  .body-types__head {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-    min-height: 0;
-    margin: 0;
-  }
-
-  .body-types__title {
-    gap: 0;
-  }
-
-  .body-types__title .l1,
-  .body-types__title .l2 {
-    font-size: clamp(32px, calc(4.4444vw + 14.6667px), 36px);
-    line-height: clamp(40px, calc(4.4444vw + 22.6667px), 44px);
-    text-transform: none;
-  }
-
-  .body-types__title .l1 {
-    margin-bottom: -4px;
-  }
-
-  .body-types__aside {
-    width: 100%;
-    padding: 0;
-    align-items: flex-start;
-    gap: 0;
-    text-align: left;
-  }
-
-  .body-types__sub {
-    width: 100%;
-    font-size: var(--type-text-16-font-size, 16px);
-    line-height: var(--type-text-16-line-height, 20px);
-  }
-
-  .body-types__consultation {
-    display: none;
-  }
-
-  .body-types__grid {
-    display: grid;
-    width: 100%;
-    height: clamp(357px, calc(144.4444vw - 206.3333px), 487px);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: repeat(3, minmax(0, 1fr));
-    gap: 10px;
-  }
-
-  .body-types__grid .bento {
-    display: contents;
-  }
-
-  .bento__a { grid-column: 1; grid-row: 1; }
-  .bento__d { grid-column: 2; grid-row: 1; }
-  .bento__e { grid-column: 1; grid-row: 2; }
-  .bento__b { grid-column: 2; grid-row: 2; }
-  .body-type-card--wide { grid-column: 1; grid-row: 3; }
-  .bento__c { grid-column: 2; grid-row: 3; }
-
-  .body-type-card,
-  .body-type-card--wide {
-    width: auto;
-    height: auto;
-    min-height: 0;
-    margin: 0;
-    border-radius: 16px;
-  }
-
-  .body-type-card__img {
-    inset: auto;
-    max-width: none;
-  }
-
-  .body-type-card__grad {
-    top: 0;
-    width: 100%;
-    height: 103px;
-  }
-
-  .body-type-card__text,
-  .body-type-card--wide .body-type-card__text {
-    top: var(--bt-mobile-card-y);
-    right: 58px;
-    left: var(--bt-mobile-card-x);
-  }
-
-  .body-type-card__title {
-    font-size: var(--bt-mobile-card-title);
-    line-height: var(--bt-mobile-card-line);
-    white-space: nowrap;
-  }
-
-  .body-type-card__sub {
-    display: none;
-  }
-
-  .body-type-card__arrow,
-  .body-type-card--wide .body-type-card__arrow {
-    top: var(--bt-mobile-card-y);
-    right: var(--bt-mobile-card-x);
-    width: 28px;
-    height: 28px;
-  }
-
-  .body-type-card__arrow svg {
-    width: 8px;
-    height: 8px;
-  }
-
-  .bento__a .body-type-card__img {
-    top: clamp(-9.67px, calc(12.9667vw - 60.24px), 2px);
-    left: 0;
-    width: calc(50vw - 25px);
-    height: calc(37.5vw - 18.75px);
-    object-fit: cover;
-  }
-
-  .bento__b .body-type-card__img {
-    top: clamp(-27.67px, calc(-2.6vw - 15.19px), -25.33px);
-    left: clamp(-35px, calc(-8.8889vw + 7.6667px), -27px);
-    width: clamp(229px, calc(73.3333vw - 57px), 295px);
-    height: clamp(187px, calc(60vw - 47px), 241px);
-    object-fit: cover;
-  }
-
-  .bento__c .body-type-card__img {
-    top: clamp(46.34px, calc(34.8044vw - 89.398px), 77.66px);
-    left: calc(25vw - 12.5px - clamp(3px, calc(16.3333px - 2.7778vw), 5.5px));
-    width: clamp(193px, calc(31.1111vw + 71.6667px), 221px);
-    height: clamp(132px, calc(20vw + 54px), 150px);
-    transform: translate(-50%, -50%);
-    object-fit: cover;
-  }
-
-  .bento__d .body-type-card__img {
-    top: clamp(-17px, calc(7.7778vw - 47.3333px), -10px);
-    left: -10px;
-    width: clamp(190px, calc(50vw - 5px), 235px);
-    height: clamp(131px, calc(35.5556vw - 7.6667px), 163px);
-    object-fit: cover;
-  }
-
-  .bento__e .body-type-card__img {
-    top: clamp(-37.67px, calc(-0.3778vw - 35.8567px), -37.33px);
-    left: calc(25vw - 12.5px + clamp(1.5px, calc(0.5556vw - 0.6667px), 2px));
-    width: clamp(225px, calc(62.2222vw - 17.6667px), 281px);
-    height: clamp(150px, calc(41.1111vw - 10.3333px), 187px);
-    transform: translateX(-50%);
-    object-fit: cover;
-  }
-
-  .body-type-card--wide .body-type-card__img {
-    top: clamp(-15.67px, calc(11.4889vw - 60.4747px), -5.33px);
-    left: clamp(-17px, calc(-1.1111vw - 11.6667px), -16px);
-    width: clamp(260px, calc(64.4444vw + 8.6667px), 318px);
-    height: clamp(147px, calc(35.5556vw + 8.3333px), 179px);
-    object-fit: cover;
-  }
-
-  .body-type-card--wide .body-type-card__text {
-    top: clamp(11px, calc(10.3667vw - 29.43px), 20.33px);
-    left: clamp(14px, calc(7.7778vw - 16.3333px), 21px);
-  }
-
-  .body-type-card--wide .body-type-card__arrow {
-    top: clamp(11px, calc(10.3667vw - 29.43px), 20.33px);
-    right: 11px;
-  }
-}
-
-@media (min-width: 481px) and (max-width: 640px) {
-  .body-types__grid {
-    height: calc(58.75vw + 205px);
-  }
-
-  .bento__a .body-type-card__img {
-    top: calc(0.25vw + 0.8px);
-    width: calc(50vw - 25px);
-    height: calc(37.5vw - 18.75px);
-  }
-
-  .bento__b .body-type-card__img {
-    top: calc(-3.525vw - 11.1px);
-    left: calc(-8vw + 4px);
-    width: calc(68.5vw - 34.25px);
-    height: calc(30.3542vw + 95.5833px);
-  }
-
-  .bento__c .body-type-card__img {
-    top: calc(9.7917vw + 30.8333px);
-    left: calc(25vw - 15.5px);
-    width: calc(51.5vw - 25.75px);
-    height: calc(18.8vw + 59.2px);
-  }
-
-  .bento__d .body-type-card__img {
-    top: calc(-1.175vw - 3.7px);
-    left: calc(-2.5vw + 1.25px);
-    width: calc(54.5vw - 27.25px);
-    height: calc(20.5625vw + 64.75px);
-  }
-
-  .bento__e .body-type-card__img {
-    top: calc(-4.7vw - 14.8px);
-    left: calc(25vw - 11.5px);
-    width: calc(65.5vw - 32.75px);
-    height: calc(23.5vw + 74px);
-  }
-
-  .body-type-card--wide .body-type-card__img {
-    top: calc(-0.5875vw - 1.85px);
-    left: calc(-4vw + 2px);
-    width: calc(74vw - 37px);
-    height: calc(22.5208vw + 70.9167px);
-  }
-}
-
-@media (max-width: 430px) {
-  .body-type-card__text,
-  .body-type-card--wide .body-type-card__text {
-    right: 14px;
-  }
-
-  .body-type-card__arrow,
-  .body-type-card--wide .body-type-card__arrow {
-    display: none;
-  }
-}
-
-@media (min-width: 961px) and (max-width: 1920px) {
-  .body-types__inner {
-    --bt-row: clamp(276px, calc(10.7143vw + 147.429px), 312px);
-    --bt-gap: clamp(20px, calc(1.1905vw + 5.714px), 24px);
-    --bt-radius: clamp(26px, calc(1.7857vw + 4.571px), 32px);
-    --bt-text-offset: clamp(25px, calc(1.4881vw + 7.143px), 30px);
-    --bt-arrow-offset: clamp(25px, calc(1.4881vw + 7.143px), 30px);
-    --bt-arrow-size: clamp(36px, calc(2.381vw + 7.429px), 44px);
-    --bt-arrow-icon: clamp(10px, calc(1.7857vw - 11.429px), 16px);
-    --bt-card-title-size: clamp(32px, calc(1.1905vw + 17.714px), 36px);
-    --bt-card-title-line: clamp(40px, calc(1.1905vw + 25.714px), 44px);
-    --bt-card-sub-size: clamp(16px, calc(0.5952vw + 8.857px), 18px);
-    --bt-card-sub-line: clamp(20px, calc(1.1905vw + 5.714px), 24px);
-    --bt-gradient-height: clamp(212px, calc(23.2143vw - 66.571px), 290px);
-    gap: 70px;
-  }
-
-  .body-types__head {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: end;
-    gap: 0;
-  }
-
-  .body-types__aside {
-    align-items: flex-end;
-    text-align: right;
-  }
-
-  .body-types__grid {
-    display: block;
-  }
-
-  .bento {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-rows: repeat(2, var(--bt-row));
-    gap: var(--bt-gap);
-  }
-
-  .body-type-card--wide {
-    height: var(--bt-row);
-    min-height: 0;
-    margin-top: var(--bt-gap);
-  }
-
-  .body-type-card--wide .body-type-card__arrow {
-    top: clamp(131px, calc(6.25vw + 56px), 152px);
-    right: auto;
-    left: var(--bt-text-offset);
-  }
-
-  .bento__a .body-type-card__img {
-    top: -7px;
-    left: -18px;
-    width: 394px;
-    height: 296px;
-    object-fit: cover;
-  }
-
-  .bento__b .body-type-card__img {
-    top: -41px;
-    left: -73px;
-    width: 524px;
-    height: 428px;
-    object-fit: cover;
-  }
-
-  .bento__c .body-type-card__img {
-    top: calc(50% - 39.5px);
-    left: 50%;
-    width: 750px;
-    height: 693px;
-    transform: translate(-50%, -50%);
-    object-fit: cover;
-  }
-
-  .bento__d .body-type-card__img {
-    top: 0;
-    left: -28px;
-    width: 412px;
-    height: 286px;
-    object-fit: cover;
-  }
-
-  .bento__e .body-type-card__img {
-    top: -59px;
-    left: calc(50% + 7px);
-    width: 502px;
-    height: 335px;
-    transform: translateX(-50%);
-    object-fit: cover;
-  }
-
-  .body-type-card--wide .body-type-card__img {
-    top: -62px;
-    left: -10px;
-    width: 1210px;
-    height: 437px;
-    object-fit: cover;
-  }
-}
-
-@media (min-width: 1367px) and (max-width: 1536px) {
-  .body-types__head {
-    grid-template-columns: 719px 594px;
-    justify-content: space-between;
-  }
-
-  .bento__a .body-type-card__img {
-    top: -23px;
-    left: -12px;
-    width: 474px;
-    height: 356px;
-  }
-
-  .bento__b .body-type-card__img {
-    top: 0;
-    left: -64px;
-    width: 584px;
-    height: 389px;
-  }
-
-  .bento__c .body-type-card__img {
-    top: 50%;
-    width: 501px;
-    height: 648px;
-  }
-
-  .bento__d .body-type-card__img {
-    top: -40px;
-    width: 510px;
-    height: 354px;
-  }
-
-  .bento__e .body-type-card__img {
-    top: -107px;
-    width: 626px;
-    height: 418px;
-  }
-
-  .body-type-card--wide .body-type-card__img {
-    top: -116px;
-    width: 1507px;
-    height: 544px;
-  }
-}
-
-@media (min-width: 961px) and (max-width: 1200px) {
-  .bento__c .body-type-card__arrow {
-    top: 136px;
-    right: auto;
-    left: var(--bt-text-offset);
-  }
-}
-
-@media (min-width: 641px) and (max-width: 960px) {
-  .body-types__inner {
-    --bt-radius: 20px;
-    --bt-text-offset: 20px;
-    --bt-arrow-offset: 20px;
-    --bt-arrow-size: 36px;
-    --bt-arrow-icon: 10px;
-    --bt-card-title-size: var(--type-display-28-font-size, 28px);
-    --bt-card-title-line: var(--type-display-28-line-height, 34px);
-    --bt-gradient-height: 80%;
-  }
-
-  .body-types__head {
-    align-items: end;
-  }
-
-  .body-types__grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: repeat(3, calc(9.7222vw + 125px));
-    gap: 10px;
-  }
-
-  .body-types__grid .bento {
-    display: contents;
-  }
-
-  .bento__a { grid-column: 1; grid-row: 1; }
-  .bento__d { grid-column: 2; grid-row: 1; }
-  .bento__e { grid-column: 1; grid-row: 2; }
-  .bento__b { grid-column: 2; grid-row: 2; }
-  .body-type-card--wide { grid-column: 1; grid-row: 3; }
-  .bento__c { grid-column: 2; grid-row: 3; }
-
-  .body-type-card,
-  .body-type-card--wide {
-    height: auto;
-    min-height: 0;
-    margin: 0;
-  }
-
-  .body-type-card__sub {
-    display: none;
-  }
-
-  .body-type-card--wide .body-type-card__text {
-    top: 25px;
-    left: 25px;
-  }
-
-  .body-type-card--wide .body-type-card__arrow {
-    top: 25px;
-  }
-
-  .bento__c .body-type-card__img {
-    object-fit: contain;
-  }
-}
-
-@media (min-width: 769px) and (max-width: 960px) {
-  .body-types__inner {
-    gap: 50px;
-  }
-
-  .body-types__head {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0;
-  }
-
-  .body-types__aside {
-    align-items: flex-end;
-    text-align: right;
-  }
-
-  .bento__a .body-type-card__img {
-    top: -83px;
-    left: -9px;
-    width: 444px;
-    height: 333px;
-  }
-
-  .bento__b .body-type-card__img {
-    top: -122.33px;
-    left: -35px;
-    width: 509px;
-    height: 415px;
-  }
-
-  .bento__c .body-type-card__img {
-    top: calc(50% - 3.33px);
-    left: calc(50% - 6px);
-    width: 487px;
-    height: 451px;
-    transform: translate(-50%, -50%);
-  }
-
-  .bento__d .body-type-card__img {
-    top: -70px;
-    left: 0;
-    width: 435px;
-    height: 302px;
-  }
-
-  .bento__e .body-type-card__img {
-    top: -150.33px;
-    left: calc(50% + 0.5px);
-    width: 560px;
-    height: 373px;
-    transform: translateX(-50%);
-  }
-
-  .body-type-card--wide .body-type-card__img {
-    top: -32.67px;
-    left: -55px;
-    width: 709px;
-    height: 309px;
-  }
-}
-
-@media (min-width: 641px) and (max-width: 768px) {
-  .body-types__inner {
-    gap: 40px;
-  }
-
-  .body-types__head {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
-  }
-
-  .body-types__aside {
-    align-items: flex-start;
-    text-align: left;
-  }
-
-  .bento__a .body-type-card__img {
-    top: -44px;
-    left: 0;
-    width: 353.33px;
-    height: 265px;
-  }
-
-  .bento__b .body-type-card__img {
-    top: -82.67px;
-    left: -33px;
-    width: 411px;
-    height: 335px;
-  }
-
-  .bento__c .body-type-card__img {
-    top: calc(50% + 3.67px);
-    left: calc(50% - 16px);
-    width: 405px;
-    height: 203px;
-    transform: translate(-50%, -50%);
-  }
-
-  .bento__d .body-type-card__img {
-    top: -61px;
-    left: -20px;
-    width: 385px;
-    height: 267px;
-  }
-
-  .bento__e .body-type-card__img {
-    top: -121.33px;
-    left: calc(50% + 0.5px);
-    width: 478px;
-    height: 319px;
-    transform: translateX(-50%);
-  }
-
-  .body-type-card--wide .body-type-card__img {
-    top: 0.67px;
-    left: -45px;
-    width: 546px;
-    height: 238px;
-  }
-}
 
 @media (prefers-reduced-motion: reduce) {
   .about__testimonial-track { scroll-behavior: auto; }
@@ -2539,10 +1971,6 @@
   .home > .contacts {
     margin-top: clamp(96px, 9vw, 144px);
   }
-
-  .body-types__title { gap: 4px; }
-  .body-types__head { min-height: 0; margin-bottom: 48px; }
-  .body-types__aside { width: min(44%, 594px); padding-top: 72px; }
 
   /* about__identity — вынесен в самодостаточный mobile-first блок выше. */
   .about__testimonial { margin-top: 140px; }
@@ -2595,16 +2023,6 @@
   .cars-section__head > .btn { display: none; }
   .cars-section__nav { display: none; }
 
-  .body-type-card__arrow {
-    width: 28px;
-    height: 28px;
-  }
-
-  .body-type-card__arrow svg {
-    width: 12px;
-    height: 12px;
-  }
-
   .service-card > .service-card__action {
     top: 16px;
     right: 16px;
@@ -2623,26 +2041,6 @@
 @media (max-width: 640px) {
   .cars-section__title {
     gap: 10px;
-  }
-  .body-types__head {
-    gap: 24px;
-    margin-bottom: 28px;
-  }
-  .bento {
-    gap: 16px;
-  }
-  .body-type-card,
-  .body-type-card--wide {
-    min-height: 300px;
-  }
-  .body-type-card__text {
-    top: 24px;
-    right: 76px;
-    left: 24px;
-  }
-  .body-type-card__arrow {
-    top: 24px;
-    right: 24px;
   }
 
   .about__services {
@@ -2675,13 +2073,6 @@
 }
 
 @media (max-width: 480px) {
-  .body-type-card,
-  .body-type-card--wide {
-    min-height: 250px;
-  }
-  .body-type-card__sub {
-    display: none;
-  }
   .service-card {
     padding: 20px;
   }
@@ -2689,239 +2080,3 @@
     padding-right: 34px;
   }
 }
-
-/* Эти сбросы стоят после общих адаптивов главной и удерживают геометрию
-   каталога Figma в диапазоне 641–1536px. */
-@media (min-width: 641px) and (max-width: 1536px) {
-  .body-types__head {
-    min-height: 0;
-    margin-bottom: 0;
-  }
-
-  .body-types__title {
-    gap: 2px;
-  }
-
-  .body-types__aside {
-    width: auto;
-    padding-top: 0;
-  }
-
-  .body-type-card__arrow {
-    width: var(--bt-arrow-size, 36px);
-    height: var(--bt-arrow-size, 36px);
-  }
-
-  .body-type-card__arrow svg {
-    width: var(--bt-arrow-icon, 10px);
-    height: var(--bt-arrow-icon, 10px);
-  }
-}
-
-/* Финальный сброс мобильного каталога после прежних общих адаптивов. */
-@media (max-width: 640px) {
-  .body-types__head {
-    gap: 16px;
-    margin-bottom: 0;
-  }
-
-  .body-type-card,
-  .body-type-card--wide {
-    min-height: 0;
-  }
-
-  .body-type-card__text,
-  .body-type-card--wide .body-type-card__text {
-    top: var(--bt-mobile-card-y);
-    right: 58px;
-    left: var(--bt-mobile-card-x);
-  }
-
-  .body-type-card__arrow,
-  .body-type-card--wide .body-type-card__arrow {
-    top: var(--bt-mobile-card-y);
-    right: var(--bt-mobile-card-x);
-  }
-
-  .body-type-card--wide .body-type-card__text {
-    top: clamp(11px, calc(10.3667vw - 29.43px), 20.33px);
-    left: clamp(14px, calc(7.7778vw - 16.3333px), 21px);
-  }
-
-  .body-type-card--wide .body-type-card__arrow {
-    top: clamp(11px, calc(10.3667vw - 29.43px), 20.33px);
-    right: 11px;
-  }
-}
-
-@media (max-width: 430px) {
-  .body-type-card__text,
-  .body-type-card--wide .body-type-card__text {
-    right: 14px;
-  }
-}
-
-
-/* ===== Кадрирование карточек «Найдите свой формат» — точные боксы из Figma =====
-   Для каждой карточки на каждом брейке взят бокс картинки из макета (сдвиг + размер
-   в % от карточки) + object-fit: cover. Это воспроизводит ручное кадрирование
-   дизайнера (у каждой карточки свой зум). Ориентация фото — как в макете, без
-   зеркалирования: right-facing машины в Figma сделаны флипом, здесь фото уже смотрят
-   в нужную сторону, поэтому берётся видимый бокс (для флипнутых left = x − width).
-   Артборды: 1163:5190 (1920) и 1115:6091..6285 (1536→390). Эти правила идут в конце
-   файла и перекрывают старые пофрагментные оверрайды выше. */
-.bento .body-type-card__img,
-.body-type-card--wide .body-type-card__img {
-  position: absolute;
-  inset: auto;
-  max-width: none;
-  transform: none;
-  object-fit: cover;
-}
-
-/* 1920 (bento) */
-.bento__a .body-type-card__img { left: -4.43%; top: -11.00%; width: 108.87%; height: 117.90%; }
-.bento__b .body-type-card__img { left: -31.91%; top: -17.90%; width: 164.18%; height: 158.06%; }
-.bento__c .body-type-card__img { left: -6.73%; top: -8.81%; width: 113.14%; height: 113.15%; }
-.bento__d .body-type-card__img { left: -10.99%; top: -19.69%; width: 121.63%; height: 121.48%; }
-.bento__e .body-type-card__img { left: -20.74%; top: -36.32%; width: 141.49%; height: 136.32%; }
-.body-type-card--wide .body-type-card__img { left: -2.89%; top: -24.14%; width: 105.78%; height: 148.28%; }
-
-/* 1536 (bento) */
-@media (max-width: 1536px) {
-  .bento__a .body-type-card__img { left: -2.63%; top: -7.37%; width: 103.95%; height: 114.10%; }
-  .bento__b .body-type-card__img { left: -36.18%; top: -25.00%; width: 172.37%; height: 167.95%; }
-  .bento__c .body-type-card__img { left: -5.04%; top: 0%; width: 109.87%; height: 100%; }
-  .bento__d .body-type-card__img { left: -6.14%; top: -12.82%; width: 111.84%; height: 113.46%; }
-  .bento__e .body-type-card__img { left: -17.11%; top: -34.29%; width: 137.28%; height: 133.97%; }
-  .body-type-card--wide .body-type-card__img { left: -0.71%; top: -37.18%; width: 106.43%; height: 174.36%; }
-}
-
-/* 1200 (bento) */
-@media (max-width: 1366px) {
-  .bento__a .body-type-card__img { left: -5.00%; top: -2.54%; width: 109.44%; height: 107.25%; }
-  .bento__b .body-type-card__img { left: -20.28%; top: -14.86%; width: 145.56%; height: 155.07%; }
-  /* внедорожник: новый бокс из макета — 442×572 по центру, top 0 (было 750×693 → перезум) */
-  .bento__c .body-type-card__img { left: -11.39%; top: 0%; width: 122.78%; height: 100%; }
-  .bento__d .body-type-card__img { left: -7.78%; top: 0%; width: 114.44%; height: 103.62%; }
-  .bento__e .body-type-card__img { left: -17.78%; top: -21.38%; width: 139.44%; height: 121.38%; }
-  .body-type-card--wide .body-type-card__img { left: -0.89%; top: -22.46%; width: 108.04%; height: 158.33%; }
-}
-
-/* 960 (2 колонки) */
-@media (max-width: 960px) {
-  .bento__a .body-type-card__img { left: -2.07%; top: -38.02%; width: 102.07%; height: 152.52%; }
-  .bento__b .body-type-card__img { left: -8.05%; top: -40.00%; width: 117.01%; height: 190.08%; }
-  /* внедорожник (боковой профиль): в макете object-contain — RR виден целиком */
-  .bento__c .body-type-card__img { left: -7.36%; top: -54.81%; width: 111.95%; height: 206.56%; object-fit: contain; }
-  .bento__d .body-type-card__img { left: 0%; top: -32.06%; width: 100%; height: 138.32%; }
-  .bento__e .body-type-card__img { left: -14.25%; top: -68.85%; width: 128.74%; height: 170.84%; }
-  .body-type-card--wide .body-type-card__img { left: -12.64%; top: -24%; width: 162.99%; height: 141.53%; }
-}
-/* 960: минивэн, кроссовер и седан в макете отзеркалены по горизонтали
-   (трансформ scaleY(-1) rotate(180)) — на 960 все машины смотрят влево. */
-@media (min-width: 769px) and (max-width: 960px) {
-  .bento__d .body-type-card__img,
-  .bento__e .body-type-card__img,
-  .body-type-card--wide .body-type-card__img { transform: scaleX(-1); }
-}
-
-/* 768 (2 колонки) */
-@media (max-width: 768px) {
-  .bento__a .body-type-card__img { left: 0%; top: -22.11%; width: 104.23%; height: 133.17%; }
-  .bento__b .body-type-card__img { left: -17.11%; top: -38.69%; width: 135.99%; height: 188.44%; }
-  .bento__c .body-type-card__img { left: -14.45%; top: 0.84%; width: 119.47%; height: 102.01%; object-position: 50% 92%; }
-  .bento__d .body-type-card__img { left: -5.90%; top: -30.65%; width: 113.57%; height: 134.17%; }
-  .bento__e .body-type-card__img { left: -20.35%; top: -60.97%; width: 140.90%; height: 160.30%; }
-  .body-type-card--wide .body-type-card__img { left: -13.27%; top: 0.34%; width: 161.06%; height: 119.60%; }
-}
-
-/* 640 (2 колонки) */
-@media (max-width: 640px) {
-  .bento__a .body-type-card__img { left: 0%; top: -6.39%; width: 100%; height: 113.50%; }
-  .bento__b .body-type-card__img { left: -15.79%; top: -23.80%; width: 134.39%; height: 166.79%; }
-  .bento__c .body-type-card__img { left: -12.28%; top: -15.28%; width: 113.33%; height: 116.70%; }
-  .bento__d .body-type-card__img { left: -7.02%; top: -20.78%; width: 116.84%; height: 123.09%; }
-  .bento__e .body-type-card__img { left: -19.30%; top: -44.40%; width: 140.00%; height: 141.75%; }
-  .body-type-card--wide .body-type-card__img { left: -10.53%; top: -16.34%; width: 154.39%; height: 132.15%; }
-}
-
-/* 480 (2 колонки) */
-@media (max-width: 480px) {
-  .bento__a .body-type-card__img { left: 0%; top: 1.28%; width: 100%; height: 103.43%; }
-  .bento__b .body-type-card__img { left: -16.28%; top: -17.77%; width: 137.21%; height: 154.82%; }
-  .bento__c .body-type-card__img { left: -2.79%; top: 1.71%; width: 102.79%; height: 96.36%; }
-  .bento__d .body-type-card__img { left: -4.65%; top: -6.42%; width: 109.30%; height: 104.71%; }
-  .bento__e .body-type-card__img { left: -14.42%; top: -24.20%; width: 130.70%; height: 120.13%; }
-  .body-type-card--wide .body-type-card__img { left: -7.91%; top: -3.43%; width: 147.91%; height: 114.98%; }
-}
-
-/* 390 (2 колонки) */
-@media (max-width: 430px) {
-  .bento__a .body-type-card__img { left: 0%; top: -4.45%; width: 100%; height: 113.06%; }
-  .bento__b .body-type-card__img { left: -15.88%; top: -22.55%; width: 134.71%; height: 166.49%; }
-  .bento__c .body-type-card__img { left: -10.00%; top: -17.51%; width: 113.53%; height: 117.51%; }
-  .bento__d .body-type-card__img { left: -5.88%; top: -15.13%; width: 111.76%; height: 116.62%; }
-  .bento__e .body-type-card__img { left: -15.29%; top: -33.24%; width: 132.35%; height: 133.53%; }
-  .body-type-card--wide .body-type-card__img { left: -9.41%; top: -13.95%; width: 152.94%; height: 130.86%; }
-}
-
-/* Готовые экспортированные изображения уже повторяют кадрирование Figma для
-   каждого контрольного разрешения, поэтому внутри карточки они заполняют бокс
-   без дополнительного зума, сдвига или отражения. */
-.body-types .body-type-card__img {
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  max-width: none;
-  transform: none;
-  object-fit: cover;
-  object-position: center;
-}
-
-/* The large desktop bento grows from the 1536 geometry to the 1920 frame.
-   Previously the row height, title and centre track all jumped at 1537px. */
-@media (min-width: 1537px) and (max-width: 1920px) {
-  .body-types__inner {
-    --bt-row: clamp(312px, calc(-4px + 20.5729vw), 391px);
-    --bt-gap: 24px;
-    --bt-gradient-height: 290px;
-    --bt-text-offset: clamp(30px, calc(-10px + 2.6042vw), 40px);
-    --bt-arrow-offset: clamp(30px, calc(-10px + 2.6042vw), 40px);
-    --bt-card-title-size: clamp(36px, calc(20px + 1.0417vw), 40px);
-    --bt-card-title-line: clamp(44px, calc(28px + 1.0417vw), 48px);
-  }
-
-  .body-types__head {
-    min-height: clamp(142px, calc(-134px + 17.9688vw), 211px);
-    margin-bottom: clamp(51px, calc(146px - 4.9479vw), 70px);
-  }
-
-  .body-types__title .l1,
-  .body-types__title .l2 {
-    font-size: clamp(66px, calc(-22px + 5.7292vw), 88px);
-    line-height: clamp(70px, calc(-50px + 7.8125vw), 100px);
-  }
-
-  .body-types__aside {
-    width: min(100%, 594px);
-    justify-self: end;
-    padding-top: clamp(0px, calc(-376px + 24.4792vw), 94px);
-  }
-
-  .bento {
-    grid-template-columns:
-      minmax(0, 1fr)
-      minmax(0, clamp(456px, calc(-216px + 43.75vw), 624px))
-      minmax(0, 1fr);
-    grid-template-rows: repeat(2, var(--bt-row));
-    gap: var(--bt-gap);
-  }
-
-  .body-type-card--wide {
-    height: var(--bt-row);
-    min-height: 0;
-    margin-top: var(--bt-gap);
-  }
-}
-
