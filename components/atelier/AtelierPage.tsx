@@ -21,9 +21,9 @@ const ATELIER_MODAL = {
 export function AtelierPage() {
   return (
     <main className="atelier">
-      {/* ---------- Hero — блок «О салоне» (.ti-hero* + медиа-подложка),
-          тексты Ателье, вместо видео — фото. ---------- */}
-      <section className="ti-hero about-salon__hero">
+      {/* ---------- Hero — общий блок трейд-ина (.ti-hero*), без фото/видео.
+          Идентичен герою велеса по размерам и адаптации. ---------- */}
+      <section className="ti-hero atelier-hero">
         <div className="ti-hero__inner home-wrap">
           <Crumbs
             items={[{ label: "Главная", href: "/" }, { label: "Автоателье" }]}
@@ -45,21 +45,12 @@ export function AtelierPage() {
               />
             </div>
           </div>
-
-          {/* Фото — на месте видео из блока «О салоне». */}
-          <div className="about-salon__video">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              className="about-salon__video-frame"
-              src="/images/services/atelie.webp"
-              alt="Автомобиль под ваш характер"
-            />
-          </div>
         </div>
       </section>
 
-      {/* ---------- Второй блок — «О салоне» с главной, текст под ателье (945:2943) ---------- */}
-      <section className="home-wrap atelier-identity">
+      {/* ---------- Второй блок — вордмарк + лид + 3 карточки (общий .about__identity
+          с главной / велеса). Тексты, фото и модалки — со старой вёрстки. ---------- */}
+      <section className="atelier-identity">
         <div className="about__identity">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -118,8 +109,10 @@ export function AtelierPage() {
         </div>
       </section>
 
-      {/* ---------- Баннер «Дизайн с Александром Велесом» (макет 945:2947) ---------- */}
-      <section className="home-wrap atelier-cta-section">
+      {/* ---------- Баннер «Дизайн с Александром Велесом» (макет 1245:5894).
+          По сути блок «Александр Велес» с велеса, но без декоративных вордмарков
+          и с двумя кнопками. Ссылки кнопок — со старой вёрстки. ---------- */}
+      <section className="atelier-cta-section">
         <div className="atelier-cta">
           <div className="atelier-cta__media">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -146,11 +139,7 @@ export function AtelierPage() {
                 triggerLabel="Обсудить работу"
                 triggerVariant="primary-surface"
               />
-              <ButtonLink
-                href="/veles"
-                size="l"
-                variant="secondary-outlined"
-              >
+              <ButtonLink href="/veles" size="l" variant="secondary-outlined">
                 Подробнее об услуге
               </ButtonLink>
             </div>
@@ -158,7 +147,7 @@ export function AtelierPage() {
         </div>
       </section>
 
-      {/* ---------- Проекты (карусель, механика брендов) — перед контактами ---------- */}
+      {/* ---------- Проекты (карусель) — пока не трогаем ---------- */}
       <ProjectsRow />
 
       {/* ---------- Контакты — с главной ---------- */}

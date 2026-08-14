@@ -1,14 +1,16 @@
 /* ==========================================================================
-   Автоателье — /atelier (макет Figma 945:2827)
-   Значения — точно из макета. Второй блок и контакты переиспользуются с главной
-   (home.css). Крошки — как на страницах услуг (.cat-crumbs).
+   Автоателье — /atelier (макет Figma 945:2827 / баннер 1245:5894)
+   Рерайт mobile-first (как trade-in/veles): боковой отступ = --gutter,
+   брейки на артборды 390/480/640/768/960/1200/1536/1920.
+   Hero — общий .ti-hero* (трейд-ин), идентичен герою велеса.
+   Второй блок — общий .about__identity (home.css). Контакты — с главной.
    ========================================================================== */
 
+/* ---------------- Вертикальный ритм блоков (тиры/брейки как на trade-in/veles) ----
+   --g-first    — hero → блок услуг
+   --g-rhythm   — общий ритм между секциями
+   --g-contacts — отступ перед контактами ---------------- */
 .atelier {
-  /* контент-контейнер как у главной */
-  /* Вертикальный ритм блоков (тиры/брейки как на trade-in):
-     --g-first — hero→«О салоне», --g-rhythm — между секциями,
-     --g-contacts — перед контактами. Контакты→футер — глобальный (footer). */
   --g-first: 120px;
   --g-rhythm: 160px;
   --g-contacts: 200px;
@@ -19,116 +21,100 @@
 @media (max-width: 767px)  { .atelier { --g-rhythm: 80px; --g-contacts: 100px; } }
 @media (max-width: 639px)  { .atelier { --g-first: 70px; } }
 
-/* Крошки — канонический компонент .ui-crumbs (стили глобальные, из кита). */
-
-/* ---------------- Hero (945:2839) ---------------- */
+/* ---------------- Hero — общий блок трейд-ина (.ti-hero*), без фото.
+   Идентичен герою велеса: беж, скруглённый низ, нижний отступ 40 (1200 → 60). ---------- */
 .atelier-hero {
   position: relative;
   background: var(--color-stone-beige-200, #E4DFDB);
   border-radius: 0 0 var(--radius-page, 50px) var(--radius-page, 50px);
   overflow: hidden;
 }
-.atelier-hero__inner {
-  position: relative;
-  min-height: 688px;
-  padding-top: var(--crumbs-page-top, var(--page-top, 155px));
-  padding-bottom: 91px;
+.atelier-hero .ti-hero__inner { padding-bottom: 40px; }
+@media (min-width: 1201px) {
+  .atelier-hero .ti-hero__inner { padding-bottom: 60px; }
 }
-.atelier-hero__title {
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
-  color: var(--color-carbon-black-500, #1B1E1D);
-}
-.atelier-hero__title .reg { font-weight: var(--font-weight-regular, 400); font-size: var(--fs-66); line-height: 1.06; }
-.atelier-hero__title .bold { font-weight: var(--font-weight-extrabold, 800); font-size: var(--fs-66); line-height: 1.06; }
-.atelier-hero__sub {
-  margin-top: 30px;
-  max-width: 730px;
-  font-family: var(--font-text, "Onest", sans-serif);
-  font-size: var(--fs-18);
-  line-height: 1.33;
-  color: var(--color-carbon-black-500, #1B1E1D);
-}
-.atelier-hero__cta { margin-top: 30px; align-self: flex-start; }
-.atelier-hero__media {
-  position: absolute;
-  top: 181px;
-  right: var(--page-gutter, 60px);
-  width: 875px;
-  height: 416px;
-  border-radius: var(--radius-media);
-  overflow: hidden;
-  box-shadow: 6px 4px 50.2px 0 #B4AAA3;
-}
-.atelier-hero__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-/* ---------------- Второй блок — «О салоне» с главной (текст под ателье) ---------------- */
-.atelier-identity { margin-top: var(--g-first); }
+/* ---------------- Второй блок — вордмарк + лид + 3 карточки (общий .about__identity).
+   Здесь только контейнер на --gutter и вертикальный ритм (как .veles-identity). ---------- */
+.atelier-identity {
+  margin-top: var(--g-first);
+  max-width: var(--layout-max, 1920px);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
 .atelier-identity .about__identity { margin-top: 0; }
-.atelier-identity .about__lead .reg { display: inline; }
-.atelier-identity .about__lead .bold { display: inline; }
 
-/* ---------------- Баннер «Дизайн с Александром Велесом» (945:2947) ---------------- */
-.atelier-cta-section { margin-top: var(--g-rhythm); }
+/* ---------------- Баннер «Дизайн с Александром Велесом» — MOBILE-FIRST по макетам,
+   как баннер «Александр Велес» (/veles): те же размеры/адаптация фото и паддингов.
+   Отличия: нет декоративных вордмарков + две кнопки в теле.
+   База = 390: колонка [текст сверху, фото снизу], всё слева.
+   1200 — ряд [фото слева | текст справа], всё по правому краю. ---------------- */
+.atelier-cta-section {
+  margin-top: var(--g-rhythm);
+  max-width: var(--layout-max, 1920px);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
 .atelier-cta {
   display: flex;
+  flex-direction: column;   /* база = стопка; 1200 → ряд */
   align-items: stretch;
-  justify-content: space-between;
-  padding: 40px;
+  gap: 20px;                /* текст↔фото; 480+ → 34 */
+  padding: 20px;            /* 390; 480→26, 640→30, 960→40 */
   border-radius: var(--radius-card);
   background: rgba(213, 204, 196, 0.4);
+  overflow: hidden;
 }
 .atelier-cta__media {
-  flex: 0 0 clamp(435px, calc(64.3px + 38.58vw), 805px);
-  width: clamp(435px, calc(64.3px + 38.58vw), 805px);
-  height: 384px;
+  order: 2;        /* фото снизу (база); 1200 → слева */
+  width: 100%;
+  height: auto;
+  aspect-ratio: 310 / 166;   /* 390; растёт по артбордам */
   border-radius: var(--radius-media);
   overflow: hidden;
 }
 .atelier-cta__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .atelier-cta__body {
-  flex: 1 1 0;
+  order: 1;        /* текст сверху (база); 1200 → справа */
   min-width: 0;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  gap: 40px;
-  text-align: right;
+  align-items: flex-start;   /* 1200 → flex-end */
+  gap: 24px;                 /* текст↔кнопки; 480→16, 960→24, 1200→40 */
+  text-align: left;          /* 1200 → right */
 }
 .atelier-cta__text {
-  flex: 1 1 0;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  gap: 20px;
+  align-items: inherit;
+  gap: 12px;                 /* заголовок↔описание; 480→16, 1200→20 */
 }
 .atelier-cta__title {
   margin: 0;
+  display: flex;
+  flex-direction: column;
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
   color: var(--color-carbon-black-500, #1B1E1D);
-  letter-spacing: -0.68px;
 }
-.atelier-cta__title .reg { display: block; font-weight: var(--font-weight-regular, 400); font-size: var(--fs-50); line-height: 1.4; }
-.atelier-cta__title .bold { display: block; font-weight: var(--font-weight-bold, 700); font-size: var(--fs-66); line-height: 1.06; }
+.atelier-cta__title .reg { font-weight: var(--font-weight-regular, 400); font-size: 24px; line-height: 32px; }
+.atelier-cta__title .bold { font-weight: var(--font-weight-extrabold, 800); font-size: 32px; line-height: 40px; }
 .atelier-cta__sub {
   margin: 0;
-  max-width: 679px;
+  max-width: none;
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: var(--fs-18);
-  line-height: 1.33;
+  font-size: 16px;      /* 390–1199; 1200→18/24 */
+  line-height: 20px;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
+/* Кнопки — в теле, после текста (как в старой вёрстке): база слева, 1200 → справа. */
 .atelier-cta__actions {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  max-width: 100%;
+  justify-content: flex-start;   /* 1200 → flex-end */
 }
 
-/* ---------------- Проекты (карусель, механика брендов) ---------------- */
+/* ---------------- Проекты (карусель) — пока не трогаем ---------------- */
 .atelier .projects { margin-top: var(--g-rhythm); }
 .projects__head {
   display: flex;
@@ -211,63 +197,67 @@
   filter: drop-shadow(0 2.75px 4.125px rgba(25, 33, 61, 0.14));
 }
 .project-card__placeholder svg { width: 32px; height: 32px; display: block; }
+@media (max-width: 768px) {
+  .projects-row > * { flex-basis: 100%; }
+}
 
 /* ---------------- Контакты — с главной ---------------- */
 .atelier .contacts { margin-top: var(--g-contacts); }
 
-/* ---------------- Адаптив (базовый; тонкий полиш — у второго агента) ---------------- */
-@media (max-width: 1280px) {
-  .atelier-hero__inner { min-height: 0; padding-bottom: 40px; }
-  .atelier-hero__media {
-    position: static;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 875 / 416;
-    margin-top: 40px;
-  }
+/* ===== Баннер «Дизайн с Александром Велесом»: MOBILE-FIRST дельты по артбордам
+   (значения фото/паддингов — как у баннера «Александр Велес» на /veles). ===== */
+/* 480: pad 26; текст↔фото 34; заголовок 28/36 · 36/44; фото 388×205 */
+@media (min-width: 480px) {
+  .atelier-cta { padding: 26px; gap: 34px; }
+  .atelier-cta__text { gap: 16px; }
+  .atelier-cta__title .reg { font-size: 28px; line-height: 36px; }
+  .atelier-cta__title .bold { font-size: 36px; line-height: 44px; }
+  .atelier-cta__media { aspect-ratio: 388 / 205; }
 }
-
-/* ===== Баннер «Дизайн с Александром Велесом»: адаптив как у блока
-   «Александр Велес» (/veles). Фото fluid, с 960 — стопка: текст,
-   затем кнопки, затем фото снизу. Тайтл/паддинги уменьшаются по тем
-   же брейкам. Числа медиа (aspect-ratio) — из макетов баннера велеса. ===== */
-/* 960: стопка — текст сверху, кнопки, фото снизу */
-@media (max-width: 960px) {
-  .atelier-cta { flex-direction: column; align-items: stretch; gap: 34px; }
-  .atelier-cta__media { order: 2; flex: none; width: 100%; height: auto; aspect-ratio: 800 / 384; }
-  .atelier-cta__body { order: 1; align-items: flex-start; text-align: left; gap: 24px; }
-  .atelier-cta__text { align-items: flex-start; }
-  .atelier-cta__title .reg { font-size: 40px; line-height: 48px; }
-  .atelier-cta__title .bold { font-size: 50px; line-height: 56px; }
-}
-/* 768: падинг 30, фото 628×318 */
-@media (max-width: 768px) {
+/* 640: pad 30; заголовок 32/40 · 40/48; фото 520×262 */
+@media (min-width: 640px) {
   .atelier-cta { padding: 30px; }
-  .atelier-cta__media { aspect-ratio: 628 / 318; }
-}
-/* 640: тайтл 32/40, фото 520×262 */
-@media (max-width: 640px) {
   .atelier-cta__title .reg { font-size: 32px; line-height: 40px; }
   .atelier-cta__title .bold { font-size: 40px; line-height: 48px; }
   .atelier-cta__media { aspect-ratio: 520 / 262; }
 }
-/* 480: падинг 26, тайтл 28/36, описание 16/20, фото 388×205 */
-@media (max-width: 480px) {
-  .atelier-cta { padding: 26px; }
-  .atelier-cta__body { gap: 16px; }
-  .atelier-cta__title .reg { font-size: 28px; line-height: 36px; }
-  .atelier-cta__title .bold { font-size: 36px; line-height: 44px; }
-  .atelier-cta__sub { font-size: 16px; line-height: 20px; }
-  .atelier-cta__media { aspect-ratio: 388 / 205; }
+/* 768: заголовок 40/48 · 50/56; фото 628×318 (pad остаётся 30) */
+@media (min-width: 768px) {
+  .atelier-cta__title .reg { font-size: 40px; line-height: 48px; }
+  .atelier-cta__title .bold { font-size: 50px; line-height: 56px; }
+  .atelier-cta__media { aspect-ratio: 628 / 318; }
 }
-/* 430: падинг 20, тайтл 24/32, фото 310×166 */
-@media (max-width: 430px) {
-  .atelier-cta { padding: 20px; gap: 40px; }
-  .atelier-cta__body { gap: 12px; }
-  .atelier-cta__title .reg { font-size: 24px; line-height: 32px; }
-  .atelier-cta__title .bold { font-size: 32px; line-height: 40px; }
-  .atelier-cta__media { aspect-ratio: 310 / 166; }
+/* 960: pad 40; фото 800×384 снизу (раскладка ещё стопкой) */
+@media (min-width: 960px) {
+  .atelier-cta { padding: 40px; }
+  .atelier-cta__media { aspect-ratio: 800 / 384; }
 }
-@media (max-width: 768px) {
-  .projects-row > * { flex-basis: 100%; }
+/* 1200: ряд [фото слева | текст справа], всё по правому краю; фото фикс. h384;
+   заголовок 50/56 · 66/70; описание 18/24; кнопки уходят вправо-вниз */
+@media (min-width: 1200px) {
+  .atelier-cta { flex-direction: row; align-items: stretch; gap: 0; }
+  .atelier-cta__media {
+    order: 0;
+    flex: 0 0 auto;
+    width: clamp(435px, calc(435px + (100vw - 1200px) * 0.5139), 805px);
+    height: 384px;
+    aspect-ratio: auto;
+  }
+  .atelier-cta__body {
+    order: 0;
+    flex: 1 1 0;
+    align-items: flex-end;
+    gap: 40px;
+    text-align: right;
+    padding-left: 40px;
+  }
+  .atelier-cta__text { gap: 20px; }
+  .atelier-cta__title .reg { font-size: 50px; line-height: 56px; }
+  .atelier-cta__title .bold { font-size: 66px; line-height: 70px; }
+  .atelier-cta__sub { max-width: 549px; font-size: 18px; line-height: 24px; }
+  .atelier-cta__actions { justify-content: flex-end; }
+}
+/* 1536: описание max 679 */
+@media (min-width: 1536px) {
+  .atelier-cta__sub { max-width: 679px; }
 }
