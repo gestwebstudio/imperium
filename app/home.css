@@ -1101,6 +1101,13 @@
 }
 
 /* ---------------- Cars section (карусель карточек) ---------------- */
+/* Контейнер секции (rebuild): боковой отступ = --gutter, как у контента услуг.
+   На home догонит, когда страницу переведут на --gutter. */
+.cars-section {
+  max-width: var(--layout-max, 1920px);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
 .cars-section__head {
   display: flex;
   height: 56px;
@@ -1116,7 +1123,7 @@
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 .cars-row {
-  --cars-card-gap: clamp(12px, 1.25vw, 24px);
+  --cars-card-gap: 12px; /* 390/480: peek-аффорданс; 640+ = 10; 1920 = 24 (по макетам) */
   width: 100%;
   display: flex;
   gap: var(--cars-card-gap);
@@ -1128,6 +1135,7 @@
 }
 .cars-row::-webkit-scrollbar { display: none; }
 .cars-row > * {
+  /* база (390/480): карточка + «выглядывает» вторая (peek) */
   flex: 0 0 clamp(248px, 78vw, 272px);
   min-width: 0;
   max-width: 432px;
@@ -1135,17 +1143,20 @@
   scroll-snap-align: start;
 }
 
-/* Mobile is the baseline. Once there is room for several usable cards, their
-   preferred width follows the container continuously; a partially visible
-   next card is intentional carousel affordance. */
-@media (min-width: 769px) {
-  .cars-row > * {
-    flex-basis: clamp(
-      272px,
-      calc((100% - 3 * var(--cars-card-gap)) / 4),
-      432px
-    );
-  }
+/* От 640 — ровно N карточек на всю ширину, без peek (по макетам):
+   640 → 2, 768/960 → 3, 1200+ → 4; gap 10, на 1920 — 24. */
+@media (min-width: 640px) {
+  .cars-row { --cars-card-gap: 10px; }
+  .cars-row > * { flex-basis: calc((100% - var(--cars-card-gap)) / 2); }
+}
+@media (min-width: 768px) {
+  .cars-row > * { flex-basis: calc((100% - 2 * var(--cars-card-gap)) / 3); }
+}
+@media (min-width: 1200px) {
+  .cars-row > * { flex-basis: calc((100% - 3 * var(--cars-card-gap)) / 4); }
+}
+@media (min-width: 1920px) {
+  .cars-row { --cars-card-gap: 24px; }
 }
 .cars-carousel__item > .car-card {
   height: 100%;

@@ -53,7 +53,6 @@ export function CarsSection({
   return (
     <section
       className={cn(
-        "home-wrap",
         "cars-section",
         `cars-section--${variant}`,
       )}
