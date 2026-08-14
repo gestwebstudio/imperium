@@ -75,7 +75,7 @@ export function TradeInPage({ cars }: { cars: Car[] }) {
     <main className="trade-in">
       {/* ---------- Hero ---------- */}
       <section className="ti-hero">
-        <div className="ti-hero__inner home-wrap">
+        <div className="ti-hero__inner">
           <Crumbs
             items={[{ label: "Главная", href: "/" }, { label: "Трейд-ин" }]}
           />
@@ -103,7 +103,7 @@ export function TradeInPage({ cars }: { cars: Car[] }) {
 
       {/* Преимущества — 4 отдельные стеклянные карточки (стекло как у шапки),
           ряд наезжает наполовину на нижнюю кромку hero */}
-      <div className="ti-hero__stats-wrap home-wrap">
+      <div className="ti-hero__stats-wrap">
         <div className="ti-hero__stats">
           {HERO_STATS.map((s) => (
             <GlassSurface
@@ -128,7 +128,7 @@ export function TradeInPage({ cars }: { cars: Car[] }) {
       </div>
 
       {/* ---------- Как проходит trade-in ---------- */}
-      <section className="home-wrap ti-steps">
+      <section className="ti-steps">
         <h2 className="ti-section-title t-page-title">Как проходит trade-in</h2>
         <div className="ti-steps__grid">
           {STEPS.map((s) => (
@@ -144,7 +144,7 @@ export function TradeInPage({ cars }: { cars: Car[] }) {
       </section>
 
       {/* ---------- Что влияет на оценку ---------- */}
-      <section className="home-wrap ti-factors">
+      <section className="ti-factors">
         <div className="ti-factors__media">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/images/services/tradein1.webp" alt="Оценка автомобиля" />
@@ -173,7 +173,7 @@ export function TradeInPage({ cars }: { cars: Car[] }) {
       />
 
       {/* ---------- Мы готовы принять ---------- */}
-      <section className="home-wrap ti-accept">
+      <section className="ti-accept">
         <div className="ti-block__body ti-accept__body">
           <h2 className="ti-block__title">
             <span className="reg">Условия приемки</span>
@@ -202,7 +202,7 @@ export function TradeInPage({ cars }: { cars: Car[] }) {
       </section>
 
       {/* ---------- Позвоните нам (баннер) ---------- */}
-      <section className="home-wrap">
+      <section className="ti-call-section">
         <div className="ti-call">
           <div className="ti-call__text">
             <h2 className="ti-call__title">
@@ -218,7 +218,8 @@ export function TradeInPage({ cars }: { cars: Car[] }) {
             triggerLabel="Получить оценку"
             triggerVariant="primary-surface"
             triggerInverse
-            triggerSize="m"
+            triggerSize="s"
+            triggerClassName="ti-call__cta"
           />
         </div>
       </section>

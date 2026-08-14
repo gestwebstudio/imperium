@@ -33,44 +33,14 @@
   overflow: hidden;
 }
 .ti-hero__inner {
-  padding-top: var(--crumbs-page-top, var(--page-top, 155px));
-  padding-bottom: 118px; /* беж под контентом (мобилка); 1536 возвращает 128 */
+  max-width: var(--layout-max, 1920px);
+  margin-inline: auto;
+  padding: var(--crumbs-page-top, var(--page-top, 155px)) var(--gutter) 118px;
+  /* беж под контентом (мобилка); 1536 возвращает 128 снизу */
 }
 
-/* Хлебные крошки страниц услуг — те же, что в каталоге (catalog.css) */
-.cat-crumbs,
-.cat-crumbs ol {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.cat-crumbs { height: 18px; margin-bottom: var(--crumbs-gap-bottom); }
-.cat-crumbs li {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  height: 18px;
-}
-.cat-crumbs__item {
-  font-family: var(--font-text, "Onest", sans-serif);
-  font-weight: var(--font-weight-regular, 400);
-  font-size: 14px;
-  line-height: 18px;
-  color: var(--color-warm-taupe-400, #8F8579);
-  text-decoration: none;
-  cursor: pointer;
-  transition: color .15s ease;
-}
-.cat-crumbs__item[href]:hover { color: var(--color-carbon-black-500, #1B1E1D); }
-.cat-crumbs__item--current { color: var(--color-carbon-black-500, #1B1E1D); cursor: default; }
-.cat-crumbs .breadcrumbs__separator {
-  flex: none;
-  color: var(--color-warm-taupe-300, #B2A79B);
-  transform: rotate(180deg);
-}
+/* Крошки — наши стандартные .ui-crumbs (глобальные стили + зазор 20). */
+
 /* MOBILE-FIRST: база = мобильный тир (390). Заголовок сверху, aside под ним
    слева; на 1200 (min-width) — две колонки, aside справа. */
 .ti-hero__top {
@@ -121,7 +91,9 @@
 .ti-hero__stats-wrap {
   position: relative;
   z-index: 3;
-  margin-top: -50px; /* наложение плашек на hero (мобилка); 960 возвращает -60 */
+  max-width: var(--layout-max, 1920px);
+  margin: -50px auto 0; /* наложение плашек на hero (мобилка); 960 возвращает -60 */
+  padding-inline: var(--gutter);
 }
 /* MOBILE-FIRST: база = 1 колонка (390). 480 → 2 колонки, 960 → ряд (flex). */
 .ti-hero__stats {
@@ -228,6 +200,11 @@
 }
 
 /* ---------------- Как проходит trade-in (MOBILE-FIRST, база = 390) ---------------- */
+.ti-steps {
+  max-width: var(--layout-max, 1920px);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
 .ti-steps__grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr); /* база = 1 колонка; 640 → 2 */
@@ -277,9 +254,9 @@
   .ti-step__title { font-size: 20px; line-height: 26px; }
   .ti-step__text { font-size: 16px; line-height: 20px; }
 }
-/* 960: шаг 24/28. */
+/* 960: шаг 24/30 (Display/24-SemiBold из макета). */
 @media (min-width: 960px) {
-  .ti-step__title { font-size: 24px; line-height: 28px; }
+  .ti-step__title { font-size: 24px; line-height: 30px; }
 }
 /* 1200: сетка gap 24; шаг 30/38; hero→steps 100. */
 @media (min-width: 1200px) {
@@ -304,15 +281,11 @@
   grid-template-columns: minmax(0, 1fr);
   gap: 40px;
   align-items: stretch;
+  /* мобилка [0,639]: беж-карточка без фото, инсет = гутер, внутр. паддинг 20 */
+  margin-inline: var(--gutter);
+  padding: 20px;
   background: var(--color-stone-beige-200, #E4DFDB);
   border-radius: var(--radius-card);
-  padding: 20px;
-}
-@media (min-width: 900px) {
-  .ti-factors,
-  .ti-accept {
-    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1fr);
-  }
 }
 .ti-factors__media,
 .ti-accept__media { min-width: 0; display: none; } /* база — фото скрыто; 640 показывает */
@@ -324,7 +297,45 @@
   border-radius: var(--radius-media, 36px);
   display: block;
 }
-.ti-accept__media { order: -1; } /* картинка слева, текст справа — как в первом блоке */
+
+/* 640+: беж убирается, 2 колонки [фото | текст]; «принять» зеркально [текст | фото].
+   Фото на 640–899 выносится узкой полосой за внешний край экрана. */
+@media (min-width: 640px) {
+  .ti-factors,
+  .ti-accept {
+    max-width: var(--layout-max, 1920px);
+    margin-inline: auto;
+    padding: 0 var(--gutter);
+    background: transparent;
+    border-radius: 0;
+    gap: clamp(32px, 4vw, 50px);
+  }
+  .ti-factors,
+  .ti-accept { grid-template-columns: minmax(0, 0.62fr) minmax(0, 1fr); }
+  .ti-factors__media,
+  .ti-accept__media { display: block; }
+  .ti-accept__media { order: -1; } /* фото слева — как в первом блоке */
+}
+@media (min-width: 640px) and (max-width: 899px) {
+  .ti-factors__media,
+  .ti-accept__media {
+    width: calc(100% + var(--gutter));
+    margin-left: calc(-1 * var(--gutter));
+  }
+  /* фото прижато к левому краю экрана — слева радиуса нет */
+  .ti-factors__media img,
+  .ti-accept__media img {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+/* 900+: колонки 1:1, фото в пределах гутера */
+@media (min-width: 900px) {
+  .ti-factors,
+  .ti-accept { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .ti-factors__media,
+  .ti-accept__media { width: 100%; margin-inline: 0; }
+}
 
 .ti-block__body {
   min-width: 0;
@@ -340,8 +351,8 @@
   display: flex;
   flex-direction: column;
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
-  font-size: 24px; /* база = мобилка 24/32; 768→30/38, 960→32/40, 1200→36/44, 1536→48/56 */
-  line-height: 32px;
+  font-size: 24px; /* база 24/30 (Display/24); 768→30/38, 960→32/40, 1200→36/44, 1536→48/56 */
+  line-height: 30px;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 .ti-block__title .reg { font-weight: var(--font-weight-regular, 400); }
@@ -386,16 +397,15 @@
 .ti-callout::before {
   content: "";
   position: absolute;
-  top: -32px; /* база = мобилка 80×66; 960 возвращает 120×100, top -46 */
-  width: 80px;
-  height: 66px;
+  display: none; /* на 390/480 кавычки нет; показывается с 640 (63×52 … 120×99) */
   background: url("/images/icon-serv.svg") no-repeat center / contain;
   opacity: 0.4;
   z-index: -1;
   pointer-events: none;
 }
+/* «что влияет» — кавычка слева; «мы готовы принять» — справа, зеркально */
 .ti-factors .ti-callout::before,
-.ti-accept .ti-callout::before { left: -25px; }
+.ti-accept  .ti-callout::before { left: -25px; }
 
 .ti-accept__note {
   margin: 0;
@@ -413,42 +423,42 @@
   .ti-callout .reg,
   .ti-callout .bold { white-space: nowrap; }
 }
-/* 640: беж-карточка убирается → «фото + текст» (фото показывается); gap fluid. */
+/* 640: кавычка появляется, 63×52. */
 @media (min-width: 640px) {
-  .ti-factors,
-  .ti-accept {
-    gap: clamp(32px, 4vw, 50px);
-    background: transparent;
-    border-radius: 0;
-    padding: 0;
-  }
-  .ti-factors__media,
-  .ti-accept__media { display: block; }
+  .ti-callout::before { display: block; width: 63px; height: 52px; top: -26px; }
 }
-/* 768: блок-заголовки 30/38. */
+/* 768: блок-заголовки 30/38; кавычка 79×66. */
 @media (min-width: 768px) {
   .ti-block__title { font-size: 30px; line-height: 38px; }
+  .ti-callout::before { width: 79px; height: 66px; top: -33px; }
 }
-/* 960: блок-заголовки 32/40; примечание 16/20; кавычка крупнее (120×100). */
+/* 960: блок-заголовки 32/40; примечание 16/20; кавычка 73×61. */
 @media (min-width: 960px) {
   .ti-block__title { font-size: 32px; line-height: 40px; }
   .ti-accept__note { font-size: 16px; line-height: 20px; }
-  .ti-callout::before { width: 120px; height: 100px; top: -46px; }
+  .ti-callout::before { width: 73px; height: 61px; top: -30px; }
 }
-/* 1200: блок-заголовки 36/44; callout 24/30. */
+/* 1200: блок-заголовки 36/44; callout 24/30; кавычка 100×83. */
 @media (min-width: 1200px) {
   .ti-block__title { font-size: 36px; line-height: 44px; }
   .ti-callout { font-size: 24px; line-height: 30px; }
+  .ti-callout::before { width: 100px; height: 83px; top: -42px; }
 }
-/* 1536: блок-заголовки 48/56; список «принять» 18/24; callout 30/40; примечание 18/24. */
+/* 1536: блок-заголовки 48/56; списки 18/24; callout 30/40; примечание 18/24; кавычка 120×99. */
 @media (min-width: 1536px) {
   .ti-block__title { font-size: 48px; line-height: 56px; }
-  .ti-accept .ti-list li { font-size: 18px; line-height: 24px; }
+  .ti-list li { font-size: 18px; line-height: 24px; }
   .ti-callout { font-size: 30px; line-height: 40px; }
   .ti-accept__note { font-size: 18px; line-height: 24px; }
+  .ti-callout::before { width: 120px; height: 99px; top: -46px; }
 }
 
 /* ---------------- Позвоните нам (баннер) ---------------- */
+.ti-call-section {
+  max-width: var(--layout-max, 1920px);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
 .ti-call {
   position: relative;
   display: flex;
@@ -481,11 +491,14 @@
   line-height: 18px;
   color: var(--color-heritage-green-100, #E1EAE5);
 }
+/* CTA — база = S (28, макет 390); 640 → M (36). */
+.ti-call__cta.btn { align-self: center; }
 
 /* ===== Адаптации баннера «Позвоните нам» (MOBILE-FIRST, база = 390) ===== */
-/* 640: заголовок 28/34. */
+/* 640: заголовок 28/34; кнопка M. */
 @media (min-width: 640px) {
   .ti-call__title { font-size: 28px; line-height: 34px; }
+  .ti-call__cta.btn { height: 36px; padding: 0 14px; font-size: 16px; line-height: 20px; }
 }
 /* 768: заголовок 30/38; подзаголовок 16/20. */
 @media (min-width: 768px) {
