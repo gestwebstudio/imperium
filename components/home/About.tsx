@@ -6,7 +6,7 @@ import { getReviews } from "@/lib/reviews";
 export async function About() {
   const reviews = await getReviews();
   return (
-    <section className="home-wrap about">
+    <section className="about">
       <ServiceCards />
 
       <div className="about__identity">

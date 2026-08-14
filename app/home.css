@@ -1409,6 +1409,13 @@
 }
 
 /* ---------------- About / услуги / отзыв ---------------- */
+/* Секция на нашем --gutter (вместо легаси home-wrap): все дети (услуги,
+   вордмарк+карточки, отзывы) выравниваются по нашему боковому отступу. */
+.about {
+  max-width: var(--layout-max, 1920px);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
 .about__services { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .service-card {
   position: relative;
@@ -1647,11 +1654,14 @@
 
 
 .about__testimonial {
+  /* Гуттер даёт родитель .about (наш --gutter). Статичные заголовок+стрелки —
+     в неподвижном оверлее; в дорожке их клоны скрыты (нужны только для раскладки).
+     Слайды листаются по клику на стрелки (useInfiniteCarousel). */
+  position: relative;
   margin-top: 198px;
   overflow: hidden;
 }
 .about__testimonial-track {
-  position: relative;
   display: flex;
   overflow-x: auto;
   overscroll-behavior-inline: contain;
@@ -1660,295 +1670,131 @@
   scrollbar-width: none;
 }
 .about__testimonial-track::-webkit-scrollbar { display: none; }
+
+/* Слайд: база <960 — стопка [ (заголовок+стрелки сверху), фото, цитата ]. */
 .about__testimonial-slide {
+  position: relative;
   flex: 0 0 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 50px;
-  align-items: stretch;
+  min-width: 0;
   scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
-.about__testi-img { overflow: hidden; border-radius: var(--radius-media); }
-.about__testi-img img { width: 100%; height: 100%; border-radius: inherit; display: block; object-fit: cover; }
-.about__testi-body { display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
-.about__testi-title { font-family: var(--font-display, "Wix Madefor Display", sans-serif); font-size: clamp(32px, 3.4vw, 48px); line-height: 1.17; color: var(--color-carbon-black-500, #1B1E1D); }
+.about__testi-body { display: contents; }   /* база: дети раскладываются в слайде (order) */
+
+.about__testi-img {
+  order: 2;
+  overflow: hidden;
+  border-radius: 20px;
+  aspect-ratio: 350 / 193;   /* 390; шагает по тирам */
+}
+.about__testi-img img { width: 100%; height: 100%; display: block; object-fit: cover; }
+
+.about__testi-title {
+  order: 1;
+  margin: 0;
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  color: var(--color-carbon-black-500, #1B1E1D);
+  font-size: 24px; line-height: 30px;   /* база; шагает по тирам */
+}
 .about__testi-title .reg { font-weight: 400; }
 .about__testi-title .bold { font-weight: 600; display: block; }
-.about__testi-quote { margin: 40px 0; }
+
+.about__testi-quote { order: 3; display: flex; flex-direction: column; gap: 17px; margin: 0; }
 .about__testi-author { display: flex; flex-direction: column; gap: 4px; }
-.about__testi-author b { display: block; font-family: var(--font-text, "Onest", sans-serif); font-weight: 600; font-size: var(--fs-18); line-height: 1.33; }
-.about__testi-author span { font-family: var(--font-text, "Onest", sans-serif); font-size: var(--fs-18); line-height: 1.33; color: var(--color-carbon-black-500, #1B1E1D); }
-.about__testi-text { margin-top: 17px; font-family: var(--font-text, "Onest", sans-serif); font-size: clamp(24px, 2.6vw, 36px); line-height: 1.17; color: var(--color-carbon-black-500, #1B1E1D); }
-.about__testi-nav { margin-top: 40px; display: flex; gap: 8px; }
+.about__testi-author b,
+.about__testi-author span {
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: 16px; line-height: 20px;   /* база <768; 768+ → 18/24 */
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.about__testi-author b { font-weight: 600; }
+.about__testi-author span { font-weight: 400; }
+.about__testi-text {
+  margin: 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: 400;
+  font-size: 20px; line-height: 28px;   /* база; шагает по тирам */
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+
+/* Стрелки: в стопке — абсолютно вверху справа (на уровне заголовка). */
+.about__testi-nav { position: absolute; top: 0; right: 0; display: flex; gap: 8px; }
 .about__testi-nav button {
-  width: 44px; height: 44px; border: none; border-radius: 30px; cursor: pointer;
+  width: 28px; height: 28px; border: none; border-radius: 30px; cursor: pointer;
   background: var(--color-stone-beige-200, #E4DFDB);
   color: var(--color-carbon-black-500, #1B1E1D);
   display: inline-flex; align-items: center; justify-content: center;
 }
-.about__testi-nav svg { width: 14px; height: 14px; }
+.about__testi-nav svg { width: 8px; height: 8px; }
 .about__testi-nav .next svg { transform: rotate(180deg); }
 
-/* Неподвижный оверлей заголовка+стрелок над прокручиваемой дорожкой.
-   Переиспользует классы слайда → наследует адаптацию. Копии в слайдах
-   прячем (visibility: место резервируют, но не видны и не «едут»). */
-.about__testimonial { position: relative; }
+/* Оверлей: единственные видимые (статичные) заголовок+стрелки поверх дорожки.
+   В дорожке клоны заголовка/стрелок скрыты (место резервируют). */
+.about__testimonial-track .about__testi-title,
+.about__testimonial-track .about__testi-nav { visibility: hidden; }
 .about__testimonial-overlay { position: absolute; inset: 0; pointer-events: none; }
 .about__testimonial-overlay .about__testimonial-slide { width: 100%; height: 100%; }
 .about__testimonial-overlay .about__testi-img,
 .about__testimonial-overlay .about__testi-quote { visibility: hidden; }
 .about__testimonial-overlay .about__testi-nav { pointer-events: auto; }
-.about__testimonial-track .about__testi-title,
-.about__testimonial-track .about__testi-nav { visibility: hidden; }
 
-/* Отзывы — адаптации Figma 1115:2516 / 4787 / 5084 / 5344 /
-   5618 / 5845 / 6051. Компонент общий для главной и страницы «О салоне». */
-@media (max-width: 1536px) {
-  .about__testimonial {
-    --testi-inset: clamp(40px, calc(40px + (100vw - 1200px) * .0595238), 60px);
-    --testi-padding-block: clamp(40px, calc(40px + (100vw - 1200px) * .1011905), 74px);
-    --testi-height: clamp(763px, calc(763px + (100vw - 1200px) * .4821429), 925px);
-    --testi-body-gap: 136px;
-    --testi-radius: 36px;
-    --testi-title-size: clamp(36px, calc(36px + (100vw - 1200px) * .0357143), 48px);
-    --testi-title-line: clamp(44px, calc(44px + (100vw - 1200px) * .0357143), 56px);
-    --testi-author-size: var(--type-text-18-font-size, 18px);
-    --testi-author-line: var(--type-text-18-line-height, 24px);
-    --testi-text-size: clamp(24px, calc(24px + (100vw - 1200px) * .0178571), 30px);
-    --testi-text-line: clamp(30px, calc(30px + (100vw - 1200px) * .0297619), 40px);
-    --testi-nav-size: 44px;
-    --testi-nav-icon: 16px;
-    --testi-image-width: clamp(643px, calc(643px + (100vw - 1200px) * .9255952), 954px);
-    --testi-image-height: clamp(683px, calc(683px + (100vw - 1200px) * .9821429), 1013px);
-    --testi-image-left: calc((100vw - 1200px) * -.1160714);
-    --testi-image-top: 0px;
-
-    position: relative;
-    left: 50%;
-    width: calc(100vw - var(--testi-inset) - var(--testi-inset));
-    height: var(--testi-height);
-    padding-block: var(--testi-padding-block);
-    transform: translateX(-50%);
-  }
-
-  /* Оверлей выравниваем по контент-области (учитываем padding-block блока). */
-  .about__testimonial-overlay {
-    top: var(--testi-padding-block);
-    bottom: var(--testi-padding-block);
-  }
-
-  .about__testimonial-track,
-  .about__testimonial-slide {
-    height: 100%;
-  }
-
-  .about__testimonial-slide {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 40px;
-    align-items: stretch;
-  }
-
-  .about__testi-img {
-    position: relative;
-    min-width: 0;
-    min-height: 0;
-    border-radius: var(--testi-radius);
-  }
-
-  .about__testi-img img {
-    position: absolute;
-    top: var(--testi-image-top);
-    left: var(--testi-image-left);
-    width: var(--testi-image-width);
-    height: var(--testi-image-height);
-    max-width: none;
-    border-radius: 0;
-    object-fit: cover;
-  }
-
-  .about__testi-body {
-    min-width: 0;
-    justify-content: flex-start;
-    gap: var(--testi-body-gap);
-  }
-
-  .about__testi-title {
-    flex: none;
-    font-size: var(--testi-title-size);
-    line-height: var(--testi-title-line);
-  }
-
-  .about__testi-quote {
-    display: flex;
-    flex: none;
-    flex-direction: column;
-    gap: 17px;
-    margin: 0;
-  }
-
+/* 480: фото 440/249 */
+@media (min-width: 480px) {
+  .about__testi-img { aspect-ratio: 440 / 249; }
+}
+/* 640: фото 580/305; стрелки 36/12 */
+@media (min-width: 640px) {
+  .about__testi-img { aspect-ratio: 580 / 305; }
+  .about__testi-nav button { width: 36px; height: 36px; }
+  .about__testi-nav svg { width: 12px; height: 12px; }
+}
+/* 768: фото 688/305; заголовок 30/38; автор 18/24; цитата 24/30; радиус 26 */
+@media (min-width: 768px) {
+  .about__testi-img { aspect-ratio: 688 / 305; border-radius: 26px; }
+  .about__testi-title { font-size: 30px; line-height: 38px; }
   .about__testi-author b,
-  .about__testi-author span {
-    font-size: var(--testi-author-size);
-    line-height: var(--testi-author-line);
-  }
-
-  .about__testi-text {
-    margin-top: 0;
-    font-size: var(--testi-text-size);
-    line-height: var(--testi-text-line);
-  }
-
-  .about__testi-nav {
-    flex: none;
-    margin-top: 0;
-  }
-
-  .about__testi-nav button {
-    width: var(--testi-nav-size);
-    height: var(--testi-nav-size);
-  }
-
-  .about__testi-nav svg {
-    width: var(--testi-nav-icon);
-    height: var(--testi-nav-icon);
-  }
+  .about__testi-author span { font-size: 18px; line-height: 24px; }
+  .about__testi-text { font-size: 24px; line-height: 30px; }
 }
-
-@media (max-width: 1200px) {
-  .about__testimonial {
-    --testi-inset: 40px;
-    --testi-padding-block: 40px;
-    --testi-height: clamp(667px, calc(667px + (100vw - 960px) * .4), 763px);
-    --testi-body-gap: clamp(66px, calc(66px + (100vw - 960px) * .2916667), 136px);
-    --testi-radius: clamp(26px, calc(26px + (100vw - 960px) * .0416667), 36px);
-    --testi-title-size: clamp(32px, calc(32px + (100vw - 960px) * .0166667), 36px);
-    --testi-title-line: clamp(40px, calc(40px + (100vw - 960px) * .0166667), 44px);
-    --testi-text-size: var(--type-text-24-font-size, 24px);
-    --testi-text-line: var(--type-text-24-line-height, 30px);
-    --testi-nav-size: clamp(36px, calc(36px + (100vw - 960px) * .0333333), 44px);
-    --testi-nav-icon: clamp(10px, calc(10px + (100vw - 960px) * .025), 16px);
-    --testi-image-width: clamp(560px, calc(560px + (100vw - 960px) * .3458333), 643px);
-    --testi-image-height: clamp(595px, calc(595px + (100vw - 960px) * .3666667), 683px);
-    --testi-image-left: 0px;
-  }
-}
-
-@media (max-width: 960px) {
-  .about__testimonial {
-    --testi-height: 667px;
-    --testi-body-gap: 66px;
-    --testi-radius: 26px;
-    --testi-title-size: var(--type-display-32-font-size, 32px);
-    --testi-title-line: var(--type-display-32-line-height, 40px);
-    --testi-nav-size: 36px;
-    --testi-nav-icon: 10px;
-    --testi-image-width: 560px;
-    --testi-image-height: 595px;
-  }
-}
-
-@media (max-width: 768px) {
-  .about__testimonial {
-    --testi-inset: clamp(30px, calc(30px + (100vw - 640px) * .078125), 40px);
-    --testi-padding-block: clamp(30px, calc(30px + (100vw - 640px) * .078125), 40px);
-    --testi-height: clamp(666px, calc(666px + (100vw - 640px) * .421875), 720px);
-    --testi-radius: 20px;
-    --testi-title-size: clamp(24px, calc(24px + (100vw - 640px) * .046875), 30px);
-    --testi-title-line: clamp(32px, calc(32px + (100vw - 640px) * .046875), 38px);
-    --testi-author-size: clamp(16px, calc(16px + (100vw - 640px) * .015625), 18px);
-    --testi-author-line: clamp(20px, calc(20px + (100vw - 640px) * .03125), 24px);
-    --testi-text-size: clamp(20px, calc(20px + (100vw - 640px) * .03125), 24px);
-    --testi-text-line: clamp(28px, calc(28px + (100vw - 640px) * .015625), 30px);
-    --testi-nav-size: 36px;
-    --testi-nav-icon: 10px;
-    --testi-image-width: 688px;
-    --testi-image-height: 731px;
-    --testi-image-left: 0px;
-    --testi-image-top: -275px;
-  }
-
-  .about__testimonial-slide {
-    position: relative;
+/* 960: 2 колонки [фото | тело]; фото портрет 420/587; заголовок 32/40.
+   Тело — колонка со space-between (заголовок сверху, цитата, стрелки снизу). */
+@media (min-width: 960px) {
+  .about__testimonial-slide { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: stretch; }
+  .about__testi-img { order: 0; aspect-ratio: 420 / 587; }
+  .about__testi-body {
+    order: 0;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-  }
-
-  .about__testi-body {
-    display: contents;
-  }
-
-  .about__testi-title {
-    order: 1;
-    width: calc(
-      100% - var(--testi-nav-size) - var(--testi-nav-size) - 28px
-    );
-  }
-
-  .about__testi-img {
-    order: 2;
-    flex: 1 1 0;
-    width: 100%;
-  }
-
-  .about__testi-quote {
-    order: 3;
-  }
-
-  .about__testi-nav {
-    position: absolute;
-    z-index: 2;
-    top: calc(
-      var(--testi-title-line) + var(--testi-title-line) - var(--testi-nav-size)
-    );
-    right: 0;
-  }
-}
-
-@media (max-width: 640px) {
-  .about__testimonial {
-    --testi-inset: clamp(20px, calc(20px + (100vw - 480px) * .0625), 30px);
-    --testi-padding-block: clamp(20px, calc(20px + (100vw - 480px) * .0625), 30px);
-    --testi-height: clamp(646px, calc(646px + (100vw - 480px) * .125), 666px);
-    --testi-title-size: var(--type-display-24-font-size, 24px);
-    --testi-title-line: 32px;
-    --testi-author-size: var(--type-text-16-font-size, 16px);
-    --testi-author-line: var(--type-text-16-line-height, 20px);
-    --testi-text-size: var(--type-text-20-font-size, 20px);
-    --testi-text-line: var(--type-text-20-line-height, 28px);
-    --testi-nav-size: clamp(28px, calc(28px + (100vw - 480px) * .05), 36px);
-    --testi-nav-icon: clamp(8px, calc(8px + (100vw - 480px) * .0125), 10px);
-    --testi-image-width: clamp(440px, calc(440px + (100vw - 480px) * 1.55), 688px);
-    --testi-image-height: clamp(467px, calc(467px + (100vw - 480px) * 1.65), 731px);
-    --testi-image-top: clamp(-275px, calc(-135px - (100vw - 480px) * .875), -135px);
-  }
-}
-
-@media (max-width: 480px) {
-  .about__testimonial {
-    --testi-inset: 20px;
-    --testi-padding-block: 20px;
-    --testi-height: 646px;
-    --testi-nav-size: 28px;
-    --testi-nav-icon: 8px;
-    --testi-image-width: 100%;
-    --testi-image-height: auto;
-    --testi-image-top: clamp(-135px, calc(-120px - (100vw - 390px) * .1666667), -120px);
-  }
-}
-
-/* Keep the testimonial frame continuous between the 1536 and 1920 anchors.
-   Its internal desktop composition remains unchanged; only the available
-   media height is interpolated so the section cannot collapse at 1537px. */
-@media (min-width: 1537px) and (max-width: 1920px) {
-  .about__testimonial {
-    height: clamp(925px, calc(901px + 1.5625vw), 931px);
-  }
-
-  .about__testimonial-track,
-  .about__testimonial-slide {
+    justify-content: space-between;
     height: 100%;
+    min-width: 0;
   }
+  .about__testi-title,
+  .about__testi-quote,
+  .about__testi-nav { order: 0; }
+  .about__testi-title { font-size: 32px; line-height: 40px; }
+  .about__testi-nav { position: static; }
+}
+/* 1200: фото 540/683; заголовок 36/44; стрелки 44/16; радиус 36 */
+@media (min-width: 1200px) {
+  .about__testi-img { aspect-ratio: 540 / 683; border-radius: 36px; }
+  .about__testi-title { font-size: 36px; line-height: 44px; }
+  .about__testi-nav button { width: 44px; height: 44px; }
+  .about__testi-nav svg { width: 16px; height: 16px; }
+}
+/* 1536: фото 688/777; заголовок 48/56; цитата 30/40 */
+@media (min-width: 1536px) {
+  .about__testi-img { aspect-ratio: 688 / 777; }
+  .about__testi-title { font-size: 48px; line-height: 56px; }
+  .about__testi-text { font-size: 30px; line-height: 40px; }
+}
+/* 1920: фото 875/931; зазор 50; цитата 36/42 */
+@media (min-width: 1920px) {
+  .about__testimonial-slide { gap: 50px; }
+  .about__testi-img { aspect-ratio: 875 / 931; }
+  .about__testi-text { font-size: 36px; line-height: 42px; }
 }
 
 

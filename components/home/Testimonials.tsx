@@ -37,7 +37,7 @@ export function Testimonials({ reviews }: { reviews: Review[] }) {
                   {/* Заголовок и стрелки продублированы в каждом слайде только
                       для сохранения раскладки; визуально их скрывает CSS
                       (.about__testimonial-track .about__testi-title/-nav),
-                      а видимые — в неподвижном оверлее ниже. */}
+                      а видимые (статичные) — в неподвижном оверлее ниже. */}
                   <h3 className="about__testi-title" aria-hidden="true">
                     <span className="reg">Выбор, </span>
                     <span className="bold">которым делятся</span>
