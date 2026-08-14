@@ -1272,7 +1272,6 @@
   line-height: 20px;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
-.body-types__consultation { display: none; } /* появляется на ≥1536 */
 
 /* Сетка: база — 2 колонки × 3 ряда, явное размещение, зазор 10. */
 .body-types__grid {
@@ -1381,7 +1380,6 @@
   .body-types__title .l1,
   .body-types__title .l2 { font-size: 62px; line-height: 70px; }
   .body-types__head { margin-bottom: 70px; }
-  .body-types__consultation { display: inline-flex; }
   .body-types__grid { grid-template-rows: 312px 312px auto; gap: 24px; }
   .body-type-card { border-radius: 30px; }
   .body-type-card--wide { height: 312px; }
