@@ -154,7 +154,7 @@ function PriceTable({ rows, ariaLabel }: { rows: Row[]; ariaLabel: string }) {
 
 export function HelpRoadsPricing() {
   return (
-    <section className="home-wrap hr-pricing">
+    <section className="hr-pricing">
       {SECTIONS.map((section) => (
         <div className="hr-pricing__section" key={section.title}>
           <h2 className="comparison-table-section__title">

@@ -78,7 +78,7 @@ export function HelpOnRoadPage() {
       </section>
 
       {/* ---------- Позвоните нам (зелёный баннер, из оригинальной страницы) ---------- */}
-      <section className="home-wrap">
+      <section className="ti-call-section">
         <div className="ti-call">
           <div className="ti-call__text">
             <h2 className="ti-call__title">Позвоните нам</h2>

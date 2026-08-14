@@ -26,6 +26,12 @@
 }
 
 /* ---------- Блок #2: два белых блока (MOBILE-FIRST, база = мобилка) ---------- */
+/* Контейнер на новый --gutter (как .ti-call-section), а не легаси home-wrap. */
+.hr-section {
+  max-width: var(--layout-max, 1920px);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
 /* База: карточки в колонку, высота по контенту, паддинг 20.
    481→pad24; 641→pad clamp; 961→в ряд, равная высота (min-height 553), pad 40. */
 .hr-cards {
@@ -51,8 +57,8 @@
 .hr-card__text {
   margin: 0;
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: var(--fs-16); /* база=мобилка fs-16/1.45; 641→1.333, 1201→fs-18 */
-  line-height: 1.45;
+  font-size: 16px; /* токены trade-in .ti-list: база 16/20; 1536→18/24 */
+  line-height: 20px;
   color: var(--color-carbon-black-500, #1b1e1d);
 }
 .hr-guarantees {
@@ -60,8 +66,8 @@
   padding: 0;
   list-style: none;
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: var(--fs-16); /* база=мобилка fs-16/1.45; 641→1.333, 1201→fs-18 */
-  line-height: 1.45;
+  font-size: 16px; /* токены trade-in .ti-list: база 16/20; 1536→18/24 */
+  line-height: 20px;
   color: var(--color-carbon-black-500, #1b1e1d);
 }
 .hr-guarantees li + li {
@@ -190,11 +196,15 @@
   }
 }
 .hr-pricing {
-  /* ширина первой колонки (услуга). База=мобилка 64%; 481→66%, 641→68%, 961→74% */
+  /* Контейнер на новый --gutter (как .ti-call-section / .hr-section), а не легаси home-wrap. */
+  max-width: var(--layout-max, 1920px);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  /* ширина первой колонки (услуга). База=мобилка 64%; 480→66%, 640→68%, 960→74% */
   --comparison-label-width: 64%;
   display: flex;
   flex-direction: column;
-  gap: 40px; /* база=мобилка 40; 641→clamp(40,6vw,56); 961→clamp(28,3vw,48) */
+  gap: 40px; /* база=мобилка 40; 640→clamp(40,6vw,56); 960→clamp(28,3vw,48) */
 }
 .hr-pricing__section {
   display: flex;
@@ -261,20 +271,20 @@
    desktop-значения trade-in. Вертикальный ритм секций и нижний паддинг hero
    НЕ трогаем — оставлены desktop-first отдельными блоками ниже. */
 
-/* База (мобилка): fluid-шрифты общих элементов + переносы callout по словам. */
+/* База (мобилка): hero fluid. Заголовок/текст/callout карточек НЕ переопределяем —
+   наследуют токены trade-in (.ti-block__title 24/30, .ti-list 16/20, .ti-callout 18/24).
+   Callout в узкой карточке оставляем с переносом по словам. */
 .help-roads .ti-hero__title .reg,
 .help-roads .ti-hero__title .bold { font-size: var(--fs-48); line-height: 1.08; }
-.help-roads .ti-block__title,
 .help-roads .ti-call__title { font-size: var(--fs-36); line-height: 1.16; }
-.help-roads .hr-card__callout { font-size: var(--fs-24); line-height: 1.3; }
 .help-roads .ti-hero__sub,
 .help-roads .ti-call__sub { font-size: var(--fs-16); }
 .help-roads .hr-card__callout .reg,
 .help-roads .hr-card__callout .bold { white-space: normal; }
 
-/* 481: карточка pad24; таблица (колонка h52 p14/16 fs-16, ячейка p16 fs-16 line22);
+/* 480: карточка pad24; таблица (колонка h52 p14/16 fs-16, ячейка p16 fs-16 line22);
    тарифы label 66%; подзаголовок line 1.333. */
-@media (min-width: 481px) {
+@media (min-width: 480px) {
   .hr-card { padding: 24px; }
   .comparison-spec-table__column {
     height: 52px;
@@ -288,13 +298,11 @@
   .hr-pricing__subtitle { line-height: 1.333; }
 }
 
-/* 641: карточки gap20; карточка pad clamp; текст/список line 1.333; секция-заголовок
+/* 640: карточки gap20; карточка pad clamp; секция-заголовок
    fs-24; таблица горизонт. паддинг 20; тарифы label 68%, gap/section/sub, footnote line. */
-@media (min-width: 641px) {
+@media (min-width: 640px) {
   .hr-cards { gap: 20px; }
   .hr-card { padding: clamp(24px, 4.167vw, 40px); }
-  .hr-card__text,
-  .hr-guarantees { line-height: 1.333; }
   .help-roads .comparison-table-section__title { font-size: var(--fs-24); }
   .comparison-spec-table__column { padding: 14px 20px; }
   .comparison-spec-table__cell { padding: 16px 20px; }
@@ -304,9 +312,9 @@
   .hr-pricing__footnote { line-height: 1.4; }
 }
 
-/* 961: карточки в ряд (равная высота 553, pad40, gap20); callout — контент-ширина
+/* 960: карточки в ряд (равная высота 553, pad40, gap20); callout — контент-ширина
    прижат вниз; заголовки-right вправо; тарифы label 74%, gap; таблица без переносов. */
-@media (min-width: 961px) {
+@media (min-width: 960px) {
   .hr-cards { flex-direction: row; padding: 10px; }
   .hr-card {
     flex: 1 1 0;
@@ -327,32 +335,29 @@
   .hr-pricing .comparison-spec-table__column { overflow-wrap: normal; }
 }
 
-/* 1201: общие элементы возвращаются к desktop-значениям trade-in. */
-@media (min-width: 1201px) {
+/* 1200: hero/подписи — desktop-значения trade-in; шрифты таблицы. Заголовок/текст/
+   callout карточек НЕ переопределяем — наследуют trade-in
+   (.ti-block__title 36/44, .ti-callout 24/30). */
+@media (min-width: 1200px) {
   .help-roads .ti-hero__title .reg,
   .help-roads .ti-hero__title .bold { font-size: 40px; line-height: 48px; }
-  .help-roads .ti-block__title { font-size: 36px; line-height: 44px; }
   .help-roads .ti-call__title { font-size: 36px; line-height: 44px; }
   .help-roads .ti-hero__sub,
   .help-roads .ti-call__sub { font-size: 16px; line-height: 20px; }
-  .help-roads .hr-card__callout { font-size: 24px; line-height: 30px; }
-  .help-roads .hr-card__callout .reg,
-  .help-roads .hr-card__callout .bold { white-space: nowrap; }
   .help-roads .comparison-table-section__title { font-size: 24px; }
   .comparison-spec-table__column { font-size: 15px; }
   .comparison-spec-table__cell { font-size: 16px; }
-  .hr-card__text,
-  .hr-guarantees { font-size: var(--fs-18); }
   .hr-pricing__subtitle { font-size: var(--fs-18); }
 }
 
-/* 1536: заголовки hero/block/callout — верхний тир trade-in. */
+/* 1536: hero-заголовок — верхний тир trade-in; текст/список карточек 18/24 (.ti-list).
+   Заголовок/callout карточек наследуют trade-in (.ti-block__title 48/56, .ti-callout 30/40). */
 @media (min-width: 1536px) {
   .help-roads .ti-hero__title .reg,
   .help-roads .ti-hero__title .bold { font-size: 66px; line-height: 70px; }
-  .help-roads .ti-block__title { font-size: 48px; line-height: 56px; }
   .help-roads .ti-hero__sub { font-size: 18px; line-height: 24px; }
-  .help-roads .hr-card__callout { font-size: 30px; line-height: 40px; }
+  .hr-card__text,
+  .hr-guarantees { font-size: 18px; line-height: 24px; }
 }
 
 /* ---------- Вертикальный ритм (spacing) — НЕ тронут, оставлен desktop-first ---------- */

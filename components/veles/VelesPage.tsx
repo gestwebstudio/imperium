@@ -80,7 +80,7 @@ export function VelesPage() {
       </section>
 
       {/* ---------- Баннер «Александр Велес» (1006:2317) ---------- */}
-      <section className="home-wrap veles-cta-section">
+      <section className="veles-cta-section">
         <div className="veles-cta">
           {/* Декор из макета: вордмарк «ВЕЛЕС» сверху, большой вордмарк под фото,
               зелёный акцент справа снизу (Figma 1206:3573/3574/3584). */}
@@ -127,7 +127,7 @@ export function VelesPage() {
       </section>
 
       {/* ---------- Второй блок — вордмарк + лид + 3 карточки (с ателье) ---------- */}
-      <section className="home-wrap veles-identity">
+      <section className="veles-identity">
         <div className="about__identity">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -194,8 +194,8 @@ export function VelesPage() {
 
       {/* ---------- Процесс работы (4 этапа) — общий блок «этапы» трейд-ина
           (.ti-steps__grid/.ti-step*), чтобы работали все адаптации. ---------- */}
-      <section className="home-wrap veles-process">
-        <h2 className="ti-section-title">Процесс работы</h2>
+      <section className="ti-steps veles-process">
+        <h2 className="ti-section-title t-page-title">Процесс работы</h2>
         <div className="ti-steps__grid">
           {STEPS.map((s) => (
             <article className="ti-step" key={s.stage}>
@@ -209,12 +209,12 @@ export function VelesPage() {
         </div>
       </section>
 
-      {/* ---------- Баннер «Назначить встречу» (1006:2908) ---------- */}
-      <section className="home-wrap veles-call-section">
-        <div className="veles-call">
-          <div className="veles-call__text">
-            <h2 className="veles-call__title">Назначить встречу с дизайнером</h2>
-            <p className="veles-call__sub">
+      {/* ---------- Зелёный CTA «Назначить встречу» — блок trade-in (.ti-call*) ---------- */}
+      <section className="ti-call-section veles-call-section">
+        <div className="ti-call">
+          <div className="ti-call__text">
+            <h2 className="ti-call__title">Назначить встречу с дизайнером</h2>
+            <p className="ti-call__sub">
               Оставьте контакты — мы свяжемся, чтобы назначить встречу с
               дизайнером и обсудить ваш проект.
             </p>
@@ -222,6 +222,7 @@ export function VelesPage() {
           <LeadModal
             {...VELES_MODAL}
             triggerLabel="Оставить заявку"
+            triggerClassName="ti-call__cta"
             triggerVariant="primary-surface"
             triggerInverse
             triggerSize="m"

@@ -66,7 +66,7 @@ export function HelpRoadsPage() {
       </section>
 
       {/* ---------- Блок #2 — два белых блока (свой) ---------- */}
-      <section className="home-wrap hr-section">
+      <section className="hr-section">
         <div className="hr-cards">
         <article className="hr-card">
           <h2 className="ti-block__title">
@@ -112,7 +112,7 @@ export function HelpRoadsPage() {
       <HelpRoadsPricing />
 
       {/* ---------- Позвоните нам (баннер, переиспользуем) ---------- */}
-      <section className="home-wrap">
+      <section className="ti-call-section">
         <div className="ti-call">
           <div className="ti-call__text">
             <h2 className="ti-call__title">Помощь 24/7</h2>

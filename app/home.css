@@ -1439,8 +1439,20 @@
   }
 }
 
-.about__identity { position: relative; height: 1320px; margin-top: 120px; }
+/* ============================================================
+   Блок услуг (about__identity) — MOBILE-FIRST по макетам Figma
+   (артборды 1209:16461…17229 / 1309:5622).
+   База (<768) — стек; 768–1199 — сетка [ателье | велес] + подбор снизу;
+   1200+ — мозаика со смещением. Ховер (белый фон) — в общем .image-service-card. */
+.about__identity {
+  position: relative;
+  margin-top: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
 .about__wordmark-bg {
+  display: none;               /* вордмарк только на мозаике (1200+) */
   position: absolute;
   z-index: 0;
   top: 460px;
@@ -1451,25 +1463,83 @@
   pointer-events: none;
 }
 .about__lead {
-  position: absolute;
-  z-index: 1;
-  top: 104px;
-  left: 0;
-  width: 1027px;
+  width: 100%;
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
   color: var(--color-carbon-black-500, #1B1E1D);
 }
-.about__lead .reg { font-weight: 400; font-size: var(--fs-50); line-height: 1.4; }
-.about__lead .bold { font-weight: 700; font-size: var(--fs-66); line-height: 1.06; }
+.about__lead .reg { font-weight: 400; font-size: var(--fs-50); line-height: 1.25; }
+.about__lead .bold { font-weight: 700; font-size: var(--fs-66); line-height: 1.08; }
+.image-service-card[class*="svc-card--"] { width: 100%; }
+/* Порядок стека по макету: ателье → велес → подбор (в сетке/мозаике — явное размещение). */
+.svc-card--atelier { order: 1; }
+.svc-card--veles { order: 2; }
+.svc-card--selection { order: 3; }
 
-/* карточка услуги с фото (Ателье / Подбор / Велес) */
-.image-service-card[class*="svc-card--"] {
-  position: absolute;
-  z-index: 1;
+/* 768–1199: сетка — лид на всю ширину; [ателье | велес]; подбор на всю ширину */
+@media (min-width: 768px) {
+  .about__identity {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap: clamp(24px, 3.2vw, 40px);
+  }
+  .about__lead { grid-column: 1 / -1; }
+  .svc-card--atelier   { grid-column: 1; grid-row: 2; }
+  .svc-card--veles     { grid-column: 2; grid-row: 2; }
+  .svc-card--selection { grid-column: 1 / -1; grid-row: 3; }
 }
-.svc-card--atelier { top: 0; left: 1027px; width: 773px; }
-.svc-card--selection { top: 535px; left: 0; width: 660px; }
-.svc-card--veles { top: 688px; left: 725px; width: 1075px; }
+
+/* 1200+: мозаика со смещением (4-трек grid, fluid) */
+@media (min-width: 1200px) {
+  .about__identity {
+    /* Пропорции треков ≈ постоянны по макетам 1200/1536/1920:
+       лид = т1+т2+т3 (≈57%), ателье = т4 (≈43%), подбор = т1 (≈38%),
+       велес = т2+т3+т4 (≈62%, смещён вправо на т1). */
+    --about-track-1: 38%;
+    --about-track-2: 5%;
+    --about-track-3: 14%;
+    --about-track-4: 43%;
+    --about-card-gutter: clamp(12px, 1.6vw, 30px);
+    --about-selection-lift: clamp(0px, 8vw, 153px);
+    --about-veles-lift: 0px;
+    grid-template-columns:
+      minmax(0, var(--about-track-1))
+      minmax(0, var(--about-track-2))
+      minmax(0, var(--about-track-3))
+      minmax(0, var(--about-track-4));
+    grid-template-rows: repeat(2, auto);
+    gap: 64px 0;
+  }
+  .about__wordmark-bg { display: block; }
+  .about__lead {
+    grid-column: 1 / 4;
+    grid-row: 1;
+    align-self: center;
+    padding-right: var(--about-card-gutter);
+  }
+  .about__lead .reg { font-size: clamp(38px, 3.4vw, 50px); line-height: 1.25; }
+  .about__lead .bold { font-size: clamp(48px, 4.4vw, 64px); line-height: 1.08; }
+  .svc-card--atelier {
+    grid-column: 4;
+    grid-row: 1;
+    width: calc(100% - var(--about-card-gutter));
+    margin-left: var(--about-card-gutter);
+  }
+  .svc-card--selection {
+    grid-column: 1;
+    grid-row: 2;
+    width: calc(100% - var(--about-card-gutter));
+    translate: 0 calc(-1 * var(--about-selection-lift));
+  }
+  .svc-card--veles {
+    grid-column: 2 / 5;
+    grid-row: 2;
+    width: calc(100% - var(--about-card-gutter));
+    margin-left: var(--about-card-gutter);
+    translate: 0 calc(-1 * var(--about-veles-lift));
+  }
+}
+
 
 .about__testimonial {
   margin-top: 198px;
@@ -2457,21 +2527,6 @@
 @media (max-width: 960px) {
   .about__services { grid-template-columns: 1fr; }
   .service-card { height: auto; min-height: 167px; }
-  .about__identity {
-    height: auto;
-    margin-top: 80px;
-    display: flex;
-    flex-direction: column;
-    gap: 48px;
-  }
-  .about__wordmark-bg { display: none; }
-  .about__lead,
-  .image-service-card[class*="svc-card--"] {
-    position: relative;
-    inset: auto;
-    width: 100%;
-  }
-  .about__lead .bold { line-height: 1.08; }
 }
 
 
@@ -2489,72 +2544,13 @@
   .body-types__head { min-height: 0; margin-bottom: 48px; }
   .body-types__aside { width: min(44%, 594px); padding-top: 72px; }
 
-  .about__identity {
-    --about-track-1: 50%;
-    --about-track-2: 0%;
-    --about-track-3: 0%;
-    --about-track-4: 50%;
-    --about-card-gutter: clamp(0px, calc(60px - 3.125vw), 12px);
-    --about-selection-lift: clamp(0px, calc(-652px + 42.4479vw), 163px);
-    --about-veles-lift: clamp(0px, calc(-40px + 2.6042vw), 10px);
-    height: auto;
-    margin-top: 120px;
-    display: grid;
-    grid-template-columns:
-      minmax(0, var(--about-track-1))
-      minmax(0, var(--about-track-2))
-      minmax(0, var(--about-track-3))
-      minmax(0, var(--about-track-4));
-    grid-template-rows: repeat(2, auto);
-    gap: 64px 0;
-  }
-  .about__wordmark-bg { display: none; }
-  .about__lead,
-  .image-service-card[class*="svc-card--"] {
-    position: relative;
-    inset: auto;
-    width: 100%;
-  }
-  .about__lead {
-    grid-column: 1 / 4;
-    grid-row: 1;
-    align-self: center;
-    padding-right: var(--about-card-gutter);
-  }
-  .about__lead .reg { font-size: clamp(38px, 3.4vw, 50px); line-height: 1.25; }
-  .about__lead .bold { font-size: clamp(48px, 4.4vw, 64px); line-height: 1.08; }
-  .svc-card--atelier {
-    grid-column: 4;
-    grid-row: 1;
-    width: calc(100% - var(--about-card-gutter));
-    margin-left: var(--about-card-gutter);
-  }
-  .svc-card--selection {
-    grid-column: 1;
-    grid-row: 2;
-    width: calc(100% - var(--about-card-gutter));
-    translate: 0 calc(-1 * var(--about-selection-lift));
-  }
-  .svc-card--veles {
-    grid-column: 2 / 5;
-    grid-row: 2;
-    width: calc(100% - var(--about-card-gutter));
-    margin-left: var(--about-card-gutter);
-    translate: 0 calc(-1 * var(--about-veles-lift));
-  }
+  /* about__identity — вынесен в самодостаточный mobile-first блок выше. */
   .about__testimonial { margin-top: 140px; }
 }
 
 /* Above the 1536 anchor the section rhythm grows toward the 1920 frame
    instead of falling back to the old fixed desktop values in one step. */
 @media (min-width: 1537px) and (max-width: 1920px) {
-  .about__identity {
-    --about-track-1: clamp(666px, calc(936px - 14.0625vw), 720px);
-    --about-track-2: clamp(0px, calc(-216px + 14.0625vw), 54px);
-    --about-track-3: clamp(0px, calc(-1224px + 79.6875vw), 306px);
-    --about-track-4: clamp(720px, calc(504px + 14.0625vw), 774px);
-  }
-
   .home > .brands {
     margin-top: max(130px, calc(200px - 3.6458vw));
   }

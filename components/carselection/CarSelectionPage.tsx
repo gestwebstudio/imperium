@@ -194,7 +194,7 @@ export function CarSelectionPage() {
       </section>
 
       {/* ---------- Позвоните нам (баннер) ---------- */}
-      <section className="home-wrap">
+      <section className="ti-call-section">
         <div className="ti-call">
           <div className="ti-call__text">
             <h2 className="ti-call__title">

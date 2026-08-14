@@ -31,60 +31,31 @@
   border-radius: 0 0 var(--radius-page, 50px) var(--radius-page, 50px);
   overflow: hidden;
 }
-.veles-hero__inner {
-  position: relative;
-  min-height: 0;
-  padding-top: var(--crumbs-page-top, var(--page-top, 155px));
-  padding-bottom: 40px;
-}
-.veles-hero__top {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: clamp(24px, 4vw, 40px);
-}
-.veles-hero__title {
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
-  color: var(--color-carbon-black-500, #1B1E1D);
-}
-.veles-hero__title .reg { font-weight: var(--font-weight-regular, 400); font-size: var(--fs-66); line-height: 1.06; }
-.veles-hero__title .bold { font-weight: var(--font-weight-extrabold, 800); font-size: var(--fs-66); line-height: 1.06; }
-.veles-hero__aside {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 24px;
-  text-align: left;
-}
-.veles-hero__sub {
-  margin: 0;
-  font-family: var(--font-text, "Onest", sans-serif);
-  font-size: var(--fs-18);
-  line-height: 1.333;
-  color: var(--color-carbon-black-500, #1B1E1D);
-}
 
-/* ---------------- Баннер «Александр Велес» (Figma 1206:3512 / 1143:12393…12728).
-   Все размеры из get_metadata. Фото слева (высота 384, ширина по брейкам),
-   текст справа; с 960 — стопка. ---------------- */
-.veles-cta-section { margin-top: var(--g-first); }
+/* ---------------- Баннер «Александр Велес» — MOBILE-FIRST по макетам Figma
+   (артборды 1143:12393…12728 / 1206:3512, числа из get_metadata).
+   База = 390: колонка [текст сверху, фото снизу], всё слева.
+   960 — текст-ряд [заголовок слева | описание справа], фото снизу.
+   1200 — ряд [фото слева | текст справа], всё по правому краю.
+   Гуттер обёртки — общий --gutter (как у остальных блоков). ---------------- */
+.veles-cta-section {
+  margin-top: var(--g-first);
+  max-width: var(--layout-max, 1920px);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
 .veles-cta {
   position: relative;
   display: flex;
+  flex-direction: column;   /* база = стопка; 1200 → ряд */
   align-items: stretch;
-  gap: 0;
-  padding: 40px;
+  gap: 20px;                /* текст↔фото; 480+ → 34 */
+  padding: 20px;            /* 390; 480→26, 640→30, 960→40 */
   border-radius: var(--radius-card);
   background: rgba(213, 204, 196, 0.4);
   overflow: hidden;
 }
-/* Декоративные вордмарки/акцент из макета (позиции по брейкам ниже). */
+/* Декоративные вордмарки/акцент (позиции по артбордам ниже, база = 390). */
 .veles-cta__wm {
   position: absolute;
   z-index: 0;
@@ -92,8 +63,8 @@
   max-width: none;
   pointer-events: none;
 }
-.veles-cta__wm--big { left: 122px; top: 0; width: 658px; height: 464px; }
-.veles-cta__wm--top { left: 845px; top: -20px; width: 968px; height: 163px; }
+.veles-cta__wm--big { left: 25px; top: 323px; width: 300px; height: 211px; }
+.veles-cta__wm--top { left: -4px; top: -6px; width: 370px; height: 62px; }
 .veles-cta__accent {
   position: absolute;
   right: 40px;
@@ -101,29 +72,30 @@
   width: 27.1px;
   height: 19.1px;
   z-index: 2;
-  display: block;
+  display: none;   /* акцент только на ряд-раскладке (1200+) */
   pointer-events: none;
 }
 .veles-cta__media {
+  order: 2;        /* фото снизу (база); 1200 → слева */
   position: relative;
   z-index: 1;
-  flex: 0 0 clamp(435px, calc(64.3px + 38.58vw), 805px);
-  width: clamp(435px, calc(64.3px + 38.58vw), 805px);
-  height: 384px;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 310 / 166;   /* 390; растёт по артбордам */
   border-radius: var(--radius-media);
   overflow: hidden;
 }
 .veles-cta__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .veles-cta__body {
+  order: 1;        /* текст сверху (база); 1200 → справа */
   position: relative;
   z-index: 1;
-  flex: 1 1 0;
   min-width: 0;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  gap: 20px;
-  text-align: right;
+  align-items: flex-start;
+  gap: 12px;       /* 390; 480→16, 1200→20 */
+  text-align: left;
 }
 .veles-cta__title {
   margin: 0;
@@ -132,197 +104,119 @@
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
   color: var(--color-carbon-black-500, #1B1E1D);
 }
-.veles-cta__title .reg { font-weight: var(--font-weight-regular, 400); font-size: 66px; line-height: 70px; }
-.veles-cta__title .bold { font-weight: var(--font-weight-extrabold, 800); font-size: 66px; line-height: 70px; }
+.veles-cta__title .reg { font-weight: var(--font-weight-regular, 400); font-size: 32px; line-height: 40px; }
+.veles-cta__title .bold { font-weight: var(--font-weight-extrabold, 800); font-size: 32px; line-height: 40px; }
 .veles-cta__sub {
   margin: 0;
-  max-width: 679px;
+  max-width: none;
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: 18px;
-  line-height: 24px;
+  font-size: 16px;      /* 390–1199; 1200→18/24 */
+  line-height: 20px;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 
-/* ---------------- Второй блок (about__identity с ателье) ---------------- */
-.veles-identity { margin-top: var(--g-rhythm); }
+/* ---------------- Блок «вордмарк + 3 карточки» — общий .about__identity с главной
+   (стили в home.css). Здесь только контейнер на --gutter и вертикальный ритм. ---------------- */
+.veles-identity {
+  margin-top: var(--g-rhythm);
+  max-width: var(--layout-max, 1920px);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
 .veles-identity .about__identity { margin-top: 0; }
 
-/* ---------------- Процесс работы (1006:2937 + 1006:2917) ---------------- */
+/* ---------------- Процесс работы — этапы trade-in (.ti-steps + .ti-step*) ----------------
+   Контейнер/гуттер даёт класс .ti-steps в разметке, здесь только вертикальный ритм. */
 .veles-process { margin-top: var(--g-rhythm); }
-.veles-process__title {
-  margin: 0 0 45px;
-  color: var(--color-carbon-black-500, #1B1E1D);
-}
-.veles-steps {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 24px;
-}
-.veles-step {
-  position: relative;
-  min-height: 164px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 30px;
-  border-radius: var(--radius-card);
-  background: var(--color-white, #FFFFFF);
-}
-.veles-step__badge {
-  position: absolute;
-  top: -14px;
-  left: 30px;
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 8px;
-  border-radius: 21px;
-  background: var(--color-blue-100, #DCDFEF);
-  font-family: var(--font-text, "Onest", sans-serif);
-  font-size: 16px;
-  line-height: 20px;
-  color: var(--color-blue-500, #5262C0);
-}
-.veles-step__title {
-  margin: 0;
-  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
-  font-weight: var(--font-weight-semibold, 600);
-  font-size: var(--fs-36);
-  line-height: 1.222;
-  color: var(--color-heritage-green-500, #294434);
-}
-.veles-step__text {
-  margin: 0;
-  font-family: var(--font-text, "Onest", sans-serif);
-  font-size: var(--fs-18);
-  line-height: 1.333;
-  color: #61584E;
-  opacity: 0.7;
-}
 
-/* ---------------- Баннер «Назначить встречу» (1006:2908) ---------------- */
+/* ---------------- Баннер «Назначить встречу» — зелёный CTA trade-in (.ti-call*) ----------------
+   Контейнер/гуттер даёт класс .ti-call-section в разметке, здесь только ритм. */
 .veles-call-section { margin-top: var(--g-rhythm); }
-.veles-call {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  gap: 24px;
-  min-height: 216px;
-  padding: 30px;
-  border-radius: var(--radius-card);
-  background:
-    url("/images/services/tradein3.webp") center center / cover no-repeat,
-    var(--color-heritage-green-500, #294434);
-  color: var(--color-white, #FFFFFF);
-}
-.veles-call__text {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  max-width: 601px;
-}
-.veles-call__title {
-  margin: 0;
-  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
-  font-weight: var(--font-weight-semibold, 600);
-  font-size: var(--fs-36);
-  line-height: 1.222;
-}
-.veles-call__sub {
-  margin: 0;
-  font-family: var(--font-text, "Onest", sans-serif);
-  font-size: var(--fs-16);
-  line-height: 1.25;
-  color: var(--color-heritage-green-100, #E1EAE5);
-}
 
 /* ---------------- Контакты — с главной ---------------- */
 .veles .contacts { margin-top: var(--g-contacts); }
 
-/* Progressive layout expansion. */
-@media (min-width: 769px) {
-  .veles-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
 @media (min-width: 1201px) {
   .veles-hero .ti-hero__inner { padding-bottom: 60px; }
-  .veles-hero__inner { min-height: 479px; padding-bottom: 60px; }
-  .veles-hero__top { flex-direction: row; gap: clamp(40px, 6vw, 116px); }
-  .veles-hero__aside {
-    width: min(100%, 730px);
-    align-items: flex-end;
-    text-align: right;
-  }
 }
 
-/* ===== Баннер «Александр Велес»: адаптив по макетам Figma (числа из get_metadata) ===== */
-/* 1536: фото 598×384 (блок в ряд) */
-@media (max-width: 1536px) {
-  .veles-cta__wm--big { left: 22px; }
-  .veles-cta__wm--top { left: 675px; }
-}
-/* 1200: фото 435×384, описание max 549 */
-@media (max-width: 1366px) {
-  .veles-cta__sub { max-width: 549px; }
-  .veles-cta__wm--big { left: -178px; }
-  .veles-cta__wm--top { left: 475px; width: 840px; height: 141px; }
-}
-/* 960: стопка — [заголовок | описание] сверху, фото снизу; заголовок 50/56 */
-@media (max-width: 960px) {
-  .veles-cta { flex-direction: column; align-items: stretch; gap: 34px; }
-  .veles-cta__body {
-    order: 1;
-    flex: none;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 60px;
-    text-align: left;
-  }
-  .veles-cta__title { flex: 0 0 auto; }
+/* ===== Баннер «Александр Велес»: MOBILE-FIRST дельты по артбордам (числа Figma get_metadata).
+   База (390) — в основном блоке выше; ниже только приращения вверх. ===== */
+/* 480: pad 26; текст↔фото 34; заголовок 36/44; фото 388×205 */
+@media (min-width: 480px) {
+  .veles-cta { padding: 26px; gap: 34px; }
+  .veles-cta__body { gap: 16px; }
   .veles-cta__title .reg,
-  .veles-cta__title .bold { font-size: 50px; line-height: 56px; }
-  .veles-cta__sub { flex: 1 1 0; max-width: none; }
-  .veles-cta__media { order: 2; flex: none; width: 100%; height: auto; aspect-ratio: 800 / 384; }
-  /* большой вордмарк уходит под фото (снизу), верхний — над текстом; акцента нет */
-  .veles-cta__wm--big { left: 111px; top: 217px; }
-  .veles-cta__wm--top { left: 20px; top: -20px; width: 840px; height: 141px; }
-  .veles-cta__accent { display: none; }
+  .veles-cta__title .bold { font-size: 36px; line-height: 44px; }
+  .veles-cta__media { aspect-ratio: 388 / 205; }
+  .veles-cta__wm--big { left: 29px; top: 282px; width: 382px; height: 269px; }
+  .veles-cta__wm--top { left: -4px; top: -10px; width: 454px; height: 76px; }
 }
-/* 768: текст стопкой (заголовок над описанием, слева); падинг 30; фото 628×318 */
-@media (max-width: 768px) {
+/* 640: pad 30; заголовок 40/48; фото 520×262 */
+@media (min-width: 640px) {
   .veles-cta { padding: 30px; }
-  .veles-cta__body { flex-direction: column; gap: 20px; }
-  .veles-cta__media { aspect-ratio: 628 / 318; }
-  .veles-cta__wm--big { left: 60px; top: 288px; width: 568px; height: 400px; }
-  .veles-cta__wm--top { left: -3px; top: -10px; width: 720px; height: 121px; }
-}
-/* 640: заголовок 40/48; фото 520×262 */
-@media (max-width: 640px) {
   .veles-cta__title .reg,
   .veles-cta__title .bold { font-size: 40px; line-height: 48px; }
   .veles-cta__media { aspect-ratio: 520 / 262; }
   .veles-cta__wm--big { left: 59px; top: 322px; width: 462px; height: 326px; }
   .veles-cta__wm--top { left: -7px; top: -10px; width: 614px; height: 103px; }
 }
-/* 480: падинг 26; заголовок 36/44; описание 16/20; фото 388×205 */
-@media (max-width: 480px) {
-  .veles-cta { padding: 26px; }
-  .veles-cta__body { gap: 16px; }
+/* 768: заголовок 50/56; фото 628×318 (pad остаётся 30) */
+@media (min-width: 768px) {
   .veles-cta__title .reg,
-  .veles-cta__title .bold { font-size: 36px; line-height: 44px; }
-  .veles-cta__sub { font-size: 16px; line-height: 20px; }
-  .veles-cta__media { aspect-ratio: 388 / 205; }
-  .veles-cta__wm--big { left: 29px; top: 282px; width: 382px; height: 269px; }
-  .veles-cta__wm--top { left: -4px; top: -10px; width: 454px; height: 76px; }
+  .veles-cta__title .bold { font-size: 50px; line-height: 56px; }
+  .veles-cta__media { aspect-ratio: 628 / 318; }
+  .veles-cta__wm--big { left: 60px; top: 288px; width: 568px; height: 400px; }
+  .veles-cta__wm--top { left: -3px; top: -10px; width: 720px; height: 121px; }
 }
-/* 390: падинг 20; заголовок 32/40; gap текст→фото 40; фото 310×166 */
-@media (max-width: 430px) {
-  .veles-cta { padding: 20px; gap: 40px; }
-  .veles-cta__body { gap: 12px; }
+/* 960: pad 40; текст-ряд [заголовок слева | описание справа]; фото 800×384 снизу */
+@media (min-width: 960px) {
+  .veles-cta { padding: 40px; }
+  .veles-cta__body {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 60px;
+  }
+  .veles-cta__title { flex: 0 0 auto; }
+  .veles-cta__sub { flex: 1 1 0; text-align: right; }
+  .veles-cta__media { aspect-ratio: 800 / 384; }
+  .veles-cta__wm--big { left: 111px; top: 217px; width: 658px; height: 464px; }
+  .veles-cta__wm--top { left: 20px; top: -20px; width: 840px; height: 141px; }
+}
+/* 1200: ряд [фото слева | текст справа], всё по правому краю; фото фикс. h384; описание 18/24 */
+@media (min-width: 1200px) {
+  .veles-cta { flex-direction: row; align-items: stretch; gap: 0; }
+  .veles-cta__media {
+    order: 0;
+    flex: 0 0 auto;
+    width: clamp(435px, calc(435px + (100vw - 1200px) * 0.5139), 805px);
+    height: 384px;
+    aspect-ratio: auto;
+  }
+  .veles-cta__body {
+    order: 0;
+    flex: 1 1 0;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 20px;
+    text-align: right;
+  }
+  .veles-cta__title { flex: 0 0 auto; }
   .veles-cta__title .reg,
-  .veles-cta__title .bold { font-size: 32px; line-height: 40px; }
-  .veles-cta__media { aspect-ratio: 310 / 166; }
-  .veles-cta__wm--big { left: 25px; top: 323px; width: 300px; height: 211px; }
-  .veles-cta__wm--top { left: -4px; top: -6px; width: 370px; height: 62px; }
+  .veles-cta__title .bold { font-size: 66px; line-height: 70px; }
+  .veles-cta__sub { flex: none; max-width: 549px; font-size: 18px; line-height: 24px; }
+  .veles-cta__accent { display: block; }
+  .veles-cta__wm--big { left: -178px; top: 0; width: 658px; height: 464px; }
+  .veles-cta__wm--top { left: 475px; top: -20px; width: 840px; height: 141px; }
+}
+/* 1536: описание max 679; вордмарки */
+@media (min-width: 1536px) {
+  .veles-cta__sub { max-width: 679px; }
+  .veles-cta__wm--big { left: 22px; top: 0; width: 658px; height: 464px; }
+  .veles-cta__wm--top { left: 675px; top: -20px; width: 968px; height: 163px; }
+}
+/* 1920: вордмарки */
+@media (min-width: 1920px) {
+  .veles-cta__wm--big { left: 122px; top: 0; }
+  .veles-cta__wm--top { left: 845px; top: -20px; }
 }
