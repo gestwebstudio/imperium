@@ -301,14 +301,14 @@ export function Hero() {
               <div className="hero__unique-copy">
                 <p className="hero__unique-title">Уникальные модели</p>
                 <p className="hero__unique-sub">
-                  редкие комплектации
+                  редкие комплектации{" "}
                   <br />в наличии и под заказ
                 </p>
               </div>
               <div className="hero__unique-copy hero__unique-copy--clone" aria-hidden="true">
                 <p className="hero__unique-title">Уникальные модели</p>
                 <p className="hero__unique-sub">
-                  редкие комплектации
+                  редкие комплектации{" "}
                   <br />в наличии и под заказ
                 </p>
               </div>

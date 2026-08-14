@@ -763,6 +763,15 @@
   }
 }
 
+/* Подложка под фото авто в горизонтальной карточке (640–960) — макеты
+   1209:14801 / 15100 / 15319. Токен подложки Stone Beige-200 (#E4DFDB). */
+@media (min-width: 640px) and (max-width: 960px) {
+  .hero__card .car-card__photo {
+    background: var(--color-stone-beige-200, #E4DFDB);
+    border-radius: 20px;
+  }
+}
+
 @media (max-width: 768px) {
   .hero__inner { height: 1109px; }
   .hero__top {
@@ -850,10 +859,10 @@
   .hero__slider { left: 30px; right: 30px; }
 }
 
-/* 480/390: the mobile Figma composition intentionally removes the large
-   vehicle, watermark and stats, while retaining the same live CarCard and
-   carousel controls. */
-@media (max-width: 480px) {
+/* Мобильная композиция (390/480 макеты) держится до 639: убраны большое авто,
+   вотермарк и статы, остаётся живая CarCard, бегущая строка и слайдер.
+   Так 481–639 показывает мобилку (растянутую вверх от 390), а не сжатую 640. */
+@media (max-width: 639px) {
   .hero {
     border-radius: 0 0 12px 12px;
   }
@@ -997,7 +1006,7 @@
   .hero__track { gap: 8px; }
 }
 
-@media (max-width: 480px) and (prefers-reduced-motion: reduce) {
+@media (max-width: 639px) and (prefers-reduced-motion: reduce) {
   .hero__unique-track {
     animation: none;
     transform: none;
@@ -1005,7 +1014,8 @@
   }
 }
 
-@media (max-width: 430px) {
+/* <480 (тир 390): кнопка карточки — только иконка (по макету 390). */
+@media (max-width: 479px) {
   .hero__lower {
     left: 21px;
     right: 21px;
