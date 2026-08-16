@@ -42,16 +42,23 @@
 }
 
 /* ---------- Галерея (бесконечная карусель) ---------- */
-/* MOBILE-FIRST: --gal-w — ширина центрального кадра; растёт снизу вверх.
-   База = мобильная (почти во всю ширину, но не шире 471). */
+/* MOBILE-FIRST по 8 макетам. --gal-w — ширина центрального кадра, растёт
+   снизу вверх по числам макета: 331→471→471→543→705→873→1222 (кап 1222).
+   Резина сегментами между парами артбордов (как отступы trade-in). Радиус —
+   общий токен --radius-current. Отступа сверху нет: верхний ритм задают крошки. */
 .car-gallery {
-  --gal-w: min(471px, calc(100vw - 8px));
+  /* 390→480: 331→471 */
+  --gal-w: calc(331px + (100vw - 390px) * 1.55556);
   --gal-h: calc(var(--gal-w) * 722 / 1222);
+  /* видимый зазор до боковых кадров: 16 (390) → 26 (480+) */
+  --gal-gap: calc(16px + (100vw - 390px) * 0.11111);
 }
-@media (min-width: 641px) { .car-gallery { --gal-w: calc(56.25vw + 111px); } }
-@media (min-width: 769px) { .car-gallery { --gal-w: calc(84.375vw - 105px); } }
-@media (min-width: 961px) { .car-gallery { --gal-w: calc(70vw + 33px); } }
-@media (min-width: 1201px) { .car-gallery { --gal-w: min(1222px, 79.5573vw); } }
+@media (min-width: 480px)  { .car-gallery { --gal-w: 471px; --gal-gap: 26px; } }
+@media (min-width: 640px)  { .car-gallery { --gal-w: calc(471px + (100vw - 640px) * 0.5625); } }
+@media (min-width: 768px)  { .car-gallery { --gal-w: calc(543px + (100vw - 768px) * 0.84375); } }
+@media (min-width: 960px)  { .car-gallery { --gal-w: calc(705px + (100vw - 960px) * 0.7); } }
+@media (min-width: 1200px) { .car-gallery { --gal-w: calc(873px + (100vw - 1200px) * 1.03869); } }
+@media (min-width: 1536px) { .car-gallery { --gal-w: 1222px; } }
 .car-gallery__viewport {
   position: relative;
   width: 100%;
@@ -60,7 +67,9 @@
 }
 .car-gallery__track {
   display: flex;
-  gap: 26px;
+  /* видимый зазор до бокового = gap + (--gal-w·(1−.9377))/2. Вычитаем «съезд»
+     бокового кадра, чтобы фактический зазор совпал с макетом (--gal-gap). */
+  gap: max(0px, calc(var(--gal-gap) - var(--gal-w) * 0.03115));
   justify-content: center;
   align-items: center;
   height: 100%;
@@ -71,7 +80,7 @@
   flex: 0 0 var(--gal-w);
   width: var(--gal-w);
   height: var(--gal-h);
-  border-radius: 36px;
+  border-radius: var(--radius-current, 12px);
   overflow: hidden;
   opacity: .5;
   transform: scale(.9377); /* 677/722 — размер боковых кадров */
@@ -113,14 +122,18 @@
 /* Позиция стрелок и кнопки — ВСЕГДА относительно центрального кадра
    (calc(50% − gal-w/2 + inset)), а не края контейнера: иначе на ширинах,
    где видны боковые кадры, они уезжают в пустое поле сбоку. */
-.car-gallery__arrow--prev { left: calc(50% - var(--gal-w) / 2 + 16px); }
-.car-gallery__arrow--next { right: calc(50% - var(--gal-w) / 2 + 16px); }
+.car-gallery__arrow--prev { left: calc(50% - var(--gal-w) / 2 + 10px); }
+.car-gallery__arrow--next { right: calc(50% - var(--gal-w) / 2 + 10px); }
 .car-gallery__arrow--next svg { transform: rotate(180deg); }
-@media (min-width: 769px) {
+@media (min-width: 480px) {
+  .car-gallery__arrow--prev { left: calc(50% - var(--gal-w) / 2 + 16px); }
+  .car-gallery__arrow--next { right: calc(50% - var(--gal-w) / 2 + 16px); }
+}
+@media (min-width: 960px) {
   .car-gallery__arrow--prev { left: calc(50% - var(--gal-w) / 2 + 20px); }
   .car-gallery__arrow--next { right: calc(50% - var(--gal-w) / 2 + 20px); }
 }
-@media (min-width: 961px) {
+@media (min-width: 1200px) {
   .car-gallery__arrow { width: 44px; height: 44px; }
 }
 .car-gallery__all {
@@ -140,11 +153,15 @@
   cursor: pointer;
   box-shadow: 4px 4px 20px 0 rgba(106, 98, 89, .12);
 }
-@media (min-width: 961px) {
+@media (min-width: 960px) {
   .car-gallery__all {
     top: 20px;
     right: calc(50% - var(--gal-w) / 2 + 20px);
-    min-height: auto;
+  }
+}
+@media (min-width: 1200px) {
+  .car-gallery__all {
+    min-height: 44px;
     padding: 10px 18px;
     font-size: 18px;
     line-height: 24px;
@@ -3468,16 +3485,4 @@
     font-size: var(--type-display-16-font-size);
     line-height: var(--type-display-16-line-height);
   }
-
-  /* Галерея (макет 390): центральное фото 331 (видны боковые кадры),
-     стрелки — 10px внутри краёв фото. Боковые слоты масштабируются
-     transform:scale(.9377) от центра, из-за чего их внутренний край
-     съезжает наружу на (--gal-w·(1−.9377))/2 ≈ 10px. Поэтому флекс-гэп
-     дорожки = 6, чтобы ВИДИМЫЙ зазор до бокового фото стал 16 (макет):
-     6 + 10 ≈ 16. Карусель читает columnGap динамически (Gallery.tsx),
-     шаг сдвига пересчитывается сам. */
-  .car-gallery { --gal-w: calc(100vw - 59px); }
-  .car-gallery__track { gap: 6px; }
-  .car-gallery__arrow--prev { left: calc(50% - var(--gal-w) / 2 + 10px); }
-  .car-gallery__arrow--next { right: calc(50% - var(--gal-w) / 2 + 10px); }
 }
