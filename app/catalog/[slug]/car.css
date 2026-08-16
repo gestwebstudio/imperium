@@ -432,7 +432,8 @@
   gap: 16px;
   width: calc(100% - 64px);
 }
-@media (min-width: 481px) {
+/* стопка (имя над бейджем) до 640, с 640 — имя и бейдж в ряд (макет) */
+@media (min-width: 640px) {
   .car-title__head {
     flex-direction: row;
     align-items: center;
@@ -3482,4 +3483,23 @@
     font-size: var(--type-display-16-font-size);
     line-height: var(--type-display-16-line-height);
   }
+  /* заголовок 390: бейдж статуса — S (h18), зазоры по макету */
+  .car-title__head { gap: 8px; }
+  .car-title__actions { gap: 12px; }
+  .car-title .car-title__badge {
+    height: 18px;
+    min-height: 18px;
+    padding: 0 6px;
+    font-size: 12px;
+    line-height: 16px;
+  }
+}
+
+/* Иконки действий: 16 (≤640) → 20 (768/960) → 24 (≥1200) — по макету.
+   На 641–1199 базовые 24 перекрываем на 20 (было off-by-one — 24 уже с 960). */
+@media (min-width: 641px) and (max-width: 1199px) {
+  .car-title__actions .wishlist,
+  .car-title__actions .compare,
+  .car-title__actions .ui-button.wishlist > svg,
+  .car-title__actions .ui-button.compare > svg { width: 20px; height: 20px; }
 }
