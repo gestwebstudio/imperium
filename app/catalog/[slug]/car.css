@@ -2959,11 +2959,6 @@
   .car-specs__column {
     gap: 6px;
   }
-  .car-specs__row {
-    height: 44px;
-    min-height: 44px;
-    padding-block: 4px;
-  }
   .car-specs__toggle {
     height: 16px;
     font-size: 12px;
@@ -3278,7 +3273,7 @@
   overflow-wrap: anywhere;
 }
 
-@media (min-width: 641px) {
+@media (min-width: 640px) {
   .car-specs__row {
     flex-direction: row;
     align-items: center;
@@ -3297,7 +3292,7 @@
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 639px) {
   .car-specs {
     height: auto;
     min-height: 260px;
