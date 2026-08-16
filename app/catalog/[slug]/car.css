@@ -4,7 +4,7 @@
    ============================================================ */
 
 .car { padding-bottom: 0; }
-.car-wrap { max-width: var(--layout-max, 1920px); margin: 0 auto; padding: 0 var(--page-gutter, 60px); }
+.car-wrap { max-width: var(--layout-max, 1920px); margin: 0 auto; padding: 0 var(--gutter); }
 .car-wrap--top { padding-top: var(--crumbs-page-top, var(--page-top, 155px)); padding-bottom: 0; }
 .car > .cars-section { height: 574px; margin-top: 126px; }
 .car > .contacts { margin-top: 200px; }
@@ -382,7 +382,9 @@
 @media (min-width: 961px) {
   .car-details__technical { margin-top: 30px; }
 }
-@media (min-width: 1536px) {
+/* ≥1200 — двухколоночная десктоп-раскладка со sticky-ценой (как 1536, только
+   меньше). Правая колонка 297→397 (clamp), gap/row-gap/отступ резинят 1200→1536. */
+@media (min-width: 1200px) {
   .car-main {
     grid-template-columns:
       minmax(0, 1fr)
@@ -390,16 +392,16 @@
     grid-template-areas:
       "title price"
       "details price";
-    column-gap: clamp(40px, calc(.78125vw + 28px), 43px);
-    row-gap: 40px;
-    margin-top: 80px;
+    column-gap: clamp(24px, calc(24px + (100vw - 1200px) * 0.04762), 43px);
+    row-gap: clamp(30px, calc(30px + (100vw - 1200px) * 0.02976), 40px);
+    margin-top: clamp(60px, calc(60px + (100vw - 1200px) * 0.05952), 80px);
   }
   .car-details {
     grid-area: details;
     min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 80px;
+    gap: clamp(60px, calc(60px + (100vw - 1200px) * 0.05952), 80px);
   }
   .car-details__technical { grid-area: auto; margin-top: 0; }
   .car-price { grid-area: price; margin-top: 0; }
@@ -622,14 +624,9 @@
   .car-price__note { flex: none; white-space: nowrap; }
 }
 
-/* ≥1200 — офферы равномерной flex-строкой */
+/* ≥1200 — вертикальная sticky-карточка (пара к 2-колоночной car-main).
+   Идёт последней в каскаде → переопределяет горизонтальный бар 640/960 на ≥1200. */
 @media (min-width: 1200px) {
-  .car-price__offers { padding: 10px 20px; }
-  .car-price__row:first-child { flex: 1 1 0; }
-}
-
-/* ≥1536 — вертикальная sticky-карточка (пара к 2-колоночной car-main) */
-@media (min-width: 1536px) {
   .car-price {
     display: flex;
     flex-direction: column;
