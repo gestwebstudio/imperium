@@ -152,13 +152,24 @@
 }
 
 /* ---------- Тело: сайдбар + результаты ---------- */
-.catalog-body { display: flex; align-items: flex-start; gap: 24px; }
+/* MOBILE-FIRST: база = мобилка. Сетка 1 колонка → 2 (640) → 3 (768).
+   Сайдбар в потоке только с 1200 (ниже — фильтры в drawer через JS). */
+.catalog-body { display: block; }
 
 .catalog-results { flex: 1 1 0; min-width: 0; }
 .catalog-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   gap: clamp(16px, 1.25vw, 24px);
+}
+@media (min-width: 640px) {
+  .catalog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 768px) {
+  .catalog-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (min-width: 1200px) {
+  .catalog-body { display: flex; align-items: flex-start; gap: 24px; }
 }
 /* Без фильтра (брендовая подборка ≤12 машин) — грид на колонку шире: 4→3→2→1 */
 .catalog-grid--wide { grid-template-columns: repeat(4, minmax(0, 1fr)); }
@@ -640,10 +651,6 @@
   }
 }
 
-@media (max-width: 768px) {
-  .catalog-grid { grid-template-columns: 1fr; }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .cat-filters,
   .cat-filters-backdrop {
@@ -940,13 +947,8 @@
     color: var(--color-carbon-black-500, #1B1E1D);
   }
 
-  .catalog-body {
-    display: block;
-  }
-
   .catalog-grid,
   .catalog-grid--wide {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 10px;
   }
 
@@ -1133,11 +1135,6 @@
 @media (max-width: 767px) {
   .catalog-page {
     padding-inline: 30px;
-  }
-
-  .catalog-grid,
-  .catalog-grid--wide {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .catalog-grid > .car-card {
