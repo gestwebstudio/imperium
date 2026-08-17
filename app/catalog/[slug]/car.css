@@ -1596,8 +1596,6 @@
   }
   .car-specs__value {
     max-width: 48%;
-    font-size: var(--fs-16);
-    line-height: 1.3;
   }
   .car-equipment__column + .car-equipment__column::before {
     display: none;
@@ -1711,11 +1709,6 @@
 }
 
 @media (max-width: 960px) {
-  .car-specs__title,
-  .car-equipment__title {
-    font-size: 24px;
-    line-height: 30px;
-  }
   .car-assur__card {
     min-height: 118px;
     padding: 20px;
@@ -1784,11 +1777,6 @@
   .car-specs {
     gap: 20px;
   }
-  .car-specs__title,
-  .car-equipment__title {
-    font-size: 20px;
-    line-height: 28px;
-  }
   .car-specs__column {
     gap: 5px;
   }
@@ -1806,13 +1794,9 @@
   .car-specs__label,
   .car-equipment__label {
     flex: none;
-    font-size: 12px;
-    line-height: 16px;
   }
   .car-specs__value {
     max-width: none;
-    font-size: 14px;
-    line-height: 18px;
     text-align: left;
   }
   .car-equipment {
@@ -1830,10 +1814,6 @@
   .car-equipment__column + .car-equipment__column::before {
     display: block;
     left: -18px;
-  }
-  .car-equipment__value {
-    font-size: 14px;
-    line-height: 18px;
   }
   .car-assur {
     margin-top: 70px;
@@ -1865,11 +1845,6 @@
   .car-equipment {
     padding: 20px;
     border-radius: 20px;
-  }
-  .car-specs__title,
-  .car-equipment__title {
-    font-size: 18px;
-    line-height: 24px;
   }
   .car-specs__list {
     column-gap: 32px;
@@ -2532,19 +2507,6 @@
   .car-specs {
     padding: 30px 30px 24px;
   }
-  .car-specs__title,
-  .car-equipment__title {
-    font-size: clamp(
-      24px,
-      calc(24px + (100vw - 1200px) * .0178571),
-      30px
-    );
-    line-height: clamp(
-      30px,
-      calc(30px + (100vw - 1200px) * .0297619),
-      40px
-    );
-  }
   .car-specs__column {
     gap: 12px;
   }
@@ -2555,30 +2517,8 @@
       36px
     );
   }
-  .car-specs__value {
-    font-size: clamp(
-      14px,
-      calc(14px + (100vw - 1200px) * .0059524),
-      16px
-    );
-    line-height: clamp(
-      18px,
-      calc(18px + (100vw - 1200px) * .0059524),
-      20px
-    );
-  }
   .car-specs__toggle {
     height: clamp(
-      18px,
-      calc(18px + (100vw - 1200px) * .0059524),
-      20px
-    );
-    font-size: clamp(
-      14px,
-      calc(14px + (100vw - 1200px) * .0059524),
-      16px
-    );
-    line-height: clamp(
       18px,
       calc(18px + (100vw - 1200px) * .0059524),
       20px
@@ -2621,25 +2561,14 @@
     height: 276px;
     padding: 30px 30px 24px;
   }
-  .car-specs__title,
-  .car-equipment__title {
-    font-size: 24px;
-    line-height: 30px;
-  }
   .car-specs__column {
     gap: 12px;
   }
   .car-specs__row {
     height: 34px;
   }
-  .car-specs__value {
-    font-size: 14px;
-    line-height: 18px;
-  }
   .car-specs__toggle {
     height: 18px;
-    font-size: 14px;
-    line-height: 18px;
   }
   .car-equipment {
     height: clamp(
@@ -2665,11 +2594,6 @@
     padding-inline: 6px;
     font-size: 10px;
     line-height: 14px;
-  }
-  .car-equipment__label,
-  .car-equipment__value {
-    font-size: 14px;
-    line-height: 18px;
   }
   .car-equipment__feature {
     gap: 2px;
@@ -2731,25 +2655,14 @@
     height: 276px;
     padding: 30px 30px 24px;
   }
-  .car-specs__title,
-  .car-equipment__title {
-    font-size: 24px;
-    line-height: 30px;
-  }
   .car-specs__column {
     gap: 12px;
   }
   .car-specs__row {
     height: 34px;
   }
-  .car-specs__value {
-    font-size: 14px;
-    line-height: 18px;
-  }
   .car-specs__toggle {
     height: 18px;
-    font-size: 14px;
-    line-height: 18px;
   }
   .car-equipment__tabs .ui-button {
     height: 28px;
@@ -2768,11 +2681,6 @@
     padding-inline: 6px;
     font-size: 10px;
     line-height: 14px;
-  }
-  .car-equipment__label,
-  .car-equipment__value {
-    font-size: 14px;
-    line-height: 18px;
   }
   .car-equipment__feature {
     gap: 2px;
@@ -2825,11 +2733,6 @@
     padding: 24px 24px 20px;
     gap: 20px;
   }
-  .car-specs__title,
-  .car-equipment__title {
-    font-size: 20px;
-    line-height: 28px;
-  }
   .car-specs__list,
   .car-equipment__grid {
     column-gap: 40px;
@@ -2842,20 +2745,8 @@
     min-height: 34px;
     padding-block: 8px;
   }
-  .car-specs__label,
-  .car-equipment__label {
-    font-size: 12px;
-    line-height: 16px;
-  }
-  .car-specs__value,
-  .car-equipment__value {
-    font-size: 14px;
-    line-height: 18px;
-  }
   .car-specs__toggle {
     height: 16px;
-    font-size: 12px;
-    line-height: 16px;
   }
   .car-equipment {
     height: 458px;
@@ -2930,17 +2821,13 @@
   }
   .car-specs__title,
   .car-equipment__title {
-    font-size: 18px;
     font-weight: 600;
-    line-height: 24px;
   }
   .car-specs__column {
     gap: 6px;
   }
   .car-specs__toggle {
     height: 16px;
-    font-size: 12px;
-    line-height: 16px;
   }
   .car-equipment {
     height: 446px;
@@ -2997,20 +2884,10 @@
   font-size: var(--type-text-16-font-size);
   line-height: var(--type-text-16-line-height);
 }
-.car-specs__title,
-.car-equipment__title {
-  font-size: var(--type-text-30-font-size);
-  line-height: var(--type-text-30-line-height);
-}
-.car-specs__label,
-.car-equipment__label,
 .car-price__value .price-block__label {
   font-size: var(--type-text-14-font-size);
   line-height: var(--type-text-14-line-height);
 }
-.car-specs__value,
-.car-equipment__value,
-.car-specs__toggle,
 .car-equipment__tabs .ui-button {
   font-size: var(--type-text-16-font-size);
   line-height: var(--type-text-16-line-height);
@@ -3050,16 +2927,6 @@
 }
 
 @media (max-width: 1200px) {
-  .car-specs__title,
-  .car-equipment__title {
-    font-size: var(--type-text-24-font-size);
-    line-height: var(--type-text-24-line-height);
-  }
-  .car-specs__label,
-  .car-specs__value,
-  .car-specs__toggle,
-  .car-equipment__label,
-  .car-equipment__value,
   .car-equipment__tabs .ui-button {
     font-size: var(--type-text-14-font-size);
     line-height: var(--type-text-14-line-height);
@@ -3110,19 +2977,6 @@
 }
 
 @media (max-width: 768px) {
-  .car-specs__title,
-  .car-equipment__title {
-    font-size: var(--type-text-20-font-size);
-    line-height: var(--type-text-20-line-height);
-  }
-  .car-specs__label,
-  .car-specs__toggle,
-  .car-equipment__label {
-    font-size: var(--type-text-12-font-size);
-    line-height: var(--type-text-12-line-height);
-  }
-  .car-specs__value,
-  .car-equipment__value,
   .car-equipment__tabs .ui-button,
   .car-price__row-head,
   .car-price__note {
@@ -3145,11 +2999,6 @@
 }
 
 @media (max-width: 640px) {
-  .car-specs__title,
-  .car-equipment__title {
-    font-size: var(--type-text-18-font-size);
-    line-height: var(--type-text-18-line-height);
-  }
   .car-price__value .price-block__label {
     font-size: var(--type-text-10-font-size);
     line-height: var(--type-text-10-line-height);
