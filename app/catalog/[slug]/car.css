@@ -414,43 +414,110 @@
   gap: 24px;
 }
 
-/* Заголовок */
+/* ---------- Заголовок машины — MOBILE-FIRST ----------
+   Резина растёт снизу вверх (min-width): на промежуточных ширинах — растянутая
+   версия нижнего артборда, не суженная верхнего. Якоря из макета по 8 брейкам:
+   имя 20/26→28/34→32/40→36/44→40/48→48/56; бейдж S(390)→M(480)→h28(960);
+   иконки 16→20(768)→24(1200); стопка<640, ряд≥640. */
 .car-title {
   grid-area: title;
   min-width: 0;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 24px;
+  gap: 16px;
 }
-/* MOBILE-FIRST: база = имя над бейджем (column), ширина оставляет место
-   иконкам действий справа; с 481 — имя и бейдж в ряд (row-wrap). */
 .car-title__head {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 16px;
-  width: calc(100% - 64px);
-}
-/* стопка (имя над бейджем) до 640, с 640 — имя и бейдж в ряд (макет) */
-@media (min-width: 640px) {
-  .car-title__head {
-    flex-direction: row;
-    align-items: center;
-    flex-wrap: wrap;
-    width: auto;
-  }
+  gap: 8px;
+  min-width: 0;
 }
 .car-title__name {
   margin: 0;
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
   font-weight: var(--font-weight-semibold, 600);
-  font-size: 48px;
-  line-height: 56px;
+  /* fluid между якорями макета (390→480: 20→28 / 26→34) */
+  font-size: clamp(20px, calc(-14.667px + 8.889vw), 28px);
+  line-height: clamp(26px, calc(-8.667px + 8.889vw), 34px);
   color: var(--color-carbon-black-500, #1B1E1D);
 }
-.car-title__badge { flex: none; white-space: nowrap; }
-.car-title__actions { flex: none; display: flex; align-items: center; gap: 16px; padding-top: 16px; }
+.car-title .car-title__badge {
+  flex: none;
+  white-space: nowrap;
+  height: 18px;
+  min-height: 18px;
+  padding: 0 6px;
+  font-size: 12px;
+  line-height: 16px;
+}
+.car-title__actions {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.car-title__actions .wishlist,
+.car-title__actions .compare,
+.car-title__actions .ui-button.wishlist > svg,
+.car-title__actions .ui-button.compare > svg { width: 16px; height: 16px; }
+
+@media (min-width: 480px) {
+  .car-title__head { gap: 10px; }
+  /* 480→768: 28→32 / 34→40 */
+  .car-title__name {
+    font-size: clamp(28px, calc(21.333px + 1.389vw), 32px);
+    line-height: clamp(34px, calc(24px + 2.083vw), 40px);
+  }
+  .car-title .car-title__badge {
+    height: 26px;
+    min-height: 26px;
+    padding: 3px 7px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .car-title__actions { gap: 16px; }
+}
+@media (min-width: 640px) {
+  .car-title__head { flex-direction: row; align-items: center; flex-wrap: wrap; }
+}
+@media (min-width: 768px) {
+  .car-title__head { gap: 8px; }
+  /* 768→960: 32→36 / 40→44 */
+  .car-title__name {
+    font-size: clamp(32px, calc(16px + 2.083vw), 36px);
+    line-height: clamp(40px, calc(24px + 2.083vw), 44px);
+  }
+  .car-title__actions .wishlist,
+  .car-title__actions .compare,
+  .car-title__actions .ui-button.wishlist > svg,
+  .car-title__actions .ui-button.compare > svg { width: 20px; height: 20px; }
+}
+@media (min-width: 960px) {
+  .car-title__head { gap: 10px; }
+  /* 960→1200: 36→40 / 44→48 */
+  .car-title__name {
+    font-size: clamp(36px, calc(20px + 1.667vw), 40px);
+    line-height: clamp(44px, calc(28px + 1.667vw), 48px);
+  }
+  .car-title .car-title__badge { height: 28px; min-height: 28px; font-size: 16px; line-height: 20px; }
+}
+@media (min-width: 1200px) {
+  /* 1200→1536: 40→48 / 48→56 */
+  .car-title__name {
+    font-size: clamp(40px, calc(11.429px + 2.381vw), 48px);
+    line-height: clamp(48px, calc(19.429px + 2.381vw), 56px);
+  }
+  .car-title__actions .wishlist,
+  .car-title__actions .compare,
+  .car-title__actions .ui-button.wishlist > svg,
+  .car-title__actions .ui-button.compare > svg { width: 24px; height: 24px; }
+}
+@media (min-width: 1536px) {
+  .car-title__head { gap: 12px; }
+  .car-title__name { font-size: 48px; line-height: 56px; }
+}
 
 /* Карточка цены — MOBILE-FIRST.
    База = «стопка» (артборд 390): всё вертикально, кнопки в ряд из двух.
@@ -1461,9 +1528,6 @@
 @media (max-width: 768px) {
   .car-details { gap: 48px; }
   .car-details__technical { gap: 20px; }
-  .car-title { flex-direction: column; }
-  .car-title__name { line-height: 1.14; }
-  .car-title__actions { padding-top: 0; }
   .car-assur__cards { flex-direction: column; }
 }
 
@@ -1507,16 +1571,6 @@
   }
   .car-gallery-modal__photo {
     border-radius: 18px;
-  }
-  .car-title {
-    gap: 16px;
-  }
-  .car-title__head {
-    gap: 10px;
-  }
-  .car-title__badge {
-    font-size: var(--fs-14);
-    line-height: 18px;
   }
   .car-details {
     gap: 40px;
@@ -1580,10 +1634,6 @@
 }
 
 @media (max-width: 480px) {
-  .car-title__actions {
-    width: 100%;
-    justify-content: flex-end;
-  }
   .car-action-modal__header {
     padding: 26px 62px 0 20px;
   }
@@ -1621,19 +1671,9 @@
    ============================================================ */
 
 @media (max-width: 1200px) {
-  .car-wrap {
-    padding-inline: 40px;
-  }
   .car-wrap--top {
     padding-top: var(--crumbs-page-top, var(--page-top, 134px));
     padding-bottom: 0;
-  }
-  .car-title {
-    flex-direction: row;
-  }
-  .car-title__name {
-    font-size: 48px;
-    line-height: 56px;
   }
   .car-specs__column {
     gap: 0;
@@ -1670,10 +1710,6 @@
 }
 
 @media (max-width: 960px) {
-  .car-title__name {
-    font-size: 48px;
-    line-height: 56px;
-  }
   .car-specs__title,
   .car-equipment__title {
     font-size: 24px;
@@ -1736,27 +1772,6 @@
 }
 
 @media (max-width: 768px) {
-  .car-wrap {
-    padding-inline: clamp(30px, 5.2083vw, 40px);
-  }
-  .car-title {
-    flex-direction: row;
-    gap: 20px;
-  }
-  .car-title__name {
-    font-size: 32px;
-    line-height: 40px;
-  }
-  .car-title__actions {
-    padding-top: 10px;
-  }
-  .car-title__actions .wishlist,
-  .car-title__actions .compare,
-  .car-title__actions .ui-button.wishlist > svg,
-  .car-title__actions .ui-button.compare > svg {
-    width: 20px;
-    height: 20px;
-  }
   .car-details__technical {
     gap: 24px;
   }
@@ -1842,35 +1857,8 @@
 }
 
 @media (max-width: 640px) {
-  .car-wrap {
-    padding-inline: 30px;
-  }
   .car-wrap--top {
     padding-bottom: 0;
-  }
-  .car-title {
-    gap: 16px;
-  }
-  .car-title__name {
-    font-size: 28px;
-    line-height: 34px;
-  }
-  .car-title {
-    min-height: 40px;
-  }
-  .car-title__head {
-    gap: 10px;
-  }
-  .car-title__actions {
-    width: auto;
-    padding-top: 10px;
-  }
-  .car-title__actions .wishlist,
-  .car-title__actions .compare,
-  .car-title__actions .ui-button.wishlist > svg,
-  .car-title__actions .ui-button.compare > svg {
-    width: 16px;
-    height: 16px;
   }
   .car-specs,
   .car-equipment {
@@ -1941,17 +1929,6 @@
 }
 
 @media (max-width: 480px) {
-  .car-wrap {
-    padding-inline: clamp(16px, 4.1667vw, 20px);
-  }
-  .car-title {
-    align-items: flex-start;
-    min-height: 72px;
-  }
-  .car-title__badge {
-    font-size: 14px;
-    line-height: 18px;
-  }
   .car-specs,
   .car-equipment {
     padding: 16px;
@@ -3012,17 +2989,6 @@
    Типографика карточки автомобиля — только фиксированные стили
    из UI Kit, соответствующие отдельным фреймам Figma.
    ============================================================ */
-.car-title__name {
-  font-size: var(--type-display-48-font-size);
-  line-height: var(--type-display-48-line-height);
-}
-.car-title {
-  min-height: 56px;
-}
-.car-title__head {
-  gap: 12px;
-}
-.car-title__badge,
 .car-price__buttons .ui-button,
 .car-price__row-head,
 .car-price__note,
@@ -3083,14 +3049,6 @@
 }
 
 @media (max-width: 1200px) {
-  .car-title__head {
-    gap: 10px;
-  }
-  .car-title__name {
-    font-size: var(--type-display-40-font-size);
-    line-height: var(--type-display-40-line-height);
-    margin-top: 4px;
-  }
   .car-specs__title,
   .car-equipment__title {
     font-size: var(--type-text-24-font-size);
@@ -3132,11 +3090,6 @@
 }
 
 @media (max-width: 960px) {
-  .car-title__name {
-    font-size: var(--type-display-36-font-size);
-    line-height: var(--type-display-36-line-height);
-    margin-top: 0;
-  }
   .car-assur__title,
   .car-help__title,
   .car-atelier .image-service-card__title {
@@ -3156,16 +3109,6 @@
 }
 
 @media (max-width: 768px) {
-  .car-title {
-    min-height: 40px;
-  }
-  .car-title__head {
-    gap: 8px;
-  }
-  .car-title__name {
-    font-size: var(--type-display-32-font-size);
-    line-height: var(--type-display-32-line-height);
-  }
   .car-specs__title,
   .car-equipment__title {
     font-size: var(--type-text-20-font-size);
@@ -3201,13 +3144,6 @@
 }
 
 @media (max-width: 640px) {
-  .car-title__head {
-    gap: 10px;
-  }
-  .car-title__name {
-    font-size: var(--type-display-28-font-size);
-    line-height: var(--type-display-28-line-height);
-  }
   .car-specs__title,
   .car-equipment__title {
     font-size: var(--type-text-18-font-size);
@@ -3234,12 +3170,6 @@
   .car-atelier .image-service-card__text {
     font-size: var(--type-text-12-font-size);
     line-height: var(--type-text-12-line-height);
-  }
-}
-
-@media (max-width: 480px) {
-  .car-title {
-    min-height: 72px;
   }
 }
 
@@ -3466,10 +3396,6 @@
    сам price-block); заголовок карточки страховки = Display 16/20
    (у «Помощи» и «Ателье» он остаётся 18/22). */
 @media (max-width: 479px) {
-  .car-title__name {
-    font-size: var(--type-display-20-font-size);
-    line-height: var(--type-display-20-line-height);
-  }
   .car-price__value .price-block__value {
     font-size: var(--type-price-24-font-size);
     line-height: var(--type-price-24-line-height);
@@ -3478,23 +3404,4 @@
     font-size: var(--type-display-16-font-size);
     line-height: var(--type-display-16-line-height);
   }
-  /* заголовок 390: бейдж статуса — S (h18), зазоры по макету */
-  .car-title__head { gap: 8px; }
-  .car-title__actions { gap: 12px; }
-  .car-title .car-title__badge {
-    height: 18px;
-    min-height: 18px;
-    padding: 0 6px;
-    font-size: 12px;
-    line-height: 16px;
-  }
-}
-
-/* Иконки действий: 16 (≤640) → 20 (768/960) → 24 (≥1200) — по макету.
-   На 641–1199 базовые 24 перекрываем на 20 (было off-by-one — 24 уже с 960). */
-@media (min-width: 641px) and (max-width: 1199px) {
-  .car-title__actions .wishlist,
-  .car-title__actions .compare,
-  .car-title__actions .ui-button.wishlist > svg,
-  .car-title__actions .ui-button.compare > svg { width: 20px; height: 20px; }
 }
