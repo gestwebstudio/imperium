@@ -76,6 +76,25 @@
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 
+/* H1 каталога: в макете 32px достигается к 768 (не к 960, как в общем
+   .t-page-title), затем держится 32 до 960. Якоря каталога: 24(390) →
+   28(640) → 32(768) → 32(960) → 36(1200) → 36(1536). База (<640) и
+   диапазон ≥960 совпадают с общим стилем — переопределяем только 640…959. */
+@media (min-width: 640px) and (max-width: 959px) {
+  .catalog-head .t-page-title {
+    font-size: clamp(
+      var(--type-display-28-font-size),
+      calc(8px + 3.125vw),
+      var(--type-display-32-font-size)
+    );
+    line-height: clamp(
+      var(--type-display-28-line-height),
+      calc(4px + 4.6875vw),
+      var(--type-display-32-line-height)
+    );
+  }
+}
+
 /* Блок сортировки: свой дизайн, дропдаун — HeroUI */
 .cat-sort {
   display: inline-flex;
@@ -524,7 +543,7 @@
 /* ---------- Адаптив ---------- */
 /* 1200-1536: геометрия плавно масштабируется между двумя ноутбучными
    макетами. Так фильтр и три карточки всегда занимают сетку целиком. */
-@media (min-width: 1201px) and (max-width: 1536px) {
+@media (min-width: 1200px) and (max-width: 1536px) {
   .catalog-page {
     padding-inline: clamp(40px, calc(5.95238vw - 31.4286px), 60px);
   }
@@ -1026,8 +1045,11 @@
   }
 }
 
-/* Compact cards show two quick attributes and an icon-only CTA. */
-@media (min-width: 481px) and (max-width: 1199px) {
+/* Компактные карточки (узкие, многоколоночные): два тега + «+1» и CTA-иконка.
+   Диапазон = ровно многоколоночная зона 640…1535: одноколоночная широкая
+   480–639 показывает текст + полные теги (как артборд 480), а с 1536 —
+   тоже текст + полные (широкая карточка сайдбара). */
+@media (min-width: 640px) and (max-width: 1535px) {
   .catalog-grid .car-card__tags .tag:nth-child(n + 3) {
     display: none;
   }
@@ -1310,7 +1332,10 @@
   }
 }
 
-@media (max-width: 390px) {
+/* Самый узкий артборд (390). Порог 400, а не 390: в браузере медиазапрос
+   max-width:390 не срабатывает ровно на 390px (дробный вьюпорт), из-за чего
+   иконка-CTA не показывалась. 400 надёжно накрывает 390, не задевая 480. */
+@media (max-width: 400px) {
   .cat-crumbs { margin-bottom: var(--crumbs-gap-bottom); }
 
   .catalog-head__title {
