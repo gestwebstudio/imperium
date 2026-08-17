@@ -1890,6 +1890,12 @@
     height: 12px;
   }
 
+  /* заголовок ≤768 — как у карточки ателье (28/34); цвет свой (heritage-green) */
+  .service-card__title {
+    font-size: 28px;
+    line-height: 34px;
+  }
+
 }
 
 @media (max-width: 640px) {
