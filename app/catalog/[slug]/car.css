@@ -3331,12 +3331,14 @@
 
 @media (min-width: 1201px) and (max-width: 1536px) {
   .car-assur__title,
-  .car-help__title {
+  .car-help__title,
+  .car-atelier .image-service-card__title {
     font-size: clamp(30px, calc(57.4286px - 1.7857vw), 36px);
     line-height: clamp(38px, calc(65.4286px - 1.7857vw), 44px);
   }
 
-  .car-assur__text {
+  .car-assur__text,
+  .car-atelier .image-service-card__text {
     font-size: clamp(16px, calc(25.1429px - .5952vw), 18px);
     line-height: clamp(20px, calc(38.2857px - 1.1905vw), 24px);
   }
@@ -3401,9 +3403,10 @@
     font-size: var(--type-price-24-font-size);
     line-height: var(--type-price-24-line-height);
   }
+  /* assur-заголовок на мобилке 16/20 (у Помощи/Ателье 18/22); 390→480 fluid 16→18 */
   .car-assur__title {
-    font-size: var(--type-display-16-font-size);
-    line-height: var(--type-display-16-line-height);
+    font-size: clamp(16px, calc(7.333px + 2.222vw), 18px);
+    line-height: clamp(20px, calc(11.333px + 2.222vw), 22px);
   }
 }
 
@@ -3475,4 +3478,24 @@
   .car-specs__value,
   .car-equipment__value,
   .car-specs__toggle { font-size: 16px; line-height: 20px; }
+}
+
+/* Низ карточки (страхование/помощь/ателье) — fluid НИЖНИХ сегментов заголовков
+   (верхние 960→1200→1536 уже fluid выше). Якоря title 18(480)→20(768)→24(960).
+   Убирает скачок 20→24 на 768. Последние в файле → перекрывают дискретный каскад. */
+@media (min-width: 480px) and (max-width: 767px) {
+  .car-assur__title,
+  .car-help__title,
+  .car-atelier .image-service-card__title {
+    font-size: clamp(18px, calc(14.667px + 0.6944vw), 20px);
+    line-height: clamp(22px, calc(15.333px + 1.3889vw), 26px);
+  }
+}
+@media (min-width: 768px) and (max-width: 959px) {
+  .car-assur__title,
+  .car-help__title,
+  .car-atelier .image-service-card__title {
+    font-size: clamp(20px, calc(4px + 2.0833vw), 24px);
+    line-height: clamp(26px, calc(10px + 2.0833vw), 30px);
+  }
 }
