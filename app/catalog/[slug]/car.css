@@ -3499,3 +3499,12 @@
     line-height: clamp(26px, calc(10px + 2.0833vw), 30px);
   }
 }
+/* тексты низа: 640→768 12→14 (убирает скачок; 960+ уже fluid выше) */
+@media (min-width: 640px) and (max-width: 767px) {
+  .car-assur__text,
+  .car-help__desc,
+  .car-atelier .image-service-card__text {
+    font-size: clamp(12px, calc(2px + 1.5625vw), 14px);
+    line-height: clamp(16px, calc(6px + 1.5625vw), 18px);
+  }
+}
