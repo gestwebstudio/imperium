@@ -1156,8 +1156,8 @@
   margin: 0;
   font-family: var(--font-text, "Onest", sans-serif);
   font-weight: var(--font-weight-medium, 500);
-  font-size: var(--fs-30);
-  line-height: 40px;
+  font-size: 18px;
+  line-height: 24px;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 /* MOBILE-FIRST: база = 2 колонки (multicol, балансировка строк), без
@@ -1192,16 +1192,16 @@
   flex: 1 1 auto;
   min-width: 0;
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: 14px;
-  line-height: 18px;
+  font-size: 12px;
+  line-height: 16px;
   color: var(--color-carbon-black-300, #898785);
 }
 .car-specs__value {
   flex: none;
   font-family: var(--font-text, "Onest", sans-serif);
   font-weight: var(--font-weight-semibold, 600);
-  font-size: 16px;
-  line-height: 20px;
+  font-size: 14px;
+  line-height: 18px;
   color: var(--color-carbon-black-500, #1B1E1D);
   text-align: right;
 }
@@ -1216,8 +1216,8 @@
   background: none;
   cursor: pointer;
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: 16px;
-  line-height: 20px;
+  font-size: 12px;
+  line-height: 16px;
   color: var(--color-heritage-green-500, #294434);
 }
 .car-specs__chevron {
@@ -1245,8 +1245,8 @@
   margin: 0;
   font-family: var(--font-text, "Onest", sans-serif);
   font-weight: var(--font-weight-medium, 500);
-  font-size: var(--fs-30);
-  line-height: 40px;
+  font-size: 18px;
+  line-height: 24px;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 .car-equipment__body {
@@ -1311,16 +1311,16 @@
 }
 .car-equipment__label {
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: 14px;
-  line-height: 18px;
+  font-size: 12px;
+  line-height: 16px;
   color: var(--color-carbon-black-300, #898785);
 }
 .car-equipment__value {
   overflow-wrap: break-word;
   font-family: var(--font-text, "Onest", sans-serif);
   font-weight: var(--font-weight-regular, 400);
-  font-size: 16px;
-  line-height: 20px;
+  font-size: 14px;
+  line-height: 18px;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 
@@ -3404,4 +3404,60 @@
     font-size: var(--type-display-16-font-size);
     line-height: var(--type-display-16-line-height);
   }
+}
+
+/* ============================================================
+   Шрифты характеристик/комплектации — FLUID между якорями (автоскейл, как
+   trade-in). База (выше) = мобилка 390: title 18/24, label 12/16, value 14/18,
+   toggle 12/16. Здесь — непрерывный рост по сегментам артбордов. Идёт последним
+   в файле → перекрывает дискретные тиры старого каскада.
+   Якоря: title 18→20(768)→24(960)→30(1536); label 12→14(960);
+   value 14→16(1536); toggle 12→14(960)→16(1536).
+   ============================================================ */
+@media (min-width: 640px) {
+  .car-specs__title,
+  .car-equipment__title {
+    font-size: clamp(18px, calc(8px + 1.5625vw), 20px);
+    line-height: clamp(24px, calc(4px + 3.125vw), 28px);
+  }
+}
+@media (min-width: 768px) {
+  .car-specs__title,
+  .car-equipment__title {
+    font-size: clamp(20px, calc(4px + 2.0833vw), 24px);
+    line-height: clamp(28px, calc(20px + 1.0417vw), 30px);
+  }
+  .car-specs__label,
+  .car-equipment__label,
+  .car-specs__toggle {
+    font-size: clamp(12px, calc(4px + 1.0417vw), 14px);
+    line-height: clamp(16px, calc(8px + 1.0417vw), 18px);
+  }
+}
+@media (min-width: 960px) {
+  .car-specs__title,
+  .car-equipment__title { font-size: 24px; line-height: 30px; }
+  .car-specs__label,
+  .car-equipment__label,
+  .car-specs__toggle { font-size: 14px; line-height: 18px; }
+}
+@media (min-width: 1200px) {
+  .car-specs__title,
+  .car-equipment__title {
+    font-size: clamp(24px, calc(2.5714px + 1.7857vw), 30px);
+    line-height: clamp(30px, calc(-5.7143px + 2.9762vw), 40px);
+  }
+  .car-specs__value,
+  .car-equipment__value,
+  .car-specs__toggle {
+    font-size: clamp(14px, calc(6.8571px + 0.5952vw), 16px);
+    line-height: clamp(18px, calc(10.857px + 0.5952vw), 20px);
+  }
+}
+@media (min-width: 1536px) {
+  .car-specs__title,
+  .car-equipment__title { font-size: 30px; line-height: 40px; }
+  .car-specs__value,
+  .car-equipment__value,
+  .car-specs__toggle { font-size: 16px; line-height: 20px; }
 }
