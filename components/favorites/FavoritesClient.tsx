@@ -78,7 +78,11 @@ export function FavoritesClient() {
 
       <header className="favorites-head">
         <h1 className="t-page-title">Избранное</h1>
-        {storageReady && <Badge color="info">{favoriteCount}</Badge>}
+        {storageReady && (
+          <Badge size="m" responsive color="info">
+            {favoriteCount}
+          </Badge>
+        )}
       </header>
 
       {isLoading ? (

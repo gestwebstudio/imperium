@@ -533,14 +533,16 @@
 .t-page-title {
   font-family: var(--font-display);
   font-weight: var(--font-weight-semibold);
+  /* 24 (390) → 28 (480), затем держим 28 до 640 (в макетах H1 на 480 и 640
+     одинаков — Display/28). Раньше 28 достигалось только к 640. */
   font-size: clamp(
     var(--type-display-24-font-size),
-    calc(17.76px + 1.6vw),
+    calc(6.667px + 4.4444vw),
     var(--type-display-28-font-size)
   );
   line-height: clamp(
     var(--type-display-24-line-height),
-    calc(20.64px + 2.4vw),
+    calc(12.667px + 4.4444vw),
     var(--type-display-28-line-height)
   );
   letter-spacing: 0;

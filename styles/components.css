@@ -729,11 +729,14 @@
 .badge--s { padding: 3px 7px; font-size: 14px; line-height: 18px; }
 .badge--xs { padding: 3px 5px; font-size: 10px; line-height: 13px; }
 
-@media (max-width: 768px) {
+/* Адаптивный счётчик-бейдж — mobile-first по нашим брейкам, размеры из
+   макета: xs 10/14 (390) → s 14/18 (480…1199) → m 16/20 (1200+). */
+.badge.badge--responsive { padding: 1px 5px; font-size: 10px; line-height: 14px; }
+@media (min-width: 480px) {
   .badge.badge--responsive { padding: 3px 7px; font-size: 14px; line-height: 18px; }
 }
-@media (max-width: 390px) {
-  .badge.badge--responsive { padding: 3px 5px; font-size: 10px; line-height: 13px; }
+@media (min-width: 1200px) {
+  .badge.badge--responsive { padding: 3px 7px; font-size: 16px; line-height: 20px; }
 }
 /* --- Surface (заливка) --- */
 .badge--info    { background: var(--color-blue-100, #DCDFEF);   color: var(--color-blue-500, #5262C0); }

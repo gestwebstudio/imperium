@@ -20,7 +20,9 @@ export function NewsGrid({ items }: { items: NewsItem[] }) {
     <>
       <header className="news-page__head">
         <h1 className="t-page-title">Новости</h1>
-        <Badge color="info">{visibleItems.length}</Badge>
+        <Badge size="m" responsive color="info">
+          {visibleItems.length}
+        </Badge>
       </header>
 
       <section className="news-page__content" aria-label="Список новостей">

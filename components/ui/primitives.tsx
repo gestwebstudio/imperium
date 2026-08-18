@@ -30,7 +30,7 @@ export function Bubble({
 /* --- Badge --- */
 export type BadgeProps = {
   size?: "xs" | "s" | "m" | "l";
-  /** M -> S at 768px -> XS at 390px, according to the responsive kit. */
+  /** Mobile-first по брейкам макета: XS (<480) -> S (480…1199) -> M (1200+). */
   responsive?: boolean;
   color?: "info" | "success" | "warning" | "error";
   variant?: "surface" | "outlined";
