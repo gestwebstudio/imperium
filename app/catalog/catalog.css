@@ -76,25 +76,6 @@
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 
-/* H1 каталога: в макете 32px достигается к 768 (не к 960, как в общем
-   .t-page-title), затем держится 32 до 960. Якоря каталога: 24(390) →
-   28(640) → 32(768) → 32(960) → 36(1200) → 36(1536). База (<640) и
-   диапазон ≥960 совпадают с общим стилем — переопределяем только 640…959. */
-@media (min-width: 640px) and (max-width: 959px) {
-  .catalog-head .t-page-title {
-    font-size: clamp(
-      var(--type-display-28-font-size),
-      calc(8px + 3.125vw),
-      var(--type-display-32-font-size)
-    );
-    line-height: clamp(
-      var(--type-display-28-line-height),
-      calc(4px + 4.6875vw),
-      var(--type-display-32-line-height)
-    );
-  }
-}
-
 /* Блок сортировки: свой дизайн, дропдаун — HeroUI */
 .cat-sort {
   display: inline-flex;

@@ -547,17 +547,19 @@
 }
 
 /* The Figma frames are anchor points. Inside every composition range the
-   title grows continuously instead of jumping at a max-width boundary. */
+   title grows continuously instead of jumping at a max-width boundary.
+   28 (640) → 32 (768), затем держим 32 до 960 (в макетах H1 на 768 и 960
+   одинаков — Display/32). Раньше 32 достигалось только к 960. */
 @media (min-width: 640px) {
   .t-page-title {
     font-size: clamp(
       var(--type-display-28-font-size),
-      calc(20px + 1.25vw),
+      calc(8px + 3.125vw),
       var(--type-display-32-font-size)
     );
     line-height: clamp(
       var(--type-display-28-line-height),
-      calc(22px + 1.875vw),
+      calc(4px + 4.6875vw),
       var(--type-display-32-line-height)
     );
   }
