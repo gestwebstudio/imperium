@@ -1108,7 +1108,8 @@
 
 /* ============================================================
    Body Logo Card — плитка типа кузова (подпись + силуэт авто)
-   Default — тёплая подложка, подпись 24; hover — белый фон, тень, подпись 36.
+   Подпись — слева-сверху (24/30). Default — тёплая подложка, подпись
+   warm-taupe-300; hover — белый фон, тень, подпись темнеет до warm-taupe-500.
    Силуэт: <img class="body-card__img"> (webp из images/body_card/).
    ============================================================ */
 .body-card {
@@ -1124,16 +1125,16 @@
 .body-card__label {
   position: absolute;
   top: 15px;
-  left: 0;
-  right: 0;
-  text-align: center;
+  left: 16px;
+  right: 16px;
+  text-align: left;
   font-family: var(--font-text, "Onest", sans-serif);
   font-weight: var(--font-weight-bold, 700);
   font-size: var(--fs-24);
   line-height: 30px;
   color: var(--color-warm-taupe-300, #B2A79B);
   pointer-events: none;
-  transition: font-size .2s ease, line-height .2s ease, color .2s ease;
+  transition: color .2s ease;
 }
 .body-card__img {
   position: absolute;
@@ -1160,9 +1161,7 @@
     box-shadow: 6px 4px 50px 0 rgba(205,197,190,.5);
   }
   .body-card:hover .body-card__label {
-    font-size: var(--fs-36);
-    line-height: 42px;
-    color: var(--color-warm-taupe-200, #D5CCC4);
+    color: var(--color-warm-taupe-500, #6A6259);
   }
   .body-card:hover .body-card__img { transform: scale(1.04); }
 }
