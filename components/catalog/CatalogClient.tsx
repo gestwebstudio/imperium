@@ -258,10 +258,13 @@ export function CatalogClient({
   }, [filtersOpen]);
 
   useEffect(() => {
-    const mq = window.matchMedia("(max-width: 1199px)");
+    // Порог совпадает с CSS-переключателем блока (min-width:1200): фильтр —
+    // drawer ниже 1200, прилипающий сайдбар с 1200. Ключ по min-width (а не
+    // max-width:1199) закрывает дырку на дробных ширинах ~1199.5.
+    const mq = window.matchMedia("(min-width: 1200px)");
     const syncSheetMode = () => {
-      setFiltersUseSheet(mq.matches);
-      if (!mq.matches) setFiltersOpen(false);
+      setFiltersUseSheet(!mq.matches);
+      if (mq.matches) setFiltersOpen(false);
     };
 
     syncSheetMode();

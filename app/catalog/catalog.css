@@ -46,14 +46,15 @@
 /* ---------- Хлебные крошки (китовый Crumbs поверх HeroUI) ---------- */
 .cat-crumbs { margin-bottom: var(--crumbs-gap-bottom); }
 
-/* ---------- Шапка: заголовок + бейдж + сортировка ---------- */
+/* ---------- Шапка: заголовок + бейдж + сортировка ----------
+   MOBILE-FIRST: база = мобилка (заголовок в колонку, «Фильтры» + сортировка
+   строкой-подложкой). Десктоп-ряд — с min-width:1200 (см. ниже). */
 .catalog-head {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
-  flex-wrap: wrap;
-  margin-bottom: 34px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 20px;
+  margin-bottom: 10px;
 }
 .catalog-head__title { display: flex; align-items: flex-start; gap: 10px; }
 .catalog-head__title > .badge { margin-top: 1px; }
@@ -64,12 +65,40 @@
   margin-top: 1px;
   border-radius: 999px;
 }
-.catalog-head__tools { display: flex; align-items: center; gap: 20px; }
+.catalog-head__tools {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  box-sizing: border-box;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .4);
+}
 
-/* Кнопка «Фильтры» и шапка/бэкдроп drawer — только на мобилке (≤1200) */
-.cat-filters-toggle { display: none; }
-.cat-filters__bar { display: none; }
-.cat-filters-backdrop { display: none; }
+/* Кнопка «Фильтры», бэкдроп и шапка drawer — база = мобилка (показаны).
+   На десктопе (min-width:1200) скрываются. */
+.cat-filters-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 20px;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--color-carbon-black-500, #1B1E1D);
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-regular, 400);
+  font-size: 16px;
+  line-height: 20px;
+  cursor: pointer;
+}
+.cat-filters-toggle__icon { width: 18px; height: 18px; flex: none; }
+.cat-filters-toggle .badge { padding: 1px 6px; font-size: 10px; line-height: 14px; }
 .catalog-head h1 {
   margin: 0;
   letter-spacing: 0;
@@ -84,7 +113,7 @@
   padding: 0;
   border: none;
   background: transparent;
-  margin-bottom: 4px;
+  margin-bottom: 0;
   cursor: pointer;
   font-family: var(--font-text, "Onest", sans-serif);
 }
@@ -168,8 +197,60 @@
 @media (min-width: 768px) {
   .catalog-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
+/* ---------- Десктоп-раскладка блока каталога (min-width:1200) ----------
+   Один порог 1200 без дырки: тело — flex, шапка — ряд, сайдбар в потоке
+   (прилипающий), кнопка «Фильтры»/бэкдроп/шапка drawer скрыты. Плавное
+   масштабирование сайдбара/сетки 1200→1536 — в матрице ниже. */
 @media (min-width: 1200px) {
   .catalog-body { display: flex; align-items: flex-start; gap: 24px; }
+
+  .catalog-head {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-bottom: 34px;
+  }
+  .catalog-head__tools {
+    width: auto;
+    height: auto;
+    justify-content: flex-start;
+    gap: 20px;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+  .cat-sort { margin-bottom: 4px; }
+
+  .cat-filters {
+    position: sticky;
+    top: 0;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    z-index: auto;
+    align-self: flex-start;
+    flex: 0 0 433px;
+    width: auto;
+    height: 688px;
+    max-height: min(100dvh, var(--cat-filters-available-height, 100dvh));
+    border-radius: var(--radius-card, var(--radius-current, 30px));
+    background: rgba(255, 255, 255, .6);
+    box-shadow: none;
+    visibility: visible;
+    opacity: 1;
+    clip-path: none;
+    pointer-events: auto;
+    transition: none;
+    overscroll-behavior-y: auto;
+  }
+
+  .cat-filters-toggle,
+  .cat-filters__bar,
+  .cat-filters-backdrop {
+    display: none;
+  }
 }
 /* Без фильтра (брендовая подборка ≤12 машин) — грид на колонку шире: 4→3→2→1 */
 .catalog-grid--wide { grid-template-columns: repeat(4, minmax(0, 1fr)); }
@@ -195,28 +276,84 @@
 }
 .catalog-empty p { margin: 0; }
 
-/* ---------- Сайдбар фильтров (прилипающий, со скроллом) ---------- */
+/* ---------- Сайдбар фильтров ----------
+   MOBILE-FIRST: база = мобильный drawer (fixed, скрыт до открытия).
+   Десктопный прилипающий сайдбар — с min-width:1200 (см. ниже). */
 .cat-filters {
-  flex: 0 0 433px;
-  align-self: flex-start;
-  position: sticky;
+  position: fixed;
   top: 0;
-  height: 688px;
-  max-height: min(
-    100dvh,
-    var(--cat-filters-available-height, 100dvh)
-  );
+  right: 0;
+  bottom: 0;
+  left: auto;
+  z-index: 100;
+  width: min(92vw, 433px);
+  height: 100dvh;
+  max-height: 100dvh;
+  flex: none;
+  box-sizing: border-box;
   overflow-y: auto;
   overflow-x: hidden;
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 24px;
   padding: 30px;
-  border-radius: var(--radius-card, var(--radius-current, 30px));
-  background: rgba(255, 255, 255, .6);
-  overscroll-behavior-y: auto;
+  border-radius: 0;
+  background: var(--color-stone-beige-100, #F3F0EE);
+  box-shadow: -20px 0 60px rgba(27, 30, 29, 0.15);
+  visibility: hidden;
+  opacity: 0;
+  clip-path: inset(0 0 0 100%);
+  pointer-events: none;
+  transition:
+    clip-path 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 180ms ease,
+    visibility 260ms;
+  overscroll-behavior-y: contain;
   scrollbar-gutter: stable;
+}
+.cat-filters.is-open {
+  visibility: visible;
+  opacity: 1;
+  clip-path: inset(0);
+  pointer-events: auto;
+}
+.cat-filters-backdrop {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: rgba(27, 30, 29, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 200ms ease, visibility 200ms ease;
+}
+.cat-filters-backdrop.is-open { opacity: 1; visibility: visible; }
+.cat-filters__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.cat-filters__bar-title {
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: var(--fs-24);
+  line-height: 1.25;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.cat-filters__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background: var(--color-white, #fff);
+  color: var(--color-carbon-black-500, #1B1E1D);
 }
 .cat-filters__block { display: flex; flex-direction: column; }
 .cat-filters__block--selected { gap: 12px; }
@@ -560,96 +697,6 @@
   }
 }
 
-/* До desktop-композиции сайдбар становится drawer. */
-@media (max-width: 1199px) {
-  .cat-filters-toggle {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    height: 44px;
-    padding: 0 20px;
-    border-radius: 90px;
-    border: 1px solid var(--color-heritage-green-500, #294434);
-    background: transparent;
-    color: var(--color-heritage-green-500, #294434);
-    font-family: var(--font-text, "Onest", sans-serif);
-    font-weight: var(--font-weight-medium, 500);
-    font-size: 16px;
-    line-height: 20px;
-    cursor: pointer;
-  }
-
-  .cat-filters-backdrop {
-    display: block;
-    position: fixed;
-    inset: 0;
-    z-index: 99;
-    background: rgba(27, 30, 29, 0.5);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 200ms ease, visibility 200ms ease;
-  }
-  .cat-filters-backdrop.is-open { opacity: 1; visibility: visible; }
-
-  .cat-filters {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: auto;
-    z-index: 100;
-    width: min(92vw, 433px);
-    height: 100dvh;
-    max-height: 100dvh;
-    flex: none;
-    border-radius: 0;
-    background: var(--color-stone-beige-100, #F3F0EE);
-    box-shadow: -20px 0 60px rgba(27, 30, 29, 0.15);
-    visibility: hidden;
-    opacity: 0;
-    clip-path: inset(0 0 0 100%);
-    pointer-events: none;
-    transition:
-      clip-path 260ms cubic-bezier(0.22, 1, 0.36, 1),
-      opacity 180ms ease,
-      visibility 260ms;
-    overscroll-behavior-y: contain;
-  }
-  .cat-filters.is-open {
-    visibility: visible;
-    opacity: 1;
-    clip-path: inset(0);
-    pointer-events: auto;
-  }
-
-  .cat-filters__bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-  }
-  .cat-filters__bar-title {
-    font-family: var(--font-display, "Wix Madefor Display", sans-serif);
-    font-weight: var(--font-weight-semibold, 600);
-    font-size: var(--fs-24);
-    line-height: 1.25;
-    color: var(--color-carbon-black-500, #1B1E1D);
-  }
-  .cat-filters__close {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    flex: none;
-    padding: 0;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    background: var(--color-white, #fff);
-    color: var(--color-carbon-black-500, #1B1E1D);
-  }
-}
 
 @media (prefers-reduced-motion: reduce) {
   .cat-filters,
@@ -904,86 +951,11 @@
   .catalog-head { margin-bottom: 31px; }
 }
 
-/* At widths below 1200 the filter becomes a drawer and its compact toolbar
-   occupies the same row as sorting. */
+/* Ниже 1200 — мобильная композиция (задаётся базой). Здесь только боковой
+   отступ страницы и размеры карточек для этой зоны (карточки не трогаем). */
 @media (max-width: 1199px) {
   .catalog-page {
     padding-inline: 40px;
-  }
-
-  .cat-crumbs {
-    margin-bottom: var(--crumbs-gap-bottom);
-  }
-
-  .catalog-head {
-    align-items: stretch;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    gap: 20px;
-    margin-bottom: 10px;
-  }
-
-  .catalog-head__title {
-    gap: 10px;
-  }
-
-  .catalog-head__tools {
-    width: 100%;
-    height: 40px;
-    box-sizing: border-box;
-    justify-content: space-between;
-    gap: 16px;
-    padding: 10px 12px;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, .4);
-  }
-
-  .cat-filters-toggle {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    height: 20px;
-    min-width: 0;
-    padding: 0;
-    border: 0;
-    border-radius: 4px;
-    background: transparent;
-    color: var(--color-carbon-black-500, #1B1E1D);
-    font-family: var(--font-text, "Onest", sans-serif);
-    font-weight: var(--font-weight-regular, 400);
-    font-size: 16px;
-    line-height: 20px;
-    cursor: pointer;
-  }
-
-  .cat-filters-toggle__icon {
-    width: 18px;
-    height: 18px;
-    flex: none;
-  }
-
-  .cat-filters-toggle .badge {
-    padding: 1px 6px;
-    font-size: 10px;
-    line-height: 14px;
-  }
-
-  .cat-sort {
-    min-width: 0;
-    margin: 0;
-    border-radius: 4px;
-    font-size: 16px;
-    line-height: 20px;
-  }
-
-  .cat-sort__value {
-    gap: 6px;
-    color: var(--color-carbon-black-500, #1B1E1D);
-    text-decoration: none;
-  }
-
-  .cat-sort__arrow {
-    color: var(--color-carbon-black-500, #1B1E1D);
   }
 
   .catalog-grid,
