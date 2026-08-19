@@ -3,12 +3,14 @@ import { LeadModal } from "@/components/ui/LeadModal";
 
 /**
  * Блок «Не нашли подходящий автомобиль?» (услуга подбора).
- * Размеры/тексты — по макету Figma 578:2501, фото — services/podbor.webp.
+ * Раскладка/размеры переиспуют эталонный блок картинка+текст трейд-ина
+ * (.ti-factors): mobile-first, фото слева + текст справа. Вместо зелёного
+ * выделения — две кнопки. Секция сама задаёт контейнер (без .home-wrap).
  * Первая кнопка — окно-заявка, вторая — ссылка на страницу подбора.
  */
 export function Podbor() {
   return (
-    <section className="home-wrap podbor">
+    <section className="podbor">
       <div className="podbor__media">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/images/services/podbor.webp" alt="Подбор автомобиля" />

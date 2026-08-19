@@ -659,48 +659,100 @@
 }
 
 /* ============================================================
-   Блок «Не нашли подходящий автомобиль?» (подбор) — макет 578:2501
+   Блок «Не нашли подходящий автомобиль?» (подбор). Раскладка/размеры —
+   как эталонный блок картинка+текст трейд-ина (.ti-factors), mobile-first
+   по нашим брейкам: база <640 — беж-карточка без фото (1 колонка, инсет =
+   гутер, паддинг 20); 640+ — фото слева + текст (0.62/1), фон убран, фото
+   полосой за край экрана; 900+ — колонки 1:1. Заголовок 24/30 → 30/38 (768)
+   → 32/40 (960) → 36/44 (1200) → 48/56 (1536); текст 16/20 → 18/24 (1536).
+   Зелёный текст заменён двумя кнопками (прижаты к низу колонки).
    ============================================================ */
-.podbor { display: flex; align-items: stretch; gap: 50px; }
-.podbor__media { flex: 1 1 0; min-width: 0; }
+.podbor {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 40px;
+  align-items: stretch;
+  margin-inline: var(--gutter);
+  padding: 20px;
+  background: var(--color-stone-beige-200, #E4DFDB);
+  border-radius: var(--radius-card);
+}
+.podbor__media { min-width: 0; display: none; }
 .podbor__media img {
   width: 100%;
-  aspect-ratio: 875 / 583;
+  height: 100%;
   object-fit: cover;
-  border-radius: var(--radius-media, var(--radius-current, 30px));
+  border-radius: var(--radius-media, 36px);
   display: block;
 }
+@media (min-width: 640px) {
+  .podbor {
+    max-width: var(--layout-max, 1920px);
+    margin-inline: auto;
+    padding: 0 var(--gutter);
+    background: transparent;
+    border-radius: 0;
+    gap: clamp(32px, 4vw, 50px);
+    grid-template-columns: minmax(0, 0.62fr) minmax(0, 1fr);
+  }
+  .podbor__media { display: block; }
+}
+@media (min-width: 640px) and (max-width: 899px) {
+  .podbor__media {
+    width: calc(100% + var(--gutter));
+    margin-left: calc(-1 * var(--gutter));
+  }
+  .podbor__media img {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+@media (min-width: 900px) {
+  .podbor { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .podbor__media { width: 100%; margin-inline: 0; }
+}
+
 .podbor__body {
-  flex: 1 1 0;
   min-width: 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 40px;
+  align-items: flex-start;
+  gap: 20px;
 }
-.podbor__text { display: flex; flex-direction: column; gap: 16px; }
-.podbor__title { display: flex; flex-direction: column; }
-.podbor__title .reg,
-.podbor__title .bold {
+.podbor__text { display: flex; flex-direction: column; gap: 20px; }
+.podbor__title {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
-  font-size: clamp(32px, 3.4vw, 48px);
-  line-height: 1.16;
+  font-size: 24px;
+  line-height: 30px;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 .podbor__title .reg { font-weight: var(--font-weight-regular, 400); }
 .podbor__title .bold { font-weight: var(--font-weight-semibold, 600); }
 .podbor__desc {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   font-family: var(--font-text, "Onest", sans-serif);
-  font-size: 18px;
-  line-height: 24px;
+  font-size: 16px;
+  line-height: 20px;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
 .podbor__desc p { margin: 0; }
-.podbor__desc p + p { margin-top: 24px; }
-.podbor__actions { display: flex; gap: 30px; flex-wrap: wrap; }
-
-@media (max-width: 960px) {
-  .podbor { flex-direction: column; gap: 32px; }
+.podbor__actions {
+  margin-top: auto;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+@media (min-width: 768px) { .podbor__title { font-size: 30px; line-height: 38px; } }
+@media (min-width: 960px) { .podbor__title { font-size: 32px; line-height: 40px; } }
+@media (min-width: 1200px) { .podbor__title { font-size: 36px; line-height: 44px; } }
+@media (min-width: 1536px) {
+  .podbor__title { font-size: 48px; line-height: 56px; }
+  .podbor__desc { font-size: 18px; line-height: 24px; }
 }
 
 @media (max-width: 640px) {
@@ -743,19 +795,6 @@
   .cat-filters {
     width: min(100vw, 432px);
     padding: 24px 20px;
-  }
-  .podbor {
-    gap: 24px;
-  }
-  .podbor__media img {
-    border-radius: var(--radius-media, 24px);
-  }
-  .podbor__body,
-  .podbor__text {
-    gap: 20px;
-  }
-  .podbor__actions {
-    gap: 12px;
   }
 }
 
