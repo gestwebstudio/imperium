@@ -1023,6 +1023,11 @@
   gap: 10px 18px;
 }
 .car-action-modal__messenger {
+  /* Accent-токены кита — иначе тема HeroUI красит галку своим синим (#0485f7). */
+  --accent: var(--color-heritage-green-400, #4E7B60);
+  --accent-hover: var(--color-heritage-green-400, #4E7B60);
+  --accent-foreground: var(--color-white, #FFFFFF);
+  --focus: var(--color-heritage-green-400, #4E7B60);
   cursor: pointer;
   outline: none;
 }
