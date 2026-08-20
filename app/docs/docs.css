@@ -83,12 +83,14 @@
   margin: 0;
   font-family: var(--font-display, "Wix Madefor Display", sans-serif);
   font-weight: 600;
-  font-size: var(--fs-36);
+  font-size: var(--fs-24);
   line-height: 1.22;
   color: var(--color-heritage-green-500, #294434);
   transition: color 280ms cubic-bezier(0.22, 1, 0.36, 1);
 }
-.docs-card__action {
+/* Селектор с `.docs-card >` — как в оригинале: поднять специфичность выше
+   базового .ui-button, иначе position:absolute перебивается на relative. */
+.docs-card > .docs-card__action {
   position: absolute;
   top: 16px;
   right: 16px;
@@ -124,7 +126,7 @@
 @media (min-width: 768px) {
   .docs-cards { gap: 24px; }
   .docs-card { min-height: 167px; padding: 30px 76px 30px 40px; }
-  .docs-card__action { top: 20px; right: 20px; width: 46px; height: 46px; }
+  .docs-card > .docs-card__action { top: 20px; right: 20px; width: 46px; height: 46px; }
   .docs-card__action-icon { width: 14px; height: 14px; }
 }
 @media (min-width: 960px) {
