@@ -52,7 +52,11 @@ const SOCIALS = [
     icon: "/icons/tg.svg",
     href: "https://telegram.me/Vladislav_imperium_motors",
   },
-  { label: "MAX", icon: "/icons/max.svg" },
+  {
+    label: "MAX",
+    icon: "/icons/max.svg",
+    href: "https://max.ru/u/f9LHodD0cOLoSlQe_Q5AAjDzLTxKGUcTNjXrMe0sZKJOMfb4566Z9EHTF0s",
+  },
   {
     label: "WhatsApp",
     icon: "/icons/wa.svg",
@@ -125,7 +129,7 @@ export function Footer() {
                 <br />
                 All Rights Reserved
               </p>
-              <Link href="#">Правовые документы</Link>
+              <Link href="/docs">Правовые документы</Link>
               <p className="footer-disclaimer">
                 Изложенная на данном сайте информация носит ознакомительный
                 характер не является публичной офертой, определяемой положениями

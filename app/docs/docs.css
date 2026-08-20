@@ -1,0 +1,53 @@
+/* ============================================================
+   Правовые документы — /docs (индекс) и /docs/[slug] (документ).
+   Крошки + заголовок как на каталоге (без бейджа), тело документа —
+   колонка правового текста.
+   ============================================================ */
+.docs-page {
+  width: 100%;
+  max-width: var(--layout-max, 1920px);
+  min-height: 70vh;
+  margin: 0 auto;
+  padding: var(--crumbs-page-top, var(--page-top, 155px)) var(--gutter)
+    clamp(56px, 4.167vw, 80px);
+}
+
+.docs-head {
+  margin-bottom: clamp(24px, 2.5vw, 40px);
+}
+.docs-head h1 {
+  margin: 0;
+  letter-spacing: 0;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+
+/* Тело правового документа — одна колонка текста */
+.legal-doc {
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.25vw, 16px);
+}
+.legal-doc__h {
+  margin: clamp(8px, 1vw, 16px) 0 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: var(--fs-20);
+  line-height: 1.35;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.legal-doc__h:first-child {
+  margin-top: 0;
+}
+.legal-doc__p {
+  margin: 0;
+  font-family: var(--font-text, "Onest", sans-serif);
+  font-size: var(--fs-16);
+  line-height: 1.6;
+  color: var(--color-carbon-black-500, #1B1E1D);
+}
+.legal-doc a {
+  color: var(--color-heritage-green-500, #294434);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
