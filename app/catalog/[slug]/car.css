@@ -1076,12 +1076,8 @@
   line-height: 22px;
   color: var(--color-carbon-black-500, #1B1E1D);
 }
-.car-action-modal__legal {
-  margin: 6px 0 0;
-  font-family: var(--font-text, "Onest", sans-serif);
-  font-size: 12px;
-  line-height: 18px;
-  color: var(--color-carbon-black-300, #898785);
+.car-action-modal__consent {
+  margin-top: 14px;
 }
 .car-action-modal__footer {
   display: flex;

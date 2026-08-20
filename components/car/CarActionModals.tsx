@@ -13,6 +13,7 @@ import {
 } from "@heroui/react";
 import { ArrowIcon } from "@/components/icons";
 import { Button, type ButtonVariant } from "@/components/ui/Button";
+import { Checkbox as ConsentCheckbox } from "@/components/ui/Checkbox";
 
 const VISIT_TIME_OPTIONS = [
   { id: "as-soon-as-possible", label: "Как можно скорее" },
@@ -264,10 +265,13 @@ function CarActionModal({
                       )}
                     </div>
 
-                    <p className="car-action-modal__legal">
-                      Нажимая кнопку, вы соглашаетесь на обработку персональных
-                      данных.
-                    </p>
+                    <ConsentCheckbox
+                      className="car-action-modal__consent"
+                      size="s"
+                      name="consent"
+                      isRequired
+                      label="Нажимая кнопку, вы соглашаетесь на обработку персональных данных."
+                    />
                   </Modal.Body>
 
                   <Modal.Footer className="car-action-modal__footer">
