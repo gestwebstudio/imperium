@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Crumbs } from "@/components/ui/Crumbs";
+import { DocsCards } from "@/components/docs/DocsCards";
 import "./docs.css";
 
 export const metadata: Metadata = {
@@ -20,7 +21,7 @@ export default function DocsPage() {
       <header className="docs-head">
         <h1 className="t-page-title">Правовые документы</h1>
       </header>
-      {/* Список ссылок на документы — по макету (позже). */}
+      <DocsCards />
     </main>
   );
 }

@@ -51,3 +51,109 @@
   text-decoration: underline;
   text-underline-offset: 2px;
 }
+
+/* ---------- Карточки-ссылки на документы (дубликат блока услуг) ----------
+   Mobile-first: 1 колонка → 3 в ряд на десктопе. Заголовок = название
+   документа, без текста. Кнопка-иконка НЕ раскрывается — только зелёная
+   подсветка карточки на hover (иконка в белой пилюле). */
+.docs-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+.docs-card {
+  position: relative;
+  display: block;
+  min-height: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 20px 54px 20px 20px;
+  border-radius: var(--radius-card);
+  background: rgba(228, 223, 219, 0.4);
+  color: var(--color-heritage-green-500, #294434);
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 6px 4px 50.2px rgba(180, 170, 163, 0);
+  transition:
+    background-color 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    color 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.docs-card__title {
+  margin: 0;
+  font-family: var(--font-display, "Wix Madefor Display", sans-serif);
+  font-weight: 600;
+  font-size: var(--fs-36);
+  line-height: 1.22;
+  color: var(--color-heritage-green-500, #294434);
+  transition: color 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.docs-card__action {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 31px;
+  border: 1px solid var(--color-heritage-green-500, #294434);
+  color: var(--color-heritage-green-500, #294434);
+  background: transparent;
+  transition: background-color 180ms ease;
+}
+.docs-card__action-icon {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+}
+.docs-card__action-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@media (min-width: 640px) {
+  .docs-card { padding: 24px 58px 24px 24px; }
+}
+@media (min-width: 768px) {
+  .docs-cards { gap: 24px; }
+  .docs-card { min-height: 167px; padding: 30px 76px 30px 40px; }
+  .docs-card__action { top: 20px; right: 20px; width: 46px; height: 46px; }
+  .docs-card__action-icon { width: 14px; height: 14px; }
+}
+@media (min-width: 960px) {
+  .docs-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.docs-card:is(:hover, :focus-visible) {
+  background: var(--color-heritage-green-500, #294434);
+  color: var(--color-white, #FFFFFF);
+  box-shadow: 6px 4px 50.2px var(--color-shadow-fin, #B4AAA3);
+}
+.docs-card:focus-visible {
+  outline: 2px solid var(--color-heritage-green-400, #4E7B60);
+  outline-offset: 3px;
+}
+.docs-card:is(:hover, :focus-visible) .docs-card__title {
+  color: var(--color-white, #FFFFFF);
+}
+.docs-card:is(:hover, :focus-visible) .docs-card__action {
+  background: var(--color-white, #FFFFFF);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .docs-card,
+  .docs-card__title,
+  .docs-card__action {
+    transition-duration: 0.01ms;
+  }
+  .docs-card .ripple {
+    animation-duration: 0.01ms;
+  }
+}
