@@ -2286,7 +2286,6 @@
     padding: 20px;
     gap: 30px;
     border-radius: 30px;
-    background: transparent;
   }
   .car-atelier .image-service-card__img {
     height: clamp(
@@ -2339,7 +2338,6 @@
     padding: 20px;
     gap: 30px;
     border-radius: 30px;
-    background: transparent;
   }
   .car-atelier .image-service-card__img {
     height: clamp(244px, calc(-196px + 45.8333vw), 354px);
